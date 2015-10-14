@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DBBB971B-C15E-4953-BFB9-5C6B7238F5D5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NebulaCommon</RootNamespace>
+    <AssemblyName>NebulaCommon</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExitGames.Logging.Log4Net">
+      <HintPath>..\..\..\photon_server\lib\ExitGames.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ExitGamesLibs, Version=1.0.0.8, Culture=neutral, PublicKeyToken=eac0edd9746a4aa0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\photon_server\lib\ExitGamesLibs.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\photon_server\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon.SocketServer">
+      <HintPath>..\..\..\photon_server\lib\Photon.SocketServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonHostRuntimeInterfaces, Version=3.52.0.0, Culture=neutral, PublicKeyToken=6cb1467adaa73020, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\..\photon_server\lib\PhotonHostRuntimeInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DbObjectWrapper.cs" />
+    <Compile Include="Server2ServerTransactionPool.cs" />
+    <Compile Include="Group\Group.cs" />
+    <Compile Include="Group\GroupMember.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublicIPAddressReader.cs" />
+    <Compile Include="S2SEventCode.cs" />
+    <Compile Include="SelectCharacter\DbPlayerCharacter.cs" />
+    <Compile Include="SelectCharacter\PlayerCharacter.cs" />
+    <Compile Include="ServerState.cs" />
+    <Compile Include="ServerToServerOperationCode.cs" />
+    <Compile Include="ServerToServerParameterCode.cs" />
+    <Compile Include="ServerToServer\Events\GETInventoryItemsTransactionEnd.cs" />
+    <Compile Include="ServerToServer\Events\GETInventoryItemsTransactionStart.cs" />
+    <Compile Include="ServerToServer\Events\GETInventoryItemTransactionEnd.cs" />
+    <Compile Include="ServerToServer\Events\GETInventoryItemTransactionStart.cs" />
+    <Compile Include="ServerToServer\Events\PostTransactionAction.cs" />
+    <Compile Include="ServerToServer\Events\PUTInventoryItemTransactionEnd.cs" />
+    <Compile Include="ServerToServer\Events\PUTInventoryItemTransactionStart.cs" />
+    <Compile Include="ServerToServer\Events\S2SGroupRemovedEvent.cs" />
+    <Compile Include="ServerToServer\Events\S2SGroupUpdateEvent.cs" />
+    <Compile Include="ServerToServer\Events\S2SInvokeMethodEnd.cs" />
+    <Compile Include="ServerToServer\Events\S2SInvokeMethodStart.cs" />
+    <Compile Include="ServerToServer\Events\S2SRaceStatusChangedEvent.cs" />
+    <Compile Include="ServerToServer\Events\ServerEventCode.cs" />
+    <Compile Include="ServerToServer\Events\TransactionEvent.cs" />
+    <Compile Include="ServerToServer\Events\UpdateCharacterEvent.cs" />
+    <Compile Include="ServerToServer\Events\UpdateShipModelEvent.cs" />
+    <Compile Include="IServer2ServerTransactionHandler.cs" />
+    <Compile Include="ServerToServer\Operations\RegisterGameServer.cs" />
+    <Compile Include="ServerToServer\Operations\RegisterGameServerResponse.cs" />
+    <Compile Include="ServerToServer\Operations\UpdateCharacter.cs" />
+    <Compile Include="ServerToServer\Operations\UpdateShipModel.cs" />
+    <Compile Include="TransactionSource.cs" />
+    <Compile Include="ServerType.cs" />
+    <Compile Include="WorldInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2da5a1d7-db75-4641-a7c4-47c0e8520fa0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameMath\GameMath.csproj">
+      <Project>{1e3cac5d-7bee-486a-b275-76cebc429e56}</Project>
+      <Name>GameMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerClientCommon\ServerClientCommon.csproj">
+      <Project>{3e0f3769-9f28-4047-8cab-5584ebeb8775}</Project>
+      <Name>ServerClientCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

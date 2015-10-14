@@ -1,0 +1,28 @@
+﻿<zones>
+  <zone id="N1" name="N1_NAME" level="1" owned_race="3" world_type="neutral">
+    <npcs>
+      <!--<npc id="1_rg_01" type="resource_guard" position="100,0,0" rotation="0,0,0" respawn_interval="10"/>
+      <npc id="1_rg_02" type="resource_guard" position="-100,0,0" rotation="0,0,0" respawn_interval="10"/>-->
+    </npcs>
+    <asteroids>
+    </asteroids>
+    <activators>
+      <!--
+      <activator id="A1" position="100,0,0" radius="50" type="event" action="create_protaction_station" />
+      <activator id="A2" position="-100,0,0" radius="50" type="event" action="create_protaction_station" />
+      <activator id="A3" position="0,0,100" radius="50" type="event" action="create_protaction_station" />
+      -->
+    </activators>
+    <events>
+
+    </events>
+
+    <inputs>
+      <input key="zone_min" value="-200.0,-200.0,-200.0" type="vector"  />
+      <input key="zone_max" value="200.0,200.0,200.0" type="vector"     />
+      <input key="number_dummies" value="20"          type="int"        />
+      <input key="reach_radius" value="5.0" type="float" />
+    </inputs>
+
+  </zone>
+</zones>

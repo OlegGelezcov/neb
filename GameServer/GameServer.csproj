@@ -1,0 +1,532 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{74F17503-CFEC-46C7-80E3-92DDD35BC8E2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nebula</RootNamespace>
+    <AssemblyName>GameServer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\photon_server\deploy\Nebula\HumansGame\bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;LOCAL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExitGames.Logging.Log4Net">
+      <HintPath>..\..\..\..\..\..\photon_server\lib\ExitGames.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ExitGamesLibs">
+      <HintPath>..\..\..\..\..\..\..\photon_server\lib\ExitGamesLibs.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\..\..\photon_server\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon.SocketServer">
+      <HintPath>..\..\..\..\..\..\..\photon_server\lib\Photon.SocketServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonHostRuntimeInterfaces">
+      <HintPath>..\..\..\..\..\..\..\photon_server\lib\PhotonHostRuntimeInterfaces.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConnectionConfigCollection.cs" />
+    <Compile Include="ConnectionRole.cs" />
+    <Compile Include="ConsoleLogContext.cs" />
+    <Compile Include="Database\CharacterDatabase.cs" />
+    <Compile Include="Database\DatabaseManager.cs" />
+    <Compile Include="Database\DatabaseUtils.cs" />
+    <Compile Include="Database\IDocument.cs" />
+    <Compile Include="Database\InventoryDatabase.cs" />
+    <Compile Include="Database\InventoryDocument.cs" />
+    <Compile Include="Database\InventoryItemDocumentElement.cs" />
+    <Compile Include="Database\PassiveBonusesDatabase.cs" />
+    <Compile Include="Database\PassiveBonusesDocument.cs" />
+    <Compile Include="Database\ShipModelDatabase.cs" />
+    <Compile Include="Database\ShipModelDocument.cs" />
+    <Compile Include="Database\ShipModuleDocumentElement.cs" />
+    <Compile Include="Database\SkillDatabase.cs" />
+    <Compile Include="Database\SkillsDocument.cs" />
+    <Compile Include="Database\StationDatabase.cs" />
+    <Compile Include="Database\StatsDocument.cs" />
+    <Compile Include="Database\WeaponDatabase.cs" />
+    <Compile Include="Database\WeaponDocument.cs" />
+    <Compile Include="Database\WorkshopDocument.cs" />
+    <Compile Include="Database\IDatabaseDocument.cs" />
+    <Compile Include="Database\DatabaseDocumentCollection.cs" />
+    <Compile Include="Database\WorldDocument.cs" />
+    <Compile Include="Database\WorldState.cs" />
+    <Compile Include="GameServerSettings.cs" />
+    <Compile Include="GameUpdater.cs" />
+    <Compile Include="Game\AsteroidInterestArea.cs" />
+    <Compile Include="Game\AsteroidItem.cs" />
+    <Compile Include="Game\Bonuses\Buff.cs" />
+    <Compile Include="Game\Bonuses\PlayerBonus.cs" />
+    <Compile Include="Game\Components\Activators\ActivatorObject.cs" />
+    <Compile Include="Game\Components\Activators\SpawnPiratesActivator.cs" />
+    <Compile Include="Game\Components\AsteroidComponent.cs" />
+    <Compile Include="Game\Components\DatabaseObject.cs" />
+    <Compile Include="Game\Components\IChest.cs" />
+    <Compile Include="Game\Components\BaseShip.cs" />
+    <Compile Include="Game\Components\BaseWeapon.cs" />
+    <Compile Include="Game\Components\BotAI\BaseAI.cs" />
+    <Compile Include="Game\Components\BotAI\CombatBaseAI.cs" />
+    <Compile Include="Game\Components\BotAI\FollowPathAI.cs" />
+    <Compile Include="Game\Components\BotAI\FollowPathCombatAI.cs" />
+    <Compile Include="Game\Components\BotAI\OrbitCombatAI.cs" />
+    <Compile Include="Game\Components\BotAI\PatrolBetweenAreasCombatAI.cs" />
+    <Compile Include="Game\Components\BotAI\StayCombatAI.cs" />
+    <Compile Include="Game\Components\BotAI\WanderAroundPointCombatAI.cs" />
+    <Compile Include="Game\Components\BotAI\WanderCombatAI.cs" />
+    <Compile Include="Game\Components\BotObject.cs" />
+    <Compile Include="Game\Components\BotShip.cs" />
+    <Compile Include="Game\Components\CharacterObject.cs" />
+    <Compile Include="Game\Components\ChestComponent.cs" />
+    <Compile Include="Game\Components\DamagableObject.cs" />
+    <Compile Include="Game\Components\EventedObject.cs" />
+    <Compile Include="Game\Components\FixedInputDamageDamagableObject.cs" />
+    <Compile Include="Game\Components\MainOutpost.cs" />
+    <Compile Include="Game\Components\MiningStation.cs" />
+    <Compile Include="Game\Components\MmoItemPropertyUpdater.cs" />
+    <Compile Include="Game\Components\MmoMessageComponent.cs" />
+    <Compile Include="Game\Components\ModelComponent.cs" />
+    <Compile Include="Game\Components\MovableObject.cs" />
+    <Compile Include="Game\Components\NotShipDamagableObject.cs" />
+    <Compile Include="Game\Components\Outpost.cs" />
+    <Compile Include="Game\Components\OutpostDamagable.cs" />
+    <Compile Include="Game\Components\PassiveBonusesComponent.cs" />
+    <Compile Include="Game\Components\PersonalBeacon.cs" />
+    <Compile Include="Game\Components\PirateStationObject.cs" />
+    <Compile Include="Game\Components\PlanetObject.cs" />
+    <Compile Include="Game\Components\PlayerBonuses.cs" />
+    <Compile Include="Game\Components\PlayerCharacterObject.cs" />
+    <Compile Include="Game\Components\PlayerLoaderObject.cs" />
+    <Compile Include="Game\Components\PlayerShipMovable.cs" />
+    <Compile Include="Game\Components\PlayerSkills.cs" />
+    <Compile Include="Game\Components\RaceableModelComponent.cs" />
+    <Compile Include="Game\Components\RespawnableObject.cs" />
+    <Compile Include="Game\Components\SharedChest.cs" />
+    <Compile Include="Game\Components\ShipBasedDamagableObject.cs" />
+    <Compile Include="Game\Components\ShipEnergyBlock.cs" />
+    <Compile Include="Game\Components\RaceableObject.cs" />
+    <Compile Include="Game\Components\ShipMovable.cs" />
+    <Compile Include="Game\Components\SimpleMovable.cs" />
+    <Compile Include="Game\Components\SimpleWeapon.cs" />
+    <Compile Include="Game\Components\StationComponent.cs" />
+    <Compile Include="Game\Components\SubZoneComponent.cs" />
+    <Compile Include="Game\Components\Teleport.cs" />
+    <Compile Include="Game\Components\Turret.cs" />
+    <Compile Include="Game\DamageInfo.cs" />
+    <Compile Include="Game\DebugActionExecutor.cs" />
+    <Compile Include="Game\EventConnectionManager.cs" />
+    <Compile Include="Game\Events\BaseEvent.cs" />
+    <Compile Include="Game\Events\DestroyPirateStationEvent.cs" />
+    <Compile Include="Game\Events\KillBossEvent.cs" />
+    <Compile Include="Game\ExitWorkshopSavedInfo.cs" />
+    <Compile Include="Game\Extensions.cs" />
+    <Compile Include="Game\ConsoleLogging.cs" />
+    <Compile Include="Game\ActionExecutor.cs" />
+    <Compile Include="Game\Game.cs" />
+    <Compile Include="Game\Groups\CooperativeGroup.cs" />
+    <Compile Include="Game\Groups\CooperativeGroupMember.cs" />
+    <Compile Include="Game\Groups\CooperativeGroups.cs" />
+    <Compile Include="Game\Groups\GroupActionRequest.cs" />
+    <Compile Include="Game\Groups\PlayerCooperativeGroupController.cs" />
+    <Compile Include="Game\IDatabaseObject.cs" />
+    <Compile Include="Game\INpcOwner.cs" />
+    <Compile Include="Game\MmoWorldNebulaObjectManager.cs" />
+    <Compile Include="Game\NebulaObjectExtensions.cs" />
+    <Compile Include="Game\NpcGroup.cs" />
+    <Compile Include="Game\NpcStatsCalculator.cs" />
+    <Compile Include="Game\ObjectCreate.cs" />
+    <Compile Include="Game\Objects\GameObject.cs" />
+    <Compile Include="Game\GhostActor.cs" />
+    <Compile Include="Game\IActivator.cs" />
+    <Compile Include="Game\IBot.cs" />
+    <Compile Include="Game\IBotItem.cs" />
+    <Compile Include="Game\IGameContainer.cs" />
+    <Compile Include="Game\InvasionPortal.cs" />
+    <Compile Include="Game\InvasionPortalEnemy.cs" />
+    <Compile Include="Game\ItemExtensions.cs" />
+    <Compile Include="Game\Managers.cs" />
+    <Compile Include="Game\Objects\AsteroidContent.cs" />
+    <Compile Include="Game\Objects\GroupNpcObjectOwner.cs" />
+    <Compile Include="Game\Objects\NoneNpcObjectOwner.cs" />
+    <Compile Include="Game\Objects\NpcObjectOwner.cs" />
+    <Compile Include="Game\Objects\NpcObjectOwnerType.cs" />
+    <Compile Include="Game\Objects\ServerInventory.cs" />
+    <Compile Include="Game\Objects\WorkhouseStation.cs" />
+    <Compile Include="Game\Objects\WorldNpcObjectOwner.cs" />
+    <Compile Include="Game\OperationHandlers\AddInterestAreaOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\AttachInterestAreaOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\BasePlayerOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\DestroyItemOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\DetachInterestAreaOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\EnterWorkshopOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\ExecActionOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\ExitWorkshopOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\ExitWorldOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\GetPropertiesOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\GetWorldsOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\MoveInterestAreaOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\MoveOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\RaiseGenericEventOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\RemoveInterestAreaOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\SetPropertiesOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\SetViewDistanceOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\SpawnItemOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\SubscribeItemOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\UnsubscribeItemOperationHandler.cs" />
+    <Compile Include="Game\PeerActionExecutor.cs" />
+    <Compile Include="Game\PlayerInfo.cs" />
+    <Compile Include="Game\PlayerMailBoxManager.cs" />
+    <Compile Include="Game\PlayerSkill.cs" />
+    <Compile Include="Game\RespawnData.cs" />
+    <Compile Include="Game\ShiftKeyState.cs" />
+    <Compile Include="Game\Skills\EmptySkillExecutor.cs" />
+    <Compile Include="Game\Skills\SkillExecutor.cs" />
+    <Compile Include="Game\Skills\Skill_000003E8.cs" />
+    <Compile Include="Game\Skills\Skill_000003EA.cs" />
+    <Compile Include="Game\Skills\Skill_000003EB.cs" />
+    <Compile Include="Game\Skills\Skill_000003EC.cs" />
+    <Compile Include="Game\Skills\Skill_000003ED.cs" />
+    <Compile Include="Game\Skills\Skill_000003EF.cs" />
+    <Compile Include="Game\Skills\Skill_000003F0.cs" />
+    <Compile Include="Game\Skills\Skill_000003F1.cs" />
+    <Compile Include="Game\Skills\Skill_000003F2.cs" />
+    <Compile Include="Game\Skills\Skill_000003F3.cs" />
+    <Compile Include="Game\Skills\Skill_000003F4.cs" />
+    <Compile Include="Game\Skills\Skill_000003F6.cs" />
+    <Compile Include="Game\Skills\Skill_000003F7.cs" />
+    <Compile Include="Game\Skills\Skill_000003F8.cs" />
+    <Compile Include="Game\Skills\Skill_000003FA.cs" />
+    <Compile Include="Game\Skills\Skill_000003FB.cs" />
+    <Compile Include="Game\Skills\Skill_000003E9.cs" />
+    <Compile Include="Game\Skills\Skill_000003EE.cs" />
+    <Compile Include="Game\Skills\Skill_000003F5.cs" />
+    <Compile Include="Game\Skills\Skill_000003FD.cs" />
+    <Compile Include="Game\Skills\Skill_000003FE.cs" />
+    <Compile Include="Game\Skills\Skill_000003FF.cs" />
+    <Compile Include="Game\Skills\Skill_00000400.cs" />
+    <Compile Include="Game\Skills\Skill_00000401.cs" />
+    <Compile Include="Game\Skills\Skill_00000402.cs" />
+    <Compile Include="Game\Skills\Skill_00000404.cs" />
+    <Compile Include="Game\Skills\Skill_00000405.cs" />
+    <Compile Include="Game\Skills\Skill_00000406.cs" />
+    <Compile Include="Game\Skills\Skill_00000407.cs" />
+    <Compile Include="Game\Skills\Skill_00000408.cs" />
+    <Compile Include="Game\Skills\Skill_00000409.cs" />
+    <Compile Include="Game\Skills\Skill_0000040A.cs" />
+    <Compile Include="Game\Skills\Skill_0000040B.cs" />
+    <Compile Include="Game\Skills\Skill_0000040C.cs" />
+    <Compile Include="Game\Skills\Skill_0000040D.cs" />
+    <Compile Include="Game\Skills\Skill_0000040E.cs" />
+    <Compile Include="Game\Skills\Skill_0000040F.cs" />
+    <Compile Include="Game\Skills\Skill_00000410.cs" />
+    <Compile Include="Game\Skills\Skill_00000411.cs" />
+    <Compile Include="Game\Skills\Skill_00000412.cs" />
+    <Compile Include="Game\Skills\Skill_00000413.cs" />
+    <Compile Include="Game\Skills\Skill_00000414.cs" />
+    <Compile Include="Game\Skills\Skill_00000415.cs" />
+    <Compile Include="Game\Skills\Skill_00000416.cs" />
+    <Compile Include="Game\Skills\Skill_00000418.cs" />
+    <Compile Include="Game\Skills\Skill_00000419.cs" />
+    <Compile Include="Game\Skills\Skill_0000041A.cs" />
+    <Compile Include="Game\Skills\Skill_0000041B.cs" />
+    <Compile Include="Game\Skills\Skill_0000041C.cs" />
+    <Compile Include="Game\Skills\Skill_0000041D.cs" />
+    <Compile Include="Game\Skills\Skill_0000041E.cs" />
+    <Compile Include="Game\Skills\Skill_0000041F.cs" />
+    <Compile Include="Game\Skills\Skill_00000420.cs" />
+    <Compile Include="Game\Skills\Skill_00000421.cs" />
+    <Compile Include="Game\Skills\Skill_00000422.cs" />
+    <Compile Include="Game\Skills\Skill_00000423.cs" />
+    <Compile Include="Game\Skills\Skill_00000424.cs" />
+    <Compile Include="Game\Skills\Skill_00000425.cs" />
+    <Compile Include="Game\Skills\Skill_00000426.cs" />
+    <Compile Include="Game\Skills\Skill_00000427.cs" />
+    <Compile Include="Game\Skills\Skill_00000428.cs" />
+    <Compile Include="Game\Skills\Skill_00000429.cs" />
+    <Compile Include="Game\Skills\Skill_0000042A.cs" />
+    <Compile Include="Game\Skills\Skill_0000042B.cs" />
+    <Compile Include="Game\Skills\Skill_0000042C.cs" />
+    <Compile Include="Game\Skills\Skill_0000042D.cs" />
+    <Compile Include="Game\Skills\Skill_0000042E.cs" />
+    <Compile Include="Game\Skills\Skill_0000042F.cs" />
+    <Compile Include="Game\Skills\Skill_00000430.cs" />
+    <Compile Include="Game\Skills\Skill_00000431.cs" />
+    <Compile Include="Game\Skills\Skill_00000432.cs" />
+    <Compile Include="Game\Skills\Skill_00000433.cs" />
+    <Compile Include="Game\Skills\Skill_00000434.cs" />
+    <Compile Include="Game\Skills\Skill_00000436.cs" />
+    <Compile Include="Game\Skills\Skill_00000437.cs" />
+    <Compile Include="Game\Skills\Skill_00000438.cs" />
+    <Compile Include="Game\Skills\Skill_00000439.cs" />
+    <Compile Include="Game\Skills\Skill_0000043A.cs" />
+    <Compile Include="Game\Skills\Skill_0000043B.cs" />
+    <Compile Include="Game\Skills\Skill_0000043C.cs" />
+    <Compile Include="Game\Skills\Skill_0000043D.cs" />
+    <Compile Include="Game\Skills\Skill_0000043E.cs" />
+    <Compile Include="Game\Skills\Skill_0000043F.cs" />
+    <Compile Include="Game\Skills\Skill_00000440.cs" />
+    <Compile Include="Game\Skills\Skill_00000441.cs" />
+    <Compile Include="Game\Skills\Skill_00000442.cs" />
+    <Compile Include="Game\Skills\Skill_00000443.cs" />
+    <Compile Include="Game\Skills\Skill_00000444.cs" />
+    <Compile Include="Game\Skills\Skill_00000445.cs" />
+    <Compile Include="Game\Skills\Skill_00000446.cs" />
+    <Compile Include="Game\Skills\Skill_00000447.cs" />
+    <Compile Include="Game\Skills\Skill_00000448.cs" />
+    <Compile Include="Game\Skills\Skill_00000449.cs" />
+    <Compile Include="Game\Skills\Skill_0000044A.cs" />
+    <Compile Include="Game\Skills\Skill_0000044B.cs" />
+    <Compile Include="Game\Skills\Skill_0000044C.cs" />
+    <Compile Include="Game\Skills\Skill_0000044D.cs" />
+    <Compile Include="Game\Skills\Skill_0000044E.cs" />
+    <Compile Include="Game\Skills\Skill_0000044F.cs" />
+    <Compile Include="Game\Skills\Skill_00000450.cs" />
+    <Compile Include="Game\Skills\Skill_00000451.cs" />
+    <Compile Include="Game\Skills\Skill_00000452.cs" />
+    <Compile Include="Game\Skills\Skill_00000453.cs" />
+    <Compile Include="Game\Skills\Skill_00000454.cs" />
+    <Compile Include="Game\Skills\Skill_00000455.cs" />
+    <Compile Include="Game\Skills\Skill_00000456.cs" />
+    <Compile Include="Game\Skills\Skill_00000457.cs" />
+    <Compile Include="Game\Skills\Skill_00000458.cs" />
+    <Compile Include="Game\Skills\Skill_00000459.cs" />
+    <Compile Include="Game\Skills\Skill_0000045C.cs" />
+    <Compile Include="Game\Skills\Skill_0000045A.cs" />
+    <Compile Include="Game\Skills\Skill_0000045B.cs" />
+    <Compile Include="Game\Skills\Skill_0000045D.cs" />
+    <Compile Include="Game\Skills\Skill_0000045E.cs" />
+    <Compile Include="Game\Skills\Skill_0000045E_Component.cs" />
+    <Compile Include="Game\Skills\Skill_0000045F.cs" />
+    <Compile Include="Game\Skills\Skill_000007D0.cs" />
+    <Compile Include="Game\Skills\Skill_000007D1.cs" />
+    <Compile Include="Game\Skills\Skill_000007D5.cs" />
+    <Compile Include="Game\Skills\Skill_000007D6.cs" />
+    <Compile Include="Game\Skills\Skill_000007DA.cs" />
+    <Compile Include="Game\Skills\Skill_000007DB.cs" />
+    <Compile Include="Game\Skills\Skill_000007DB_Component.cs" />
+    <Compile Include="Game\Skills\Skill_000007DF.cs" />
+    <Compile Include="Game\Skills\Skill_00000403.cs" />
+    <Compile Include="Game\Skills\Skill_000007E0.cs" />
+    <Compile Include="Game\Spawn\OutpostSpawnCheck.cs" />
+    <Compile Include="Game\Spawn\SpawnCheck.cs" />
+    <Compile Include="Game\Spawn\SpawnCheckManager.cs" />
+    <Compile Include="Game\TestElementAttribute.cs" />
+    <Compile Include="Game\TestRPCAttribute.cs" />
+    <Compile Include="Game\WeaponHitInfo.cs" />
+    <Compile Include="Game\WorldAsteroidManager.cs" />
+    <Compile Include="Game\WorldEvents.cs" />
+    <Compile Include="Game\IShip.cs" />
+    <Compile Include="Game\IShipWeapon.cs" />
+    <Compile Include="Game\Components\AIState.cs" />
+    <Compile Include="Game\Components\PlayerShip.cs" />
+    <Compile Include="Game\Components\ShipWeapon.cs" />
+    <Compile Include="Game\Components\PlayerTarget.cs" />
+    <Compile Include="Game\ShipMechanicalShield.cs" />
+    <Compile Include="Game\ShipPowerFieldShield.cs" />
+    <Compile Include="Game\Time.cs" />
+    <Compile Include="Game\ICombatActor.cs" />
+    <Compile Include="Game\InvasionPortalEnemyShip.cs" />
+    <Compile Include="Game\NpcShipWeapon.cs" />
+    <Compile Include="Game\WorldNpcManager.cs" />
+    <Compile Include="NebulaLogger.cs" />
+    <Compile Include="OutgoingMasterServerPeer.cs" />
+    <Compile Include="Saving\MailBoxSaveObject.cs" />
+    <Compile Include="Saving\MailMessageChannel.cs" />
+    <Compile Include="ServerRuntimeStats.cs" />
+    <Compile Include="Server\Events\UseSkillEvent.cs" />
+    <Compile Include="Server\Events\WorkshopEntered.cs" />
+    <Compile Include="Server\Events\WorkshopExited.cs" />
+    <Compile Include="Server\Operations\CreateCharacter.cs" />
+    <Compile Include="Server\Operations\CreateCharacterResponse.cs" />
+    <Compile Include="Server\Operations\CreateGhost.cs" />
+    <Compile Include="Server\Operations\EnterWorkshop.cs" />
+    <Compile Include="Server\Operations\EnterWorkshopResponse.cs" />
+    <Compile Include="Server\Operations\GetWorldsOperation.cs" />
+    <Compile Include="Server\Operations\GetWorldsOperationResponse.cs" />
+    <Compile Include="Server\Operations\Login.cs" />
+    <Compile Include="Server\Operations\LoginResponse.cs" />
+    <Compile Include="Server\Operations\ExecAction.cs" />
+    <Compile Include="Server\IActor.cs" />
+    <Compile Include="CounterOperations.cs" />
+    <Compile Include="Server\MethodReturnValue.cs" />
+    <Compile Include="Server\Events\CounterDataEvent.cs" />
+    <Compile Include="Server\Events\ItemDestroyed.cs" />
+    <Compile Include="Server\Events\ItemGeneric.cs" />
+    <Compile Include="Server\Events\ItemMoved.cs" />
+    <Compile Include="Server\Events\ItemProperties.cs" />
+    <Compile Include="Server\Events\ItemPropertiesSet.cs" />
+    <Compile Include="Server\Events\ItemSubscribed.cs" />
+    <Compile Include="Server\Events\ItemUnsubscribed.cs" />
+    <Compile Include="Server\Events\RadarUpdate.cs" />
+    <Compile Include="Server\Events\WorldExited.cs" />
+    <Compile Include="Server\IMmoItem.cs" />
+    <Compile Include="Server\Messages\MmoItemPositionUpdate.cs" />
+    <Compile Include="Server\Messages\MmoItemSnapshot.cs" />
+    <Compile Include="Server\Operations\AddInterestArea.cs" />
+    <Compile Include="Server\Operations\AddInterestAreaResponse.cs" />
+    <Compile Include="Server\Operations\AttachInterestArea.cs" />
+    <Compile Include="Server\Operations\AttachInterestAreaResponse.cs" />
+    <Compile Include="Server\Operations\CreateWorld.cs" />
+    <Compile Include="Server\Operations\CreateWorldResponse.cs" />
+    <Compile Include="Server\Operations\DestroyItem.cs" />
+    <Compile Include="Server\Operations\DestroyItemResponse.cs" />
+    <Compile Include="Server\Operations\DetachInterestArea.cs" />
+    <Compile Include="Server\Operations\DetachInterestAreaResponse.cs" />
+    <Compile Include="Server\Operations\EnterWorld.cs" />
+    <Compile Include="Server\Operations\EnterWorldResponse.cs" />
+    <Compile Include="Server\Operations\GetProperties.cs" />
+    <Compile Include="Server\Operations\GetPropertiesResponse.cs" />
+    <Compile Include="Server\Operations\Move.cs" />
+    <Compile Include="Server\Operations\MoveInterestArea.cs" />
+    <Compile Include="Server\Operations\MoveInterestAreaResponse.cs" />
+    <Compile Include="Server\Operations\MoveResponse.cs" />
+    <Compile Include="Server\Operations\RadarSubscribe.cs" />
+    <Compile Include="Server\Operations\RadarSubscribeResponse.cs" />
+    <Compile Include="Server\Operations\RaiseGenericEvent.cs" />
+    <Compile Include="Server\Operations\RaiseGenericEventResponse.cs" />
+    <Compile Include="Server\Operations\RemoveInterestArea.cs" />
+    <Compile Include="Server\Operations\RemoveInterestAreaResponse.cs" />
+    <Compile Include="Server\Operations\SelectCharacter.cs" />
+    <Compile Include="Server\Operations\SelectCharacterResponse.cs" />
+    <Compile Include="Server\Operations\SetProperties.cs" />
+    <Compile Include="Server\Operations\SetPropertiesResponse.cs" />
+    <Compile Include="Server\Operations\SetViewDistance.cs" />
+    <Compile Include="Server\Operations\SetViewDistanceResponse.cs" />
+    <Compile Include="Server\Operations\SpawnItem.cs" />
+    <Compile Include="Server\Operations\SpawnItemResponse.cs" />
+    <Compile Include="Server\Operations\SubscribeCounter.cs" />
+    <Compile Include="Server\Operations\SubscribeItem.cs" />
+    <Compile Include="Server\Operations\SubscribeItemResponse.cs" />
+    <Compile Include="Server\Operations\UnsubscribeItem.cs" />
+    <Compile Include="Server\Operations\UnsubscribeItemResponse.cs" />
+    <Compile Include="Server\Actor.cs" />
+    <Compile Include="Server\BoundingBox.cs" />
+    <Compile Include="Server\ClientInterestArea.cs" />
+    <Compile Include="Server\GridWorld.cs" />
+    <Compile Include="Server\InterestArea.cs" />
+    <Compile Include="Server\Item.cs" />
+    <Compile Include="Server\ItemAutoSubscription.cs" />
+    <Compile Include="Server\ItemCache.cs" />
+    <Compile Include="Server\IWorld.cs" />
+    <Compile Include="Server\Messages\ItemDisposedMessage.cs" />
+    <Compile Include="Server\Messages\ItemEventMessage.cs" />
+    <Compile Include="Server\Messages\ItemPositionMessage.cs" />
+    <Compile Include="Server\Messages\ItemSnapshot.cs" />
+    <Compile Include="Server\Messages\ItemSnapshotRequest.cs" />
+    <Compile Include="Server\Messages\MessageCounters.cs" />
+    <Compile Include="Server\Messages\RegionMessage.cs" />
+    <Compile Include="Server\Region.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Game\MmoActor.cs" />
+    <Compile Include="Game\MmoBotInterestArea.cs" />
+    <Compile Include="Game\MmoBotItem.cs" />
+    <Compile Include="Game\MmoClientInterestArea.cs" />
+    <Compile Include="Game\MmoItem.cs" />
+    <Compile Include="Game\MmoItemCache.cs" />
+    <Compile Include="Game\MmoRadar.cs" />
+    <Compile Include="Game\MmoWorldCache.cs" />
+    <Compile Include="Server\Settings.cs" />
+    <Compile Include="MmoPeer.cs" />
+    <Compile Include="Game\MmoWorld.cs" />
+    <Compile Include="GameApplication.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram3.cd" />
+    <None Include="ClassDiagram4.cd" />
+    <None Include="ClassDiagram5.cd" />
+    <None Include="ClassDiagram6.cd" />
+    <None Include="ClassDiagram7.cd" />
+    <None Include="MmoActor.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="log4net.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="PlayerSkills.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Nebula\NebulaCommon\NebulaCommon.csproj">
+      <Project>{dbbb971b-c15e-4953-bfb9-5c6b7238f5d5}</Project>
+      <Name>NebulaCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Nebula\ServerClientCommon\ServerClientCommon.csproj">
+      <Project>{3e0f3769-9f28-4047-8cab-5584ebeb8775}</Project>
+      <Name>ServerClientCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2da5a1d7-db75-4641-a7c4-47c0e8520fa0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameMath\GameMath.csproj">
+      <Project>{1e3cac5d-7bee-486a-b275-76cebc429e56}</Project>
+      <Name>GameMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Space.Game\Space.Game.csproj">
+      <Project>{258e2bbb-a667-4bbe-97bb-fab72a5e552c}</Project>
+      <Name>Space.Game</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\connection_config_local.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\role.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\connection_config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Docs\message_table.txt" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

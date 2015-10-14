@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E50CA137-2A04-48F2-A61C-2049D9D993A2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nebula</RootNamespace>
+    <AssemblyName>UnityLib</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>..\..\..\photon_server\lib\Photon3Unity3D.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\Program Files\Unity\Editor\Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\Program Files\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\UnityEngine.UI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExtrapolationData.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="Game\Space\Singleton.cs" />
+    <Compile Include="MmoConnectionFlags.cs" />
+    <Compile Include="MmoConnectionParameters.cs" />
+    <Compile Include="MmoEngine.cs" />
+    <Compile Include="Mmo\Games\GameType.cs" />
+    <Compile Include="Mmo\IEngine.cs" />
+    <Compile Include="Mmo\Items\BaseItem.cs" />
+    <Compile Include="Mmo\Items\Components\IMmoComponentContainer.cs" />
+    <Compile Include="Mmo\Items\Components\MmoActivatorComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoAsteroidComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoBaseComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoBonusesComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoBotComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoCharacterComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoChestComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoCombatAIComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoDamagableComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoEnergyComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoEventComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoEventedObjectComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoMainOutpostComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoMiningStationComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoModelComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoMovableComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoOutpostComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoPassiveBonusesComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoPirateStationComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoPlanetComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoPlayerAIComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoPlayerComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoRaceableComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoRespawnableComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoSharedChestComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoShipComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoSkillsComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoStationComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoSubZoneComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoTargetComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoTeleportComponent.cs" />
+    <Compile Include="Mmo\Items\Components\MmoWeaponComponent.cs" />
+    <Compile Include="Mmo\Items\IItemProperty.cs" />
+    <Compile Include="Mmo\Items\Item.cs" />
+    <Compile Include="Mmo\Objects\MmoComponentUpdater.cs" />
+    <Compile Include="NetworkTransformInterpolation.cs" />
+    <Compile Include="PrefKeys.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\AudioCache.cs" />
+    <Compile Include="Resources\BaseStringCache.cs" />
+    <Compile Include="Resources\BaseTextureCache.cs" />
+    <Compile Include="Resources\BuffDescriptionResolver.cs" />
+    <Compile Include="Resources\ColorCache.cs" />
+    <Compile Include="Resources\DataResources.cs" />
+    <Compile Include="Resources\GameEffectSoundType.cs" />
+    <Compile Include="Resources\IconType.cs" />
+    <Compile Include="Resources\InventoryItemDescriptionResolver.cs" />
+    <Compile Include="Resources\ItemTypeName.cs" />
+    <Compile Include="Resources\ModuleSetNames.cs" />
+    <Compile Include="Resources\ObjectCache.cs" />
+    <Compile Include="Resources\ObjectIcons.cs" />
+    <Compile Include="Resources\ObjectSubCache.cs" />
+    <Compile Include="Resources\PrefabCache.cs" />
+    <Compile Include="Resources\PrefabSubCache.cs" />
+    <Compile Include="Resources\ResObjectIconData.cs" />
+    <Compile Include="Resources\SpriteSubCache.cs" />
+    <Compile Include="Resources\StringCache.cs" />
+    <Compile Include="Resources\StringSubCache.cs" />
+    <Compile Include="Resources\sXDocument.cs" />
+    <Compile Include="Resources\TextureCache.cs" />
+    <Compile Include="Resources\TextureSubCache.cs" />
+    <Compile Include="Resources\UISoundType.cs" />
+    <Compile Include="Resources\WorldEvents.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SpaceExtensions.cs" />
+    <Compile Include="UI\IAsteroidObjectInfo.cs" />
+    <Compile Include="UI\ICombatObjectInfo.cs" />
+    <Compile Include="UI\IEventObjectInfo.cs" />
+    <Compile Include="UI\IIconObjectInfo.cs" />
+    <Compile Include="UI\IObjectInfo.cs" />
+    <Compile Include="UI\ObjectChange.cs" />
+    <Compile Include="UI\ObjectInfoType.cs" />
+    <Compile Include="UnityEvents.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2da5a1d7-db75-4641-a7c4-47c0e8520fa0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerClientCommon\ServerClientCommon.csproj">
+      <Project>{3e0f3769-9f28-4047-8cab-5584ebeb8775}</Project>
+      <Name>ServerClientCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpaceClient\SpaceClient.csproj">
+      <Project>{04eed28c-4145-4315-b700-2c1491639c87}</Project>
+      <Name>SpaceClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Mmo\Games\Strategies\" />
+    <Folder Include="Server\Components\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

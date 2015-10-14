@@ -1,0 +1,98 @@
+<events>
+  <event id="EV0003" name="EV0003_NAME" description="EV0003_DESCRIPTION" cooldown="60" reward_exp="100" reward_coins="100" position="732.0,-301,-954.0">
+    
+    <inputs>
+      <input key="data_activator_radius" value="80.0" type="float" />
+      <input key="asteroid_minmax" value="-200,-200,-200;200,200,200" type="minmax"/>
+      <input key="respawn_objects_interval" value="150" type="float" />
+      <input key="borguzands_spawn_radius" value="200" type="float" />
+      <input key="borguzands_type_name" value="pirate_evt" type="string" />
+    </inputs>
+    
+    <stages>
+      <stage id="0" start_text="S0_EV0003_START" task_text="" is_final="False" is_success="False" timeout="1">
+        <transitions>
+          <transition to="10">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="10" />
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      <stage id="10" start_text="S10_EV0003_START" task_text="S10_EV0003_TASK" is_final="False" is_success="False" timeout="1">
+        <transitions>
+          <transition to="20">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="300" />
+            </conditions>
+          </transition>
+          <transition to="30">
+            <conditions>
+              <condition type="GEQ" var_name="data_collected" var_type="int" value="10" />
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      <stage id="20" start_text="S20_EV0003_START" task_text="" is_final="True" is_success="False" timeout="-1">
+        <transitions />
+      </stage>
+      <stage id="30" start_text="S30_EV0003_START" task_text="S30_EV0003_TASK" is_final="False" is_success="False" timeout="1">
+        <transitions>
+          <transition to="40">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="300" />
+            </conditions>
+          </transition>
+          <transition to="50" text="EV0003_T30_SUCCESS">
+            <conditions>
+              <condition type="GEQ" var_name="killed_counter" var_type="int" value="20" />
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      <stage id="40" start_text="S40_EV0003_START" task_text="S40_EV0003_TASK" is_final="False" is_success="False" timeout="1">
+        <transitions>
+          <transition to="30">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="600" />
+            </conditions>
+          </transition>
+          <transition to="70">
+            <conditions>
+              <condition type="GEQ" var_name="collected_CraftOre0001" var_type="int" value="100" />
+              <condition type="GEQ" var_name="collected_CraftOre0003" var_type="int" value="100" />
+              <condition type="GEQ" var_name="collected_CraftOre0002" var_type="int" value="100" />
+              <condition type="GEQ" var_name="collected_CraftOre0004" var_type="int" value="100" />
+              <condition type="GEQ" var_name="collected_CraftOre0005" var_type="int" value="100" />
+              <condition type="GEQ" var_name="collected_CraftOre0006" var_type="int" value="100" />
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      <stage id="70" start_text="S70_EV003_START" task_text="" is_final="True" is_success="True" timeout="-1">
+        <transitions />
+      </stage>
+      <stage id="50" start_text="S50_EV0003_START" task_text="S50_EV0003_TASK" is_final="False" is_success="False" timeout="1">
+        <transitions>
+          <transition to="60">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="600" />
+            </conditions>
+          </transition>
+          <transition to="40">
+            <conditions>
+              <condition type="GEQ" var_name="kill_wave_1" var_type="int" value="2" />
+              <condition type="GEQ" var_name="kill_wave_2" var_type="int" value="5" />
+              <condition type="GEQ" var_name="kill_wave_3" var_type="int" value="7" />
+              <condition type="GEQ" var_name="kill_wave_4" var_type="int" value="12" />
+              <condition type="GEQ" var_name="kill_wave_5" var_type="int" value="3" />
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      <stage id="60" start_text="S60_EV0003_START" task_text="" is_final="True" is_success="False" timeout="-1">
+        <transitions />
+      </stage>
+    </stages>
+  </event>
+</events>

@@ -1,0 +1,110 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+
+namespace Common
+{
+    public enum PS : byte
+    {
+        MechanicalShieldFullDamageAbsorb = 0,
+        MechanicalShieldCurrentDamageAbsorb = 1,
+        MechanicalShieldEnabled = 2,
+
+        PowerFieldShieldFullDamageAbsorb = 3,
+        PowerFieldShieldRecoverSpeed = 4,
+        PowerFieldShieldCurrentPowerPercent = 5,
+        PowerFieldShieldEnabled = 6,
+
+        CurrentHealth = 7,
+        MaxHealth = 8,
+        Destroyed = 9,
+        Model = 10,
+        AIState = 11,
+        ControlState = 12,
+        ActionState = 13,
+        Acceleration = 14,
+        MinLinearSpeed = 15,
+        MaxLinearSpeed = 16,
+        CurrentLinearSpeed = 17,
+        AngleSpeed = 18,
+        CurrentEnergy = 19,
+        MaxEnergy = 20,
+        Workshop = 21,
+
+        WeaponReloadInterval = 22,
+
+        LightShotReady = 23,
+        HeavyShotReady = 24,
+        Damage = 25,
+        LightShotReloadTimer = 26,
+        HeavyShotReloadTimer = 27,
+        HitProb = 28,
+        MinHitProb = 29,
+        OptimalDistance = 30,
+        WeaponRange = 31,
+        ProbFar2OptimalDistance = 32,
+        ProbNear2OptimalDistance = 33,
+        MaxHitSpeed = 34,
+        MaxFireDistance = 35,
+
+        IsStatic = 36,
+        TargetType = 37,
+        HasTarget = 38,
+        TargetId = 39,
+        InterestAreaAttached = 40,
+        ViewDistanceEnter = 41,
+        ViewDistanceExit = 42,
+        BotSubType = 43,
+        Level = 44,
+        TypeName = 45,
+        Race = 46,
+        Description = 47,
+                
+        ModulePrefabs = 48,
+        UseSkill = 49,
+        AsteroidContent = 50,
+        AsteroidData = 51,
+        Bonuses = 52,
+
+        ShiftPressed = 53,
+        FromEvent = 54,
+        EventId = 55,
+        EventWorldId = 56,
+        
+        //HasTarget = 57,
+        //TargetId = 58,
+        //TargetType = 59,
+        PlanetType = 57,
+        Ship = 58,
+        Difficulty = 59,
+        SubType = 60,
+        Info,
+        ModelInfo,
+        Name,
+        LightCooldown,
+        HeavyCooldown,
+        Fraction,
+        Event,
+        CharacterID,
+        Login,
+        Radius,
+        Active,
+        IgnoreDamage,
+        IgnoreDamageTimer,
+        RaceStatus,
+        DataId,
+        Resist,
+        CritDamage,
+        CritChance,
+        InCombat,
+        SubZoneID,
+        InnerRadius,
+        OuterRadius,
+        Invisibility,
+        UnderConstruction,
+        ConstructionTimer,
+        CharacterName
+    }
+}

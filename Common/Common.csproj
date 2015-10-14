@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2DA5A1D7-DB75-4641-A7C4-47C0E8520FA0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Common</RootNamespace>
+    <AssemblyName>Common</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Users\Dev\Documents\SpaceMMO\Assets\Plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActivatorType.cs" />
+    <Compile Include="AttachmentType.cs" />
+    <Compile Include="AuctionFilterType.cs" />
+    <Compile Include="AuctionObjectType.cs" />
+    <Compile Include="BaseFSM.cs" />
+    <Compile Include="BonusType.cs" />
+    <Compile Include="BotAIState.cs" />
+    <Compile Include="BotItemSubType.cs" />
+    <Compile Include="ChatGroup.cs" />
+    <Compile Include="ACTION_RESULT.cs" />
+    <Compile Include="ComponentID.cs" />
+    <Compile Include="DropList.cs" />
+    <Compile Include="DSL\Condition.cs" />
+    <Compile Include="DSL\EqualCondition.cs" />
+    <Compile Include="DSL\IConditionContext.cs" />
+    <Compile Include="DSL\Lang\AddNode.cs" />
+    <Compile Include="DSL\Lang\AssignNode.cs" />
+    <Compile Include="DSL\Lang\AST.cs" />
+    <Compile Include="DSL\Lang\ASTGenerator.cs" />
+    <Compile Include="DSL\Lang\BoolLogicExpressionNode.cs" />
+    <Compile Include="DSL\Lang\BoolNode.cs" />
+    <Compile Include="DSL\Lang\CallNode.cs" />
+    <Compile Include="DSL\Lang\DivNode.cs" />
+    <Compile Include="DSL\Lang\ElseIfNode.cs" />
+    <Compile Include="DSL\Lang\EqualsNode.cs" />
+    <Compile Include="DSL\Lang\ExpressionNode.cs" />
+    <Compile Include="DSL\Lang\FloatNode.cs" />
+    <Compile Include="DSL\Lang\GreaterThanEqualNode.cs" />
+    <Compile Include="DSL\Lang\GreaterThanNode.cs" />
+    <Compile Include="DSL\Lang\IExecutionContext.cs" />
+    <Compile Include="DSL\Lang\IfNode.cs" />
+    <Compile Include="DSL\Lang\IntNode.cs" />
+    <Compile Include="DSL\Lang\LangLexer.cs" />
+    <Compile Include="DSL\Lang\LessThanEqualNode.cs" />
+    <Compile Include="DSL\Lang\LessThanNode.cs" />
+    <Compile Include="DSL\Lang\MulNode.cs" />
+    <Compile Include="DSL\Lang\NotEqualsNode.cs" />
+    <Compile Include="DSL\Lang\StatementListNode.cs" />
+    <Compile Include="DSL\Lang\StatementNode.cs" />
+    <Compile Include="DSL\Lang\SubNode.cs" />
+    <Compile Include="DSL\Lang\Token.cs" />
+    <Compile Include="DSL\Lang\TokenStream.cs" />
+    <Compile Include="DSL\Lang\VarNode.cs" />
+    <Compile Include="DSL\Lang\WhileNode.cs" />
+    <Compile Include="DSL\NotEqualCondition.cs" />
+    <Compile Include="DSL\RaceEqualCondition.cs" />
+    <Compile Include="DSL\RaceNotEqualCondition.cs" />
+    <Compile Include="DSL\Script.cs" />
+    <Compile Include="FractionType.cs" />
+    <Compile Include="FractionRelation.cs" />
+    <Compile Include="CombatParamKeys.cs" />
+    <Compile Include="CommonExtensions.cs" />
+    <Compile Include="CommonUtils.cs" />
+    <Compile Include="CustomEventCode.cs" />
+    <Compile Include="CVec.cs" />
+    <Compile Include="Difficulty.cs" />
+    <Compile Include="EnumerableExtension.cs" />
+    <Compile Include="GameEventState.cs" />
+    <Compile Include="HashtableExtensions.cs" />
+    <Compile Include="IDCountPair.cs" />
+    <Compile Include="IPlacingType.cs" />
+    <Compile Include="MoneyType.cs" />
+    <Compile Include="Nebula\AppVersion.cs" />
+    <Compile Include="Nebula\Server\AIType.cs" />
+    <Compile Include="Nebula\Server\AttackMovingType.cs" />
+    <Compile Include="Nebula\Server\CombatAIType.cs" />
+    <Compile Include="Nebula\Server\Components\ActivatorComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\CombatBaseAIComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AsteroidComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\BaseAIComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\BonusesComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\BotCharacterComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\BotComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\BotShipComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\BotShipMovableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\ComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\ComponentSubType.cs" />
+    <Compile Include="Nebula\Server\Components\DatabaseObjectComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\EnergyComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\FixedInputDamageDamagableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\FollowPathCombatAIComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\FollowPathNonCombatAIComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\FreeFlyNearPointComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\IDatabaseComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\MainOutpostComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\MiningStationComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\ModelComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\MultiComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\NebulaObjectComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\NebulaObjectData.cs" />
+    <Compile Include="Nebula\Server\Components\NotShipDamagableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\OrbitAIComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\OutpostComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\OutpostDamagableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\PatrolAIComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\PersonalBeaconComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\PlanetObjectComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\PlayerAIStateComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\PlayerCharacterComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\PlayerShipMovableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\RaceableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\RaceableModelComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\RespwanableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\SharedChestComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\ShipDamagableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\ShipWeaponComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\SimpleMovableComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\SimpleWeaponComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\SkillsComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\SpawnPiratesActivatorComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\StayAIComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\StationComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\SubZoneComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\TargetComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\TeleportComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\TurretComponentData.cs" />
+    <Compile Include="Nebula\Server\Components\AI\WanderAIComponentData.cs" />
+    <Compile Include="Nebula\Server\FollowPathAIType.cs" />
+    <Compile Include="Nebula\Server\FollowPathNonCombatAIType.cs" />
+    <Compile Include="Nebula\Server\FreeFlyAtBoxAIType.cs" />
+    <Compile Include="Nebula\Server\FreeFlyNearPointAIType.cs" />
+    <Compile Include="Nebula\Server\MovingType.cs" />
+    <Compile Include="Nebula\Server\NoneAIType.cs" />
+    <Compile Include="Nebula\Server\OrbitAroundPointAIType.cs" />
+    <Compile Include="Nebula\Server\PatrolAIType.cs" />
+    <Compile Include="PageDirection.cs" />
+    <Compile Include="PassiveBonusType.cs" />
+    <Compile Include="PlacingType.cs" />
+    <Compile Include="PlanetType.cs" />
+    <Compile Include="RaceCommandKey.cs" />
+    <Compile Include="RaceStatus.cs" />
+    <Compile Include="ReturnCode.cs" />
+    <Compile Include="EventCode.cs" />
+    <Compile Include="EventReceiver.cs" />
+    <Compile Include="GameBalance.cs" />
+    <Compile Include="GenericEventProps.cs" />
+    <Compile Include="Geometry.cs" />
+    <Compile Include="GroupActionRequestType.cs" />
+    <Compile Include="IFSM.cs" />
+    <Compile Include="IHold.cs" />
+    <Compile Include="IInfo.cs" />
+    <Compile Include="IInfoParser.cs" />
+    <Compile Include="IInfoSource.cs" />
+    <Compile Include="IInventoryObjectBase.cs" />
+    <Compile Include="ILogContext.cs" />
+    <Compile Include="Inventory.cs" />
+    <Compile Include="InventoryItem.cs" />
+    <Compile Include="InventoryObjectType.cs" />
+    <Compile Include="InventoryType.cs" />
+    <Compile Include="ISaver.cs" />
+    <Compile Include="IStation.cs" />
+    <Compile Include="IStationHoldableObject.cs" />
+    <Compile Include="ItemType.cs" />
+    <Compile Include="LevelType.cs" />
+    <Compile Include="LogFilter.cs" />
+    <Compile Include="LogicErrorCode.cs" />
+    <Compile Include="MailMessageSenderReceiverType.cs" />
+    <Compile Include="MaterialType.cs" />
+    <Compile Include="ModuleSetBonusType.cs" />
+    <Compile Include="ObjectColor.cs" />
+    <Compile Include="ObjectQuality.cs" />
+    <Compile Include="OperationCode.cs" />
+    <Compile Include="ParameterCode.cs" />
+    <Compile Include="PlayerState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PS.cs" />
+    <Compile Include="Race.cs" />
+    <Compile Include="RPCErrorCode.cs" />
+    <Compile Include="SafeDictionary.cs" />
+    <Compile Include="SafeEnumerable.cs" />
+    <Compile Include="SafeEnumerator.cs" />
+    <Compile Include="SaveProperties.cs" />
+    <Compile Include="SelectCharacterEventCode.cs" />
+    <Compile Include="SelectCharacterGenericEventSubCode.cs" />
+    <Compile Include="SelectCharacterOperationCode.cs" />
+    <Compile Include="ServiceMessageType.cs" />
+    <Compile Include="ShipModelSlotType.cs" />
+    <Compile Include="Size.cs" />
+    <Compile Include="SkillType.cs" />
+    <Compile Include="IState.cs" />
+    <Compile Include="FSMState.cs" />
+    <Compile Include="Space\Game\Resources\FractionResolver.cs" />
+    <Compile Include="Space\Game\Resources\Leveling.cs" />
+    <Compile Include="SPC.cs" />
+    <Compile Include="SphericalCoord.cs" />
+    <Compile Include="StateTemplate.cs" />
+    <Compile Include="StationHoldableObjectType.cs" />
+    <Compile Include="TagType.cs" />
+    <Compile Include="WeaponChargeType.cs" />
+    <Compile Include="IWorkhouseStationHold.cs" />
+    <Compile Include="WeaponDamageType.cs" />
+    <Compile Include="WeaponShotInfo.cs" />
+    <Compile Include="WeaponType.cs" />
+    <Compile Include="Workshop.cs" />
+    <Compile Include="WorkshopStrategyType.cs" />
+    <Compile Include="WorldClasses.cs" />
+    <Compile Include="WorldObjectType.cs" />
+    <Compile Include="WorldType.cs" />
+    <Compile Include="ZoneType.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameMath\GameMath.csproj">
+      <Project>{1e3cac5d-7bee-486a-b275-76cebc429e56}</Project>
+      <Name>GameMath</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

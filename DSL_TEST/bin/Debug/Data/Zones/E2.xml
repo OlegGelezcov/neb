@@ -1,0 +1,1026 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<zones>
+  <zone id="E2" name="E2_NAME" level="2" owned_race="2" world_type="source" h_sp="-400,200,-150" b_sp="-150,100,400" c_sp="400,200,-150">
+    <planets />
+    <npc_groups />
+    <npcs />
+    <asteroids />
+    <nebula_objects>
+      <nebula_object id="CriptizidOutpost01" position="0,0,0" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="main_outpost" size="1.00" subzone_id="0" />
+        <component id="Model" model="CRIPTIZID_OUTPOST" />
+        <component id="MainOutpost" />
+        <component id="Bot" bot_sub_type="MainOutpost" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="6000.00" ignore_damage_at_start="True" ignore_damage_interval="3600.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="BotCriptizids" />
+      </nebula_object>
+      <nebula_object id="CriptizidFortification01" position="0,500,800" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+        <component id="Model" model="CRIPTIZID_FORTIFICATION" />
+        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Bonuses" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="BotCriptizids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="3600.00" ignore_damage_at_start="True" ignore_damage_interval="3600.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
+        <component id="Outpost" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Respawnable" interval="3600.00" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret01" position="0,543,700" rotation="0,0,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="0.0,543.8,700.0;58.8,543.8,719.1;95.1,543.8,769.1;95.1,543.8,830.9;58.8,543.8,880.9;0.0,543.8,900.0;-58.8,543.8,880.9;-95.1,543.8,830.9;-95.1,543.8,769.1;-58.8,543.8,719.1" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret02" position="-87,500,850" rotation="0,120,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="-86.6,500.0,849.9;-99.5,500.0,789.5;-74.3,500.0,733.0;-20.8,500.0,702.1;40.7,500.0,708.6;86.6,500.0,749.9;99.4,500.0,810.4;74.3,500.0,866.9;20.8,500.0,897.8;-40.7,500.0,891.3" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret03" position="87,456,850" rotation="0,240,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="87.5,456.3,850.0;41.6,456.3,891.4;-19.9,456.3,897.8;-73.4,456.3,866.9;-98.6,456.3,810.5;-85.7,456.3,750.0;-39.8,456.3,708.6;21.7,456.3,702.2;75.2,456.3,733.1;100.3,456.3,789.5" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="CriptizidFortification02" position="800,-500,-400" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+        <component id="Model" model="CRIPTIZID_FORTIFICATION" />
+        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Bonuses" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="BotCriptizids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="3600.00" ignore_damage_at_start="True" ignore_damage_interval="3600.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
+        <component id="Outpost" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Respawnable" interval="3600.00" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret04" position="800,-456,-500" rotation="0,0,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="800.0,-456.3,-500.0;858.8,-456.3,-480.9;895.1,-456.3,-430.9;895.1,-456.3,-369.1;858.8,-456.3,-319.1;800.0,-456.3,-300.0;741.2,-456.3,-319.1;704.9,-456.3,-369.1;704.9,-456.3,-430.9;741.2,-456.3,-480.9" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret05" position="712,-500,-350" rotation="0,120,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="713.4,-500.0,-350.1;700.5,-500.0,-410.5;725.7,-500.0,-467.0;779.2,-500.0,-497.9;840.7,-500.0,-491.4;886.6,-500.0,-450.1;899.4,-500.0,-389.6;874.3,-500.0,-333.1;820.8,-500.0,-302.2;759.3,-500.0,-308.7" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret06" position="887,-543,-350" rotation="0,240,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="887.5,-543.8,-350.0;841.6,-543.8,-308.6;780.1,-543.8,-302.2;726.6,-543.8,-333.1;701.4,-543.8,-389.5;714.3,-543.8,-450.0;760.2,-543.8,-491.4;821.7,-543.8,-497.8;875.2,-543.8,-466.9;900.3,-543.8,-410.5" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="CriptizidFortification03" position="-800,-500,-400" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+        <component id="Model" model="CRIPTIZID_FORTIFICATION" />
+        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Bonuses" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="BotCriptizids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="3600.00" ignore_damage_at_start="True" ignore_damage_interval="3600.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
+        <component id="Outpost" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Respawnable" interval="3600.00" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret07" position="-800,-456,-500" rotation="0,0,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="-800.0,-456.3,-500.0;-741.2,-456.3,-480.9;-704.9,-456.3,-430.9;-704.9,-456.3,-369.1;-741.2,-456.3,-319.1;-800.0,-456.3,-300.0;-858.8,-456.3,-319.1;-895.1,-456.3,-369.1;-895.1,-456.3,-430.9;-858.8,-456.3,-480.9" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret08" position="-887,-500,-350" rotation="0,120,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="-886.6,-500.0,-350.1;-899.5,-500.0,-410.5;-874.3,-500.0,-467.0;-820.8,-500.0,-497.9;-759.3,-500.0,-491.4;-713.4,-500.0,-450.1;-700.6,-500.0,-389.6;-725.7,-500.0,-333.1;-779.2,-500.0,-302.2;-840.7,-500.0,-308.7" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="CriptizidTurret09" position="-712,-543,-350" rotation="0,240,0" script="turret">
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackStay" path="-712.5,-543.8,-350.0;-758.4,-543.8,-308.6;-819.9,-543.8,-302.2;-873.4,-543.8,-333.1;-898.6,-543.8,-389.5;-885.7,-543.8,-450.0;-839.8,-543.8,-491.4;-778.3,-543.8,-497.8;-724.8,-543.8,-466.9;-699.7,-543.8,-410.5" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="200.00" damage="200.00" cooldown="4.00" use_target_hp="True" target_hp_percent="0.1500" />
+        <component id="Target" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="1" fraction="PlayerCriptizids" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="50.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Bonuses" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Turret" />
+        <component id="Model" model="CRIPTIZID_TURRET" />
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_f24a7c7a-2b91-4c3e-8678-c592af89ce83" position="406,457,-144" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_e1446524-fd8b-42db-9a8f-ae3d5e1b6524" position="430,441,-143" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_127501d7-9c81-4e26-9b02-7d5fa76ab376" position="412,445,-163" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="NPC_b1ff53e4-4698-4903-adc7-5b03d7d54adc 1" position="417,450,-149" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="KrolRo" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_9c2d34a7-c56d-4dd5-99fb-c2355d1c7d8e 1" position="384,205,93" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Model" model="AsteroidSmallCraters_2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_127501d7-9c81-4e26-9b02-7d5fa76ab376" position="412,195,86" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_e1446524-fd8b-42db-9a8f-ae3d5e1b6524" position="370,191,100" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_f24a7c7a-2b91-4c3e-8678-c592af89ce83" position="430,207,100" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="NPC_5a271e67-4078-485d-a030-3d6c00c6ef51" position="384,200,100" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="KrolRo" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_b1ff53e4-4698-4903-adc7-5b03d7d54adc 1" position="417,200,100" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Yshuar" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_670b7d61-2121-4dc6-87af-393f6ba643e7" position="401,-42,-142" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_eff22a04-8fd4-4a16-977f-57998cb1b226" position="406,-58,-189" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_7482a155-ced4-4fe8-95cb-1800f3747d42" position="412,-54,-163" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_d376fc99-7817-42de-91d9-f76ad74d618e 1" position="384,-44,-156" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Model" model="AsteroidSmallCraters_2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="NPC_0a3679af-5586-44f9-94b9-118088589bd3" position="400,-50,-168" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_ba9cc0d3-0e79-4910-a703-370030e50022" position="417,-50,-150" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="KrolRo" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_b1aa8d8b-2f21-4fb7-b8dd-63c23113de2b 1" position="394,-50,-150" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_2a4e14b2-113f-4cb9-bbdf-ab5738f12cf7" position="425,205,-406" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Model" model="AsteroidSmallCraters_2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_6299c1cf-0892-4f8d-a42d-68759ccf8ef4" position="412,195,-407" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="NPC_5ef6c8fe-d170-4c62-a89c-d20ad7679e9b 1" position="417,200,-400" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="KrolRo" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_f0bec8ba-7847-4b89-a5ae-b594024bb0de 1" position="651,196,-132" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_5085070c-c3ad-4f46-b3cb-56fc7aedbdeb 1" position="642,188,-165" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_1b7bca15-c2f1-4b33-80af-34db61ffcfb10" position="628,208,-136" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Model" model="AsteroidSmallCraters_2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="NPC_e2354a9c-e9a3-4f92-b5b6-fce4c36bac93" position="656,200,-149" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Yshuar" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_054a32c5-555f-467b-a70b-fa1c18f6f511" position="623,200,-150" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_7ab7310a-94ba-4021-885e-92445c1420eb 1" position="125,208,-149" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Model" model="AsteroidSmallCraters_2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_544f8024-a97e-46ca-9a3a-e6a3d062918c 1" position="133,188,-169" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_d1a0e4c5-d931-4b32-baf5-3224bf0dd76c 1" position="151,196,-146" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_ee7f5eb8-b98e-4e55-a8c2-c2b381582f5c 1" position="150,200,-172" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_6ce73628-d00f-4fe4-b212-2fd3894fde16" position="134,200,-150" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_28124612-1929-468c-94b6-98bf699d9614" position="167,200,-150" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Yshuar" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_c2b0ae04-7513-4a4e-9e61-297f83714248" position="552,332,4" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_399587a6-62f8-4f1e-8fc5-7fb14f73a168" position="518,316,4" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_abdf73d1-f7db-4a79-8119-131da1454dc5" position="563,320,-32" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_e52d8bf9-e837-498b-bc32-aedec1b24f8b 1" position="528,330,-33" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Model" model="AsteroidSmallCraters_2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="NPC_8e055a03-53ae-4e81-9d3e-c1ce42f938ae 1" position="529,325,-22" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_ee1d2c6e-5e60-4fb3-b24e-c360b35084bf 1" position="560,325,-16" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Yshuar" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_5663dc41-ccbb-47a0-89d7-d62b287eafd7" position="538,325,4" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="KrolRo" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_9b378717-e112-4cd2-9ff8-b32abac8d2bc 1" position="267,320,-17" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_137cda59-3945-48be-b67c-75b7ca958e02" position="260,330,-10" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Model" model="AsteroidSmallCraters_2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_d9e60fe3-9846-4723-9df1-715a97b161bd 1" position="256,320,-16" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_c6643f80-2784-4722-a40e-69b28c1bbbc3" position="252,316,-2" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_24ca9457-4e91-4041-abd5-1c8be589a8ca 1" position="264,332,-3" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="NPC_6e447d64-c6ae-48b6-b9ce-28db183d926b 1" position="273,325,-12" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_b2d4bbf1-de7c-4dfb-8385-c030494fc44e 1" position="257,325,-23" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="KrolRo" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_ad5675eb-0f57-4904-b423-db203f6fa505" position="261,325,5" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Yshuar" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_25ff077f-96de-4f74-a6b2-7a8238e32419" position="247,325,-6" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_bbdf9a9a-a34a-4d9d-a001-0bbe1820ffde 1" position="550,332,-282" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_565732a0-2f27-481a-a143-d6d0066d1602" position="535,317,-305" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_2fa30c72-db21-43e6-8e7e-1ecde004eb2b 1" position="535,325,-287" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_f3223b7c-7be0-4081-83ed-6f930fec1ebe 1" position="552,325,-304" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_80784246-9b0e-4594-ad2d-c82d5fd60f47" position="250,321,-296" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_f0b080c8-ffb7-44fe-adf6-80f132b7b26b 1" position="267,317,-282" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_a07ae36f-f0ba-4e3e-8f86-c0c817778b9e 1" position="257,328,-284" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="NPC_9d1664ee-91d0-409f-92d8-f02cf6407f5c 1" position="261,320,-292" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_025b104b-52d7-4e37-ae8c-77296cf175ea 1" position="251,332,-287" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_3c752959-5228-4fc6-89ba-cf6495fbd67b 1" position="261,77,-290" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_8f55f2aa-2854-4cbb-8f9d-721ed3255177" position="268,66,-284" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_0fe8031b-5ce2-4bc0-9555-e6b22e277215" position="266,70,-296" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="NPC_b017a93e-9347-4032-afc8-6614071707ad 1" position="272,73,-286" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_05797280-da29-4d0a-9ab4-ffdc4bb4300f 1" position="262,70,-292" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_84d946b5-bbbd-442d-baf7-b0c35856d90e 1" position="238,66,-17" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_31eb4dc4-0b5f-4de7-b092-e6e72e0cb8a6" position="256,82,-8" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="NPC_68a71889-e62e-43a3-8a31-87b800f52905" position="258,82,-17" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_6a88136d-31ec-45bb-b10c-2a05efac7438" position="241,69,-9" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_c78d620e-b773-4088-aead-e7bec654cf83" position="545,80,-3" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_0004591d-2b90-49a6-8618-514c7fcf4c27" position="533,66,-4" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_092d9787-741e-4513-8d22-3af576463ff7" position="537,70,-13" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="NPC_4d9445d4-a1bd-4ed8-89ea-0c0e8f28bbfa 1" position="533,75,-6" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Arlen" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_a75f56d3-ee3a-48a2-b2ad-38d4d809b13a 1" position="538,61,-13" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="KrolRo" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_e14db648-ed79-40a9-9e26-1f00bf37bfe10" position="543,78,-12" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="A_2502e3e6-a875-45ba-9210-fac4f05b8362" position="517,84,-304" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Model" model="AsteroidSmallCraters_2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="A_aef73011-556f-45bb-854a-bbac307b3bb2" position="552,75,-287" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" model="AsteroidSmallSmoothRound" />
+      </nebula_object>
+      <nebula_object id="A_8f88c2ac-d4c5-4902-8322-6acc70466827" position="507,79,-291" rotation="0,0,0" script="">
+        <component id="Model" model="AsteroidSmallCratersPotato" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_55703ef2-1b27-41c9-ab9b-dd1cd6af8e12" position="541,76,-302" rotation="0,0,0" script="">
+        <component id="Respawnable" interval="60.00" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" model="AsteroidSmallCraters_4" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="0" />
+      </nebula_object>
+      <nebula_object id="NPC_6a1811ae-474f-440f-9b88-b253d8b7bf0a 1" position="527,68,-281" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="KrolRo" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_34028a9a-c765-4ec3-b67d-1d012c6eb555" position="540,81,-290" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Yshuar" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_68b0e2a7-fb0a-4e73-91d0-30ed507949d2" position="522,91,-304" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="Dyneira" level="2" fraction="BotNeutral" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="60.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Criptizoids" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+    </nebula_objects>
+    <events />
+    <inputs>
+      <input key="zone_min" value="-200,-200,-200" type="vector" />
+      <input key="zone_max" value="200,200,200" type="vector" />
+      <input key="reach_radius" value="5" type="float" />
+    </inputs>
+  </zone>
+</zones>

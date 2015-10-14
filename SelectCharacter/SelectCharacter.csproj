@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D65C51D1-FEEE-41C4-A846-1702F26EA1E4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SelectCharacter</RootNamespace>
+    <AssemblyName>SelectCharacter</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\photon_server\deploy\Nebula\SelectCharacter\bin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;LOCAL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExitGames.Logging.Log4Net">
+      <HintPath>..\..\..\photon_server\lib\ExitGames.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="ExitGamesLibs">
+      <HintPath>..\..\..\photon_server\lib\ExitGamesLibs.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\photon_server\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon.SocketServer">
+      <HintPath>..\..\..\photon_server\lib\Photon.SocketServer.dll</HintPath>
+    </Reference>
+    <Reference Include="PhotonHostRuntimeInterfaces">
+      <HintPath>..\..\..\photon_server\lib\PhotonHostRuntimeInterfaces.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Auction\AuctionFilter.cs" />
+    <Compile Include="Auction\AuctionItem.cs" />
+    <Compile Include="Auction\AuctionObjectTypeFilter.cs" />
+    <Compile Include="Auction\AuctionService.cs" />
+    <Compile Include="Auction\ColorFilter.cs" />
+    <Compile Include="Auction\LevelFilter.cs" />
+    <Compile Include="Auction\PlayerAuctionRequest.cs" />
+    <Compile Include="Auction\PriceFilter.cs" />
+    <Compile Include="Auction\WorkshopFilter.cs" />
+    <Compile Include="Characters\CharacterInfo.cs" />
+    <Compile Include="Characters\PlayerService.cs" />
+    <Compile Include="Chat\ChatCache.cs" />
+    <Compile Include="Chat\ChatLinkedObject.cs" />
+    <Compile Include="Chat\ChatMessage.cs" />
+    <Compile Include="Chat\ChatService.cs" />
+    <Compile Include="ClientCollection.cs" />
+    <Compile Include="Characters\PlayerCache.cs" />
+    <Compile Include="Characters\DbPlayerCharactersObject.cs" />
+    <Compile Include="Commander\CandidateCache.cs" />
+    <Compile Include="Commander\CommanderCandidate.cs" />
+    <Compile Include="Commander\CommanderElection.cs" />
+    <Compile Include="Commander\CommanderElectionInfo.cs" />
+    <Compile Include="Commander\CommanderElector.cs" />
+    <Compile Include="Commander\ICommandMember.cs" />
+    <Compile Include="Commander\RaceAdmiral.cs" />
+    <Compile Include="Commander\RaceCommand.cs" />
+    <Compile Include="Commander\RaceCommandCache.cs" />
+    <Compile Include="Commander\RaceCommander.cs" />
+    <Compile Include="Commander\RaceCommandService.cs" />
+    <Compile Include="DbReader.cs" />
+    <Compile Include="Events\CharacterUpdateEvent.cs" />
+    <Compile Include="Events\ChatMessageEvent.cs" />
+    <Compile Include="Events\GenericEvent.cs" />
+    <Compile Include="Events\GroupRemovedEvent.cs" />
+    <Compile Include="Events\GroupUpdateEvent.cs" />
+    <Compile Include="Events\GuildUpdateEvent.cs" />
+    <Compile Include="Events\MailUpdatedEvent.cs" />
+    <Compile Include="Events\NotificationUpdateEvent.cs" />
+    <Compile Include="Events\PlayerStoreUpdateEvent.cs" />
+    <Compile Include="Friends\Friend.cs" />
+    <Compile Include="Friends\FriendCache.cs" />
+    <Compile Include="Friends\FriendService.cs" />
+    <Compile Include="Friends\PlayerFriends.cs" />
+    <Compile Include="Group\GroupAction.cs" />
+    <Compile Include="Group\GroupCache.cs" />
+    <Compile Include="Group\GroupService.cs" />
+    <Compile Include="Guilds\Guild.cs" />
+    <Compile Include="Guilds\GuildAction.cs" />
+    <Compile Include="Guilds\GuildCache.cs" />
+    <Compile Include="Guilds\GuildMember.cs" />
+    <Compile Include="Guilds\GuildService.cs" />
+    <Compile Include="Mail\MailAttachment.cs" />
+    <Compile Include="Mail\MailBox.cs" />
+    <Compile Include="Mail\MailManager.cs" />
+    <Compile Include="Mail\MailMessage.cs" />
+    <Compile Include="MethodInvoker.cs" />
+    <Compile Include="Notifications\CharacterNotifications.cs" />
+    <Compile Include="Notifications\Notification.cs" />
+    <Compile Include="Notifications\NotificationCache.cs" />
+    <Compile Include="Notifications\NotificationService.cs" />
+    <Compile Include="OperationHandlers\BaseOperationHandler.cs" />
+    <Compile Include="OperationHandlers\BuyAuctionItemOperationHandler.cs" />
+    <Compile Include="OperationHandlers\ChangeGuildMemberStatusOperationHandler.cs" />
+    <Compile Include="OperationHandlers\CreateCharacterOperationHandler.cs" />
+    <Compile Include="OperationHandlers\CreateGuildOperationHandler.cs" />
+    <Compile Include="OperationHandlers\DeleteAuctionItemOperationHandler.cs" />
+    <Compile Include="OperationHandlers\DeleteCharacterOperationHandler.cs" />
+    <Compile Include="OperationHandlers\DeleteGuildOperationHandler.cs" />
+    <Compile Include="OperationHandlers\DeleteMessageOperationHandler.cs" />
+    <Compile Include="OperationHandlers\ExitGuildOperationHandler.cs" />
+    <Compile Include="OperationHandlers\GetCharactersOperationHandler.cs" />
+    <Compile Include="OperationHandlers\GetGuildOperationHandler.cs" />
+    <Compile Include="OperationHandlers\GetMailBoxOperationHandler.cs" />
+    <Compile Include="OperationHandlers\GetNotificationsOperationHandler.cs" />
+    <Compile Include="OperationHandlers\GetPlayerStoreOperationHandler.cs" />
+    <Compile Include="OperationHandlers\HandleNotificationOperationHandler.cs" />
+    <Compile Include="OperationHandlers\InviteToGuildOperationHandler.cs" />
+    <Compile Include="OperationHandlers\InvokeMethodOperationHandler.cs" />
+    <Compile Include="OperationHandlers\MoveAttachmentToStationOperationHandler.cs" />
+    <Compile Include="OperationHandlers\RegisterClientOperationHandler.cs" />
+    <Compile Include="OperationHandlers\SelectCharacterOperationHandler.cs" />
+    <Compile Include="OperationHandlers\SetGuildDescriptionOperationHandler.cs" />
+    <Compile Include="OperationHandlers\SetNewPriceOperationHandler.cs" />
+    <Compile Include="OperationHandlers\WriteMessageOperationHandler.cs" />
+    <Compile Include="Operations\BuyAuctionItemOperationRequest.cs" />
+    <Compile Include="Operations\BuyAuctionItemOperationResponse.cs" />
+    <Compile Include="Operations\ChangeGuildMemberStatusOperationRequest.cs" />
+    <Compile Include="Operations\CreateCharacterOperationRequest.cs" />
+    <Compile Include="Operations\CreateCharacterOperationResponse.cs" />
+    <Compile Include="Operations\CreateGuildOperationRequest.cs" />
+    <Compile Include="Operations\CreateGuildOperationResponse.cs" />
+    <Compile Include="Operations\DeleteAttachmentOperationRequest.cs" />
+    <Compile Include="Operations\DeleteAttachmentOperationResponse.cs" />
+    <Compile Include="Operations\DeleteCharacterOperationRequest.cs" />
+    <Compile Include="Operations\DeleteCharacterOperationResponse.cs" />
+    <Compile Include="Operations\DeleteGuildOperationRequest.cs" />
+    <Compile Include="Operations\DeleteGuildOperationResponse.cs" />
+    <Compile Include="Operations\DeleteMailMessageRequest.cs" />
+    <Compile Include="Operations\ExitGuildOperationRequest.cs" />
+    <Compile Include="Operations\ExitGuildOperationResponse.cs" />
+    <Compile Include="Operations\GetCharactersOperationRequest.cs" />
+    <Compile Include="Operations\GetCharactersOperationResponse.cs" />
+    <Compile Include="Operations\GetGuildOperationRequest.cs" />
+    <Compile Include="Operations\GetGuildOperationResponse.cs" />
+    <Compile Include="Operations\GetMailBoxOperationRequest.cs" />
+    <Compile Include="Operations\GetMailBoxOperationResponse.cs" />
+    <Compile Include="Operations\GetNotificationsOperationRequest.cs" />
+    <Compile Include="Operations\GetNotificationsOperationResponse.cs" />
+    <Compile Include="Operations\GetPlayerStoreOperationRequest.cs" />
+    <Compile Include="Operations\GetPlayerStoreOperationResponse.cs" />
+    <Compile Include="Operations\HandleNotificationOperationRequest.cs" />
+    <Compile Include="Operations\HandleNotificationOperationResponse.cs" />
+    <Compile Include="Operations\InviteGuildOperationRequest.cs" />
+    <Compile Include="Operations\InvokeMethodOperationRequest.cs" />
+    <Compile Include="Operations\InvokeMethodOperationResponse.cs" />
+    <Compile Include="Operations\RegisterClientOperationRequest.cs" />
+    <Compile Include="Operations\RemoveAuctionItemOperationRequest.cs" />
+    <Compile Include="Operations\RemoveAuctionItemOperationResponse.cs" />
+    <Compile Include="Operations\SelectCharacterOperationRequest.cs" />
+    <Compile Include="Operations\SelectCharacterOperationResponse.cs" />
+    <Compile Include="Operations\SetGuildDescriptionOperationRequest.cs" />
+    <Compile Include="Operations\SetGuildDescriptionOperationResponse.cs" />
+    <Compile Include="Operations\SetNewPriceOperationRequest.cs" />
+    <Compile Include="Operations\SetNewPriceOperationResponse.cs" />
+    <Compile Include="Operations\WriteMailMessageOperationRequest.cs" />
+    <Compile Include="Operations\WriteMailMessageOperationResponse.cs" />
+    <Compile Include="OutgoingMasterServerPeer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Races\RaceStat.cs" />
+    <Compile Include="Races\RaceStats.cs" />
+    <Compile Include="Races\RaceStatsService.cs" />
+    <Compile Include="Resources\ColoredItemPrice.cs" />
+    <Compile Include="Resources\ConsumableItemCollection.cs" />
+    <Compile Include="Resources\IDItemPrice.cs" />
+    <Compile Include="Resources\ItemPrice.cs" />
+    <Compile Include="Resources\ItemPriceCollection.cs" />
+    <Compile Include="Resources\NebulaElementItemPrice.cs" />
+    <Compile Include="S2SMethodInvoker.cs" />
+    <Compile Include="SelectCharacterApplication.cs" />
+    <Compile Include="SelectCharacterClientPeer.cs" />
+    <Compile Include="SelectCharacterSettings.cs" />
+    <Compile Include="StartLocation.cs" />
+    <Compile Include="StartLocationCollection.cs" />
+    <Compile Include="Store\PlayerStore.cs" />
+    <Compile Include="Store\PlayerStoreItem.cs" />
+    <Compile Include="Store\PlayerStoreService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2da5a1d7-db75-4641-a7c4-47c0e8520fa0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameMath\GameMath.csproj">
+      <Project>{1e3cac5d-7bee-486a-b275-76cebc429e56}</Project>
+      <Name>GameMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NebulaCommon\NebulaCommon.csproj">
+      <Project>{dbbb971b-c15e-4953-bfb9-5c6b7238f5d5}</Project>
+      <Name>NebulaCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerClientCommon\ServerClientCommon.csproj">
+      <Project>{3e0f3769-9f28-4047-8cab-5584ebeb8775}</Project>
+      <Name>ServerClientCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Space.Game\Space.Game.csproj">
+      <Project>{258e2bbb-a667-4bbe-97bb-fab72a5e552c}</Project>
+      <Name>Space.Game</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\start_locations.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\start_player_modules.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

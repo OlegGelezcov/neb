@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B4161E2A-E2CE-41E5-B1D5-A646D4100EFA}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>TestClient</RootNamespace>
+    <AssemblyName>TestClient</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ExitGamesLibs">
+      <HintPath>..\..\..\photon_server\lib\ExitGamesLibs.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony">
+      <HintPath>..\..\..\Users\Dev\Favorites\Downloads\Irony_2013_12_12\Irony_2013_12_12\Irony\bin\Debug\Irony.dll</HintPath>
+    </Reference>
+    <Reference Include="Irony.Interpreter">
+      <HintPath>..\..\..\Users\Dev\Favorites\Downloads\Irony_2013_12_12\Irony_2013_12_12\Irony.Interpreter\bin\Debug\Irony.Interpreter.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Photon3DotNet">
+      <HintPath>..\..\..\photon_server\lib\Photon3DotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Client.cs" />
+    <Compile Include="ClientSettings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>ClientSettings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ConcurrentTests.cs" />
+    <Compile Include="DisconnectAction.cs" />
+    <Compile Include="DropSetsModules.cs" />
+    <Compile Include="Events.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="Listeners\LoginListener.cs" />
+    <Compile Include="Listeners\MasterListener.cs" />
+    <Compile Include="Listeners\SelectCharacterListener.cs" />
+    <Compile Include="MongoTester.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="PlayMarketReviewReader\ReviewReader.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\CSharpGrammar.cs" />
+    <Compile Include="Scripts\TestDSL.cs" />
+    <Compile Include="SelectCharacterTests\TestFilters.cs" />
+    <Compile Include="TestAttributes\RequireComponent.cs" />
+    <Compile Include="TestBalance\TestBalance.cs" />
+    <Compile Include="TestBehaviours\ABehaviour.cs" />
+    <Compile Include="TestBehaviours\BBehaviour.cs" />
+    <Compile Include="TestBehaviours\DerivedBehaviour.cs" />
+    <Compile Include="TestBehaviours\FirstBehaviour.cs" />
+    <Compile Include="TestBehaviours\SecondBehaviour.cs" />
+    <Compile Include="TestBehaviours\TestMain.cs" />
+    <Compile Include="TestBehaviours\TestNebulaObject.cs" />
+    <Compile Include="TestBehaviours\TestWorld.cs" />
+    <Compile Include="TestDatabase\RemoteDatabase.cs" />
+    <Compile Include="TestDatabase\TestDatabase.cs" />
+    <Compile Include="TestDropping\TestDroppingProbs.cs" />
+    <Compile Include="TestLoopThrowFibers\LoopFibersTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ClientSettings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>ClientSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2da5a1d7-db75-4641-a7c4-47c0e8520fa0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameMath\GameMath.csproj">
+      <Project>{1e3cac5d-7bee-486a-b275-76cebc429e56}</Project>
+      <Name>GameMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SelectCharacter\SelectCharacter.csproj">
+      <Project>{d65c51d1-feee-41c4-a846-1702f26ea1e4}</Project>
+      <Name>SelectCharacter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerClientCommon\ServerClientCommon.csproj">
+      <Project>{3e0f3769-9f28-4047-8cab-5584ebeb8775}</Project>
+      <Name>ServerClientCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Space.Game\Space.Game.csproj">
+      <Project>{258e2bbb-a667-4bbe-97bb-fab72a5e552c}</Project>
+      <Name>Space.Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpaceClient\SpaceClient.csproj">
+      <Project>{04eed28c-4145-4315-b700-2c1491639c87}</Project>
+      <Name>SpaceClient</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestMath\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

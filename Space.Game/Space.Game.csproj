@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{258E2BBB-A667-4BBE-97BB-FAB72A5E552C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nebula</RootNamespace>
+    <AssemblyName>Nebula</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;FORCE_SKILL_GENERATION_ON_MODULE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.XML" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Balance\BalanceFormulas.cs" />
+    <Compile Include="Drop\AsteroidDropper.cs" />
+    <Compile Include="Drop\DropManager.cs" />
+    <Compile Include="Drop\Dropper.cs" />
+    <Compile Include="EmptyNebulaLogger.cs" />
+    <Compile Include="Engine\BehaviourCollection.cs" />
+    <Compile Include="Engine\BehaviourMissedException.cs" />
+    <Compile Include="Engine\ComponentMessages.cs" />
+    <Compile Include="Engine\IBaseWorld.cs" />
+    <Compile Include="Engine\NebulaBehaviour.cs" />
+    <Compile Include="Engine\NebulaObject.cs" />
+    <Compile Include="Engine\NebulaObjectProperties.cs" />
+    <Compile Include="Engine\NebulaTransform.cs" />
+    <Compile Include="Engine\PropertyMissedException.cs" />
+    <Compile Include="Engine\REQUIRE_COMPONENT.cs" />
+    <Compile Include="ICombatStatsCalculator.cs" />
+    <Compile Include="ILog.cs" />
+    <Compile Include="INebulaLogger.cs" />
+    <Compile Include="Inventory\Objects\FortificationInventoryObject.cs" />
+    <Compile Include="Inventory\Objects\FortUpgradeObject.cs" />
+    <Compile Include="Inventory\Objects\MiningStationInventoryObject.cs" />
+    <Compile Include="Inventory\Objects\NebulaElementObject.cs" />
+    <Compile Include="Inventory\Objects\OutpostInventoryObject.cs" />
+    <Compile Include="Inventory\Objects\OutpostUpgradeObject.cs" />
+    <Compile Include="Inventory\Objects\PersonalBeaconObject.cs" />
+    <Compile Include="Inventory\Objects\RepairKitObject.cs" />
+    <Compile Include="Inventory\Objects\RepairPatchObject.cs" />
+    <Compile Include="Inventory\Objects\TurretInventoryObject.cs" />
+    <Compile Include="NetUtils.cs" />
+    <Compile Include="ResourcePool.cs" />
+    <Compile Include="Resources\MiscInventoryItemData.cs" />
+    <Compile Include="Resources\MiscInventoryItemDataRes.cs" />
+    <Compile Include="Resources\ModuleSetData.cs" />
+    <Compile Include="Resources\ModuleSetRes.cs" />
+    <Compile Include="Resources\ModuleSettingsRes.cs" />
+    <Compile Include="Resources\ModuleSlotsCountLevelRangeEntry.cs" />
+    <Compile Include="Resources\ModuleTypeDropSettings.cs" />
+    <Compile Include="Resources\ModuleTypeSlotLevelRange.cs" />
+    <Compile Include="Resources\PassiveBonusData.cs" />
+    <Compile Include="Resources\ResPassiveBonuses.cs" />
+    <Compile Include="Resources\ResSchemeCraftingMaterials.cs" />
+    <Compile Include="Resources\SchemeCraftingMaterial.cs" />
+    <Compile Include="Resources\SetBonusData.cs" />
+    <Compile Include="Resources\SkillDropping.cs" />
+    <Compile Include="Resources\SkillInfo.cs" />
+    <Compile Include="Resources\SkillStorage.cs" />
+    <Compile Include="Resources\StartPlayerModuleRes.cs" />
+    <Compile Include="Resources\WeaponDropSettings.cs" />
+    <Compile Include="Drop\DropSettingsKeys.cs" />
+    <Compile Include="Drop\IDroppable.cs" />
+    <Compile Include="Drop\ModuleDropper.cs" />
+    <Compile Include="Drop\SchemeDropper.cs" />
+    <Compile Include="Drop\WeaponDropper.cs" />
+    <Compile Include="Events\EqualsVariableEventCondition.cs" />
+    <Compile Include="Events\EventStageTransition.cs" />
+    <Compile Include="Events\GreaterOrEqualsVariableEventCondition.cs" />
+    <Compile Include="Events\IEvent.cs" />
+    <Compile Include="Events\ObjectLifetimeActionType.cs" />
+    <Compile Include="Events\VariableEventCondition.cs" />
+    <Compile Include="Events\EventCondition.cs" />
+    <Compile Include="Events\EventStage.cs" />
+    <Compile Include="Events\IVarInterpretator.cs" />
+    <Compile Include="IEnergySource.cs" />
+    <Compile Include="IPlayerCharacter.cs" />
+    <Compile Include="Inventory\IContainer.cs" />
+    <Compile Include="Inventory\IInventoryObject.cs" />
+    <Compile Include="Inventory\ITransformable.cs" />
+    <Compile Include="Inventory\Objects\InventoryObjectComparer.cs" />
+    <Compile Include="Inventory\Objects\MaterialObject.cs" />
+    <Compile Include="Inventory\Objects\SchemeObject.cs" />
+    <Compile Include="Inventory\ServerInventoryItem.cs" />
+    <Compile Include="Inventory\Objects\WeaponObject.cs" />
+    <Compile Include="IPropertyHolder.cs" />
+    <Compile Include="Player\AttackerInfo.cs" />
+    <Compile Include="Player\ChatManager.cs" />
+    <Compile Include="Player\ChatMessageData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Res.cs" />
+    <Compile Include="Resources\AsteroidData.cs" />
+    <Compile Include="Resources\AsteroidMaterialData.cs" />
+    <Compile Include="Resources\AsteroidsRes.cs" />
+    <Compile Include="Resources\AttackTargetType.cs" />
+    <Compile Include="Resources\ColoredObjectType.cs" />
+    <Compile Include="Resources\EventInfo.cs" />
+    <Compile Include="Resources\IdleStateType.cs" />
+    <Compile Include="Resources\IResourceLoader.cs" />
+    <Compile Include="Resources\NpcGroupData.cs" />
+    <Compile Include="Resources\NpcGroupRes.cs" />
+    <Compile Include="Resources\NpcTypeData.cs" />
+    <Compile Include="Resources\NpcTypeDataRes.cs" />
+    <Compile Include="Resources\ResEvents.cs" />
+    <Compile Include="Resources\WeaponData.cs" />
+    <Compile Include="Resources\WeaponDataRes.cs" />
+    <Compile Include="Resources\WorkshopModuleSettings.cs" />
+    <Compile Include="Resources\WorkshopWeaponSettings.cs" />
+    <Compile Include="Resources\WorldEventData.cs" />
+    <Compile Include="Resources\MaterialData.cs" />
+    <Compile Include="Resources\MaterialRes.cs" />
+    <Compile Include="Resources\OreData.cs" />
+    <Compile Include="Resources\ServerInputsRes.cs" />
+    <Compile Include="Resources\SkillData.cs" />
+    <Compile Include="Resources\SkillRes.cs" />
+    <Compile Include="Resources\Zones\ActivatorData.cs" />
+    <Compile Include="Resources\Zones\WeaponSettingsRes.cs" />
+    <Compile Include="Resources\Zones\ZoneAsteroidInfo.cs" />
+    <Compile Include="Resources\Zones\ZoneData.cs" />
+    <Compile Include="Resources\Zones\ZoneNpcInfo.cs" />
+    <Compile Include="Resources\Zones\ZonePlanetInfo.cs" />
+    <Compile Include="Resources\Zones\ZonesRes.cs" />
+    <Compile Include="ServerWorkhouseStationHold.cs" />
+    <Compile Include="Ship\CM_ShipModelSlot.cs" />
+    <Compile Include="Resources\ColorInfo.cs" />
+    <Compile Include="Resources\ColorInfoRes.cs" />
+    <Compile Include="Ship\DF_ShipModelSlot.cs" />
+    <Compile Include="Ship\DM_ShipModelSlot.cs" />
+    <Compile Include="Ship\ES_ShipModelSlot.cs" />
+    <Compile Include="Ship\CB_ShipModelSlot.cs" />
+    <Compile Include="Ship\IEnergyBlock.cs" />
+    <Compile Include="Ship\IShipModel.cs" />
+    <Compile Include="Ship\ModuleInfo.cs" />
+    <Compile Include="Ship\ModuleInfoStorage.cs" />
+    <Compile Include="Ship\ModuleInSetInfo.cs" />
+    <Compile Include="Ship\OrbitParams.cs" />
+    <Compile Include="Ship\SetInfoStorage.cs" />
+    <Compile Include="Ship\SetBonusType.cs" />
+    <Compile Include="Ship\ShipModel.cs" />
+    <Compile Include="Ship\ShipModelSets.cs" />
+    <Compile Include="Ship\ShipModelSlotBase.cs" />
+    <Compile Include="Ship\ShipModule.cs" />
+    <Compile Include="Ship\SetInfo.cs" />
+    <Compile Include="SpaceGameExtensions.cs" />
+    <Compile Include="WeaponHitInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{2da5a1d7-db75-4641-a7c4-47c0e8520fa0}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameMath\GameMath.csproj">
+      <Project>{1e3cac5d-7bee-486a-b275-76cebc429e56}</Project>
+      <Name>GameMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ServerClientCommon\ServerClientCommon.csproj">
+      <Project>{3e0f3769-9f28-4047-8cab-5584ebeb8775}</Project>
+      <Name>ServerClientCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
