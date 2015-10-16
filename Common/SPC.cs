@@ -278,6 +278,7 @@ namespace ServerClientCommon {
         NebulaElementId,
         MaxCount,
         WarnCount,
-        MaxWarnCount
+        MaxWarnCount,
+        PreviousRace
     }
 }

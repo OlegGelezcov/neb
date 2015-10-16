@@ -354,7 +354,7 @@ namespace SelectCharacter.Mail {
                 //attachment empty
                 attachments = new Dictionary<string, MailAttachment>(),
                 //standard body for purchases
-                body = "You have purchased item",
+                body = "s_purchase_auction_item_body",
                 //unique id of message
                 id = Guid.NewGuid().ToString(),
                 //game ref id of receiver
@@ -366,7 +366,7 @@ namespace SelectCharacter.Mail {
                 //time of message
                 time = DateTime.UtcNow.ToString(System.Globalization.CultureInfo.InvariantCulture),
                 //standard title of message
-                title = "Purchase on auction"
+                title = "s_purchase_auction_item_title"
             };
             //add attachment to message
             message.AddAttachment(item.objectInfo, item.count);
@@ -395,13 +395,13 @@ namespace SelectCharacter.Mail {
             log.InfoFormat("Put back auction item via mail");
             MailMessage message = new MailMessage {
                 attachments = new Dictionary<string, MailAttachment>(),
-                body = "Return from auction",
+                body = "s_auction_return_body",
                 id = Guid.NewGuid().ToString(),
                 receiverGameRefId = item.gameRefID,
                 sendefGameRefId = string.Empty,
                 senderLogin = string.Empty,
                 time = DateTime.UtcNow.ToString(System.Globalization.CultureInfo.InvariantCulture),
-                title = "Return"
+                title = "s_auction_return_title"
             };
             message.AddAttachment(item.objectInfo, item.count);
             var mailBox = GetMailBox(item.gameRefID);

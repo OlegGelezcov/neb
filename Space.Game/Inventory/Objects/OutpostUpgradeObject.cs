@@ -15,11 +15,12 @@ namespace Nebula.Inventory.Objects {
         public OutpostUpgradeObject(Hashtable info) {
             ParseInfo(info);
         }
-        public OutpostUpgradeObject(string inID, int inMinLevel, int inMaxLevel, bool inBinded = false) {
+        public OutpostUpgradeObject(string inID, int inMinLevel, int inMaxLevel, Race inrace, bool inBinded = false) {
             Id = inID;
             minLevel = inMinLevel;
             maxLevel = inMaxLevel;
             binded = inBinded;
+            race = (int)(byte)inrace;
         }
 
         public bool binded {

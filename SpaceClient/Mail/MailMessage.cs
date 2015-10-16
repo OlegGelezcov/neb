@@ -18,6 +18,14 @@ namespace Nebula.Client.Mail {
         public DateTime time { get; private set; }
         public Dictionary<string, MailAttachment> attachments { get; private set; }
 
+        public void ReplaceTitle(string newTitle) {
+            title = newTitle;
+        }
+
+        public void ReplaceBody(string newBody) {
+            body = newBody;
+        }
+
         public void ParseInfo(Hashtable info) {
             id = info.Value<string>((int)SPC.Id);
             title = info.Value<string>((int)SPC.Title);

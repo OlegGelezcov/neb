@@ -12,6 +12,7 @@ namespace Nebula.Game.Components {
     public class MiningStation : NebulaBehaviour, IInfoSource {
 
         public const float FULL_TIME = 24 * 60 * 60;
+        public const float RECEIVE_DAMAGE_NOTIFICATION_INTERVAL = 2 * 60;
 
         //element id from planet
         private string mNebulaElementID;
@@ -31,6 +32,8 @@ namespace Nebula.Game.Components {
         //player who setup this station
         private string ownerPlayerID;
 
+        private string mCharacterID;
+
         private float mTimer = 0f;
 
         private float mFullTimer = FULL_TIME;
@@ -40,6 +43,7 @@ namespace Nebula.Game.Components {
         private int mTotalCount;
 
         private bool mDestroyed = false;
+        private float mLastReceiveDamageNotificationSended = 0;
 
         public void MakeEmpty() {
             mCurrentCount = 0;
@@ -117,6 +121,7 @@ namespace Nebula.Game.Components {
             mTotalCount = data.totalCount;
             mCurrentTotalCount = 0;
             props.SetProperty((byte)PS.DataId, ownerPlayerID);
+            mCharacterID = data.characterID;
         }
 
         public override void Start() {
@@ -173,6 +178,19 @@ namespace Nebula.Game.Components {
 
         public void Death() {
             DestroyStation();
+        }
+
+        //called when receive damage,
+        //at new damage every interval send notification via notification service when my mining station were attacked
+        public void OnNewDamage(DamageInfo damager) {
+            if ((Time.curtime() - mLastReceiveDamageNotificationSended) >= RECEIVE_DAMAGE_NOTIFICATION_INTERVAL) {
+                mLastReceiveDamageNotificationSended = Time.curtime();
+
+                if (false == string.IsNullOrEmpty(mCharacterID)) {
+                    GameApplication.Instance.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "MiningStationUnderAttackNotification",
+                        new object[] { mCharacterID, nebulaObject.mmoWorld().Zone.Id });
+                }
+            }
         }
 
         private void DestroyStation() {

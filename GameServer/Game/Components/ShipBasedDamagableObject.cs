@@ -24,7 +24,7 @@ namespace Nebula.Game.Components {
 
         private float mIncreaseRegenSpeedTimer;
         private float mIncreaseRegenSpeedMultiplier;
-
+        private EventedObject mEventedObject;
         
 
         public void Init(ShipDamagableComponentData data) {
@@ -49,6 +49,7 @@ namespace Nebula.Game.Components {
             mTarget = GetComponent<PlayerTarget>();
             mSkills = GetComponent<PlayerSkills>();
             mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
+            mEventedObject = GetComponent<EventedObject>();
         }
 
         public void Respawn() {
@@ -174,15 +175,11 @@ namespace Nebula.Game.Components {
                     damage = mTarget.MoveDamageToSubscriber(damage);
                 }
                 SetHealth(health - damage);
-                if(damagerType == (byte)ItemType.Avatar) {
-                    //log.InfoFormat("receive damage from player = {0}, cur health = {1}", damage, health);
-                }
             }
             AddDamager(damagerID, damagerType, damage, workshop, level, race);
 
-            var eventedObject = GetComponent<EventedObject>();
-            if(eventedObject) {
-                eventedObject.ReceiveDamage(new DamageInfo(damagerID, damagerType, damage, workshop, level, race));
+            if(mEventedObject != null ) {
+                mEventedObject.ReceiveDamage(new DamageInfo(damagerID, damagerType, damage, workshop, level, race));
             }
 
             if(health <= 0f) {
@@ -190,14 +187,6 @@ namespace Nebula.Game.Components {
                     SetWasKilled(true);
                 }
             }
-            //var evtObject = GetComponent<EventedObject>();
-            //if(evtObject) {
-            //    evtObject.ActionOccured(ObjectLifetimeActionType.ReceiveDamage);
-            //}
-
-            //if(damage > 0 ) {
-            //    log.InfoFormat("Receive damage = {0}, current health = {1}", damage, health);
-            //}
             return damage;
         }
 

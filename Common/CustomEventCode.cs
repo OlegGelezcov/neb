@@ -36,7 +36,8 @@ namespace Common
         DamageDron,
         HealDron,
         GetPlanetInfo,
-        GetMiningStationInfo
+        GetMiningStationInfo,
+        WorldRaceChanged
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

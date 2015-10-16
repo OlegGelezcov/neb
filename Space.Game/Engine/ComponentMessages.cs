@@ -50,5 +50,7 @@ namespace Nebula.Engine {
 
         //send self when make shot
         public const string OnMakeFire = "OnMakeFire";
+
+        public const string OnWasKilled = "OnWasKilled";
     }
 }

@@ -42,6 +42,8 @@ namespace Nebula.Game.Components {
             }
         }
 
+        
+
         public override float maximumHealth {
             get {
                 var character = GetComponent<CharacterObject>();
@@ -52,6 +54,14 @@ namespace Nebula.Game.Components {
                     return baseMaximumHealth * constructMultiplier ;
                 }
             }
+        }
+
+        public override float ReceiveDamage(byte damagerType, string damagerID, float damage, byte workshop, int level, byte race) {
+            float dmg =  base.ReceiveDamage(damagerType, damagerID, damage, workshop, level, race);
+            if(mOutpost) {
+                log.InfoFormat("outpost receive damage input = {0} output = {1} [blue]", damage, dmg);
+            }
+            return dmg;
         }
 
         public override void Death() {

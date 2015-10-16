@@ -49,7 +49,10 @@
             mUnderConstruction = value;
             nebulaObject.properties.SetProperty((byte)PS.UnderConstruction, mUnderConstruction);
             nebulaObject.properties.SetProperty((byte)PS.ConstructionTimer, constructProgress);
+            
             nebulaObject.MmoMessage().SendUnderConstructChanged(value);
+
+
         }
 
         public override void Update(float deltaTime) {
@@ -57,9 +60,15 @@
             if (mConstructionTimer > 0) {
                 mConstructionTimer -= deltaTime;
                 if (mConstructionTimer <= 0f) {
+                    mDamagable.SetHealth(mDamagable.maximumHealth);
                     SetUnderConstruction(false);
                 }
                 nebulaObject.properties.SetProperty((byte)PS.ConstructionTimer, constructProgress);
+            }
+
+            if (mDamagable.god) {
+                log.InfoFormat("outpost at world = {0} was GOD, we change it to NOT GOD [red]", nebulaObject.mmoWorld().Zone.Id);
+                mDamagable.SetGod(false);
             }
         }
 

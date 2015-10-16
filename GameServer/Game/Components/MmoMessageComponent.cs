@@ -290,6 +290,21 @@ namespace Nebula.Game.Components {
             }
         }
 
+        public void ReceiveWorldRaceChanged(Hashtable info) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.WorldRaceChanged,
+                EventData = info
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
 
         public void SendActivatorEvent(bool active) {
             if(!nebulaObject) {

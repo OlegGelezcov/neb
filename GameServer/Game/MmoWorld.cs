@@ -85,6 +85,7 @@
             var worldDocument = GameApplication.Instance.DatabaseManager.GetWorld(Zone.Id);
             
             if(worldDocument == null ) {
+
                 //if save not found 
                 GameApplication.Instance.DatabaseManager.SetWorld(this);
             }  else {
@@ -251,11 +252,13 @@
         }
 
         public void SetCurrentRace(Race race) {
+            Race previousRace = ownedRace;
             ownedRace = race;
             //save changes to database
             GameApplication.Instance.DatabaseManager.SetWorld(this);
 
-            log.InfoFormat("world = {0} set race owned to = {1} [purple]", Zone.Id, ownedRace);
+            log.InfoFormat("world = {0} set race owned to = {1} [red]", Zone.Id, ownedRace);
+            GameApplication.Instance.updater.SendS2SWorldRaceChanged(Zone.Id, (byte)previousRace, (byte)ownedRace);
         }
 
         public void SetAttackRace(Race race) {
@@ -523,6 +526,14 @@
 
         public void ClearResources() {
             ItemCache.DeleteItems();
+        }
+
+        public void SendWorldChangedToPlayers(Hashtable info ) {
+            var players = GetItems((item) => item.IsPlayer());
+            foreach(var pPlayer in players ) {
+                log.InfoFormat("send world race changed event to player at = {0} [red]", Zone.Id);
+                pPlayer.Value.MmoMessage().ReceiveWorldRaceChanged(info);
+            }
         }
     }
          

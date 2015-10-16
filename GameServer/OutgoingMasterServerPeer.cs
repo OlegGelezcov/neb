@@ -127,6 +127,9 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
             case S2SEventCode.RaceStatusChanged:
                 HandleRaceStatusChanged(eventData, sendParameters);
                 break;
+            case S2SEventCode.WorldRaceChanged:
+                HandleWorldRaceChanged(eventData, sendParameters);
+                break;
         }
     }
 
@@ -444,6 +447,31 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
         }
     }
 
+    private void HandleWorldRaceChanged(IEventData eventData, SendParameters sendParameters) {
+        log.InfoFormat("MasterPeer: received world race changed event... [red]");
+
+        GameApplication.Instance.updater.fiber.Enqueue(() => {
+            try {
+
+                string worldID = (string)eventData.Parameters[(byte)ServerToServerParameterCode.WorldId];
+                byte previousRace = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.PreviousRace];
+                byte currentRace = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.CurrentRace];
+
+                Hashtable info = new Hashtable {
+                    { (int)SPC.WorldId, worldID },
+                    { (int)SPC.PreviousRace, previousRace },
+                    { (int)SPC.CurrentRace, currentRace }
+                };
+
+                MmoWorldCache.Instance.SendWorldRaceChanged(info);
+
+            }catch(Exception exception) {
+                log.InfoFormat(exception.Message + " [red]");
+                log.InfoFormat(exception.StackTrace + " [red]");
+            }
+        });
+    }
+
     protected override void OnOperationRequest(OperationRequest operationRequest, SendParameters sendParameters) {
         if (log.IsDebugEnabled) {
             log.DebugFormat("Received unknown operation code {0}", operationRequest.OperationCode);
@@ -505,6 +533,8 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
         }
     }
 
+
+
     protected void StartUpdateLoop() {
         if (this.updateLoop != null) {
             log.Error("Update loop already started! Duplicate RegisterGameServer response?");
@@ -539,7 +569,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
     }
 
 
-
+    
 
 
 

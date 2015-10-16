@@ -50,7 +50,7 @@ namespace Nebula.Game {
                 obj.AddToWorld();
                 return obj;
             } else {
-                log.InfoFormat("object = {0} was destroyed and saved, don't create");
+                log.InfoFormat("object = {0} was destroyed and saved, don't create [blue]", data.ID);
                 return null;
             }
         }

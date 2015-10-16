@@ -13,6 +13,7 @@ namespace Space.Game.Resources
         public Hashtable Inputs { get; private set; }
 
         public float playerLootChestLifeTime { get; private set; }
+        public float miningStationHP { get; private set; }
 
         public void Load(string basePath)
         {
@@ -28,6 +29,7 @@ namespace Space.Game.Resources
                 return key;
             }).ToList();
             playerLootChestLifeTime = Inputs.GetValue<float>("player_dead_chest_life_time", 0f);
+            miningStationHP = Inputs.GetValue<float>("mining_station_hp", 0f);
         }
 
         public T GetValue<T>(string key)

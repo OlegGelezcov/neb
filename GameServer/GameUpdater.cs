@@ -129,5 +129,22 @@ namespace Nebula {
                 }
             });
         }
+
+        public void SendS2SWorldRaceChanged(string worldID, byte previousRace, byte currentRace ) {
+            mFiber.Enqueue(() => {
+                try {
+                    WorldRaceChanged eventInstance = new WorldRaceChanged {
+                        worldID = worldID,
+                        previousRace = previousRace,
+                        currentRace = currentRace
+                    };
+                    EventData eventData = new EventData((byte)S2SEventCode.WorldRaceChanged, eventInstance);
+                    application.MasterPeer.SendEvent(eventData, new SendParameters());
+                } catch (Exception exception) {
+                    log.InfoFormat(exception.Message + " [red]");
+                    log.InfoFormat(exception.StackTrace + " [red]");
+                }
+            });
+        }
     }
 }

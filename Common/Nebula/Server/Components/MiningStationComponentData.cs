@@ -16,15 +16,18 @@ namespace Nebula.Server.Components {
 
         public int totalCount { get; private set; }
 
+        public string characterID { get; private set; }
+
         public MiningStationComponentData(XElement element) { }
 
-        public MiningStationComponentData(string inNebulaElementID, int inMaxCount, float inTimeToGetSingleElement, string inSourcePlanetID, string inOwnedPlayerID, int inTotalCount) {
+        public MiningStationComponentData(string inNebulaElementID, int inMaxCount, float inTimeToGetSingleElement, string inSourcePlanetID, string inOwnedPlayerID, int inTotalCount, string inCharacterID) {
             nebulaElementID = inNebulaElementID;
             maxCount = inMaxCount;
             timeToGetSingleElement = inTimeToGetSingleElement;
             sourceID = inSourcePlanetID;
             ownedPlayerID = inOwnedPlayerID;
             totalCount = inTotalCount;
+            characterID = inCharacterID;
         }
 
         public override ComponentID componentID {

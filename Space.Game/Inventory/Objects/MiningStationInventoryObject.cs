@@ -16,7 +16,7 @@ namespace Nebula.Inventory.Objects {
             ParseInfo(info);
         }
 
-        public MiningStationInventoryObject(string inID, int inRace, int inSpeed, int inCapacity, bool inBinded = false ) {
+        public MiningStationInventoryObject(string inID, int inRace, int inSpeed, int inCapacity,  bool inBinded = false ) {
             Id = inID;
             race = inRace;
             speed = inSpeed;

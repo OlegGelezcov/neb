@@ -1149,6 +1149,18 @@ namespace Space.Game {
             return new Hashtable();
         }
 
+        /// <summary>
+        /// Testing broadcats message to game servers and after to client about race changes event
+        /// </summary>
+        /// <returns></returns>
+        public Hashtable sendrace() {
+            GameApplication.Instance.updater.SendS2SWorldRaceChanged("H5", (byte)Race.Humans, (byte)Race.Criptizoids);
+            log.InfoFormat("change race sended to Master [red]");
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
+            };
+        }
+
         public Hashtable addexp(int count) {
             Player.GetComponent<PlayerCharacterObject>().AddExp(count);
             return new Hashtable();
@@ -1325,11 +1337,13 @@ namespace Space.Game {
 
             float timeForSingleElement = (60.0f * 60.0f) / miningStationInventoryObject.speed;
 
+            string characterID = Player.GetComponent<PlayerCharacterObject>().characterId;
+
             Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
                 { ComponentID.Model, new ModelComponentData(GetDrillModel((Race)(byte)miningStationInventoryObject.race))},
                 { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, 20, 0 ) },
                 { ComponentID.Raceable, new RaceableComponentData((Race)(byte)miningStationInventoryObject.race)},
-                { ComponentID.Damagable, new NotShipDamagableComponentData(10000, false, 0, false) },
+                { ComponentID.Damagable, new NotShipDamagableComponentData(world.Resource().ServerInputs.miningStationHP, false, 0, false) },
                 { ComponentID.Bonuses, new BonusesComponentData() },
                 { ComponentID.Bot, new BotComponentData(BotItemSubType.Drill) },
                 { ComponentID.MiningStation, new MiningStationComponentData(planetComponent.element, 
@@ -1337,7 +1351,8 @@ namespace Space.Game {
                     timeForSingleElement,
                     planetObject.Id,
                     Player.nebulaObject.Id,
-                    miningStationInventoryObject.capacity * 3) },
+                    miningStationInventoryObject.capacity * 3, 
+                    characterID)},
                 { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop((Race)(byte)miningStationInventoryObject.race),
                         1, Turret.SelectFraction((Race)(byte)miningStationInventoryObject.race))}
             };
@@ -1456,6 +1471,7 @@ namespace Space.Game {
             }
             botCharacter.SetLevel(botCharacter.level + 1);
             fortificationObject.GetComponent<Outpost>().SetConstruct(10);
+            
             Player.Inventory.Remove(InventoryObjectType.fort_upgrade, inventoryItemID, 1);
             Player.EventOnInventoryUpdated();
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };

@@ -55,5 +55,17 @@ namespace Nebula.Client.Planets {
                 return 0;
             }
         }
+
+        public bool HasStationOfPlayer(string playerID) {
+            if(slots == null ) {
+                return false;
+            }
+            foreach(var pSlot in slots ) {
+                if(pSlot.Value.miningStationOwnedPlayerID == playerID) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

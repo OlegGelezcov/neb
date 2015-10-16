@@ -1,5 +1,7 @@
 ﻿using Common;
 using ExitGames.Logging;
+using ServerClientCommon;
+using System.Collections;
 
 namespace SelectCharacter {
     public class S2SMethodInvoker {
@@ -30,6 +32,19 @@ namespace SelectCharacter {
                 }
             }
             return (int)ReturnCode.Fatal;
+        }
+
+        public object MiningStationUnderAttackNotification(string characterID, string worldID ) {
+
+            string id = "MS_" + worldID;
+            Hashtable data = new Hashtable {
+                { (int)SPC.WorldId, worldID }
+            };
+            var notification = mApplication.Notifications.Create(id, "mining_station_attack",
+                data, NotficationRespondAction.Delete, NotificationSourceServiceType.Server,
+                 NotificationSubType.MiningStationAttack);
+            mApplication.Notifications.SetNotificationToCharacter(characterID, notification);
+            return (int)ReturnCode.Ok;
         }
     }
 }

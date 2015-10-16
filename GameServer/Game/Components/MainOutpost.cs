@@ -36,6 +36,13 @@ namespace Nebula.Game.Components {
             mConstructionTimer = CONSTRUCTION_INTERVAL;
             SetUnderConstruction(true);
 
+            var world = nebulaObject.world as MmoWorld;
+
+
+            if ((byte)world.ownedRace != mRaceable.race) {
+                log.InfoFormat("change world race on outpost start [red]");
+                world.SetCurrentRace((Race)mRaceable.race);
+            }
         }
 
         public void SetConstruct(float time) {
@@ -60,14 +67,12 @@ namespace Nebula.Game.Components {
                 CheckGodState();
             }
 
-            var world = nebulaObject.world as MmoWorld;
-            if ((byte)world.ownedRace != mRaceable.race) {
-                world.SetCurrentRace((Race)mRaceable.race);
-            }
+
 
             if(mConstructionTimer > 0 ) {
                 mConstructionTimer -= deltaTime;
                 if(mConstructionTimer <= 0f) {
+                    mDamagable.SetHealth(mDamagable.maximumHealth);
                     SetUnderConstruction(false);
                 }
                 nebulaObject.properties.SetProperty((byte)PS.ConstructionTimer, constructProgress);
@@ -96,11 +101,18 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public void Death() {
+        public void OnWasKilled() {
+            log.InfoFormat("change race ow world at outpost when is killed [{0}:{1}] [red]", 
+                nebulaObject.mmoWorld().Zone.Id, (Race)mRaceable.race);
             nebulaObject.mmoWorld().SetCurrentRace(Race.None);
         }
 
-        public void OnNewDamage(object damageInfo) {
+        public void Death() {
+            
+            
+        }
+
+        public void OnNewDamage(DamageInfo damageInfo) {
             mLastDamage = damageInfo as DamageInfo;
             if(mLastDamage != null ) {
 

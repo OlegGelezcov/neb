@@ -5,6 +5,7 @@
         Explosion,
         Warp,
         CollectAsteroid,
-        Die
+        Die,
+        CreateStructure
     }
 }

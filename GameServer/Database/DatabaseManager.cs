@@ -1,4 +1,5 @@
-﻿using ExitGames.Logging;
+﻿using Common;
+using ExitGames.Logging;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using Nebula;
@@ -98,6 +99,13 @@ namespace Space.Database {
                 document.info.attackRace = (byte)world.attackedRace;
                 document.info.playerCount = world.playerCount;
             }
+            log.InfoFormat("save world state = [{0}, {1}, {2}, {3}, {4}, {5}] [red]", 
+                document.info.worldID,
+                (Race)(byte)document.info.currentRace, 
+                (Race)(byte)document.info.startRace, 
+                document.info.underAttack, 
+                (WorldType)(int)document.info.worldType, 
+                document.info.playerCount);
             //save updated world info
             Worlds.Save(document);
         }

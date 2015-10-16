@@ -6,10 +6,13 @@ using System.Collections.Concurrent;
 using Nebula.Server.Components;
 using System.Collections;
 using ServerClientCommon;
+using ExitGames.Logging;
 
 namespace Nebula.Game.Components {
     public class PlanetObject : NebulaBehaviour, IInfoSource
     {
+        private static readonly ILogger log = LogManager.GetCurrentClassLogger();
+
         private string mNebulaElementID;
         private byte mMaxSlots;
         private byte mPlanetType;
@@ -41,6 +44,7 @@ namespace Nebula.Game.Components {
             foreach(var pSlot in mSlots ) {
                 if(pSlot.Value.minigStationID == miningStationID ) {
                     pSlot.Value.FreeSlot();
+                    log.InfoFormat("free slot = {0} from station = {1} [red]", pSlot.Key, miningStationID);
                 }
             }
         }

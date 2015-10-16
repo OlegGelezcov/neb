@@ -10,6 +10,7 @@ namespace ServerClientCommon {
         InviteToGuild,
         RequestToGuild,
         RequestFriend,
-        RequestToGroup
+        RequestToGroup,
+        MiningStationAttack
     }
 }

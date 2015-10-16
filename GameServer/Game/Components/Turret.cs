@@ -1,4 +1,5 @@
 ﻿using Common;
+using ExitGames.Logging;
 using Nebula.Engine;
 using Nebula.Server.Components;
 using Space.Game;
@@ -8,17 +9,26 @@ using System.Collections;
 namespace Nebula.Game.Components {
     public class Turret : NebulaBehaviour, IDatabaseObject {
 
+        private static readonly ILogger log = LogManager.GetCurrentClassLogger();
+
         private TurretComponentData mInitData;
+
+        private DamagableObject mDamagable;
+
         public void Init(TurretComponentData data) {
             mInitData = data;
         }
 
         public override void Start() {
             base.Start();
+            mDamagable = GetComponent<DamagableObject>();
         }
 
         public override void Update(float deltaTime) {
-            base.Update(deltaTime);
+            if(mDamagable.god) {
+                log.InfoFormat("turret at world = {0} was GOD, we change it to NOT GOD [red]", nebulaObject.mmoWorld().Zone.Id);
+                mDamagable.SetGod(false);
+            }
         }
 
         public override int behaviourId {

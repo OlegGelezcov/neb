@@ -21,6 +21,8 @@
         weapon_simple,
         spawn_pirate_activator,
         simple_model,
-        raceable_model
+        raceable_model,
+        SimpleTeleport,
+        PersonalTeleport
     }
 }

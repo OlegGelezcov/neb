@@ -71,6 +71,14 @@
             }
         }
 
+        public void SendWorldRaceChanged(Hashtable info ) {
+            using (ReadLock.TryEnter(this.readWriteLock, Settings.MaxLockWaitTimeMilliseconds)) {
+                foreach(var pWorld in dict ) {
+                    pWorld.Value.SendWorldChangedToPlayers(info);
+                }
+            }
+        }
+
         public bool TryCreate(string name, Vector minCorner, Vector maxCorner, Vector tileDimensions, out MmoWorld world, Res resource)
         {
             using(WriteLock.TryEnter(this.readWriteLock, Settings.MaxLockWaitTimeMilliseconds))

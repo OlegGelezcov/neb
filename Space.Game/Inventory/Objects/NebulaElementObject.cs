@@ -20,7 +20,8 @@ namespace Nebula.Inventory.Objects {
         }
 
         public bool binded {
-            get { return false; }
+            get;
+            private set;
         }
 
         public string Id {
@@ -87,6 +88,7 @@ namespace Nebula.Inventory.Objects {
             mRaw = info;
             Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             templateId = info.GetValue<string>((int)SPC.Template, string.Empty);
+            binded = info.GetValue<bool>((int)SPC.Binded, false);
         }
     }
 }

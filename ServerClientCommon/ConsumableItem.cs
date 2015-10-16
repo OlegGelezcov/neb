@@ -22,6 +22,8 @@ namespace ServerClientCommon {
         public int count { get; private set; }
         public MoneyType moneyType { get; private set; }
 
+        //private Dictionary
+
         public Hashtable GetInfo() {
             return new Hashtable {
                 { (int)SPC.Id, id },

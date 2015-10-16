@@ -39,6 +39,8 @@
         Tag,
         TargetObject,
         RaceStatus,
-        Items
+        Items,
+        PreviousRace,
+        CurrentRace
     }
 }

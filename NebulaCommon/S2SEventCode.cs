@@ -17,6 +17,7 @@ namespace NebulaCommon {
         PUTInventoryItemEnd,
         RaceStatusChanged,
         GETInventoryItemsStart,
-        GETInventoryItemsEnd
+        GETInventoryItemsEnd,
+        WorldRaceChanged
     }
 }

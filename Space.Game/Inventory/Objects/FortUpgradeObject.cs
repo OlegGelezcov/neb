@@ -18,11 +18,12 @@ namespace Nebula.Inventory.Objects {
         public FortUpgradeObject(Hashtable info) {
             ParseInfo(info);
         }
-        public FortUpgradeObject(string inID, int inMinLevel, int inMaxLevel, bool inBinded = false) {
+        public FortUpgradeObject(string inID, int inMinLevel, int inMaxLevel, Race inrace, bool inBinded = false) {
             Id = inID;
             minLevel = inMinLevel;
             maxLevel = inMaxLevel;
             binded = inBinded;
+            race = (int)(byte)inrace;
         }
 
         public bool binded {

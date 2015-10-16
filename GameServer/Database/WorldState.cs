@@ -74,6 +74,7 @@ namespace Nebula.Database {
 
                     var nebObj = ObjectCreate.NebObject(world, data);
                     nebObj.AddToWorld();
+                    nebObj.SetDatabaseSaveable(true);
                     log.InfoFormat("restored object from save = {0} [dy]", nebObj.Id);
                 }
             }
@@ -184,6 +185,11 @@ namespace Nebula.Database {
                     }
                 }
             }
+            NebulaObjectComponentData nebulaObjectComponentData = new NebulaObjectComponentData((ItemType)go.Type, go.tags, go.badge, go.size, go.subZone);
+            if(savedComponents.ContainsKey((int)ComponentID.NebulaObject) ) {
+                savedComponents.Remove((int)ComponentID.NebulaObject);
+            }
+            savedComponents.Add((int)ComponentID.NebulaObject, go.GetDatabaseSave());
 
             return new NebulaObjectSave {
                 id = go.Id,

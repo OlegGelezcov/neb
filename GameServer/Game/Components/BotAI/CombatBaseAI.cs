@@ -23,6 +23,7 @@ namespace Nebula.Game.Components.BotAI {
     [REQUIRE_COMPONENT(typeof(BaseWeapon))]
     public class CombatBaseAI  : BaseAI {
 
+        public const float RESET_TARGET_INTERVAL = 20;
         private static ILogger log = LogManager.GetCurrentClassLogger();
         public NpcObjectOwner objectOwner { get; private set; }
         protected BaseWeapon mWeapon;
@@ -38,6 +39,7 @@ namespace Nebula.Game.Components.BotAI {
         private float mShotCooldown = 3.0f;
         private float mShotTimer;
         private float mWaitTimer = 5;
+        private float mResetTargetTimer = RESET_TARGET_INTERVAL;
 
         public enum MovingNearTarget { Circle, LIne}
         private MovingNearTarget mMovNearTargetType;
@@ -46,7 +48,8 @@ namespace Nebula.Game.Components.BotAI {
         private Vector3 mStartPosition;
         private bool mReturningToStartPosition = false;
         private bool mUseHitProbForAgro = false;
-        private PlayerSkills mSkills;
+        private BotObject mBotObject;
+
 
         public void Init(CombatBaseAIComponentData data) {
             base.Init(data);
@@ -93,6 +96,17 @@ namespace Nebula.Game.Components.BotAI {
             }
             //--------------------------------------------------------------------
 #endif
+
+            mBotObject = GetComponent<BotObject>();
+        }
+
+        private bool isTurret {
+            get {
+                if(mBotObject != null && mBotObject.isTurret) {
+                    return true;
+                }
+                return false;
+            }
         }
 
         protected virtual Vector3 GetStartPosition() {
@@ -143,7 +157,8 @@ namespace Nebula.Game.Components.BotAI {
                     } else {
 
                         float hitProb = mWeapon.HitProbTo(mTarget.targetObject);
-                        if (hitProb < 0.1f) {
+                        mResetTargetTimer -= deltaTime;
+                        if (hitProb < 0.1f && (mResetTargetTimer <= 0f)) {
                             mTarget.Clear();
                             OnStartIdle(deltaTime);
                             return;
@@ -219,11 +234,17 @@ namespace Nebula.Game.Components.BotAI {
         }
 
         private void StartReturn() {
+
+            
             mReturningToStartPosition = true;
             nebulaObject.SendMessage(ComponentMessages.OnReturnStateChanged, mReturningToStartPosition);
         }
 
         private bool NeedReturn() {
+            if(isTurret) {
+                return false;
+            }
+
             float distance = (GetStartPosition() - transform.position).magnitude;
             return (distance > 350);
         }
@@ -380,6 +401,7 @@ namespace Nebula.Game.Components.BotAI {
                 NebulaObject attacker;
                 if ((nebulaObject.world as MmoWorld).TryGetObject((byte)info.DamagerType, info.DamagerId, out attacker)) {
 
+                    mResetTargetTimer = RESET_TARGET_INTERVAL;
                     mTarget.SetTarget(attacker);
                 }
             }

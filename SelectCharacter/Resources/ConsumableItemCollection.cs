@@ -54,17 +54,17 @@ namespace SelectCharacter.Resources {
                 case "repair_patch_300pc":
                     return new RepairPatchObject("repair_patch_300pc", 6f, true);
                 case "fort_level_upgrade_1_10":
-                    return new FortUpgradeObject("fort_level_upgrade_1_10", 1, 10, true);
+                    return new FortUpgradeObject("fort_level_upgrade_1_10", 1, 10, (Race)(byte)race, true);
                 case "fort_level_upgrade_11_20":
-                    return new FortUpgradeObject("fort_level_upgrade_11_20", 11, 20, true);
+                    return new FortUpgradeObject("fort_level_upgrade_11_20", 11, 20, (Race)(byte)race, true);
                 case "fort_level_upgrade_21_30":
-                    return new FortUpgradeObject("fort_level_upgrade_21_30", 21, 30, true);
+                    return new FortUpgradeObject("fort_level_upgrade_21_30", 21, 30, (Race)(byte)race, true);
                 case "out_level_upgrade_1_10":
-                    return new OutpostUpgradeObject("out_level_upgrade_1_10", 1, 10, true);
+                    return new OutpostUpgradeObject("out_level_upgrade_1_10", 1, 10, (Race)(byte)race, true);
                 case "out_level_upgrade_11_20":
-                    return new OutpostUpgradeObject("out_level_upgrade_11_20", 11, 20, true);
+                    return new OutpostUpgradeObject("out_level_upgrade_11_20", 11, 20, (Race)(byte)race, true);
                 case "out_level_upgrade_21_30":
-                    return new OutpostUpgradeObject("out_level_upgrade_21_30", 21, 30, true);
+                    return new OutpostUpgradeObject("out_level_upgrade_21_30", 21, 30, (Race)(byte)race, true);
                 case "turret":
                     return new TurretInventoryObject("turret", race, true);
                 case "fortification":

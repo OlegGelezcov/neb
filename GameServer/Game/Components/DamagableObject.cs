@@ -88,7 +88,7 @@ namespace Nebula.Game.Components {
             mAbsorbedDamage = absorb;
         }
 
-        protected float AbsorbDamage(float inputDamage) {
+        protected virtual float AbsorbDamage(float inputDamage) {
             if(mAbsorbedDamage > 0) {
                 mAbsorbedDamage -= inputDamage;
                 if(mAbsorbedDamage >= 0f ) {
@@ -330,7 +330,7 @@ namespace Nebula.Game.Components {
         }
         public virtual float ReceiveDamage(byte damagerType, string damagerID, float damage, byte workshop, int level, byte race) {
             nebulaObject.SetInvisibility(false);
-            return 0f;
+            return damage;
         }
 
         public virtual void Death() {

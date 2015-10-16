@@ -60,6 +60,8 @@ namespace Nebula.Resources {
                     return sCommonEffects.GetObject(GameEffectSoundType.CollectAsteroid, "Audio/collect_asteroid");
                 case GameEffectSoundType.Die:
                     return sCommonEffects.GetObject(GameEffectSoundType.Die, "Audio/die");
+                case GameEffectSoundType.CreateStructure:
+                    return sCommonEffects.GetObject(GameEffectSoundType.CreateStructure, "Audio/create");
                 case GameEffectSoundType.None:
                     return null;
                 default:

@@ -114,6 +114,11 @@ namespace Master {
                             Transport(eventData, sendParameters, ServerType.Game);
                             break;
                         }
+                    case S2SEventCode.WorldRaceChanged:
+                        {
+                            Transport(eventData, sendParameters, ServerType.Game);
+                            break;
+                        }
                 }
             }catch(Exception ex) {
                 log.Error(ex);
