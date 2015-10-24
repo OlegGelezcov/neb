@@ -1,6 +1,7 @@
 ﻿using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using SelectCharacter.Auction;
+using SelectCharacter.Bank;
 using SelectCharacter.Characters;
 using SelectCharacter.Chat;
 using SelectCharacter.Commander;
@@ -31,6 +32,7 @@ namespace SelectCharacter {
         public MongoCollection<RaceStats> raceStats { get; set; }
         public MongoCollection<PlayerFriends> friends { get; set; }
         public MongoCollection<CharacterInfo> characters { get; private set; }
+        public MongoCollection<BankSave> banks { get; private set; }
 
 
 
@@ -56,6 +58,7 @@ namespace SelectCharacter {
             raceStats = Database.GetCollection<RaceStats>("race_stats");
             friends = Database.GetCollection<PlayerFriends>("friends");
             characters = Database.GetCollection<CharacterInfo>("character_info");
+            banks = Database.GetCollection<BankSave>("banks");
         }
 
         public bool ExistsPlayer(string gameRefId) {
@@ -76,6 +79,26 @@ namespace SelectCharacter {
 
         public void Save(DbPlayerCharactersObject document) {
             var result = this.PlayerCharacters.Save(document);
+        }
+
+        public BankSave LoadBank(string login ) {
+            var query = Query<BankSave>.EQ(b => b.login, login);
+            var bank = banks.FindOne(query);
+            if(bank != null ) {
+                return bank;
+            } else {
+                Bank.Bank bankObj = new SelectCharacter.Bank.Bank();
+                BankSave save = new BankSave {
+                    bankInfo = bankObj.GetInfo(),
+                    login = login
+                };
+                banks.Save(save);
+                return save;
+            }
+        }
+
+        public void SaveBank(BankSave save) {
+            banks.Save(save);
         }
     }
 }

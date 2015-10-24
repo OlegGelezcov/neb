@@ -24,6 +24,9 @@ namespace SelectCharacter.Operations {
         [DataMember(Code =(byte)ParameterCode.InventoryType)]
         public byte inventoryType { get; set; }
 
+        [DataMember(Code = (byte)ParameterCode.ServerId, IsOptional = false)]
+        public string targetServer { get; set; }
+
         public WriteMailMessageOperationRequest(IRpcProtocol protocol, OperationRequest operationRequest) : base(protocol, operationRequest) { }
     }
 }

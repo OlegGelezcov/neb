@@ -50,6 +50,11 @@
     <Compile Include="ExtrapolationData.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="Game\Space\Singleton.cs" />
+    <Compile Include="IManagedSingleton.cs" />
+    <Compile Include="Inap\IStoreItemCollectio.cs" />
+    <Compile Include="Inap\StoreItemCollection.cs" />
+    <Compile Include="Inap\StoreType.cs" />
+    <Compile Include="Login\LoggedUser.cs" />
     <Compile Include="MmoConnectionFlags.cs" />
     <Compile Include="MmoConnectionParameters.cs" />
     <Compile Include="MmoEngine.cs" />
@@ -93,15 +98,18 @@
     <Compile Include="Mmo\Items\Item.cs" />
     <Compile Include="Mmo\Objects\MmoComponentUpdater.cs" />
     <Compile Include="NetworkTransformInterpolation.cs" />
+    <Compile Include="GameTimeInfo.cs" />
     <Compile Include="PrefKeys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AudioCache.cs" />
+    <Compile Include="Inap\BaseStoreItem.cs" />
     <Compile Include="Resources\BaseStringCache.cs" />
     <Compile Include="Resources\BaseTextureCache.cs" />
     <Compile Include="Resources\BuffDescriptionResolver.cs" />
     <Compile Include="Resources\ColorCache.cs" />
     <Compile Include="Resources\DataResources.cs" />
     <Compile Include="Resources\GameEffectSoundType.cs" />
+    <Compile Include="Inap\GoogleStoreItem.cs" />
     <Compile Include="Resources\IconType.cs" />
     <Compile Include="Resources\InventoryItemDescriptionResolver.cs" />
     <Compile Include="Resources\ItemTypeName.cs" />
@@ -121,7 +129,9 @@
     <Compile Include="Resources\UISoundType.cs" />
     <Compile Include="Resources\WorldEvents.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="SingletonManager.cs" />
     <Compile Include="SpaceExtensions.cs" />
+    <Compile Include="SystemInfo.cs" />
     <Compile Include="UI\IAsteroidObjectInfo.cs" />
     <Compile Include="UI\ICombatObjectInfo.cs" />
     <Compile Include="UI\IEventObjectInfo.cs" />
@@ -130,6 +140,7 @@
     <Compile Include="UI\ObjectChange.cs" />
     <Compile Include="UI\ObjectInfoType.cs" />
     <Compile Include="UnityEvents.cs" />
+    <Compile Include="UnityUIExtensions.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

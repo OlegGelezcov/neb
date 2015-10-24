@@ -13,6 +13,6 @@ namespace ServerClientCommon {
         Server,
         Group,
         Election,
-        Friends
+        Friends,
     }
 }

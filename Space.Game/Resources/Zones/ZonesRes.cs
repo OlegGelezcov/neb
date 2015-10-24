@@ -445,8 +445,25 @@ namespace Space.Game.Resources.Zones {
                             break;
                         case ComponentID.Teleport:
                             {
-                                TeleportComponentData data = new TeleportComponentData(ce);
-                                componentCollection.Add(ComponentID.Teleport, data);
+                                ComponentSubType subType = ComponentSubType.SimpleTeleport;
+                                if(ce.HasAttribute("sub_type")) {
+                                    subType = (ComponentSubType)Enum.Parse(typeof(ComponentSubType), ce.GetString("sub_type"));
+                                }
+                                switch(subType) {
+                                    case ComponentSubType.PersonalTeleport:
+                                        {
+                                            PersonalBeaconComponentData data = new PersonalBeaconComponentData(ce);
+                                            componentCollection.Add(ComponentID.Teleport, data);
+                                        }
+                                        break;
+                                    case ComponentSubType.SimpleTeleport:
+                                        {
+                                            TeleportComponentData data = new TeleportComponentData(ce);
+                                            componentCollection.Add(ComponentID.Teleport, data);
+                                        }
+                                        break;
+                                }
+
                             }
                             break;
                         case ComponentID.SubZone:

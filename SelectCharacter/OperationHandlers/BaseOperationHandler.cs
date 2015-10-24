@@ -1,5 +1,6 @@
 ﻿using Common;
 using Photon.SocketServer;
+using Photon.SocketServer.Rpc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,13 @@ namespace SelectCharacter.OperationHandlers {
             return new OperationResponse((byte)code) {
                 ReturnCode = (short)ReturnCode.InvalidOperationParameter,
                 DebugMessage = string.Format("Operation {0}: invalid operation parameters", code)
+            };
+        }
+
+        protected OperationResponse InvalidParametersOperationResponse(Operation op) {
+            return new OperationResponse((byte)op.OperationRequest.OperationCode) {
+                ReturnCode = (short)ReturnCode.InvalidOperationParameter,
+                DebugMessage = op.GetErrorMessage()
             };
         }
     }

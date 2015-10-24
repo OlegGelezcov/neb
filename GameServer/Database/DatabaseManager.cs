@@ -7,6 +7,7 @@ using Nebula.Database;
 using NebulaCommon;
 using Space.Game;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Space.Database {
@@ -22,12 +23,17 @@ namespace Space.Database {
         public MongoCollection<WorldState> worldStates { get; private set; }
 
 
-        public void Setup() {
-            DbClient = new MongoClient(GameServerSettings.Default.DatabaseConnectionString);
+        public void Setup(string connectionString) {
+            DbClient = new MongoClient(connectionString);
             DbServer = DbClient.GetServer();
+            foreach(var cred in DbClient.Settings.Credentials) {
+                log.InfoFormat("credentials = {0}:{1} [red]", cred.Username, cred.Password);
+            }
+
             Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             Worlds                  = Database.GetCollection<WorldDocument>(GameServerSettings.Default.WorldCollection);
             worldStates = Database.GetCollection<WorldState>(GameServerSettings.Default.WorldStateCollectionName);
+            //log.InfoFormat("world count: {0} [red]", )
         }
 
         public WorldState GetWorldState(string worldID) {

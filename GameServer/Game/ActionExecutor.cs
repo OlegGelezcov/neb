@@ -8,6 +8,7 @@ namespace Space.Game {
     using Nebula.Game;
     using Nebula.Game.Bonuses;
     using Nebula.Game.Components;
+    using Nebula.Inventory;
     using Nebula.Inventory.Objects;
     using Nebula.Server.Components;
     using ServerClientCommon;
@@ -354,7 +355,7 @@ namespace Space.Game {
             };
         }
 
-        public Hashtable MoveItemFromInventoryToStation(byte inventoryObjectType, string inventoryItemId )
+        public Hashtable MoveItemFromInventoryToStation(byte inventoryObjectType, string inventoryItemId, int count )
         {
             ServerInventoryItem sourceItem = null;
 
@@ -371,19 +372,26 @@ namespace Space.Game {
                 return new Hashtable { { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL }, { ACTION_RESULT.MESSAGE, "EM0023" } };
             }
 
-            if( !this.Player.Station.StationInventory.Add(sourceItem.Object, sourceItem.Count))
+            if(sourceItem.Count < count ) {
+                return new Hashtable {
+                    { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL },
+                    { ACTION_RESULT.MESSAGE, "count"}
+                };
+            }
+
+            if( !this.Player.Station.StationInventory.Add(sourceItem.Object, count))
             {
                 return new Hashtable { { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL }, { ACTION_RESULT.MESSAGE, "EM0024" } };
             }
 
-            this.Player.Inventory.Remove((InventoryObjectType)inventoryObjectType, inventoryItemId, sourceItem.Count);
+            this.Player.Inventory.Remove((InventoryObjectType)inventoryObjectType, inventoryItemId, count);
             this.Player.EventOnInventoryUpdated();
             this.Player.EventOnStationHoldUpdated();
 
             return new Hashtable { { ACTION_RESULT.RESULT, ACTION_RESULT.SUCCESS }, {ACTION_RESULT.MESSAGE, "EM0000"}};
         }
 
-        public Hashtable MoveItemFromStationToInventory(byte inventoryObjectType, string inventoryItemId)
+        public Hashtable MoveItemFromStationToInventory(byte inventoryObjectType, string inventoryItemId, int count)
         {
             ServerInventoryItem sourceItem = null;
             if (!this.Player.Station.StationInventory.TryGetItem((InventoryObjectType)inventoryObjectType, inventoryItemId, out sourceItem))
@@ -398,12 +406,19 @@ namespace Space.Game {
                 return new Hashtable { { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL }, { ACTION_RESULT.MESSAGE, "EM0015" } };
             }
 
-            if (!this.Player.Inventory.Add(sourceItem.Object, sourceItem.Count))
+            if(sourceItem.Count < count ) {
+                return new Hashtable {
+                    { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL},
+                    { ACTION_RESULT.MESSAGE, "count"}
+                };
+            }
+
+            if (!this.Player.Inventory.Add(sourceItem.Object, count))
             {
                 return new Hashtable { { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL }, { ACTION_RESULT.MESSAGE, "EM0017" } };
             }
 
-            this.Player.Station.StationInventory.Remove((InventoryObjectType)inventoryObjectType, inventoryItemId, sourceItem.Count);
+            this.Player.Station.StationInventory.Remove((InventoryObjectType)inventoryObjectType, inventoryItemId, count);
             this.Player.EventOnInventoryUpdated();
             this.Player.EventOnStationHoldUpdated();
 
@@ -823,7 +838,7 @@ namespace Space.Game {
         /// <returns></returns>
         public Hashtable AddInventoryItem(Hashtable rawItem) {
             int count = 0;
-            IInventoryObject item = ServerInventory.Create(rawItem, out count);
+            IInventoryObject item = InventoryUtils.Create(rawItem, out count);
             if(item == null ) {
                 return new Hashtable { { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL }, { ACTION_RESULT.MESSAGE, "item invalid"} };
             }
@@ -1159,6 +1174,11 @@ namespace Space.Game {
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
             };
+        }
+
+        public Hashtable SetRace(int race) {
+            Player.nebulaObject.mmoWorld().SetCurrentRace((Race)(byte)race);
+            return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
         public Hashtable addexp(int count) {
@@ -1594,7 +1614,7 @@ namespace Space.Game {
             }
 
             Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
-                { ComponentID.Damagable, new OutpostDamagableComponentData(50, true, 60, false, 10, 0) },
+                { ComponentID.Damagable, new OutpostDamagableComponentData(world.Resource().ServerInputs.standardTurretHp, true, 60, false, 10, 0) },
                 { ComponentID.Model, new ModelComponentData(GetTurretModel(race))},
                 { ComponentID.CombatAI, new FreeFlyNearPointComponentData(true, 0.5f, 150, Nebula.Server.AttackMovingType.AttackStay, true) },
                 { ComponentID.Movable, new SimpleMovableComponentData(10) },
@@ -1605,7 +1625,7 @@ namespace Space.Game {
                 { ComponentID.Bonuses, new BonusesComponentData() },
                 { ComponentID.Bot, new BotComponentData(BotItemSubType.Turret) },
                 { ComponentID.Turret, new TurretComponentData() },
-                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), "",  20, 0 ) }
+                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), "",  world.Resource().ServerInputs.standardTurretSize, 0 ) }
             };
             NebulaObjectData data = new NebulaObjectData {
                 ID = "TUR_" + Guid.NewGuid().ToString(),
@@ -1676,14 +1696,14 @@ namespace Space.Game {
             }
 
             Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
-                { ComponentID.Damagable, new OutpostDamagableComponentData(3600, true, 60, false, 500, 200) },
+                { ComponentID.Damagable, new OutpostDamagableComponentData(world.Resource().ServerInputs.standardFortificationHp, true, 60, false, 500, 200) },
                 { ComponentID.Model, new ModelComponentData(GetFortificationModel(race)) },
                 { ComponentID.Bot, new BotComponentData(BotItemSubType.Outpost) },
                 { ComponentID.Bonuses, new BonusesComponentData() },
                 { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 1, Turret.SelectFraction(race)) },
                 { ComponentID.Outpost, new OutpostComponentData() },
                 { ComponentID.Raceable, new RaceableComponentData(race) },
-                { ComponentID.NebulaObject, new NebulaObjectComponentData (ItemType.Bot, new Dictionary<byte, object>(), "",  50, 0) }
+                { ComponentID.NebulaObject, new NebulaObjectComponentData (ItemType.Bot, new Dictionary<byte, object>(), "",  world.Resource().ServerInputs.standardFortificationSize, 0) }
             };
             NebulaObjectData data = new NebulaObjectData {
                 ID = "FORT_" + Guid.NewGuid().ToString(),
@@ -1735,14 +1755,14 @@ namespace Space.Game {
             }
 
             Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
-                { ComponentID.Damagable, new OutpostDamagableComponentData(6000, true, 60, false, 500, 500) },
+                { ComponentID.Damagable, new OutpostDamagableComponentData(world.Resource().ServerInputs.standardOutpostHp, true, 60, false, 500, 500) },
                 { ComponentID.Model, new ModelComponentData(GetOutpostModel()) },
                 { ComponentID.MainOutpost, new MainOutpostComponentData() },
                 { ComponentID.Bot, new BotComponentData(BotItemSubType.MainOutpost) },
                 { ComponentID.Bonuses, new BonusesComponentData() },
                 { ComponentID.Raceable, new RaceableComponentData(race) },
                 { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 1, Turret.SelectFraction(race)) },
-                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), "", 200, 0) }
+                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), "", world.Resource().ServerInputs.standardOutpostSize, 0) }
             };
 
             NebulaObjectData data = new NebulaObjectData {

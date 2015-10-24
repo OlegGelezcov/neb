@@ -4,6 +4,7 @@ using ExitGames.Logging;
 using Nebula;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using Nebula.Inventory;
 using NebulaCommon;
 using NebulaCommon.Group;
 using NebulaCommon.ServerToServer.Events;
@@ -174,18 +175,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
 
     private void HandlePUTInventoryItemStart(IEventData eventData, SendParameters sendParameters) {
         log.Info("HandlePUTInventoryItemStart: PUT inventory item event received");
-        PUTInventoryItemTransactionStart start = new PUTInventoryItemTransactionStart {
-            characterID = eventData.Parameters[(byte)ServerToServerParameterCode.CharacterId] as string,
-            count = (int)eventData.Parameters[(byte)ServerToServerParameterCode.Count],
-            gameRefID = eventData.Parameters[(byte)ServerToServerParameterCode.GameRefId] as string,
-            inventoryType = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.InventoryType],
-            itemID = eventData.Parameters[(byte)ServerToServerParameterCode.ID] as string,
-            postTransactionAction = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.Action],
-            tag = eventData.Parameters[(byte)ServerToServerParameterCode.Tag],
-            targetObject = eventData.Parameters[(byte)ServerToServerParameterCode.TargetObject],
-            transactionID = eventData.Parameters[(byte)ServerToServerParameterCode.TransactionID] as string,
-            transactionSource = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.TransactionSource]
-        };
+        PUTInventoryItemTransactionStart start = new PUTInventoryItemTransactionStart(eventData);
 
         try {
             MmoActor player;
@@ -202,14 +192,15 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                 count = start.count,
                 transactionID = start.transactionID,
                 transactionSource = start.transactionSource,
-
+                transactionStartServer = start.transactionStartServer,
+                transactionEndServer = start.transactionEndServer
             };
 
             InventoryType invType = (InventoryType)start.inventoryType;
             if (invType == InventoryType.ship || invType == InventoryType.station) {
                 var inventory = (invType == InventoryType.ship) ? player.Inventory : player.Station.StationInventory;
                 int count = 0;
-                var itemObject = ServerInventory.Create(start.targetObject as Hashtable, out count);
+                var itemObject = InventoryUtils.Create(start.targetObject as Hashtable, out count);
                 count = start.count;
 
                 if (!inventory.EnoughSpace(new Dictionary<string, InventoryObjectType> { { itemObject.Id, itemObject.Type } })) {
@@ -239,16 +230,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
     private void HandleGETInventoryItemsStart(IEventData eventData, SendParameters sendParameters) {
         try {
             log.InfoFormat("OutgoinfMasterServerPeer.HandleGETInventoryItemsStart()");
-            GETInventoryItemsTransactionStart start = new GETInventoryItemsTransactionStart {
-                characterID = (string)eventData[(byte)ServerToServerParameterCode.CharacterId],
-                gameRefID = (string)eventData[(byte)ServerToServerParameterCode.GameRefId],
-                inventoryType = (byte)eventData[(byte)ServerToServerParameterCode.InventoryType],
-                transactionID = (string)eventData[(byte)ServerToServerParameterCode.TransactionID],
-                transactionSource = (byte)eventData[(byte)ServerToServerParameterCode.TransactionSource],
-                postTransactionAction = (byte)eventData[(byte)ServerToServerParameterCode.Action],
-                tag = eventData.Parameters[(byte)ServerToServerParameterCode.Tag] as object,
-                items = eventData.Parameters[(byte)ServerToServerParameterCode.Items] as Hashtable
-            };
+            GETInventoryItemsTransactionStart start = new GETInventoryItemsTransactionStart(eventData);
 
             MmoActor player;
             if (GameApplication.Instance.serverActors.TryGetValue(start.gameRefID, out player)) {
@@ -259,7 +241,9 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                     inventoryType = start.inventoryType,
                     transactionID = start.transactionID,
                     transactionSource = start.transactionSource,
-                    items = start.items
+                    items = start.items,
+                    transactionStartServer = start.transactionStartServer,
+                    transactionEndServer = start.transactionEndServer
                 };
 
                 List<IDCountPair> itemPairs = new List<IDCountPair>();
@@ -329,17 +313,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
         try {
             log.InfoFormat("OutgoinfMasterServerPeer.HandleGETInventoryItemStart()");
 
-            GETInventoryItemTransactionStart start = new GETInventoryItemTransactionStart {
-                characterID = (string)eventData[(byte)ServerToServerParameterCode.CharacterId],
-                count = (int)eventData[(byte)ServerToServerParameterCode.Count],
-                gameRefID = (string)eventData[(byte)ServerToServerParameterCode.GameRefId],
-                inventoryType = (byte)eventData[(byte)ServerToServerParameterCode.InventoryType],
-                itemID = (string)eventData[(byte)ServerToServerParameterCode.ID],
-                transactionID = (string)eventData[(byte)ServerToServerParameterCode.TransactionID],
-                transactionSource = (byte)eventData[(byte)ServerToServerParameterCode.TransactionSource],
-                postTransactionAction = (byte)eventData[(byte)ServerToServerParameterCode.Action],
-                tag = eventData.Parameters[(byte)ServerToServerParameterCode.Tag] as object
-            };
+            GETInventoryItemTransactionStart start = new GETInventoryItemTransactionStart(eventData);
 
             MmoActor player;
             if (GameApplication.Instance.serverActors.TryGetValue(start.gameRefID, out player)) {
@@ -351,8 +325,9 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                     inventoryType = start.inventoryType,
                     itemID = start.itemID,
                     transactionID = start.transactionID,
-                    transactionSource = start.transactionSource
-
+                    transactionSource = start.transactionSource,
+                    transactionStartServer = start.transactionStartServer,
+                    transactionEndServer = start.transactionEndServer
                 };
 
                 if (start.inventoryType == (byte)InventoryType.ship || start.inventoryType == (byte)InventoryType.station) {

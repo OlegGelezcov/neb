@@ -137,7 +137,7 @@ namespace SelectCharacter.Store {
             mApplication.Clients.SendGenericEventToGameref(gameRefID, evt);
         }
 
-        public bool BuyConsumableItem(string login, string gameRefID, string characterID, int race, string consumableItemID) {
+        public bool BuyConsumableItem(string login, string gameRefID, string characterID, int race, string consumableItemID, string targetServer) {
             var store = GetOrCreatePlayerStore(login, gameRefID, characterID);
 
             ConsumableItem consumableItem;
@@ -162,12 +162,13 @@ namespace SelectCharacter.Store {
                 inventoryObject.Id, 
                 PostTransactionAction.BuyStoreItem, 
                 consumableItem.price, 
-                inventoryObject.GetInfo()
+                inventoryObject.GetInfo(),
+                targetServer
                 );
             return true;
         }
 
-        public bool PutItemToAuction(string login, string gameRefID, string characterID, int count, InventoryType inventoryType, string itemID, int price) {
+        public bool PutItemToAuction(string login, string gameRefID, string characterID, int count, InventoryType inventoryType, string itemID, int price, string targetServer) {
             var store = GetOrCreatePlayerStore(login, gameRefID, characterID);
 
             if (!store.hasFreeSlots) {
@@ -175,13 +176,13 @@ namespace SelectCharacter.Store {
                 return false;
             }
 
-            RequestItemFromInventory(login, characterID, count, gameRefID, inventoryType, itemID, PostTransactionAction.PutToAuction, price);
+            RequestItemFromInventory(login, characterID, count, gameRefID, inventoryType, itemID, PostTransactionAction.PutToAuction, price, targetServer);
             return true;
         }
 
 
-        public void SellItemToNPC(string login, string gameRefID, string characterID, int count, InventoryType inventoryType, string itemID) {
-            RequestItemFromInventory(login, characterID, count, gameRefID, inventoryType, itemID, PostTransactionAction.SellItemToNPC, 1);
+        public void SellItemToNPC(string login, string gameRefID, string characterID, int count, InventoryType inventoryType, string itemID, string targetServer) {
+            RequestItemFromInventory(login, characterID, count, gameRefID, inventoryType, itemID, PostTransactionAction.SellItemToNPC, 1, targetServer);
         }
 
         /// <summary>
@@ -197,42 +198,62 @@ namespace SelectCharacter.Store {
             //Get item from auction
             AuctionItem auctionItem = mApplication.Auction.GetItem(storeItemID);
             if(auctionItem == null ) {
+                log.InfoFormat("BuyAuctionItem: auction item not founded [red]");
                 return false;
             }
 
             if(auctionItem.gameRefID == gameRefID ) {
-                log.InfoFormat("don't allow buy items from self");
+                log.InfoFormat("BuyAuctionItem: don't allow buy items from self [red]");
                 return false;
             }
 
             //Get store of customer
             var store = GetOrCreatePlayerStore(login, gameRefID, characterID);
             if(store == null) {
+                log.InfoFormat("BuyAuctionItem: store of customer not founded [red]");
                 return false;
             }
 
             //Check the customer have enough credits
             if(store.credits < auctionItem.price ) {
+                log.InfoFormat("BuyAuctionItem: customer dont has enough credits {0} < {1} [red]", store.credits, auctionItem.price);
                 return false;
             }
 
             //Delete item from acutino
             var deletedItem = mApplication.Auction.Remove(storeItemID);           
             if(deletedItem == null ) {
+                log.InfoFormat("BuyAuctionItem: error of deleting auction item from auction [red]");
                 return false;
             }
 
             //Delete item from seller store
             if(!RemoveFromStore(deletedItem.login, deletedItem.gameRefID, deletedItem.characterID, deletedItem.storeItemID)) {
+                log.InfoFormat("BuyAuctionItem: error of removing auction item from seller store [red]");
                 return false;
             }
             //Remove credist from customer store
             if( !RemoveCredits(login, gameRefID, characterID, deletedItem.price) ) {
+                log.InfoFormat("BuyAuctionItem: error of removing credits from customer store [red]");
                 return false;
             }
 
+            if(!AddCredits(deletedItem.login, deletedItem.gameRefID, deletedItem.characterID, deletedItem.price)) {
+                log.InfoFormat("BuyAuctionItem: error of adding credits to seller store [red]");
+            }
+
             //Put purchased item to mail as attachment
-            return mApplication.Mail.PutAuctionItemToMailFromPurchase(gameRefID, deletedItem);
+            bool success =  mApplication.Mail.PutAuctionItemToMailFromPurchase(gameRefID, deletedItem);
+
+            if(success ) {
+                Hashtable data = new Hashtable {
+                    { (int)SPC.Price, deletedItem.price }
+                };
+                var n = mApplication.Notifications.Create(deletedItem.storeItemID, "s_you_item_purchased", data, 
+                    NotficationRespondAction.Delete, NotificationSourceServiceType.Server, NotificationSubType.AuctionPurchase);
+                mApplication.Notifications.SetNotificationToCharacter(deletedItem.characterID, n);
+            }
+            return success;
         }
 
         /// <summary>
@@ -287,7 +308,8 @@ namespace SelectCharacter.Store {
             return true;
         }
 
-        private void RequestItemFromInventory(string login, string characterID, int count, string gameRefID, InventoryType inventoryType, string itemID, PostTransactionAction action, object tag) {
+        private void RequestItemFromInventory(string login, string characterID, int count, string gameRefID, 
+            InventoryType inventoryType, string itemID, PostTransactionAction action, object tag, string targetServer) {
             var playerStore = GetOrCreatePlayerStore(login, gameRefID, characterID);
             if (playerStore == null) {
                 log.InfoFormat("player store is null");
@@ -303,7 +325,9 @@ namespace SelectCharacter.Store {
                 transactionID = Guid.NewGuid().ToString(),
                 transactionSource = (byte)TransactionSource.Store,
                 postTransactionAction = (byte)action,
-                tag = tag
+                tag = tag,
+                transactionEndServer = targetServer,
+                 transactionStartServer = SelectCharacterApplication.ServerId.ToString()
             };
             EventData evt = new EventData((byte)S2SEventCode.GETInventoryItemStart, start);
             mTransactionPool.StartTransaction(start);
@@ -331,7 +355,8 @@ namespace SelectCharacter.Store {
             string itemID, 
             PostTransactionAction action, 
             object tag, 
-            object objectData) {
+            object objectData,
+            string targetServer) {
             var playerStore = GetOrCreatePlayerStore(login, gameRefID, characterID);
             if(playerStore == null ) {
                 log.Info("PutItemToInventory: player store is null");
@@ -348,7 +373,9 @@ namespace SelectCharacter.Store {
                 tag = tag,
                 targetObject = objectData,
                 transactionSource = (byte)TransactionSource.Store,
-                transactionID = Guid.NewGuid().ToString()
+                transactionID = Guid.NewGuid().ToString(),
+                transactionEndServer = targetServer,
+                 transactionStartServer = SelectCharacterApplication.ServerId.ToString()
             };
             EventData evt = new EventData((byte)S2SEventCode.PUTInventoryItemStart, start);
             mPutTransactionPool.StartTransaction(start);
@@ -400,6 +427,15 @@ namespace SelectCharacter.Store {
                     return store;
                 }
             }
+        }
+
+        public bool HasCredits(string login, string gameRefID, string characterID, int credits) {
+            var store = GetOrCreatePlayerStore(login, gameRefID, characterID);
+            if (store == null) {
+                log.InfoFormat("RemoveCredits(): store for character not found");
+                return false;
+            }
+            return (store.credits >= credits);
         }
 
 

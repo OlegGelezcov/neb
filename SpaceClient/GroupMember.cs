@@ -22,6 +22,10 @@ namespace Nebula.Client {
             worldID = info.Value<string>((int)SPC.WorldId);
         }
 
+        public void SetLogin(string inLogin) {
+            login = inLogin;
+        }
+
         public GroupMember() { }
         public GroupMember(Hashtable info ) { ParseInfo(info); }
 

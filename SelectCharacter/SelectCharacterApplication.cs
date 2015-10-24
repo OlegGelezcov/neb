@@ -21,6 +21,7 @@ using SelectCharacter.Notifications;
 using SelectCharacter.Races;
 using SelectCharacter.Resources;
 using SelectCharacter.Store;
+using ServerClientCommon;
 using Space.Game.Resources;
 using System;
 using System.IO;
@@ -68,6 +69,8 @@ namespace SelectCharacter {
         public RaceStatsService raceStats { get; private set; }
         public FriendService friends { get; private set; }
         public ConsumableItemCollection consumableItems { get; private set; }
+
+        public BankSlotPriceCollection bankSlotPrices { get; private set; }
 
         public static new SelectCharacterApplication Instance {
             get {
@@ -131,6 +134,9 @@ namespace SelectCharacter {
                 this.StartModules = new StartPlayerModuleRes();
                 this.StartModules.LoadFromFile(Path.Combine(this.BinaryPath, "assets/start_player_modules.xml"));
 
+                bankSlotPrices = new BankSlotPriceCollection();
+                bankSlotPrices.LoadFromFile(Path.Combine(this.BinaryPath, "assets/bank_slot_price.xml"));
+
                 leveling = new Leveling();
                 leveling.Load(Path.Combine(BinaryPath, "assets"));
 
@@ -148,6 +154,8 @@ namespace SelectCharacter {
                 raceStats = new RaceStatsService(this);
 
                 friends = new FriendService(this);
+
+
 
                 Protocol.AllowRawCustomValues = true;
                 this.PublicIpAddress = PublicIPAddressReader.ParsePublicIpAddress(SelectCharacterSettings.Default.PublicIPAddress);

@@ -35,6 +35,8 @@ namespace Login {
         public IPAddress PublicIpAddress { get; protected set; }
         protected int ConnectRetryIntervalSeconds { get; set; }
 
+        public PassManager passManager { get; private set; }
+
         public static new LoginApplication Instance {
             get {
                 return instance;
@@ -54,7 +56,7 @@ namespace Login {
         }
 
         public LoggedInUserCollection LogedInUsers { get; private set; }
-        protected DbReader DbUserLogins { get; private set; }
+        public DbReader DbUserLogins { get; private set; }
 
 
         public LoginApplication() {
@@ -85,6 +87,8 @@ namespace Login {
                 this.DbUserLogins.Setup(GameServerSettings.Default.MongoConnectionString, GameServerSettings.Default.DatabaseName, GameServerSettings.Default.DbLoginCollectionName);
 
                 this.LogedInUsers = new LoggedInUserCollection(this);
+
+                passManager = new PassManager(this);
 
                 Protocol.AllowRawCustomValues = true;
                 this.PublicIpAddress = PublicIPAddressReader.ParsePublicIpAddress(GameServerSettings.Default.PublicIPAddress);
@@ -197,8 +201,8 @@ namespace Login {
             return true;
         }
 
-        public DbUserLogin GetUserLogin( string loginId, string gameRefID, out LoginReturnCode code) {
-            return this.DbUserLogins.Get(loginId, gameRefID, out code);
+        public DbUserLogin GetExistingUser( string login, string password, out LoginReturnCode code) {
+            return this.DbUserLogins.GetExistingUser(login, password, out code);
         }
     }
 }

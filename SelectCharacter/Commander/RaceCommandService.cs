@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Collections;
 using ServerClientCommon;
+using SelectCharacter.Events;
 
 namespace SelectCharacter.Commander {
     public class RaceCommandService : IInfoSource {
@@ -111,6 +112,37 @@ namespace SelectCharacter.Commander {
                     return false;
             }
             
+        }
+
+        public bool MakeAdmiral(int race, string sourceLogin, string sourceGameRefID, string sourceCharacterID, string targetLogin, string targetGameRefID, string targetCharacterID ) {
+            bool setted = false;
+            var command = GetCommand(race);
+            if(command != null ) {
+                if(command.commander != null ) {
+                    if(command.commander.characterID == sourceCharacterID ) {
+                        if(false == command.IsAdmiral(targetCharacterID)) {
+                            if(!command.firstAdmiral.has ) {
+                                command.firstAdmiral.Set(targetLogin, targetGameRefID, targetCharacterID);
+                                cache.SetChanged(true);
+                                setted = true;
+                            } else if(!command.secondAdmiral.has) {
+                                command.secondAdmiral.Set(targetLogin, targetGameRefID, targetCharacterID);
+                                cache.SetChanged(true);
+                                setted = true;
+                            }
+                        }
+                    }
+                }
+            }
+            if(setted ) {
+                GenericEvent genEvent = new GenericEvent {
+                    data = GetInfo(),
+                    subCode = (byte)SelectCharacterGenericEventSubCode.CommandsUpdate
+                };
+                application.Clients.SendGenericEventToGameref(sourceGameRefID, genEvent);
+                application.Clients.SendGenericEventToGameref(targetGameRefID, genEvent);
+            }
+            return setted;
         }
 
         //Get info for all commands

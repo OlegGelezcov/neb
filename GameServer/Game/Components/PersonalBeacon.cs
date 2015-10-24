@@ -16,7 +16,6 @@ namespace Nebula.Game.Components {
 
         public void Init(PersonalBeaconComponentData data) {
             mInitData = data;
-            base.Init(data);
             mTimer = data.time;
         }
         public override void Start() {

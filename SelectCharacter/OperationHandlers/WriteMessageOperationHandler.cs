@@ -35,7 +35,7 @@ namespace SelectCharacter.OperationHandlers {
             var targetMailBox = application.Mail.GetMailBox(targetPlayer.GameRefId);
 
             bool result = application.Mail.StartWriteMessageTransaction(sourcePlayer.GameRefId, sourcePlayer.Login, operation.inventoryType, targetPlayer.GameRefId, operation.Title, operation.Body,
-                operation.Attachments);
+                operation.Attachments, operation.targetServer);
 
             WriteMailMessageOperationResponse response = new WriteMailMessageOperationResponse { status = result };
 

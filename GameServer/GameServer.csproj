@@ -64,10 +64,10 @@
     <Compile Include="ConnectionConfigCollection.cs" />
     <Compile Include="ConnectionRole.cs" />
     <Compile Include="ConsoleLogContext.cs" />
+    <Compile Include="DatabaseUsers.cs" />
     <Compile Include="Database\CharacterDatabase.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Database\DatabaseUtils.cs" />
-    <Compile Include="Database\IDocument.cs" />
     <Compile Include="Database\InventoryDatabase.cs" />
     <Compile Include="Database\InventoryDocument.cs" />
     <Compile Include="Database\InventoryItemDocumentElement.cs" />
@@ -83,8 +83,6 @@
     <Compile Include="Database\WeaponDatabase.cs" />
     <Compile Include="Database\WeaponDocument.cs" />
     <Compile Include="Database\WorkshopDocument.cs" />
-    <Compile Include="Database\IDatabaseDocument.cs" />
-    <Compile Include="Database\DatabaseDocumentCollection.cs" />
     <Compile Include="Database\WorldDocument.cs" />
     <Compile Include="Database\WorldState.cs" />
     <Compile Include="GameServerSettings.cs" />
@@ -203,6 +201,7 @@
     <Compile Include="Game\OperationHandlers\MoveOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\RaiseGenericEventOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\RemoveInterestAreaOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\RequestServerIDOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\SetPropertiesOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\SetViewDistanceOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\SpawnItemOperationHandler.cs" />
@@ -421,6 +420,8 @@
     <Compile Include="Server\Operations\RaiseGenericEventResponse.cs" />
     <Compile Include="Server\Operations\RemoveInterestArea.cs" />
     <Compile Include="Server\Operations\RemoveInterestAreaResponse.cs" />
+    <Compile Include="Server\Operations\RequestServerID.cs" />
+    <Compile Include="Server\Operations\RequestServerIDResponse.cs" />
     <Compile Include="Server\Operations\SelectCharacter.cs" />
     <Compile Include="Server\Operations\SelectCharacterResponse.cs" />
     <Compile Include="Server\Operations\SetProperties.cs" />
@@ -512,6 +513,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\connection_config.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Docs\message_table.txt" />

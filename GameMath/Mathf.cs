@@ -148,5 +148,12 @@
             }
             return value;
         }
+
+        public static int ClampLess(int iVal, int iMin) {
+            if(iVal < iMin ) {
+                iVal = iMin;
+            }
+            return iVal;
+        }
     }
 }

@@ -20,5 +20,11 @@ namespace SelectCharacter.Operations {
         [DataMember(Code =(byte)ParameterCode.AttachmentId, IsOptional =false)]
         public string AttachmentId { get; set; }
 
+        [DataMember(Code =(byte)ParameterCode.ServerId, IsOptional =false)]
+        public string targetServer { get; set; }
+
+        public override string ToString() {
+            return string.Format("Login: {0}, MSG: {1}, ATCH: {2}, SRV: {3}", Login, MessageId, AttachmentId, targetServer);
+        }
     }
 }

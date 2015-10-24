@@ -11,6 +11,7 @@ namespace ServerClientCommon {
         RequestToGuild,
         RequestFriend,
         RequestToGroup,
-        MiningStationAttack
+        MiningStationAttack,
+        AuctionPurchase
     }
 }

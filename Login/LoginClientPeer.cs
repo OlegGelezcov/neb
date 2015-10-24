@@ -1,9 +1,11 @@
 ﻿using Common;
 using ExitGames.Logging;
+using Login.OperationHandlers;
 using Login.Operations;
 using Photon.SocketServer;
 using PhotonHostRuntimeInterfaces;
 using ServerClientCommon;
+using System.Collections.Generic;
 
 namespace Login {
     public class LoginClientPeer : PeerBase {
@@ -12,9 +14,25 @@ namespace Login {
         private LoginApplication application;
         public string login { get; private set; } = string.Empty;
 
+        private readonly Dictionary<OperationCode, BaseOperationHandler> mOperationHandlers;
+
+        public MethodInvoker invoker { get; }
+
         public LoginClientPeer(InitRequest initRequest, LoginApplication application)
             : base(initRequest.Protocol, initRequest.PhotonPeer) {
+            
             this.application = application;
+            invoker = new MethodInvoker(application, this);
+
+            mOperationHandlers = new Dictionary<OperationCode, BaseOperationHandler>();
+            mOperationHandlers.Add(OperationCode.Login, new LoginOperationHandler(application, this));
+            mOperationHandlers.Add(OperationCode.GetUsersOnline, new GetUsersOnlineHandler(application, this));
+            mOperationHandlers.Add(OperationCode.RegisterUser, new RegisterUserHandler(application, this));
+            mOperationHandlers.Add(OperationCode.GetUserPasses, new GetUserPassesOperationHandler(application, this));
+            mOperationHandlers.Add(OperationCode.RecoverUser, new RecoverUserOperationHandler(application, this));
+            mOperationHandlers.Add(OperationCode.UsePass, new UsePassOperationHandler(application, this));
+            mOperationHandlers.Add(OperationCode.AddPass, new AddPassOperationHandler(application, this));
+            mOperationHandlers.Add(OperationCode.ExecAction, new InvokeMethodOperationHandler(application, this));
         }
 
         protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail) {
@@ -25,68 +43,16 @@ namespace Login {
         }
 
         protected override void OnOperationRequest(OperationRequest operationRequest, SendParameters sendParameters) {
-
             OperationResponse response;
-            switch((OperationCode)operationRequest.OperationCode) {
-                default:
-                    {
-                        response = new OperationResponse(operationRequest.OperationCode) {
-                            ReturnCode = (short)ReturnCode.OperationInvalid,
-                            DebugMessage = "Unknown operation code"
-                        };
-                        break;
-                    }
-                case OperationCode.Login:
-                    {
-                        LoginOperationRequest operation = new LoginOperationRequest(this.Protocol, operationRequest);
-
-                        if(!operation.IsValid ) {
-                            response = new OperationResponse(operationRequest.OperationCode) {
-                                ReturnCode = (short)ReturnCode.OperationInvalid,
-                                DebugMessage = "Login operation parameters invalid"
-                            };
-                        } else {
-                            if(false == this.application.CheckAccessToken(operation.LoginId, operation.AccessToken)) {
-                                response = new OperationResponse(operationRequest.OperationCode) {
-                                    ReturnCode = (short)ReturnCode.AccessTokenInvalid,
-                                    DebugMessage = "Access token invalid"
-                                };
-                            } else {
-                                LoginReturnCode code = LoginReturnCode.Ok;
-
-                                var userLogin = this.application.GetUserLogin(operation.LoginId, operation.AccessToken, out code);
-                                if(code != LoginReturnCode.Ok ) {
-                                    var rObj = new LoginOperationResponse {
-                                        GameRefId = (userLogin != null) ? userLogin.GameRefId : operation.AccessToken,
-                                        Login = (userLogin != null ) ? userLogin.LoginId : operation.LoginId,
-                                        returnCode = (int)code
-                                    };
-                                    response = new OperationResponse(operationRequest.OperationCode, rObj);
-                                    application.LogedInUsers.OnUserLoggedIn(rObj.Login, rObj.GameRefId, rObj.GameRefId, rObj.Login);
-                                    login = rObj.Login;
-                                } else {
-                                    var rObj = new LoginOperationResponse {
-                                        GameRefId = userLogin.GameRefId,
-                                        Login = userLogin.LoginId,
-                                        returnCode = (int)code
-                                    };
-                                    response = new OperationResponse(operationRequest.OperationCode, rObj);
-                                    application.LogedInUsers.OnUserLoggedIn(rObj.Login, rObj.GameRefId, rObj.GameRefId, rObj.Login);
-                                    login = rObj.Login;
-                                }
-                                
-                            }
-                        }
-                        break;
-                    }
-                case OperationCode.GetUsersOnline:
-                    {
-                        var responseObject = new GetUserOnlineResponse { count = application.LogedInUsers.Count };
-                        response = new OperationResponse((byte)OperationCode.GetUsersOnline, responseObject);
-                        break;
-                    }
+            if (mOperationHandlers.ContainsKey((OperationCode)operationRequest.OperationCode)) {
+                response = mOperationHandlers[(OperationCode)operationRequest.OperationCode].Handle(operationRequest, sendParameters);
+            } else {
+                response = new OperationResponse(operationRequest.OperationCode) {
+                    ReturnCode = (short)ReturnCode.OperationInvalid,
+                    DebugMessage = "Unknown operation code"
+                };
             }
-
+          
             if(response != null ) {
                 this.SendOperationResponse(response, sendParameters);
             }

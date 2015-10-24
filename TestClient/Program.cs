@@ -18,6 +18,7 @@ using Space.Game.Ship;
 using TestClient.TestDatabase;
 using TestClient.PlayMarketReviewReader;
 using TestClient.TestDropping;
+using System.Threading;
 
 namespace TestClient {
     public class ClientApplication {
@@ -40,8 +41,42 @@ namespace TestClient {
             //    Console.WriteLine("{0}-{1}-{2}", review.rating, review.title, review.text);
             //}
 
-            TestDroppingProbs testDroppingProbs = new TestDroppingProbs();
-            testDroppingProbs.TestModifyWeights();
+            //TestDroppingProbs testDroppingProbs = new TestDroppingProbs();
+            //testDroppingProbs.TestModifyWeights();
+
+            //Push sender
+            /*
+            PushSender sender = new PushSender();
+
+            Thread t = new Thread(() => {
+                
+                sender.Setup();
+                sender.Run();
+            });
+            t.Start();
+            t.Join();
+            Console.WriteLine("exit from push sender");*/
+
+            /*
+            RegexUtilities util = new RegexUtilities();
+            string[] emailAddresses = { "david.jones@proseware.com", "d.j@server1.proseware.com",
+                                  "jones@ms1.proseware.com", "j.@server1.proseware.com",
+                                  "j@proseware.com9", "js#internal@proseware.com",
+                                  "j_9@[129.126.118.1]", "j..s@proseware.com",
+                                  "js*@proseware.com", "js@proseware..com",
+                                  "js@proseware.com9", "j.s@server1.proseware.com",
+                                   "\"j\\\"s\\\"\"@proseware.com", "js@contoso.中国" };
+
+            foreach (var emailAddress in emailAddresses) {
+                if (util.IsValidEmail(emailAddress))
+                    Console.WriteLine("Valid: {0}", emailAddress);
+                else
+                    Console.WriteLine("Invalid: {0}", emailAddress);
+            }*/
+
+            EmailSender sender = new EmailSender("smtp.yandex.com", 465, "support@depielco.com", "ks00ts14");
+            bool result = sender.SendMessage("oleggelezcov@komargames.com", "dfdff sf", "test bofy of sadad");
+            Console.WriteLine( result );
         }
 
         private static void OldTests() {

@@ -79,6 +79,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="PlayMarketReviewReader\ReviewReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PushSender.cs" />
     <Compile Include="Scripts\CSharpGrammar.cs" />
     <Compile Include="Scripts\TestDSL.cs" />
     <Compile Include="SelectCharacterTests\TestFilters.cs" />
@@ -133,6 +134,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TestMath\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\push.xml" />
+    <Content Include="push.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

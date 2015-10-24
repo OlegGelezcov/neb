@@ -225,7 +225,15 @@ namespace Nebula.Game {
                         break;
                     case ComponentID.Teleport:
                         {
-                            components.Add(typeof(Teleport));
+                            switch((comp.Value as MultiComponentData).subType) {
+                                case ComponentSubType.SimpleTeleport:
+                                    components.Add(typeof(Teleport));
+                                    break;
+                                case ComponentSubType.PersonalTeleport:
+                                    components.Add(typeof(PersonalBeacon));
+                                    break;
+                            }
+                            
                         }
                         break;
                     case ComponentID.SubZone:
@@ -476,7 +484,14 @@ namespace Nebula.Game {
                         break;
                     case ComponentID.Teleport:
                         {
-                            nebObject.GetComponent<Teleport>().Init(comp.Value as TeleportComponentData);
+                            switch((comp.Value as MultiComponentData).subType) {
+                                case ComponentSubType.SimpleTeleport:
+                                    nebObject.GetComponent<Teleport>().Init(comp.Value as TeleportComponentData);
+                                    break;
+                                case ComponentSubType.PersonalTeleport:
+                                    nebObject.GetComponent<PersonalBeacon>().Init(comp.Value as PersonalBeaconComponentData);
+                                    break;
+                            }
                         }
                         break;
                     case ComponentID.SubZone:

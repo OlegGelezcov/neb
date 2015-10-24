@@ -47,7 +47,7 @@ namespace Nebula {
                 GameApplication.SetResourcePool(new ResourcePool(GameApplication.Instance.BinaryPath));
             }
             var globalResourceCheck = GameApplication.ResourcePool().Resource("global");
-            GameApplication.Instance.DatabaseManager.Setup();
+            GameApplication.Instance.DatabaseManager.Setup(GameServerSettings.Default.DatabaseConnectionString);
 
 
             foreach (string locationID in GameApplication.Instance.CurrentRole().Locations) {

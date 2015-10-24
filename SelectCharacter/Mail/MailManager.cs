@@ -187,7 +187,7 @@ namespace SelectCharacter.Mail {
             }
         }
 
-        public bool StartPutAttachmentToStation(string login, string messageID, string attachmentID ) {
+        public bool StartPutAttachmentToStation(string login, string messageID, string attachmentID, string targetServer) {
 
             log.InfoFormat("PUT ATTCHMENT to inventory started");
 
@@ -231,7 +231,9 @@ namespace SelectCharacter.Mail {
                 tag = new Hashtable { { (int)SPC.Id, attachmentID }, { (int)SPC.Message, messageID } },
                 targetObject = attachment.objectHash,
                 transactionID = Guid.NewGuid().ToString(),
-                transactionSource = (byte)TransactionSource.Mail
+                transactionSource = (byte)TransactionSource.Mail,
+                 transactionEndServer = targetServer,
+                  transactionStartServer = SelectCharacterApplication.ServerId.ToString()
             };
             EventData evt = new EventData((byte)S2SEventCode.PUTInventoryItemStart, transaction);
             mPutTransactionPool.StartTransaction(transaction);
@@ -260,7 +262,7 @@ namespace SelectCharacter.Mail {
         }
 
         public bool StartWriteMessageTransaction(string senderGameRefID, string senderDisplayName, byte inventoryType, 
-            string receiverGameRefID, string title, string body, Hashtable attachments ) {
+            string receiverGameRefID, string title, string body, Hashtable attachments, string targetServer) {
             log.InfoFormat("Started writing message");
 
             var mailBox = GetMailBox(receiverGameRefID);
@@ -327,7 +329,9 @@ namespace SelectCharacter.Mail {
                     postTransactionAction = (byte)PostTransactionAction.PutItemsToAttachment,
                     tag = new Hashtable(),
                     transactionID = Guid.NewGuid().ToString(),
-                    transactionSource = (byte)TransactionSource.Mail
+                    transactionSource = (byte)TransactionSource.Mail,
+                    transactionEndServer = targetServer,
+                    transactionStartServer = SelectCharacterApplication.ServerId.ToString()
                 };
                 start.SetNotSended(message);
 

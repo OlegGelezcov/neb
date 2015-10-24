@@ -98,19 +98,7 @@ namespace SelectCharacter {
                         }
                     case S2SEventCode.GETInventoryItemEnd:
                         {
-                            GETInventoryItemTransactionEnd end = new GETInventoryItemTransactionEnd {
-                                characterID = (string)eventData[(byte)ServerToServerParameterCode.CharacterId],
-                                count = (int)eventData[(byte)ServerToServerParameterCode.Count],
-                                gameRefID = (string)eventData[(byte)ServerToServerParameterCode.GameRefId],
-                                inventoryType = (byte)eventData[(byte)ServerToServerParameterCode.InventoryType],
-                                itemID = (string)eventData[(byte)ServerToServerParameterCode.ID],
-                                result = eventData[(byte)ServerToServerParameterCode.Result],
-                                returnCode = (short)eventData[(byte)ServerToServerParameterCode.ReturnCode],
-                                success = (bool)eventData[(byte)ServerToServerParameterCode.Success],
-                                transactionID = (string)eventData[(byte)ServerToServerParameterCode.TransactionID],
-                                transactionSource = (byte)eventData[(byte)ServerToServerParameterCode.TransactionSource]
-                            };
-
+                            GETInventoryItemTransactionEnd end = new GETInventoryItemTransactionEnd(eventData);
                             switch((TransactionSource)end.transactionSource) {
                                 case TransactionSource.Store:
                                     {
@@ -119,23 +107,19 @@ namespace SelectCharacter {
 
                                         break;
                                     }
+                                case TransactionSource.Bank:
+                                    {
+
+                                        application.Clients.HandleTransaction(end);
+                                        log.Info("bank add transaction returned....");
+                                        break;
+                                    }
                             }
                             break;
                         }
                     case S2SEventCode.GETInventoryItemsEnd:
                         {
-                            GETInventoryItemsTransactionEnd end = new GETInventoryItemsTransactionEnd {
-                                characterID = (string)eventData[(byte)ServerToServerParameterCode.CharacterId],
-                                gameRefID = (string)eventData[(byte)ServerToServerParameterCode.GameRefId],
-                                inventoryType = (byte)eventData[(byte)ServerToServerParameterCode.InventoryType],
-                                items = (Hashtable)eventData[(byte)ServerToServerParameterCode.Items],
-                                result = eventData[(byte)ServerToServerParameterCode.Result],
-                                returnCode = (short)eventData[(byte)ServerToServerParameterCode.ReturnCode],
-                                success = (bool)eventData[(byte)ServerToServerParameterCode.Success],
-                                transactionID = (string)eventData[(byte)ServerToServerParameterCode.TransactionID],
-                                transactionSource = (byte)eventData[(byte)ServerToServerParameterCode.TransactionSource]
-                                
-                            };
+                            GETInventoryItemsTransactionEnd end = new GETInventoryItemsTransactionEnd(eventData);
                             switch((TransactionSource)end.transactionSource) {
                                 case TransactionSource.Mail:
                                     {
@@ -186,18 +170,7 @@ namespace SelectCharacter {
         }
 
         private void HandlePUTInventoryTransactionEnd(IEventData eventData, SendParameters sendParameters) {
-            PUTInventoryItemTransactionEnd end = new PUTInventoryItemTransactionEnd {
-                characterID = (string)eventData.Parameters[(byte)ServerToServerParameterCode.CharacterId],
-                count = (int)eventData.Parameters[(byte)ServerToServerParameterCode.Count],
-                gameRefID = (string)eventData.Parameters[(byte)ServerToServerParameterCode.GameRefId],
-                inventoryType = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.InventoryType],
-                itemID = (string)eventData.Parameters[(byte)ServerToServerParameterCode.ID],
-                result = eventData.Parameters[(byte)ServerToServerParameterCode.Result] as object,
-                returnCode = (short)eventData.Parameters[(byte)ServerToServerParameterCode.ReturnCode],
-                success = (bool)eventData.Parameters[(byte)ServerToServerParameterCode.Success],
-                transactionID = eventData.Parameters[(byte)ServerToServerParameterCode.TransactionID] as string,
-                transactionSource = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.TransactionSource]
-            };
+            PUTInventoryItemTransactionEnd end = new PUTInventoryItemTransactionEnd(eventData);
             switch((TransactionSource)end.transactionSource) {
                 case TransactionSource.Store:
                     {
@@ -209,6 +182,12 @@ namespace SelectCharacter {
                     {
                         log.InfoFormat("Handle PUT Inventory transaction end with MAIL source");
                         application.Mail.inventoryPUTPool.HandleTransaction(end);
+                        break;
+                    }
+                case TransactionSource.Bank:
+                    {
+                        log.InfoFormat("handle put bank transaction returned");
+                        application.Clients.HandleTransaction(end);
                         break;
                     }
                 default:

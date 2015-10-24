@@ -51,7 +51,7 @@
                 case BonusType.decrease_time_of_negative_speed_buffs:
                     return subCache.String(buff.bonusType, buff.description);
                 default:
-                    return string.Empty;
+                    return subCache.String(buff.bonusType, buff.description);
 
             }
         }

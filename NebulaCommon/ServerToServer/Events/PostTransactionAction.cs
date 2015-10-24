@@ -10,6 +10,10 @@ namespace NebulaCommon.ServerToServer.Events {
         BuyAuctionItem,
         RemoveMailAttachment,
         PutItemsToAttachment,
-        BuyStoreItem
+        BuyStoreItem,
+        DecreasePasses,
+        IncreasePasses,
+        WithdrawFromBank,
+        AddToBank
     }
 }

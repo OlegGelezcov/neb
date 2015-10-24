@@ -62,16 +62,41 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbReader.cs" />
+    <Compile Include="DbUserLogin.cs" />
+    <Compile Include="Events\PassesUpdateEvent.cs" />
     <Compile Include="GameServerSettings.cs" />
     <Compile Include="LoggedInUser.cs" />
     <Compile Include="LoggedInUserCollection.cs" />
     <Compile Include="LoginApplication.cs" />
     <Compile Include="LoginClientPeer.cs" />
+    <Compile Include="MethodInvoker.cs" />
+    <Compile Include="OperationHandlers\AddPassOperationHandler.cs" />
+    <Compile Include="OperationHandlers\BaseOperationHandler.cs" />
+    <Compile Include="OperationHandlers\GetUserPassesOperationHandler.cs" />
+    <Compile Include="OperationHandlers\GetUsersOnlineHandler.cs" />
+    <Compile Include="OperationHandlers\InvokeMethodOperationHandler.cs" />
+    <Compile Include="OperationHandlers\LoginOperationHandler.cs" />
+    <Compile Include="OperationHandlers\RecoverUserOperationHandler.cs" />
+    <Compile Include="OperationHandlers\RegisterUserHandler.cs" />
+    <Compile Include="OperationHandlers\UsePassOperationHandler.cs" />
+    <Compile Include="Operations\AddPassOperationResponse.cs" />
+    <Compile Include="Operations\AddPassRequest.cs" />
     <Compile Include="Operations\GetUserOnlineRequest.cs" />
     <Compile Include="Operations\GetUserOnlineResponse.cs" />
+    <Compile Include="Operations\GetUserPassesRequest.cs" />
+    <Compile Include="Operations\GetUserPassesResponse.cs" />
+    <Compile Include="Operations\InvokeMethodOperationRequest.cs" />
+    <Compile Include="Operations\InvokeMethodOperationResponse.cs" />
     <Compile Include="Operations\LoginOperationRequest.cs" />
     <Compile Include="Operations\LoginOperationResponse.cs" />
+    <Compile Include="Operations\RecoverUserRequest.cs" />
+    <Compile Include="Operations\RecoverUserResponse.cs" />
+    <Compile Include="Operations\RegisterUserRequest.cs" />
+    <Compile Include="Operations\RegisterUserResponse.cs" />
+    <Compile Include="Operations\UsePassRequest.cs" />
+    <Compile Include="Operations\UsePassResponse.cs" />
     <Compile Include="OutgoingMasterServerPeer.cs" />
+    <Compile Include="PassManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,9 +128,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

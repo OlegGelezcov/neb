@@ -114,6 +114,10 @@ namespace SelectCharacter.Auction {
         public void OnDisconnect(string characterID) {
             log.InfoFormat("character = {0} disconnect, remove auction entry", characterID);
             PlayerAuctionRequest request;
+
+            if(string.IsNullOrEmpty(characterID)) {
+                return;
+            }
             mCursors.TryRemove(characterID, out request);
         }
     }

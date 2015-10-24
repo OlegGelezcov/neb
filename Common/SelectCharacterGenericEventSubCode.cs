@@ -10,6 +10,9 @@ namespace Common {
         FriendsUpdate,
         CharactersUpdate,
         ConsumablePurchaseStatus,
-        NewMessageCountChanged
+        NewMessageCountChanged,
+        CommandsUpdate,
+        Push,
+        BankUpdate
     }
 }

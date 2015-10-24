@@ -2,14 +2,26 @@
 using ServerClientCommon;
 using System.Collections;
 using System.Xml.Linq;
+using System;
 
 namespace Nebula.Server.Components {
-    public class PersonalBeaconComponentData : TeleportComponentData, IDatabaseComponentData {
+    public class PersonalBeaconComponentData : MultiComponentData, IDatabaseComponentData {
 
         public float time { get; private set; }
 
-        public PersonalBeaconComponentData(XElement element)
-            : base(element) {
+        public override ComponentSubType subType {
+            get {
+                return ComponentSubType.PersonalTeleport;
+            }
+        }
+
+        public override ComponentID componentID {
+            get {
+                return ComponentID.Teleport;
+            }
+        }
+
+        public PersonalBeaconComponentData(XElement element) {
             time = element.GetFloat("time");
         }
 

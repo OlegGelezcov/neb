@@ -23,6 +23,8 @@ namespace Common
         fortification,
         outpost,
         mining_station,
-        nebula_element
+        nebula_element,
+        //pass elenment
+        pass
     }
 }

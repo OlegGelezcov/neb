@@ -15,6 +15,8 @@ namespace Nebula.Resources {
     using UnityEngine;
     using System.Xml.Linq;
     using Common.Space.Game.Resources;
+    using Inap;
+    using ServerClientCommon;
 
     public class DataResources {
 
@@ -29,6 +31,14 @@ namespace Nebula.Resources {
                 return instance;
             }
         }
+
+
+        public DataResources() {
+            if (string.IsNullOrEmpty(mStringsLanguage)) {
+                mStringsLanguage = Language();
+            }
+        }
+        private static string mStringsLanguage;
 
         private bool loaded = false;
         private List<ResModuleData> modules;
@@ -61,8 +71,13 @@ namespace Nebula.Resources {
 
         public ResPassiveBonuses passiveBonuses { get; private set; }
 
+        public StoreItemCollection googleInAps { get; private set; }
+
+        public BankSlotPriceCollection bankPrices { get; private set; }
+
         private Dictionary<string, string> strings;
         private static List<StringData> mLauncherStrings;
+
 
 
         private void Load() {
@@ -84,7 +99,8 @@ namespace Nebula.Resources {
                 this.moduleSetNames = ModulesSetNames.LoadModulesSetNames(Resources.Load<TextAsset>("Data/set_names").text);
                 //this.gameSounds = ResSoundsData.LoadGameSounds(Resources.Load<TextAsset>("Data/sounds").text);
                 this.leveling = ResLoader.LoadLeveling(Resources.Load<TextAsset>("Data/leveling").text);
-                this.strings = LoadAllStringFromFiles("DataClient/Strings");
+                LoadStrings();
+
                 this.zones = ResLoader.LoadZones(Resources.Load<TextAsset>("DataClient/zones").text);
                 this.weapons = ResLoader.LoadWeapons(Resources.Load<TextAsset>("Data/Drop/weapons").text);
                 this.help = ResLoader.LoadHelp(Resources.Load<TextAsset>("DataClient/help").text);
@@ -119,8 +135,27 @@ namespace Nebula.Resources {
                 passiveBonuses = new ResPassiveBonuses();
                 passiveBonuses.Load(Resources.Load<TextAsset>("Data/passive_bonuses").text);
 
+                bankPrices = new BankSlotPriceCollection();
+                bankPrices.LoadFromText(Resources.Load<TextAsset>("Data/bank_slot_price").text);
+                LoadInaps();
+
                 this.loaded = true;
             }
+        }
+
+        /// <summary>
+        /// Reloading all strings from all files ( very slow operation )
+        /// </summary>
+        public void LoadStrings() {
+            this.strings = LoadAllStringFromFiles("DataClient/Strings");
+        }
+
+
+
+        private void LoadInaps() {
+            Debug.Log("load inaps");
+            googleInAps = new StoreItemCollection();
+            googleInAps.Load(UnityEngine.Resources.Load<TextAsset>("DataClient/inap/inap_google").text);
         }
 
         private void LoadSkillLeveling() {
@@ -208,7 +243,7 @@ namespace Nebula.Resources {
             Dictionary<string, string> strings = new Dictionary<string, string>();
             foreach (var e in document.Element("strings").Elements("string")) {
                 string key = e.Attribute("key").Value;
-                string content = e.Attribute(Language()).Value;
+                string content = e.Attribute(currentStringsLanguage).Value;
                 if (!strings.ContainsKey(key)) {
                     strings.Add(key, content);
                 } else {
@@ -216,6 +251,28 @@ namespace Nebula.Resources {
                 }
             }
             return strings;
+        }
+
+
+        public void SetStringLanguage(SystemLanguage lang) {
+            switch(lang) {
+                case SystemLanguage.Russian:
+                    mStringsLanguage = "ru";
+                    break;
+                default:
+                    mStringsLanguage = "en";
+                    break;
+
+            }
+        }
+
+        public static string currentStringsLanguage {
+            get {
+                if(string.IsNullOrEmpty(mStringsLanguage)) {
+                    mStringsLanguage = Language();
+                }
+                return mStringsLanguage;
+            }
         }
 
         private static string Language() {
@@ -415,25 +472,25 @@ namespace Nebula.Resources {
             return this.miscInventoryItems;
         }
 
-        public string GetGameRefID() {
+        //public string GetGameRefID() {
 
-            string gameRefID = PlayerPrefs.GetString(PrefKeys.GAME_REF_ID, string.Empty);
-            //if (string.IsNullOrEmpty(gameRefID)) {
-            //    gameRefID = System.Guid.NewGuid().ToString();
-            //    PlayerPrefs.SetString("GAME_REF_ID", gameRefID);
-            //    PlayerPrefs.Save();
-            //}
-            return gameRefID;
-        }
+        //    string gameRefID = PlayerPrefs.GetString(PrefKeys.GAME_REF_ID, string.Empty);
+        //    //if (string.IsNullOrEmpty(gameRefID)) {
+        //    //    gameRefID = System.Guid.NewGuid().ToString();
+        //    //    PlayerPrefs.SetString("GAME_REF_ID", gameRefID);
+        //    //    PlayerPrefs.Save();
+        //    //}
+        //    return gameRefID;
+        //}
 
         public string GetLogin() {
             return PlayerPrefs.GetString(PrefKeys.LOGIN, string.Empty);
         }
 
-        public void UpdateGameRefID(string newID) {
-            PlayerPrefs.SetString(PrefKeys.GAME_REF_ID, newID);
-            PlayerPrefs.Save();
-        }
+        //public void UpdateGameRefID(string newID) {
+        //    PlayerPrefs.SetString(PrefKeys.GAME_REF_ID, newID);
+        //    PlayerPrefs.Save();
+        //}
 
         public Location GetLocation(string id) {
             return locations.GetLocation(id);

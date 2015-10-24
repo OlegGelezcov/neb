@@ -10,6 +10,7 @@ using NebulaCommon.ServerToServer.Operations;
 using NebulaCommon;
 using System.Net;
 using Common;
+using NebulaCommon.ServerToServer.Events;
 
 namespace Login {
     public class OutgoingMasterServerPeer : ServerPeerBase {
@@ -73,7 +74,47 @@ namespace Login {
 
 
         protected override void OnEvent(IEventData eventData, SendParameters sendParameters) {
-            
+            try {
+                switch((S2SEventCode)eventData.Code) {
+                    case S2SEventCode.GETInventoryItemEnd:
+                        {
+                            GETInventoryItemTransactionEnd end = new GETInventoryItemTransactionEnd(eventData); 
+                            switch((TransactionSource)end.transactionSource) {
+                                case TransactionSource.PassManager:
+                                    {
+                                        application.passManager.getTransactionPool.HandleTransaction(end);
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        log.InfoFormat("Login Master Peer unhandled get transaction source = {0} [red]", (TransactionSource)end.transactionSource);
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                    case S2SEventCode.PUTInventoryItemEnd:
+                        {
+                            PUTInventoryItemTransactionEnd end = new PUTInventoryItemTransactionEnd(eventData); 
+                            switch((TransactionSource)end.transactionSource) {
+                                case TransactionSource.PassManager:
+                                    {
+                                        application.passManager.putTransactionPool.HandleTransaction(end);
+                                    }
+                                    break;
+                                default:
+                                    {
+                                        log.InfoFormat("Login Master Peer unhandled put transaction source = {0} [red]", (TransactionSource)end.transactionSource);
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
+                }
+            } catch(Exception exception) {
+                log.InfoFormat(exception.Message);
+                log.InfoFormat(exception.StackTrace);
+            }
         }
 
         protected override void OnOperationRequest(OperationRequest operationRequest, SendParameters sendParameters) {

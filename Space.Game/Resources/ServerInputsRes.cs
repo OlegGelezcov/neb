@@ -15,6 +15,13 @@ namespace Space.Game.Resources
         public float playerLootChestLifeTime { get; private set; }
         public float miningStationHP { get; private set; }
 
+        public float standardOutpostSize { get; private set; }
+        public float standardFortificationSize { get; private set; }
+        public float standardTurretSize { get; private set; }
+        public float standardOutpostHp { get; private set; }
+        public float standardFortificationHp { get; private set; }
+        public float standardTurretHp { get; private set; }
+
         public void Load(string basePath)
         {
             string fullPath = Path.Combine(basePath, "Data/server_inputs.xml");
@@ -30,6 +37,12 @@ namespace Space.Game.Resources
             }).ToList();
             playerLootChestLifeTime = Inputs.GetValue<float>("player_dead_chest_life_time", 0f);
             miningStationHP = Inputs.GetValue<float>("mining_station_hp", 0f);
+            standardOutpostSize = Inputs.GetValue<float>("standard_outpost_size", 0f);
+            standardFortificationSize = Inputs.GetValue<float>("standard_fortification_size", 0f);
+            standardTurretSize = Inputs.GetValue<float>("standard_turret_size", 0f);
+            standardOutpostHp = Inputs.GetValue<float>("standard_outpost_hp", 0f);
+            standardFortificationHp = Inputs.GetValue<float>("standard_fortification_hp", 0f);
+            standardTurretHp = Inputs.GetValue<float>("standard_turret_hp", 0f);
         }
 
         public T GetValue<T>(string key)

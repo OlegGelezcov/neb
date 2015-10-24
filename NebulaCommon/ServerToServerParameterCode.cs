@@ -41,6 +41,8 @@
         RaceStatus,
         Items,
         PreviousRace,
-        CurrentRace
+        CurrentRace,
+        TransactionStartServer,
+        TransactionEndServer,
     }
 }

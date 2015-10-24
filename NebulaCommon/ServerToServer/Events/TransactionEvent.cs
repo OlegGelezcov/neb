@@ -9,6 +9,11 @@ namespace NebulaCommon.ServerToServer.Events {
         [DataMember(Code = (byte)ServerToServerParameterCode.TransactionID)]
         public string transactionID { get; set; }
 
+        [DataMember(Code = (byte)ServerToServerParameterCode.TransactionStartServer, IsOptional = true)]
+        public string transactionStartServer { get; set; }
+
+        [DataMember(Code = (byte)ServerToServerParameterCode.TransactionEndServer, IsOptional = true)]
+        public string transactionEndServer { get; set; }
 
     }
 }

@@ -6,14 +6,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace Nebula.Game.Components {
 
-    public class Teleport  : NebulaBehaviour {
+    public class Teleport  : NebulaBehaviour{
 
         protected RaceableObject myRaceable { get; set; }
 
         private float mRaceTimer = 60;
+
+        private TeleportComponentData mCachedData;
 
         public override int behaviourId {
             get {
@@ -21,7 +24,9 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public void Init(TeleportComponentData data) { }
+        public void Init(TeleportComponentData data) {
+            mCachedData = data;
+        }
 
         public override void Start() {
             myRaceable = GetComponent<RaceableObject>();
@@ -49,6 +54,5 @@ namespace Nebula.Game.Components {
             }
             return false;
         }
-
     }
 }

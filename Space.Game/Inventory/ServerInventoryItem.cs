@@ -21,5 +21,7 @@ namespace Space.Game.Inventory
             objectInfo.Add((int)SPC.Count, _count);
             return objectInfo;
         }
+
+       
     }
 }

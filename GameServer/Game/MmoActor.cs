@@ -91,6 +91,7 @@ namespace Space.Game {
             operationHandlers.Add(OperationCode.ExitWorkshop, new ExitWorkshopOperationHandler());
             operationHandlers.Add(OperationCode.GetProperties, new GetPropertiesOperationHandler());
             operationHandlers.Add(OperationCode.GetWorlds, new GetWorldsOperationHandler());
+            operationHandlers.Add(OperationCode.RequestServerId, new RequestServerIDOperationHandler());
 
 
             moveHandler = new MoveOperationHandler();

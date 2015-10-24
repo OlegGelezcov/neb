@@ -24,6 +24,8 @@ namespace Common
         GetUsersOnline = 2,
         GetServerVersion = 3,
         GetNews = 4,
+        AddPass = 5,
+        RequestServerId = 6,
         /// <summary>
         /// Create world operation code
         /// </summary>
@@ -146,6 +148,10 @@ namespace Common
         EnterWorkshop = 122,
         ExitWorkshop = 123,
         SelectCharacter = 124,
-        AddCharacter = 125
+        AddCharacter = 125,
+        RegisterUser = 126,
+        GetUserPasses = 127,
+        RecoverUser = 128,
+        UsePass = 129,
     }
 }

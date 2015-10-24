@@ -9,5 +9,6 @@ namespace Common
     {
         ship = 0,
         station = 1,
+        bank = 2
     }
 }

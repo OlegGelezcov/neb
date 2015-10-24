@@ -38,5 +38,15 @@ namespace SelectCharacter.Commander {
             }
             return false;
         }
+
+        public bool IsAdmiral(string characterID ) {
+            if(firstAdmiral.has && firstAdmiral.characterID == characterID ) {
+                return true;
+            }
+            if(secondAdmiral.has && secondAdmiral.characterID == characterID ) {
+                return true;
+            }
+            return false;
+        }
     }
 }

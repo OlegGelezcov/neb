@@ -47,6 +47,14 @@ namespace Master {
         }
 
 
+        private ServerType GetServerTypeForTransaction(IEventData eventData) {
+            TransactionSource transactionSource = (TransactionSource)eventData.Parameters.GetValue<byte>((byte)ServerToServerParameterCode.TransactionSource, (byte)TransactionSource.Mail);
+            if(transactionSource == TransactionSource.PassManager) {
+                return ServerType.Login;
+            }
+            return ServerType.SelectCharacter;
+        }
+
 
         protected override void OnEvent(IEventData eventData, SendParameters sendParameters) {
             try {
@@ -68,32 +76,38 @@ namespace Master {
                         }
                     case S2SEventCode.GETInventoryItemStart:
                         {
-                            Transport(eventData, sendParameters, ServerType.Game);
+                            //Transport(eventData, sendParameters, ServerType.Game);
+                            TransportTransactionForward(eventData, sendParameters);
                             break;
                         }
                     case S2SEventCode.GETInventoryItemEnd:
                         {
-                            Transport(eventData, sendParameters, ServerType.SelectCharacter);
+                            TransportTransactionBack(eventData, sendParameters);
+                            //Transport(eventData, sendParameters, GetServerTypeForTransaction(eventData));
                             break;
                         }
                     case S2SEventCode.GETInventoryItemsStart:
                         {
-                            Transport(eventData, sendParameters, ServerType.Game);
+                            TransportTransactionForward(eventData, sendParameters);
+                            //Transport(eventData, sendParameters, ServerType.Game);
                             break;
                         }
                     case S2SEventCode.GETInventoryItemsEnd:
                         {
-                            Transport(eventData, sendParameters, ServerType.SelectCharacter);
+                            TransportTransactionBack(eventData, sendParameters);
+                            //Transport(eventData, sendParameters, GetServerTypeForTransaction(eventData));
                             break;
                         }
                     case S2SEventCode.PUTInventoryItemStart:
                         {
-                            Transport(eventData, sendParameters, ServerType.Game);
+                            TransportTransactionForward(eventData, sendParameters);
+                            //Transport(eventData, sendParameters, ServerType.Game);
                             break;
                         }
                     case S2SEventCode.PUTInventoryItemEnd:
                         {
-                            Transport(eventData, sendParameters, ServerType.SelectCharacter);
+                            TransportTransactionBack(eventData, sendParameters);
+                            //Transport(eventData, sendParameters, GetServerTypeForTransaction(eventData));
                             break;
                         }
                     case S2SEventCode.InvokeMethodStart:
@@ -122,6 +136,28 @@ namespace Master {
                 }
             }catch(Exception ex) {
                 log.Error(ex);
+            }
+        }
+
+        private void TransportTransactionForward(IEventData evt, SendParameters sendParameters) {
+            TransportTransaction(evt, sendParameters, true);
+        }
+
+        private void TransportTransactionBack(IEventData evt, SendParameters sendParameters) {
+            TransportTransaction(evt, sendParameters, false);
+        }
+
+        private void TransportTransaction(IEventData evt, SendParameters sendParameters, bool forward) {
+            string serverId = string.Empty;
+            if(forward) {
+                serverId = (string)evt.Parameters[(byte)ServerToServerParameterCode.TransactionEndServer];
+            } else {
+                serverId = (string)evt.Parameters[(byte)ServerToServerParameterCode.TransactionStartServer];
+            }
+            if (!string.IsNullOrEmpty(serverId)) {
+                application.GameServers.SendEvent(evt, sendParameters, serverId);
+            } else {
+                log.ErrorFormat("server id empty at event: {0}", (S2SEventCode)evt.Code);
             }
         }
 

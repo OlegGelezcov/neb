@@ -23,12 +23,24 @@ namespace SelectCharacter.OperationHandlers {
                 return new OperationResponse(request.OperationCode) { ReturnCode = (short)ReturnCode.InvalidOperationParameter, DebugMessage = "Invalid GameRefId" };
             }
 
+            if(string.IsNullOrEmpty(operation.login)) {
+                return new OperationResponse(request.OperationCode) {
+                    ReturnCode = (short)ReturnCode.InvalidOperationParameter,
+                    DebugMessage = "Invalid login parameter"
+                };
+            }
+
             peer.SetId(operation.GameRefId);
+            peer.SetLogin(operation.login);
+
             if (!application.Clients.OnConnect(peer)) {
                 return new OperationResponse(request.OperationCode) { ReturnCode = (short)ReturnCode.InvalidOperation, DebugMessage = "Error of registering client" };
             }
 
             log.InfoFormat("register client peer = {0}", peer.id);
+
+            var bankSave = application.DB.LoadBank(operation.login);
+            peer.SetBank(bankSave);
 
             return new OperationResponse(request.OperationCode) { ReturnCode = (short)ReturnCode.Ok };
         }

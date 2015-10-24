@@ -52,6 +52,12 @@ namespace Common
         SourceCharacterId = 15,
         GuildId = 16,
         Page = 17,
+        Email = 18,
+        Passes = 19,
+        ExpireTime = 20,
+        CurrentTime = 21,
+        Language = 22,
+        ServerId,
         /// <summary>
         /// The event code.
         /// </summary>

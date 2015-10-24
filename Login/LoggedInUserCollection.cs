@@ -23,13 +23,13 @@ namespace Login {
         /// <param name="loginId"></param>
         /// <param name="accessToken"></param>
         /// <param name="gameRefId"></param>
-        public void OnUserLoggedIn(string loginId, string accessToken, string gameRefId, string login) {
+        public void OnUserLoggedIn(string login, string gameRef, LoginClientPeer peer) {
             lock(syncRoot) {
                 LoggedInUser user;
-                if(this.TryGetValue(loginId, out user)) {
-                    this.Remove(loginId);
+                if(this.TryGetValue(login, out user)) {
+                    this.Remove(login);
                 }
-                this.Add(loginId, new LoggedInUser { LoginId = loginId, AccessToken = accessToken, GameRefId = gameRefId, Login = login });
+                this.Add(login, new LoggedInUser(login, gameRef, peer) );
                 log.InfoFormat("added user = {0} yellow", login);
             }
         }
@@ -42,6 +42,15 @@ namespace Login {
             lock(this.syncRoot) {
                 this.Remove(loginId);
                 log.InfoFormat("removed user = {0} yellow", loginId);
+            }
+        }
+
+        public void SendPassesUpdateEvent(DbUserLogin dbUser) {
+            lock(syncRoot) {
+                LoggedInUser user;
+                if(TryGetValue(dbUser.login, out user)) {
+                    user.SendPassesUpdateEvent(dbUser);
+                }
             }
         }
     }

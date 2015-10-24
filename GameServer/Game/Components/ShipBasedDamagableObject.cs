@@ -61,8 +61,10 @@ namespace Nebula.Game.Components {
 
         public override float maximumHealth {
             get {
-                
-                float maxHp =  baseMaximumHealth * (1.0f + mBonuses.maxHpPcBonus) + mBonuses.maxHpCntBonus;
+                float maxHp = baseMaximumHealth;
+                if (mBonuses != null) {
+                    maxHp = baseMaximumHealth * (1.0f + mBonuses.maxHpPcBonus) + mBonuses.maxHpCntBonus;
+                }
                 maxHp = ApplyMaximumHpPassiveBonus(maxHp);
                 return maxHp;
             }

@@ -89,6 +89,7 @@ namespace Nebula.Game.Components {
         private void CheckGodState() {
             var world = nebulaObject.world as MmoWorld;
             if(world.FindObjectsOfType<Outpost>().Count > 0 ) {
+
                 if(!mDamagable.god) {
                     //log.Info("Set MainOutpost GOD to true");
                     mDamagable.SetGod(true);

@@ -1,36 +1,28 @@
 ﻿using Common;
-using ExitGames.Concurrency.Fibers;
 using ExitGames.Configuration;
 using ExitGames.Diagnostics.Monitoring;
 using ExitGames.Logging;
 using ExitGames.Logging.Log4Net;
 using log4net;
 using log4net.Config;
+using Nebula;
 using NebulaCommon;
+using NebulaCommon.SelectCharacter;
+using NebulaCommon.ServerToServer.Operations;
 using Photon.SocketServer;
 using Photon.SocketServer.Diagnostics;
 using Photon.SocketServer.ServerToServer;
-using Space;
 using Space.Database;
 using Space.Game;
-using Space.Game.Inventory;
-using Space.Server;
 using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Collections.Generic;
-
 using LogManager = ExitGames.Logging.LogManager;
-using Space.Game.Ship;
-using NebulaCommon.ServerToServer.Operations;
-using NebulaCommon.SelectCharacter;
-using System.Collections;
-using Nebula;
-using System.Collections.Concurrent;
-using System.Threading.Tasks;
 
 public class GameApplication : ApplicationBase
 {
@@ -55,6 +47,8 @@ public class GameApplication : ApplicationBase
     protected int ConnectRetryIntervalSeconds { get; set; }
 
     public GameUpdater updater { get; private set; }
+
+    private DatabaseUsers mDatabaseUsers;
 
 
     private readonly DatabaseManager databaseManager = new DatabaseManager();
@@ -109,6 +103,9 @@ public class GameApplication : ApplicationBase
         ReceiveRoleName();
         ReceiveRole();
 
+        mDatabaseUsers = new DatabaseUsers();
+        mDatabaseUsers.Load(BinaryPath);
+
         UpdateMasterEndPoint();
         this.GamingTcpPort = currentRole.GamingTcpPort;
         this.GamingUdpPort = currentRole.GamingUdpPort;
@@ -125,6 +122,14 @@ public class GameApplication : ApplicationBase
             log.Error(exception);
         }
     }
+
+    //public string ConnectionString() {
+    //    var dbUser = mDatabaseUsers.GetUser(roleName);
+    //    if(dbUser != null ) {
+    //        return dbUser.ConnectionString(GameServerSettings.Default.DatabaseIP);
+    //    }
+    //    return string.Empty;
+    //}
 
     private void ReceiveRole() {
         try {

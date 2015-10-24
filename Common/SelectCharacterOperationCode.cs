@@ -32,6 +32,9 @@ namespace Common {
         GetPlayerStore,
         BuyAuctionItem,
         DeleteAuctionItem,
-        SetNewPrice
+        SetNewPrice,
+        SendPushToPlayers,
+        MoveItemFromStationToBank,
+        MoveItemFromBankToStation
     }
 }

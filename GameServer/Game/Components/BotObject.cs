@@ -57,5 +57,11 @@ namespace Nebula.Game.Components {
                 return (int)ComponentID.Bot;
             }
         }
+
+        public bool isTurret {
+            get {
+                return (mBotSubType == (byte)BotItemSubType.Turret);
+            }
+        }
     }
 }

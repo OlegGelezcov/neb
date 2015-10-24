@@ -175,9 +175,9 @@ namespace SelectCharacter {
             return (int)ReturnCode.Ok;
         }
 
-        public object SellToNPC(string login,  string gameRefID, string characterID, int count, byte inventoryType, string itemID ) {
+        public object SellToNPC(string login,  string gameRefID, string characterID, int count, byte inventoryType, string itemID, string targetServer) {
             //application.Stores.RequestItemFromInventory(login, characterID, count, gameRefID, (InventoryType)inventoryType, itemID, PostTransactionAction.SellItemToNPC);
-            application.Stores.SellItemToNPC(login, gameRefID, characterID, count, (InventoryType)inventoryType, itemID);
+            application.Stores.SellItemToNPC(login, gameRefID, characterID, count, (InventoryType)inventoryType, itemID, targetServer);
             return 0;
         }
 
@@ -185,12 +185,12 @@ namespace SelectCharacter {
             return application.consumableItems.GetInfo();
         }
 
-        public bool BuyConsumableItem(string login, string gameRefID, string characterID, int race, string consumableItemID) {
-            return application.Stores.BuyConsumableItem(login, gameRefID, characterID, race, consumableItemID);
+        public bool BuyConsumableItem(string login, string gameRefID, string characterID, int race, string consumableItemID, string targetServer) {
+            return application.Stores.BuyConsumableItem(login, gameRefID, characterID, race, consumableItemID, targetServer);
         }
 
-        public object PutToAuction(string login, string gameRefID, string characterID, int count, byte inventoryType, string itemID, int price) {
-            bool success = application.Stores.PutItemToAuction(login, gameRefID, characterID, count, (InventoryType)inventoryType, itemID, price);
+        public object PutToAuction(string login, string gameRefID, string characterID, int count, byte inventoryType, string itemID, int price, string targetServer) {
+            bool success = application.Stores.PutItemToAuction(login, gameRefID, characterID, count, (InventoryType)inventoryType, itemID, price, targetServer);
             return success;
         }
 
@@ -212,6 +212,13 @@ namespace SelectCharacter {
 
         public Hashtable GetRaceCommands() {
             return application.RaceCommands.GetInfo();
+        }
+
+        public bool MakeAdmiral(int race, string sourceLogin, string sourceGameRef, string sourceCharacter,
+            string targetLogin, string targetGameRef, string targetCharacter) {
+            return application.RaceCommands.MakeAdmiral(race, 
+                sourceLogin, sourceGameRef, sourceCharacter,
+                targetLogin, targetGameRef, targetCharacter);
         }
 
         public Hashtable GetRaceStats() {
@@ -309,5 +316,13 @@ namespace SelectCharacter {
         public bool ResetNewMailMessages(string gameRefID) {
             return application.Mail.ResetNewMessageCount(gameRefID);
         }
+
+        public bool RemoveBankItem(string item, int count) {
+            return peer.RemoveBankItem(item, count);
+        }
+
+        public bool BuyBankMaxSlots() {
+            return peer.BuyMaxSlots();
+        } 
     }
 }

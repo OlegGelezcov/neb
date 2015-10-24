@@ -17,5 +17,8 @@ namespace SelectCharacter.Operations {
         [DataMember(Code =(byte)ParameterCode.GameRefId)]
         public string GameRefId { get; set; }
 
+        [DataMember(Code =(byte)ParameterCode.Login)]
+        public string login { get; set; }
+
     }
 }

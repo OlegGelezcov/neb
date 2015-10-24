@@ -1,4 +1,5 @@
-﻿using Photon.SocketServer.Rpc;
+﻿using Photon.SocketServer;
+using Photon.SocketServer.Rpc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +37,27 @@ namespace NebulaCommon.ServerToServer.Events {
 
         public void SetNotSended(object o) {
             notSended = o;
+        }
+
+        public GETInventoryItemsTransactionStart() {
+
+        }
+
+        public GETInventoryItemsTransactionStart(IEventData eventData) {
+            characterID = (string)eventData[(byte)ServerToServerParameterCode.CharacterId];
+            gameRefID = (string)eventData[(byte)ServerToServerParameterCode.GameRefId];
+            inventoryType = (byte)eventData[(byte)ServerToServerParameterCode.InventoryType];
+            transactionID = (string)eventData[(byte)ServerToServerParameterCode.TransactionID];
+            transactionSource = (byte)eventData[(byte)ServerToServerParameterCode.TransactionSource];
+            postTransactionAction = (byte)eventData[(byte)ServerToServerParameterCode.Action];
+            tag = eventData.Parameters[(byte)ServerToServerParameterCode.Tag] as object;
+            items = eventData.Parameters[(byte)ServerToServerParameterCode.Items] as Hashtable;
+            if (eventData.Parameters.ContainsKey((byte)ServerToServerParameterCode.TransactionStartServer)) {
+                transactionStartServer = eventData.Parameters[(byte)ServerToServerParameterCode.TransactionStartServer] as string;
+            }
+            if (eventData.Parameters.ContainsKey((byte)ServerToServerParameterCode.TransactionEndServer)) {
+                transactionEndServer = eventData.Parameters[(byte)ServerToServerParameterCode.TransactionEndServer] as string;
+            }
         }
     }
 }

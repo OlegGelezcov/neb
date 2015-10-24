@@ -63,11 +63,23 @@ namespace Master {
             }
         }
 
+        //public void SendEventTo(IEventData evt, SendParameters sendParameters, string serverID ) {
+        //    lock(syncRoot) {
+        //        foreach(var srv in this ) {
+        //            if(srv.Value.ServerId.Value.ToString() == serverID ) {
+        //                srv.Value.SendEvent(evt, sendParameters);
+                        
+        //            }
+        //        }
+        //    }
+        //}
+
         public void SendEvent(IEventData evt, SendParameters sendParameters, string serverID ) {
             lock(syncRoot) {
                 foreach(var srv in this ) {
                     if(srv.Value.ServerId.Value.ToString() == serverID ) {
                         srv.Value.SendEvent(evt, sendParameters);
+                        log.InfoFormat("transport event to serv: {0}:{1}", srv.Value.ServerId.Value.ToString(), srv.Value.ServerType);
                         break;
                     }
                 }

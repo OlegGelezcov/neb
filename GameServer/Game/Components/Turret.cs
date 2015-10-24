@@ -26,7 +26,7 @@ namespace Nebula.Game.Components {
 
         public override void Update(float deltaTime) {
             if(mDamagable.god) {
-                log.InfoFormat("turret at world = {0} was GOD, we change it to NOT GOD [red]", nebulaObject.mmoWorld().Zone.Id);
+                log.InfoFormat("turret at world = {0} was GOD, we change it to NOT GOD ID = {1} [red]", nebulaObject.mmoWorld().Zone.Id, nebulaObject.Id);
                 mDamagable.SetGod(false);
             }
         }

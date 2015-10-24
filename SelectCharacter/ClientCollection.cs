@@ -1,5 +1,6 @@
 ﻿using Common;
 using ExitGames.Logging;
+using NebulaCommon.ServerToServer.Events;
 using SelectCharacter.Chat;
 using SelectCharacter.Events;
 using System;
@@ -113,6 +114,38 @@ namespace SelectCharacter {
             SelectCharacterClientPeer peer;
             if(TryGetPeerForGameRefId(gameRefID, out peer)) {
                 peer.SendGenericEvent(evt);
+            }
+        }
+
+        public void SendGenericEvent(GenericEvent evt) {
+            lock(syncRoot) {
+                foreach(var pClient in this) {
+                    pClient.Value.SendGenericEvent(evt);
+                }
+            }
+        } 
+
+        public void HandleTransaction(GETInventoryItemTransactionEnd end) {
+            string id = end.gameRefID;
+            lock(syncRoot) {
+                foreach(var pClient in this) {
+                    if(pClient.Value.id == id ) {
+                        pClient.Value.getPool.HandleTransaction(end);
+                        break;
+                    }
+                }
+            }
+        }
+
+        public void HandleTransaction(PUTInventoryItemTransactionEnd end) {
+            string id = end.gameRefID;
+            lock (syncRoot) {
+                foreach (var pClient in this) {
+                    if (pClient.Value.id == id) {
+                        pClient.Value.putPool.HandleTransaction(end);
+                        break;
+                    }
+                }
             }
         }
     }

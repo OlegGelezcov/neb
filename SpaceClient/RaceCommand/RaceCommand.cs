@@ -77,5 +77,18 @@ namespace Nebula.Client.RaceCommand {
             }
             return null;
         }
+
+        public bool IsCommanderOrAdmiral(string characterID ) {
+            if(hasCommander) {
+                return GetCommander().characterID == characterID;
+            }
+            if(hasFirstAdmiral) {
+                return GetFirstAdmiral().characterID == characterID;
+            }
+            if(hasSecondAdmiral) {
+                return GetSecondAdmiral().characterID == characterID;
+            }
+            return false;
+        }
     }
 }

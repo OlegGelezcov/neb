@@ -6,6 +6,8 @@ using System.Text;
 namespace NebulaCommon {
     public enum TransactionSource : byte {
         Store,
-        Mail
+        Mail,
+        PassManager,
+        Bank
     }
 }
