@@ -1,8 +1,4 @@
 ﻿using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Login {
     public class DbUserLogin {
@@ -17,7 +13,7 @@ namespace Login {
 
         public void MoveSinglePassToTime() {
             passes--;
-            expireTime += DbReader.TIME_FOR_PASS;
+            expireTime += LoginApplication.Instance.serverSettings.timeForPass;
         }
 
         public void IncrementPasses() {

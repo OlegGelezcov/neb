@@ -138,7 +138,7 @@ namespace Login {
                     transactionEndServer = targetServer,
                     transactionStartServer = LoginApplication.ServerId.ToString()
                 };
-                EventData eventData = new EventData((byte)S2SEventCode.GETInventoryItemsStart, start);
+                EventData eventData = new EventData((byte)S2SEventCode.GETInventoryItemStart, start);
                 mGetTransactionPool.StartTransaction(start);
                 application.MasterPeer.SendEvent(eventData, new SendParameters());
                 log.InfoFormat("move inventory item to pass started");

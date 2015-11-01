@@ -8,6 +8,7 @@ using NebulaCommon;
 using Photon.SocketServer;
 using Photon.SocketServer.ServerToServer;
 using ServerClientCommon;
+using Space.Game.Resources;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,6 +21,7 @@ using LogManager = ExitGames.Logging.LogManager;
 
 namespace Login {
     public class LoginApplication : ApplicationBase {
+
         public static readonly Guid ServerId = Guid.NewGuid();
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
         private static LoginApplication instance;
@@ -36,6 +38,11 @@ namespace Login {
         protected int ConnectRetryIntervalSeconds { get; set; }
 
         public PassManager passManager { get; private set; }
+
+        /// <summary>
+        /// Server settings file reader
+        /// </summary>
+        public ServerInputsRes serverSettings { get; private set; }
 
         public static new LoginApplication Instance {
             get {
@@ -89,6 +96,9 @@ namespace Login {
                 this.LogedInUsers = new LoggedInUserCollection(this);
 
                 passManager = new PassManager(this);
+
+                serverSettings = new ServerInputsRes();
+                serverSettings.Load(BinaryPath, GameServerSettings.Default.assets.SERVER_INPUTS_FILE);
 
                 Protocol.AllowRawCustomValues = true;
                 this.PublicIpAddress = PublicIPAddressReader.ParsePublicIpAddress(GameServerSettings.Default.PublicIPAddress);

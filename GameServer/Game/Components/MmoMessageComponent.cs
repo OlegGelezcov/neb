@@ -430,6 +430,13 @@ namespace Nebula.Game.Components {
             };
 
             var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+
+            //try fix double event ( this don't work after moving in new world)
+            /*
+            if (receiver == EventReceiver.OwnerAndSubscriber) {
+                receiver = EventReceiver.ItemSubscriber;
+                SendEventData(receiver, eventData, sendParameters);
+            }*/
             SendEventData(receiver, eventData, sendParameters);
         }
 

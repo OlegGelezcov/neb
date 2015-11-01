@@ -1,5 +1,6 @@
 ﻿using ExitGames.Logging;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,6 +44,8 @@ namespace Login {
                 this.Remove(loginId);
                 log.InfoFormat("removed user = {0} yellow", loginId);
             }
+
+            DeleteNotValidUsers();
         }
 
         public void SendPassesUpdateEvent(DbUserLogin dbUser) {
@@ -50,6 +53,23 @@ namespace Login {
                 LoggedInUser user;
                 if(TryGetValue(dbUser.login, out user)) {
                     user.SendPassesUpdateEvent(dbUser);
+                }
+            }
+        }
+
+        private void DeleteNotValidUsers() {
+            lock(syncRoot) {
+                ConcurrentBag<string> keys = new ConcurrentBag<string>();
+
+                foreach(var pclient in this ) {
+                    if(pclient.Value.peer == null || pclient.Value.peer.Disposed) {
+                        keys.Add(pclient.Key);
+                    }
+                }
+
+                foreach (var k in keys) {
+                    log.InfoFormat("delete not valid user = {0} [red]", k);
+                    Remove(k);
                 }
             }
         }

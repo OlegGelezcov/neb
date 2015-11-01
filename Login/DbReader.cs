@@ -14,8 +14,8 @@ using System.Text.RegularExpressions;
 namespace Login {
     public class DbReader {
 
-        public const int NEW_USER_GAME_INTERVAL_IN_SECONDS = 172800;
-        public const int TIME_FOR_PASS = 2592000;
+        //public const int NEW_USER_GAME_INTERVAL_IN_SECONDS = 172800;
+        //public const int TIME_FOR_PASS = 2592000;
 
 
         public MongoClient DbClient { get; private set; }
@@ -85,7 +85,7 @@ namespace Login {
             DbUserLogin dbUser = new DbUserLogin {
                 creationTime = CommonUtils.SecondsFrom1970(),
                 email = email,
-                expireTime = CommonUtils.SecondsFrom1970() + NEW_USER_GAME_INTERVAL_IN_SECONDS,
+                expireTime = CommonUtils.SecondsFrom1970() + LoginApplication.Instance.serverSettings.startPlayerTime,
                 gameRef = Guid.NewGuid().ToString(),
                 login = login,
                 passes = 0,

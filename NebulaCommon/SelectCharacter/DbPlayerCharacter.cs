@@ -21,6 +21,8 @@ namespace NebulaCommon.SelectCharacter {
         public string guildID { get; set; }
         public int raceStatus { get; set; }
 
+        public int characterIcon { get; set; }
+
         public bool HasGuild() {
             return (false == string.IsNullOrEmpty(guildID));
         }
@@ -59,7 +61,8 @@ namespace NebulaCommon.SelectCharacter {
                 {(int)SPC.WorldId, WorldId },
                 {(int)SPC.Exp, Exp },
                 {(int)SPC.Guild, guildID },
-                {(int)SPC.RaceStatus, raceStatus}
+                {(int)SPC.RaceStatus, raceStatus},
+                {(int)SPC.Icon, characterIcon }
             };
         }
     }

@@ -343,7 +343,9 @@ namespace Nebula.Game.Components {
 
             if (mWasKilled) {
                 if(nebulaObject.Type == (byte)ItemType.Avatar) {
-                    log.InfoFormat("player was killed and give exp [purple]");
+                    log.InfoFormat("player was killed and give pvp points [purple]");
+                    GivePvpPoints();
+
                 }
                 foreach (var damager in damagers) {
                     if (damager.Value.DamagerType == ItemType.Avatar) {
@@ -383,6 +385,64 @@ namespace Nebula.Game.Components {
                 }
             }
 
+        }
+
+
+        //send pvp points to players, only called on players
+        protected void GivePvpPoints() {
+            //if i am player
+            if (nebulaObject.Type == (byte)ItemType.Avatar) {
+                log.InfoFormat("give php point from avatar... [red]");
+                int meLevel = nebulaObject.Character().level;
+
+                foreach (var pDamage in damagers) {
+                    var damager = pDamage.Value;
+                    if (damager.DamagerType == ItemType.Avatar) {
+                        if (damager.level <= (meLevel - 5)) {
+                            GivePvpPointsToDamager(damager, 10);
+                        } else if ((damager.level > (meLevel - 5) && (damager.level <= (meLevel + 5)))) {
+                            GivePvpPointsToDamager(damager, 5);
+                        }
+                    }
+                }
+            } else if(nebulaObject.Type == (byte)ItemType.Bot ) {
+
+                //give pvp points from killing turrets, fortifications, outposts
+                var botObject = nebulaObject.GetComponent<BotObject>();
+                if(botObject != null ) {
+                    int points = 0;
+                    switch((BotItemSubType)botObject.botSubType) {
+                        case BotItemSubType.Turret:
+                            points = 5;
+                            break;
+                        case BotItemSubType.Outpost:
+                            points = 10;
+                            break;
+                        case BotItemSubType.MainOutpost:
+                            points = 20;
+                            break;
+                    }
+
+                    if (points > 0) {
+                        foreach (var pDamage in damagers) {
+                            var damager = pDamage.Value;
+                            if (damager.DamagerType == ItemType.Avatar) {
+                                GivePvpPointsToDamager(damager, points);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void GivePvpPointsToDamager(DamageInfo damager, int points ) {
+            NebulaObject damagerObject = null;
+            if(nebulaObject.mmoWorld().TryGetObject((byte)ItemType.Avatar, damager.DamagerId, out damagerObject)) {
+                var damagerCharacter = damagerObject.Character() as PlayerCharacterObject;
+                if(damagerCharacter != null ) {
+                    damagerCharacter.AddPvpPoints(points);
+                }
+            }
         }
 
         public override int behaviourId {

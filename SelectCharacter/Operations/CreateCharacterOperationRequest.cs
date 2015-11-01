@@ -25,5 +25,8 @@ namespace SelectCharacter.Operations {
 
         [DataMember(Code =(byte)ParameterCode.DisplayName, IsOptional =false)]
         public string DisplayName { get; set; }
+
+        [DataMember(Code = (byte)ParameterCode.Icon, IsOptional = false )]
+        public int icon { get; set; }
     }
 }

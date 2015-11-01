@@ -1,5 +1,4 @@
-﻿namespace Space.Game
-{
+﻿namespace Space.Game {
     using Common;
     using Common.Space.Game.Resources;
     using Nebula;
@@ -17,8 +16,7 @@
     using System.Linq;
     using System.Xml.Linq;
 
-    public interface IRes
-    {
+    public interface IRes {
         WeaponData RandomWeapon(Workshop workshop);
 
         ColorInfo WeaponColor(ObjectColor color);
@@ -27,7 +25,7 @@
 
         WeaponDropSettings WeaponSettings { get; }
 
-        ModuleSettingsRes ModuleSettings { get;  }
+        ModuleSettingsRes ModuleSettings { get; }
 
         ModuleSetRes Sets { get; }
 
@@ -53,15 +51,15 @@
 
         ZonesRes Zones { get; }
 
-        NpcGroupRes NpcGroups { get;  }
+        NpcGroupRes NpcGroups { get; }
 
         //ResEvents Events { get; }
 
-        AsteroidsRes Asteroids { get;  }
+        AsteroidsRes Asteroids { get; }
 
         FractionResolver fractionResolver { get; }
 
-        SkillDropping skillDropping { get;  }
+        SkillDropping skillDropping { get; }
 
         string path { get; }
 
@@ -73,23 +71,21 @@
         ResPassiveBonuses PassiveBonuses { get; }
     }
 
-    public class Res : IRes 
-    {
+    public class Res : IRes {
 
         private ConcurrentDictionary<Difficulty, float> mDifficultMult;
 
         //private static Res instance;
         private string basePath;
-        
+
         public string path {
             get {
                 return basePath;
             }
         }
-        
 
-        public Res(string basePath)
-        {
+
+        public Res(string basePath) {
             this.basePath = basePath;
             mDifficultMult = new ConcurrentDictionary<Difficulty, float>();
             mDifficultMult.TryAdd(Difficulty.easy, 0.5f);
@@ -103,14 +99,13 @@
 
         public float GetDifficultyMult(Difficulty d) {
             float val = 1;
-            if(mDifficultMult.TryGetValue(d, out val)) {
+            if (mDifficultMult.TryGetValue(d, out val)) {
                 return val;
             } else {
                 return 1;
             }
         }
-        public void Load()
-        {
+        public void Load() {
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
             this.SkillStorage = LoadSkills();
@@ -119,22 +114,19 @@
             skillDropping.Load(basePath);
 
             this.WeaponSettings = new WeaponDropSettings();
-            if(!this.WeaponSettings.Load(basePath))
-            {
+            if (!this.WeaponSettings.Load(basePath)) {
                 throw new Exception("Error of loading weapon settings....");
             }
 
 
 
             this.ModuleSettings = new ModuleSettingsRes();
-            if(!this.ModuleSettings.Load(basePath))
-            {
+            if (!this.ModuleSettings.Load(basePath)) {
                 throw new Exception("exception: module settings loading error");
             }
 
             this.Sets = new ModuleSetRes();
-            if(!this.Sets.Load(basePath))
-            {
+            if (!this.Sets.Load(basePath)) {
                 throw new Exception("exception: error of loading module sets...");
             }
 
@@ -146,7 +138,7 @@
             this.ModuleTemplates.Load(basePath);
 
             this.ServerInputs = new ServerInputsRes();
-            this.ServerInputs.Load(basePath);
+            this.ServerInputs.Load(basePath, "Data/server_inputs.xml");
 
             //load materials
             this.Materials = new MaterialRes();
@@ -182,8 +174,7 @@
 
             this.NpcGroups = new NpcGroupRes();
             this.NpcGroups.Load(basePath);
-            if(!this.NpcGroups.Loaded)
-            {
+            if (!this.NpcGroups.Loaded) {
                 throw new Exception("Npc Groups Resources loading error");
             }
 
@@ -220,62 +211,52 @@
             private set;
         }
 
-        public ModuleSettingsRes ModuleSettings
-        {
+        public ModuleSettingsRes ModuleSettings {
             get;
             private set;
         }
 
-        public NpcGroupRes NpcGroups
-        {
+        public NpcGroupRes NpcGroups {
             get;
             private set;
         }
 
-        public WeaponDataRes Weapons
-        {
+        public WeaponDataRes Weapons {
             get;
             private set;
         }
 
-        public ServerInputsRes ServerInputs
-        {
+        public ServerInputsRes ServerInputs {
             get;
             private set;
         }
 
-        public SkillStorage SkillStorage
-        {
+        public SkillStorage SkillStorage {
             get;
             private set;
         }
 
-        public WeaponDropSettings WeaponSettings
-        {
+        public WeaponDropSettings WeaponSettings {
             get;
             private set;
         }
 
-        public ModuleSetRes Sets
-        {
+        public ModuleSetRes Sets {
             get;
             private set;
         }
 
-        public ColorInfoRes ColorRes
-        {
+        public ColorInfoRes ColorRes {
             get;
             private set;
         }
 
-        public ModuleInfoStorage ModuleTemplates
-        {
+        public ModuleInfoStorage ModuleTemplates {
             get;
             private set;
         }
 
-        public MaterialRes Materials
-        {
+        public MaterialRes Materials {
             get;
             private set;
         }
@@ -285,22 +266,19 @@
             private set;
         }
 
-        public AsteroidsRes Asteroids
-        {
+        public AsteroidsRes Asteroids {
             get;
             private set;
         }
 
 
 
-        public ZonesRes Zones
-        {
+        public ZonesRes Zones {
             get;
             private set;
         }
 
-        public SkillRes Skills
-        {
+        public SkillRes Skills {
             get;
             private set;
         }
@@ -311,8 +289,7 @@
         //    private set;
         //}
 
-        public Leveling Leveling
-        {
+        public Leveling Leveling {
             get;
             private set;
         }
@@ -328,28 +305,23 @@
             private set;
         }
 
-        public WeaponData RandomWeapon(Workshop workshop)
-        {
+        public WeaponData RandomWeapon(Workshop workshop) {
             return this.Weapons.RandomWeapon(workshop);
         }
 
-        public ColorInfo WeaponColor(ObjectColor color )
-        {
+        public ColorInfo WeaponColor(ObjectColor color) {
             return this.ColorRes.Color(ColoredObjectType.Weapon, color);
         }
 
-        public ColorInfo ModuleColor(ObjectColor color)
-        {
+        public ColorInfo ModuleColor(ObjectColor color) {
             return this.ColorRes.Color(ColoredObjectType.Module, color);
         }
 
         #region Loading functions
-        private SkillStorage LoadSkills()
-        {
+        private SkillStorage LoadSkills() {
             string path = Path.Combine(basePath, "Data/Drop/skills.xml");
             XDocument document = XDocument.Load(path);
-            var skills = document.Element("skills").Elements("skill").Select(e =>
-            {
+            var skills = document.Element("skills").Elements("skill").Select(e => {
                 return new SkillInfo { id = e.Attribute("id").Value, type = CommonUtils.GetEnum<ShipModelSlotType>(e.Attribute("type").Value) };
             }).ToList();
             return new SkillStorage(skills);
@@ -369,7 +341,7 @@
 
         public static INebulaLogger logger {
             get {
-                if(_logger == null ) { _logger = new EmptyNebulaLogger(); }
+                if (_logger == null) { _logger = new EmptyNebulaLogger(); }
                 return _logger;
             }
         }

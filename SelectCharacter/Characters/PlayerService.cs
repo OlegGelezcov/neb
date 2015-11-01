@@ -173,6 +173,7 @@ namespace SelectCharacter.Characters {
                 string name, 
                 Race race, 
                 Workshop workshop, 
+                int icon,
                 out DbPlayerCharactersObject playerObject) {
 
             playerObject = null;
@@ -206,7 +207,7 @@ namespace SelectCharacter.Characters {
                 };
             }
 
-            var newCharacter = playerObject.AddCharacter(name, (int)race, (int)workshop, startModules);
+            var newCharacter = playerObject.AddCharacter(name, (int)race, (int)workshop, startModules, icon );
 
             CreateCharacterInfo(newCharacter.CharacterId, newCharacter.Name);
 

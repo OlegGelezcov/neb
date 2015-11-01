@@ -460,6 +460,22 @@ namespace SelectCharacter.Store {
             return true;
         }
 
+        public bool AddPvpPoints(string login, string gameRef, string character, int pvpPoints) {
+            if(pvpPoints < 0 ) {
+                log.InfoFormat("AddPvpPoints say: pvp points count must be > 0");
+                return false;
+            }
+            var store = GetOrCreatePlayerStore(login, gameRef, character);
+            if(store == null ) {
+                log.InfoFormat("AddPvpPoints say: store of character must be not (null)");
+                return false;
+            }
+
+            store.AddPvpPoints(pvpPoints);
+            return true;
+
+        }
+
         public bool RemoveCredits(string login, string gameRefID, string characterID, int credits) {
             if(credits < 0 ) {
                 log.Info("RemoveCredits(): credits must be >= 0");
@@ -483,6 +499,23 @@ namespace SelectCharacter.Store {
                 EventData evt = new EventData((byte)SelectCharacterEventCode.PlayerStoreUpdate, data);
                 peer.SendEvent(evt, new SendParameters());
             }
+        }
+
+        /// <summary>
+        /// Send pvp point update generic event to client
+        /// </summary>
+        /// <param name="store">Store of client</param>
+        public void SendPvpPointsUpdate(PlayerStore store) {
+            SelectCharacterClientPeer peer;
+            if(mApplication.Clients.TryGetPeerForCharacterId(store.characterID, out peer)) {
+                log.InfoFormat("sending PvP points updates to client peer [red]");
+                GenericEvent eventObject = new GenericEvent {
+                     data = new Hashtable { { (int)SPC.PvpPoints, store.pvpPoints } },
+                     subCode = (int)SelectCharacterGenericEventSubCode.PvpPointUpdate
+                };
+                EventData eventData = new EventData((byte)SelectCharacterEventCode.GenericEvent, eventObject);
+                peer.SendEvent(eventData, new SendParameters());
+            } 
         }
 
         public bool RemoveFromStore(string login, string gameRefID, string characterID, string storeItemID ) {

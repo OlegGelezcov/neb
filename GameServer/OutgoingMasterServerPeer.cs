@@ -167,9 +167,34 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
             log.InfoFormat("method {0} successfully called on server {1}", method, serverType);
             if(result != null ) {
                 log.InfoFormat("method call result = {0}", result.ToString());
+
+                switch(method) {
+                    case "RequestGuildInfo":
+                        {
+                            HandleRequestGuildInfo(result);
+                        }
+                        break;
+                }
             }
         } else {
             log.InfoFormat("fail call method {0} on server {1}", method, serverType);
+        }
+    }
+
+
+    private void HandleRequestGuildInfo(object result) {
+        Hashtable guildInfo = result as Hashtable;
+        if(guildInfo != null ) {
+            string gameRef = guildInfo.GetValue<string>((int)SPC.GameRefId, string.Empty);
+            if(!string.IsNullOrEmpty(gameRef)) {
+                MmoActor player;
+                if(GameApplication.Instance.serverActors.TryGetValue(gameRef, out player)) {
+                    var character = player.GetComponent<PlayerCharacterObject>();
+                    if(character != null ) {
+                        character.SetGuildInfo(guildInfo);
+                    }
+                }
+            }
         }
     }
 

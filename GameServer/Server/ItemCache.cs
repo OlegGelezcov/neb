@@ -123,6 +123,17 @@ namespace Space.Server
             return result;
         }
 
+        //public ConcurrentDictionary<string, Item> GetItems(byte type, Func<Item, bool> filter ) {
+        //    ConcurrentDictionary<string, Item> result = new ConcurrentDictionary<string, Item>();
+        //    ItemCacheL2 cache;
+        //    if(itemCaches.TryGetValue(type, out cache)) {
+        //        foreach(var it in cache.GetItems(filter)) {
+        //            result.TryAdd(it.Key, it.Value);
+        //        }
+        //    }
+        //    return result;
+        //}
+
         public Item GetItem(Func<Item, bool> filter) {
             foreach(var itCache in itemCaches) {
                 var it = itCache.Value.GetItem(filter);

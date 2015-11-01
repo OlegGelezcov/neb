@@ -21,6 +21,9 @@ namespace SelectCharacter.Store {
         public string characterID { get; set; } = string.Empty;
         public int credits { get; set; } = 0;
 
+        //Hold pvp points of player
+        public int pvpPoints { get; set; } = 0;
+
         public Dictionary<string, PlayerStoreItem> storeItems { get; set; } = new Dictionary<string, PlayerStoreItem>();
 
         private bool mChaged = false;
@@ -90,6 +93,27 @@ namespace SelectCharacter.Store {
             }
         }
 
+        public bool AddPvpPoints(int count) {
+            lock(syncRoot ) {
+                pvpPoints += count;
+                mChaged = true;
+                SelectCharacterApplication.Instance.Stores.SendPvpPointsUpdate(this);
+                return true;
+            }
+        }
+
+        public bool RemovePvpPoints(int count) {
+            lock(syncRoot ) {
+                if(pvpPoints >= count ) {
+                    pvpPoints -= count;
+                    mChaged = true;
+                    SelectCharacterApplication.Instance.Stores.SendPvpPointsUpdate(this);
+                    return true;
+                }
+                return false;
+            }
+        }
+
         public void AddCredits(int creds) {
             lock(syncRoot) {
                 credits += creds;
@@ -115,7 +139,8 @@ namespace SelectCharacter.Store {
                 Hashtable hash = new Hashtable {
                 { (int)SPC.Credits, credits },
                 { (int)SPC.SlotsUsed, storeItems.Count },
-                { (int)SPC.MaxSlots, MAX_SLOTS }
+                { (int)SPC.MaxSlots, MAX_SLOTS },
+                { (int)SPC.PvpPoints, pvpPoints }
             };
 
                 Hashtable storeItemsHash = new Hashtable();

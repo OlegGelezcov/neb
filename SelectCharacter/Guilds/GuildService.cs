@@ -597,6 +597,14 @@ namespace SelectCharacter.Guilds {
             return true;
         }
 
+        public void AddRating(string gID, int points) {
+            var guild = GetGuild(gID);
+            if(guild != null ) {
+                guild.AddRating(points);
+                MarkModified(gID);
+            }
+        }
+
         public Hashtable GetGuilds(int race) {
 
             if(mSearchCachedGuilds.ContainsKey(race)) {

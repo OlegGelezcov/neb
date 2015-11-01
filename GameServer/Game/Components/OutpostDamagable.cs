@@ -68,7 +68,7 @@ namespace Nebula.Game.Components {
 
             var world = nebulaObject.world as MmoWorld;
             var levelCalc = nebulaObject.resource.Leveling;
-
+            GivePvpPoints();
 
             foreach(var p in damagers ) {
                 var damager = p.Value as DamageInfo;

@@ -17,6 +17,8 @@ namespace Nebula.Client
         public int Exp { get; private set; }
         public string guildID { get; private set; }
 
+        public int icon { get; private set; }
+
         public ClientPlayerCharacter(Hashtable info )
         {
             this.ParseInfo(info);
@@ -42,6 +44,7 @@ namespace Nebula.Client
             this.Race = info.GetValue<int>((int)SPC.Race, 0);
             World = info.GetValue<string>((int)SPC.WorldId, "");
             Exp = info.GetValue<int>((int)SPC.Exp, 0);
+            icon = info.GetValue<int>((int)SPC.Icon, 0);
 
             if (info.ContainsKey((int)SPC.Guild) && info[(int)SPC.Guild] != null) {
                 guildID = info.Value<string>((int)SPC.Guild, string.Empty);

@@ -13,6 +13,7 @@ namespace Common {
         NewMessageCountChanged,
         CommandsUpdate,
         Push,
-        BankUpdate
+        BankUpdate,
+        PvpPointUpdate
     }
 }

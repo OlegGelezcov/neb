@@ -4,7 +4,9 @@ using Nebula.Engine;
 using Nebula.Game.Bonuses;
 using Nebula.Server.Components;
 using NebulaCommon.Group;
+using ServerClientCommon;
 using Space.Game;
+using System.Collections;
 
 namespace Nebula.Game.Components {
 
@@ -21,10 +23,13 @@ namespace Nebula.Game.Components {
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
         private bool mRaceStatusRequested = false;
+        private bool mGuildRequested = false;
+
         private PlayerLoaderObject mLoader;
         private MmoMessageComponent mMessage;
         private float mUpdateRaceStatusBonusTimer = 0;
         private PlayerBonuses mBonuses;
+        private RaceableObject mRace;
 
 
         public void Init(PlayerCharacterComponentData data) {
@@ -39,6 +44,7 @@ namespace Nebula.Game.Components {
             mLoader = GetComponent<PlayerLoaderObject>();
             mMessage = GetComponent<MmoMessageComponent>();
             mBonuses = GetComponent<PlayerBonuses>();
+            mRace = GetComponent<RaceableObject>();
         }
 
         public string characterId { get; private set; }
@@ -51,7 +57,16 @@ namespace Nebula.Game.Components {
 
         public string characterName { get; private set; }
 
+        public string guildId { get; private set; } = string.Empty;
 
+        public string guildName { get; private set; } = string.Empty;
+
+        public void SetGuildInfo(Hashtable hash) {
+            guildId = hash.GetValue<string>((int)SPC.Guild, string.Empty);
+            guildName = hash.GetValue<string>((int)SPC.GuildName, string.Empty);
+            nebulaObject.properties.SetProperty((byte)PS.GuildName, guildName);
+            log.InfoFormat("guild name setted = {0}", guildName);
+        }
 
         public void AddExp(int e) {
             exp += (e );
@@ -102,6 +117,13 @@ namespace Nebula.Game.Components {
                 }
             }
 
+            if(!mGuildRequested) {
+                if(mLoader.loaded) {
+                    mGuildRequested = true;
+                    mPlayer.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "RequestGuildInfo", new object[] { nebulaObject.Id, characterId });
+                }
+            }
+
             mUpdateRaceStatusBonusTimer -= deltaTime;
             if(mUpdateRaceStatusBonusTimer <= 0f) {
                 mUpdateRaceStatusBonusTimer = RACE_STATUS_BONUS_UPDATE_INTERVAL;
@@ -135,6 +157,14 @@ namespace Nebula.Game.Components {
             if(group.groupID == groupID.ToString() ) {
                 group.Clear();
             }
+        }
+
+        public void AddPvpPoints(int points) {
+            log.InfoFormat("give pvp points => {0}:{1} [red]", login, points);
+            if(mRace == null ) {
+                mRace = GetComponent<RaceableObject>();
+            }
+            mPlayer.application.updater.GivePvpPoints(login, nebulaObject.Id, characterId, guildId, mRace.race , points);
         }
     }
 }

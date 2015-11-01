@@ -24,6 +24,7 @@ namespace Login {
         public string MongoConnectionString;
         public string DbLoginCollectionName;
         public string DatabaseName;
+        public Assets assets;
 
         public static GameServerSettings Default {
             get {
@@ -46,7 +47,8 @@ namespace Login {
                     AppStatsPublishInterval = 1000,
                     MongoConnectionString = "mongodb://localhost",
                     DbLoginCollectionName = "user_login_collection",
-                    DatabaseName = "user_logins"
+                    DatabaseName = "user_logins",
+                    assets = new Assets()
                 };
 #else
                 return new GameServerSettings {
@@ -67,10 +69,15 @@ namespace Login {
                     AppStatsPublishInterval = 1000,
                     MongoConnectionString = "mongodb://104.207.135.55",
                     DbLoginCollectionName = "user_login_collection",
-                    DatabaseName = "user_logins"
+                    DatabaseName = "user_logins",
+                    assets = new Assets()
                 };
 #endif
             }
+        }
+
+        public class Assets {
+            public readonly string SERVER_INPUTS_FILE = "Data/server_inputs.xml";
         }
     }
 }

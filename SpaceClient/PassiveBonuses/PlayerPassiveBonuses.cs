@@ -20,5 +20,11 @@ namespace Nebula.Client.PassiveBonuses {
                 }
             }
         }
+
+        public void Clear() {
+            if(bonuses != null ) {
+                bonuses.Clear();
+            }
+        }
     }
 }

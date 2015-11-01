@@ -20,6 +20,44 @@ namespace SelectCharacter {
             return (int)ReturnCode.Ok;
         }
 
+        public object AddPvpPoints(string login, string gameRef, string character, string guild, byte race, int pvpPoints) {
+            log.InfoFormat("{0}:{1} received pvp points [red]", character, pvpPoints);
+
+            mApplication.Stores.AddPvpPoints(login, gameRef, character, pvpPoints);
+
+            if(!string.IsNullOrEmpty(guild)) {
+                mApplication.Guilds.AddRating(guild, pvpPoints);
+            }
+
+            if(race != (byte)Race.None ) {
+                mApplication.raceStats.AddPoints((Race)race, pvpPoints);
+            }
+
+            return (int)ReturnCode.Ok;
+        }
+
+        public object RequestGuildInfo(string gameRef, string characterID ) {
+            var characterObject = mApplication.Players.GetCharacter(gameRef, characterID);
+            if(characterObject != null ) {
+                if(!string.IsNullOrEmpty(characterObject.guildID)) {
+                    var guild = mApplication.Guilds.GetGuild(characterObject.guildID);
+                    if( guild != null ) {
+                        return new Hashtable {
+                            { (int)SPC.Guild, guild.Id },
+                            { (int)SPC.Name, guild.name },
+                            { (int)SPC.GameRefId, gameRef }
+                        };
+                    }
+                }
+            }
+
+            return new Hashtable {
+                { (int)SPC.Guild, string.Empty },
+                { (int)SPC.Name, string.Empty },
+                { (int)SPC.GameRefId, string.Empty }
+            };
+        }
+
         public object RequestRaceStatus(string gameRefID, string characterID) {
             var player = mApplication.Players.GetExistingPlayer(gameRefID);
             if(player != null ) {

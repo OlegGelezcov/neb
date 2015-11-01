@@ -695,6 +695,17 @@ namespace Space.Game {
             return GetSuccessResponse("Ok");
         }
 
+        public Hashtable addne() {
+            foreach(var pb in Player.resource.PassiveBonuses.allData) {
+                NebulaElementObject neObj = new NebulaElementObject(pb.elementID, pb.elementID);
+                Player.Inventory.Add(neObj, 1);
+            }
+            Player.EventOnInventoryUpdated();
+            return new Hashtable {
+                { (int)SPC.ReturnCode, RPCErrorCode.Ok }
+            };
+        }
+
 
 
         public Hashtable GetWeapon()
@@ -794,16 +805,25 @@ namespace Space.Game {
             };
         }
 
-        public Hashtable DestroyInventoryItem(byte inventoryType, byte type, string itemId )
+        public Hashtable DestroyInventoryItem(byte inventoryType, byte type, string itemId, int count)
         {
             var targetInventory = (((InventoryType)inventoryType) == InventoryType.ship) ? this.Player.Inventory : this.Player.Station.StationInventory;
 
-            int count = targetInventory.ItemCount(type.toEnum<InventoryObjectType>(), itemId);
+            int inventoryCount = targetInventory.ItemCount(type.toEnum<InventoryObjectType>(), itemId);
+            if(inventoryCount < count ) {
+                return GetErrorResponse("count");
+            }
+
             if(count > 0 )
             {
                 targetInventory.Remove(type.toEnum<InventoryObjectType>(), itemId, count);
-                this.Player.EventOnInventoryUpdated();
-                this.Player.EventOnStationHoldUpdated();
+
+                if (inventoryType == (byte)InventoryType.ship) {
+                    this.Player.EventOnInventoryUpdated();
+                } else if (inventoryType == (byte)InventoryType.station) {
+                    this.Player.EventOnStationHoldUpdated();
+                }
+
                 return GetSuccessResponse("removed {0} of item {1}".f(count, itemId));
             }
             else

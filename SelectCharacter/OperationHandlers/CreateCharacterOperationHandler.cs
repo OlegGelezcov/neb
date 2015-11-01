@@ -18,7 +18,7 @@ namespace SelectCharacter.OperationHandlers {
             var response = this.application.Players.CreateCharacter(
                 request, sendParameters, operation.GameRefId,
                 operation.DisplayName, (Race)operation.Race,
-                (Workshop)operation.Workshop, out player);
+                (Workshop)operation.Workshop, operation.icon, out player);
             if (player != null) {
                 peer.SetCharacterId(player.SelectedCharacterId);
             }

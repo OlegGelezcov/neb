@@ -79,7 +79,7 @@ namespace SelectCharacter.Characters {
         /// <param name="model">Modules dictionary of character</param>
         /// <param name="exp">Initial exp of character</param>
         /// <returns></returns>
-        public DbPlayerCharacter AddCharacter(string name, int race, int workshop, Dictionary<ShipModelSlotType, string> model) {
+        public DbPlayerCharacter AddCharacter(string name, int race, int workshop, Dictionary<ShipModelSlotType, string> model, int icon) {
             if(this.Characters == null) {
                 this.Characters = new List<DbPlayerCharacter>();
             }
@@ -92,7 +92,8 @@ namespace SelectCharacter.Characters {
                 Workshop = workshop,
                 Exp = 0,
                 WorldId = SelectCharacterApplication.Instance.GetStartLocation((Race)race, (Workshop)workshop),
-                raceStatus = (int)RaceStatus.None
+                raceStatus = (int)RaceStatus.None,
+                characterIcon = icon
             };
             character.SetModel(ToHash(model));
             this.Characters.Add(character);

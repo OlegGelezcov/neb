@@ -279,6 +279,9 @@ namespace ServerClientCommon {
         MaxCount,
         WarnCount,
         MaxWarnCount,
-        PreviousRace
+        PreviousRace,
+        Icon,
+        PvpPoints,
+        GuildName
     }
 }

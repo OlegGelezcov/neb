@@ -252,6 +252,12 @@
         }
 
         public void SetCurrentRace(Race race) {
+
+            //dont allow change source worlds to neutral owners
+            if(race == Race.None && Zone.worldType == WorldType.source ) {
+                return;
+            }
+
             Race previousRace = ownedRace;
             ownedRace = race;
             //save changes to database
@@ -259,6 +265,21 @@
 
             log.InfoFormat("world = {0} set race owned to = {1} [red]", Zone.Id, ownedRace);
             GameApplication.Instance.updater.SendS2SWorldRaceChanged(Zone.Id, (byte)previousRace, (byte)ownedRace);
+
+            if(race != Race.None) {
+                GivePvpPointsForSystemCapture(race);
+            }
+        }
+
+        private void GivePvpPointsForSystemCapture(Race captureRace) {
+            foreach(var pItem in GetItems(ItemType.Avatar, (it) => {
+                return (it.Raceable().race == (byte)captureRace);
+            })) {
+                var playerCharacter = pItem.Value.GetComponent<PlayerCharacterObject>();
+                if (playerCharacter != null) {
+                    playerCharacter.AddPvpPoints(100);
+                }
+            }
         }
 
         public void SetAttackRace(Race race) {
@@ -370,6 +391,7 @@
         public ConcurrentDictionary<string, Item> GetItems(Func<Item, bool> filter) {
             return ItemCache.GetItems(filter);
         }
+
 
         public ConcurrentDictionary<string, Item> GetItems(ItemType type, Func<Item, bool> filter) {
             return ItemCache.GetItemsConcurrent((byte)type, filter);

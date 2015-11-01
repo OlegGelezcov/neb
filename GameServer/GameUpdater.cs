@@ -130,6 +130,14 @@ namespace Nebula {
             });
         }
 
+        public void GivePvpPoints(string login, string gameRef, string character, string guild, byte race, int pvpPoints) {
+            CallS2SMethod(ServerType.SelectCharacter, "AddPvpPoints", new object[] { login, gameRef, character, guild, race,  pvpPoints });
+        }
+
+        public void RequestGuildInfo(string gameRef, string character) {
+            CallS2SMethod(ServerType.SelectCharacter, "RequestGuildInfo", new object[] { gameRef, character });
+        }
+
         public void SendS2SWorldRaceChanged(string worldID, byte previousRace, byte currentRace ) {
             mFiber.Enqueue(() => {
                 try {

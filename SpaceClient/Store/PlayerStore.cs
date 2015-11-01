@@ -13,10 +13,17 @@ namespace Nebula.Client.Store {
         public int slotsUSed { get; private set; } = 0;
         public int maxSlots { get; private set; } = 0;
 
+        public int pvpPoints { get; private set; } = 0;
+
+        public void SetPvpPoints(int count) {
+            pvpPoints = count;
+        }
+
         public void ParseInfo(Hashtable info) {
-            credits =   info.Value<int>((int)SPC.Credits,   0);
-            slotsUSed = info.Value<int>((int)SPC.SlotsUsed, 0);
-            maxSlots =  info.Value<int>((int)SPC.MaxSlots,  0);
+            credits =   info.GetValue<int>((int)SPC.Credits,   0);
+            slotsUSed = info.GetValue<int>((int)SPC.SlotsUsed, 0);
+            maxSlots =  info.GetValue<int>((int)SPC.MaxSlots,  0);
+            pvpPoints = info.GetValue<int>((int)SPC.PvpPoints, 0);
 
             if(storeItems == null ) {
                 storeItems = new Dictionary<string, StoreItem>();
@@ -35,6 +42,16 @@ namespace Nebula.Client.Store {
 
         public PlayerStore(Hashtable hash) {
             ParseInfo(hash);
+        }
+
+        public void Clear() {
+            credits = 0;
+            pvpPoints = 0;
+            slotsUSed = 0;
+            maxSlots = 0;
+            if(storeItems != null ) {
+                storeItems.Clear();
+            }
         }
     }
 }

@@ -57,7 +57,8 @@ namespace Common
         ExpireTime = 20,
         CurrentTime = 21,
         Language = 22,
-        ServerId,
+        ServerId = 23,
+        Icon = 24,
         /// <summary>
         /// The event code.
         /// </summary>

@@ -106,6 +106,12 @@ namespace SelectCharacter.Guilds {
             }
         }
 
+        public void AddRating(int points) {
+            lock(syncRoot) {
+                rating += points;
+            }
+        }
+
         public List<GuildMember> memberList {
             get {
                 List<GuildMember> result = new List<GuildMember>();
