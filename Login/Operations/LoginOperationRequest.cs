@@ -14,7 +14,7 @@ namespace Login.Operations {
         public string login { get; set; }
 
         [DataMember(Code =(byte)ParameterCode.Password, IsOptional =false)]
-        public string password { get; set; }
+        public string encryptedPassword { get; set; }
 
     }
 }

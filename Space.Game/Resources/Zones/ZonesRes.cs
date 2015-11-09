@@ -443,6 +443,12 @@ namespace Space.Game.Resources.Zones {
                                 componentCollection.Add(ComponentID.SharedChest, data);
                             }
                             break;
+                        case ComponentID.PvpStore:
+                            {
+                                PvpStoreComponentData data = new PvpStoreComponentData(ce);
+                                componentCollection.Add(ComponentID.PvpStore, data);
+                            }
+                            break;
                         case ComponentID.Teleport:
                             {
                                 ComponentSubType subType = ComponentSubType.SimpleTeleport;

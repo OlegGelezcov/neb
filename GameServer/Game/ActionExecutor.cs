@@ -1394,7 +1394,7 @@ namespace Space.Game {
                     miningStationInventoryObject.capacity * 3, 
                     characterID)},
                 { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop((Race)(byte)miningStationInventoryObject.race),
-                        1, Turret.SelectFraction((Race)(byte)miningStationInventoryObject.race))}
+                        1, Turret.SelectFraction(playerRace))}
             };
 
             log.InfoFormat("creating mining station with max count = {0}, time for single element = {1}, total count = {2}, element = {3} [red]",
@@ -1408,6 +1408,7 @@ namespace Space.Game {
             };
             var miningStationObject = ObjectCreate.NebObject(world, data);
             miningStationObject.AddToWorld();
+            
             planetComponent.SetStation(miningStationObject.GetComponent<MiningStation>(), slotNumber);
 
             Player.Inventory.Remove(InventoryObjectType.mining_station, inventoryItemID, 1);

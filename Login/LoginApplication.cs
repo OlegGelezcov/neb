@@ -89,9 +89,15 @@ namespace Login {
                 Instance = this;
                 this.InitLogging();
                 log.InfoFormat("Setup: serverId={0}", ServerId);
+#if LOCAL
+                string databaseConnectionFile = System.IO.Path.Combine(BinaryPath, "assets/database_connection_local.txt");
+#else
+                string databaseConnectionFile = System.IO.Path.Combine(BinaryPath, "assets/database_connection.txt");
+#endif
+                string databaseConnectionString = File.ReadAllText(databaseConnectionFile).Trim();
 
                 this.DbUserLogins = new DbReader();
-                this.DbUserLogins.Setup(GameServerSettings.Default.MongoConnectionString, GameServerSettings.Default.DatabaseName, GameServerSettings.Default.DbLoginCollectionName);
+                this.DbUserLogins.Setup(databaseConnectionString, GameServerSettings.Default.DatabaseName, GameServerSettings.Default.DbLoginCollectionName);
 
                 this.LogedInUsers = new LoggedInUserCollection(this);
 

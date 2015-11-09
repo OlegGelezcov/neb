@@ -18,10 +18,12 @@ using SelectCharacter.Group;
 using SelectCharacter.Guilds;
 using SelectCharacter.Mail;
 using SelectCharacter.Notifications;
+using SelectCharacter.PvpStore;
 using SelectCharacter.Races;
 using SelectCharacter.Resources;
 using SelectCharacter.Store;
 using ServerClientCommon;
+using Space.Game;
 using Space.Game.Resources;
 using System;
 using System.IO;
@@ -71,6 +73,13 @@ namespace SelectCharacter {
         public ConsumableItemCollection consumableItems { get; private set; }
 
         public BankSlotPriceCollection bankSlotPrices { get; private set; }
+        public PvpStoreItemCollection pvpStoreItems { get; private set; }
+
+        public ServerInputsRes serverSettings { get; private set; }
+
+        public Res resource { get; private set; }
+
+        public PvpStoreManager pvpStore { get; private set; }
 
         public static new SelectCharacterApplication Instance {
             get {
@@ -118,8 +127,15 @@ namespace SelectCharacter {
                 Clients = new ClientCollection();
                 Notifications = new NotificationService(this);
 
+#if LOCAL
+                string databaseConnectionFile = System.IO.Path.Combine(BinaryPath, "assets/database_connection_local.txt");
+#else
+                string databaseConnectionFile = System.IO.Path.Combine(BinaryPath, "assets/database_connection.txt");
+#endif
+
+                string databaseConnectionString = File.ReadAllText(databaseConnectionFile).Trim();
                 this.DB = new DbReader();
-                this.DB.Setup(SelectCharacterSettings.Default.DatabaseConnectionString, SelectCharacterSettings.Default.DatabaseName, SelectCharacterSettings.Default.DatabaseCollectionName);
+                this.DB.Setup(databaseConnectionString, SelectCharacterSettings.Default.DatabaseName, SelectCharacterSettings.Default.DatabaseCollectionName);
 
                 Mail = new MailManager(this);
                 Guilds = new GuildService(this);
@@ -150,12 +166,22 @@ namespace SelectCharacter {
                 StartLocations.LoadFromFile(Path.Combine(BinaryPath, "assets/start_locations.xml"));
                 log.Info(StartLocations.GetWorld(Race.Humans, Workshop.DarthTribe));
 
+                pvpStoreItems = new PvpStoreItemCollection();
+                pvpStoreItems.Load(Path.Combine(BinaryPath, "assets/pvp_store.xml"));
+                log.InfoFormat("store items loaded = {0} [red]", pvpStoreItems.count);
+
+                serverSettings = new ServerInputsRes();
+                serverSettings.Load(BinaryPath, "Data/server_inputs.xml");
+
+                resource = new Res(BinaryPath);
+                resource.Load();
+
                 Election = new CommanderElection(this);
                 raceStats = new RaceStatsService(this);
 
                 friends = new FriendService(this);
 
-
+                pvpStore = new PvpStoreManager(this);
 
                 Protocol.AllowRawCustomValues = true;
                 this.PublicIpAddress = PublicIPAddressReader.ParsePublicIpAddress(SelectCharacterSettings.Default.PublicIPAddress);

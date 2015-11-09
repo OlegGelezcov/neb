@@ -20,14 +20,14 @@ namespace Nebula.Database {
         public static StationDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new StationDatabase();
+                    s_Instance = new StationDatabase(GameApplication.Instance.databaseConnectionString);
                 }
                 return s_Instance;
             }
         }
 
-        private StationDatabase() {
-            DbClient = new MongoClient(GameServerSettings.Default.DatabaseConnectionString);
+        private StationDatabase(string connectionString) {
+            DbClient = new MongoClient(connectionString);
             DbServer = DbClient.GetServer();
             Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             StationDocuments = Database.GetCollection<WorkshopDocument>(GameServerSettings.Default.DatabaseWorkshopCollectionName);

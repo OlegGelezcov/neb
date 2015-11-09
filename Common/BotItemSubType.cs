@@ -11,7 +11,8 @@
         Drill,
         Outpost,
         Turret,
-        MainOutpost
+        MainOutpost,
+        PvpStore
     }
 }
 

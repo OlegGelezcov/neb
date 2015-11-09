@@ -116,6 +116,11 @@ namespace Nebula.Game {
                             components.Add(typeof(BotObject));
                         }
                         break;
+                    case ComponentID.PvpStore:
+                        {
+                            components.Add(typeof(PvpStore));
+                        }
+                        break;
                     case ComponentID.Raceable:
                         {
                             components.Add(typeof(RaceableObject));
@@ -378,6 +383,11 @@ namespace Nebula.Game {
                     case ComponentID.Bot:
                         {
                             nebObject.GetComponent<BotObject>().Init(comp.Value as BotComponentData);
+                        }
+                        break;
+                    case ComponentID.PvpStore:
+                        {
+                            nebObject.GetComponent<PvpStore>().Init(comp.Value as PvpStoreComponentData);
                         }
                         break;
                     case ComponentID.Raceable:

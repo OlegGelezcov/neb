@@ -45,6 +45,7 @@ namespace Common {
         Skill_45E,
         DatabaseObject,
         PassiveBonuses,
-        MiningStation
+        MiningStation,
+        PvpStore
     }
 }

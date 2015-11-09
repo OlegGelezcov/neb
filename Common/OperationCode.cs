@@ -26,6 +26,7 @@ namespace Common
         GetNews = 4,
         AddPass = 5,
         RequestServerId = 6,
+        GetShipModel = 7,
         /// <summary>
         /// Create world operation code
         /// </summary>

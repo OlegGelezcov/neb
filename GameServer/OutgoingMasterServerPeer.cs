@@ -70,27 +70,33 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
         this.StopUpdateLoop();
         MmoWorldCache.Instance.Clear();
 
-//#if !LOCAL
-//        string servName = "Remote Game Server";
 //#if LOCAL
-//        servName = "Local Game Server";
-//#endif
-
 //        Task.Factory.StartNew(() => {
-
             
-//            string slackMsg = string.Format("connection to master closed (id={0}, reason={1}, detail={2}), serverId={3}",
-//            this.ConnectionId, reasonCode, reasonDetail, GameApplication.ServerId);
-//            string response = NetUtils.SendToSlack(servName, slackMsg);
-
-//            int rtt = 0, rttVariance = 0, numFailures = 0;
-//            GetStats(out rtt, out rttVariance, out numFailures);
-//            string msg = string.Format("Disconnected peer stats: RTT = {0}, RTT Variance = {1}, Num Failures = {2}", rtt, rttVariance, numFailures);
-//            NetUtils.SendToSlack(servName, msg);
-
-//            log.InfoFormat(response + "[green]");
 //        });
 //#endif
+
+        //#if !LOCAL
+        //        string servName = "Remote Game Server";
+        //#if LOCAL
+        //        servName = "Local Game Server";
+        //#endif
+
+        //        Task.Factory.StartNew(() => {
+
+
+        //            string slackMsg = string.Format("connection to master closed (id={0}, reason={1}, detail={2}), serverId={3}",
+        //            this.ConnectionId, reasonCode, reasonDetail, GameApplication.ServerId);
+        //            string response = NetUtils.SendToSlack(servName, slackMsg);
+
+        //            int rtt = 0, rttVariance = 0, numFailures = 0;
+        //            GetStats(out rtt, out rttVariance, out numFailures);
+        //            string msg = string.Format("Disconnected peer stats: RTT = {0}, RTT Variance = {1}, Num Failures = {2}", rtt, rttVariance, numFailures);
+        //            NetUtils.SendToSlack(servName, msg);
+
+        //            log.InfoFormat(response + "[green]");
+        //        });
+        //#endif
         if (!this.redirected) {
             log.InfoFormat("connection to master closed (id={0}, reason={1}, detail={2}), serverId={3}",
                 this.ConnectionId, reasonCode, reasonDetail, GameApplication.ServerId);

@@ -1,4 +1,11 @@
-﻿using MongoDB.Bson;
+﻿// DbUserLogin.cs
+// Nebula
+//
+// Created by Oleg Zheleztsov on Thursday, November 5, 2015 4:22:34 PM
+// Copyright (c) 2015 KomarGames. All rights reserved.
+//
+using Common;
+using MongoDB.Bson;
 
 namespace Login {
     public class DbUserLogin {
@@ -22,6 +29,13 @@ namespace Login {
 
         public void DecrementPasses() {
             passes--;
+        }
+
+        /// <summary>
+        /// Force expire game time on user ( for testing )
+        /// </summary>
+        public void ForceExpire() {
+            expireTime = CommonUtils.SecondsFrom1970();
         }
     }
 }

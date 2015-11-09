@@ -62,6 +62,7 @@ public class GameApplication : ApplicationBase
     //private readonly PoolFiber loopFiber;
     
 
+        public string databaseConnectionString { get; private set; }
          
 
 
@@ -182,6 +183,14 @@ public class GameApplication : ApplicationBase
                 currentRole.RoleName, currentRole.PublicIPAddress, currentRole.GamingTcpPort, currentRole.GamingUdpPort, currentRole.Locations.Count);
             log.InfoFormat("connect to master = {0}", currentRole.RoleName);
 
+#if LOCAL
+            string databaseConnectionFile = System.IO.Path.Combine(BinaryPath, "assets/database_connection_local.txt");
+#else
+            string databaseConnectionFile = System.IO.Path.Combine(BinaryPath, "assets/database_connection.txt");
+#endif
+            databaseConnectionString = File.ReadAllText(databaseConnectionFile).Trim();
+            DatabaseManager.Setup(databaseConnectionString);
+
             updater = new GameUpdater(this);
 
             this.ConnectToMaster();
@@ -233,8 +242,11 @@ public class GameApplication : ApplicationBase
 
     protected override void TearDown()
     {
-        
-
+#if LOCAL
+        if (roleName.ToLower().Contains("humans")) {
+            NetUtils.SendToSlack("", "LOCAL SERVER WAS RESTARTED");
+        }
+#endif
         //if (PlayerGroups != null) {
         //    PlayerGroups.Dispose();
         //    PlayerGroups = null;

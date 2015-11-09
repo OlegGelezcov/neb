@@ -25,14 +25,14 @@ namespace Nebula.Database {
         public static InventoryDatabase instance {
             get {
                 if(s_Instance == null) {
-                    s_Instance = new InventoryDatabase();
+                    s_Instance = new InventoryDatabase(GameApplication.Instance.databaseConnectionString);
                 }
                 return s_Instance;
             }
         }
 
-        private InventoryDatabase() {
-            DbClient = new MongoClient(GameServerSettings.Default.DatabaseConnectionString);
+        private InventoryDatabase(string connectionString) {
+            DbClient = new MongoClient(connectionString);
             DbServer = DbClient.GetServer();
             Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             InventoryDocuments = Database.GetCollection<InventoryDocument>(GameServerSettings.Default.DatabaseInventoryCollectionName);

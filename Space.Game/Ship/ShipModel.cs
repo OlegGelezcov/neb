@@ -252,6 +252,20 @@ namespace Space.Game.Ship
             return result;
         }
 
+        /// <summary>
+        /// Get only existing modules on model ( for GetShipModel operation)
+        /// </summary>
+        /// <returns></returns>
+        public Hashtable GetExistingInfo() {
+            Hashtable result = new Hashtable();
+            foreach(var slot in Slots) {
+                if(slot.HasModule) {
+                    result.Add((byte)slot.Type, slot.Module.GetInfo());
+                }
+            }
+            return result;
+        }
+
         public ShipModelSets Sets
         {
             get

@@ -1,9 +1,12 @@
-﻿using ExitGames.Logging;
-using System;
+﻿// LoggedInUserCollection.cs
+// Nebula
+//
+// Created by Oleg Zheleztsov on Thursday, November 5, 2015 4:23:25 PM
+// Copyright (c) 2015 KomarGames. All rights reserved.
+//
+using ExitGames.Logging;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Login {
     public class LoggedInUserCollection : Dictionary<string, LoggedInUser> {

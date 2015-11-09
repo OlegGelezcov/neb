@@ -1,11 +1,14 @@
-﻿using Common;
+﻿// CharacterNotifications.cs
+// Nebula
+//
+// Created by Oleg Zheleztsov on Tuesday, November 3, 2015 6:36:31 PM
+// Copyright (c) 2015 KomarGames. All rights reserved.
+//
+using Common;
 using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 using ServerClientCommon;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace SelectCharacter.Notifications {
     public class CharacterNotifications : IInfoSource {
@@ -15,11 +18,22 @@ namespace SelectCharacter.Notifications {
 
         private readonly object syncRoot = new object();
 
+        /// <summary>
+        /// Look for notifiations already contains such notification or not (for comparing used unique ID status and handle state for responded notifications)
+        /// </summary>
+        /// <param name="n">Notification for comparing with existing notifications</param>
+        /// <returns></returns>
         public bool Contains(Notification n) {
             lock(syncRoot) {
                 foreach(var pNotification in notifications) {
                     if(pNotification.Value.uniqueID == n.uniqueID) {
-                        return true;
+
+                        //Comparing for handled notifications uses handled options
+                        if (pNotification.Value.respondAction == (int)NotficationRespondAction.YesDelete && pNotification.Value.handled) {
+                            return false;
+                        } else {
+                            return true;
+                        }
                     }
                 }
                 return false;

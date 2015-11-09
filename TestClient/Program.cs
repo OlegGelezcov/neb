@@ -2,23 +2,14 @@
 //#define BALANCE
 //#define SCRIPT
 using Common;
+using Nebula.Client.Servers;
 using ServerClientCommon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Nebula.Client.Servers;
-using TestClient.SelectCharacterTests;
-using TestClient.Scripts;
 using System.Text.RegularExpressions;
-using Space.Game;
-using Space.Game.Drop;
-using Space.Game.Ship;
-using TestClient.TestDatabase;
-using TestClient.PlayMarketReviewReader;
-using TestClient.TestDropping;
-using System.Threading;
 
 namespace TestClient {
     public class ClientApplication {
@@ -74,9 +65,24 @@ namespace TestClient {
                     Console.WriteLine("Invalid: {0}", emailAddress);
             }*/
 
+            /*
             EmailSender sender = new EmailSender("smtp.yandex.com", 465, "support@depielco.com", "ks00ts14");
             bool result = sender.SendMessage("oleggelezcov@komargames.com", "dfdff sf", "test bofy of sadad");
-            Console.WriteLine( result );
+            Console.WriteLine( result );*/
+
+            //TestConnectingToMongoWithUserAndPassword test = new TestConnectingToMongoWithUserAndPassword();
+            /*
+            test.Connect();
+            for(int i = 0; i < 10; i++ ) {
+                test.Insert();
+            }
+
+            test.Read();
+            test.CheckUsers();*/
+            // test.TestDatabaseManager();
+
+            TestCryptoPassword testCrypto = new TestCryptoPassword();
+            testCrypto.Test();
         }
 
         private static void OldTests() {

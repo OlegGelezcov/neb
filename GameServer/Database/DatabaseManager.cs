@@ -25,14 +25,19 @@ namespace Space.Database {
 
         public void Setup(string connectionString) {
             DbClient = new MongoClient(connectionString);
+            
             DbServer = DbClient.GetServer();
+
+           
             foreach(var cred in DbClient.Settings.Credentials) {
                 log.InfoFormat("credentials = {0}:{1} [red]", cred.Username, cred.Password);
             }
 
             Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            
             Worlds                  = Database.GetCollection<WorldDocument>(GameServerSettings.Default.WorldCollection);
             worldStates = Database.GetCollection<WorldState>(GameServerSettings.Default.WorldStateCollectionName);
+            log.InfoFormat("world count = {0} [red]", Worlds.Count());
             //log.InfoFormat("world count: {0} [red]", )
         }
 

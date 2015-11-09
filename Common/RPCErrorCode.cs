@@ -34,6 +34,8 @@ namespace Common {
         MaxTierReached = 1025,
         DontEnoughInventoryItems = 1026,
         LearningAlreadyStarted = 1027,
+        UnableRemovePvpPointsFromBalance = 1028,
+        DontEnoughPvpPoints = 1029,
         UnknownError = 10002,
         
     }

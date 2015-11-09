@@ -324,5 +324,13 @@ namespace SelectCharacter {
         public bool BuyBankMaxSlots() {
             return peer.BuyMaxSlots();
         } 
+
+        public Hashtable GetPvpStore() {
+            return application.pvpStoreItems.GetInfo();
+        }
+
+        public bool AddPvpPoints(string login, string gameRef, string character, int count) {
+            return application.Stores.AddPvpPoints(login, gameRef, character, count);
+        }
     }
 }

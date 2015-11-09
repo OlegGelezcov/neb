@@ -21,7 +21,6 @@ namespace Login {
         public bool EnableLatencyMonitor;
         public int GamingWebSocketPort;
         public int AppStatsPublishInterval;
-        public string MongoConnectionString;
         public string DbLoginCollectionName;
         public string DatabaseName;
         public Assets assets;
@@ -35,7 +34,7 @@ namespace Login {
                     GamingUdpPort = 5107,
                     ConnectRetryInterval = 15,
                     OutgoingMasterServerPeerPort = 4520,
-                    LatencyMonitorAddress = "",
+                   LatencyMonitorAddress = "",
                     RelayPortTcp = 0,
                     RelayPortWebSocket = 0,
                     WorkloadConfigFile = "192.168.1.102",
@@ -45,7 +44,6 @@ namespace Login {
                     EnableLatencyMonitor = false,
                     GamingWebSocketPort = 9092,
                     AppStatsPublishInterval = 1000,
-                    MongoConnectionString = "mongodb://localhost",
                     DbLoginCollectionName = "user_login_collection",
                     DatabaseName = "user_logins",
                     assets = new Assets()
@@ -67,7 +65,6 @@ namespace Login {
                     EnableLatencyMonitor = false,
                     GamingWebSocketPort = 9092,
                     AppStatsPublishInterval = 1000,
-                    MongoConnectionString = "mongodb://104.207.135.55",
                     DbLoginCollectionName = "user_login_collection",
                     DatabaseName = "user_logins",
                     assets = new Assets()

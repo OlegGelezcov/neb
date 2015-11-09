@@ -1,11 +1,13 @@
-﻿using Common;
+﻿// AddPassOperationHandler.cs
+// Nebula
+//
+// Created by Oleg Zheleztsov on Thursday, November 5, 2015 4:19:08 PM
+// Copyright (c) 2015 KomarGames. All rights reserved.
+//
+using Common;
 using Login.Operations;
 using Photon.SocketServer;
 using ServerClientCommon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Login.OperationHandlers {
     public class AddPassOperationHandler : BaseOperationHandler  {

@@ -2,10 +2,6 @@
 using Login.Operations;
 using Photon.SocketServer;
 using ServerClientCommon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Login.OperationHandlers {
     public class LoginOperationHandler : BaseOperationHandler  {
@@ -21,9 +17,11 @@ namespace Login.OperationHandlers {
                 };
             }
 
+            string password = StringChiper.Decrypt(operation.encryptedPassword);
+
             OperationResponse response;
             LoginReturnCode returnCode = LoginReturnCode.Ok;
-            var user = application.GetExistingUser(operation.login, operation.password, out returnCode);
+            var user = application.GetExistingUser(operation.login, password, out returnCode);
             if(returnCode != LoginReturnCode.Ok ) {
                 var responseObject = new LoginOperationResponse {
                     Login = operation.login,

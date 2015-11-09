@@ -35,6 +35,7 @@ namespace Common {
         SetNewPrice,
         SendPushToPlayers,
         MoveItemFromStationToBank,
-        MoveItemFromBankToStation
+        MoveItemFromBankToStation,
+        BuyPvpItem
     }
 }

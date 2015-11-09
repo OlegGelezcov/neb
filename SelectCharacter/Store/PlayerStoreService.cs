@@ -429,6 +429,25 @@ namespace SelectCharacter.Store {
             }
         }
 
+        public PlayerStore GetOnlyPlayerStore(string characterID) {
+
+            if (mPlayerStoreCache.ContainsKey(characterID)) {
+                PlayerStore store;
+                if (mPlayerStoreCache.TryGetValue(characterID, out store)) {
+                    return store;
+                } 
+
+            } else {
+                var store = mApplication.DB.Stores.FindOne(Query<PlayerStore>.EQ(s => s.characterID, characterID));
+                if (store != null) {
+                    mPlayerStoreCache.TryAdd(store.characterID, store);
+                    return store;
+                } 
+            }
+
+            return null;
+        }
+
         public bool HasCredits(string login, string gameRefID, string characterID, int credits) {
             var store = GetOrCreatePlayerStore(login, gameRefID, characterID);
             if (store == null) {
@@ -474,6 +493,21 @@ namespace SelectCharacter.Store {
             store.AddPvpPoints(pvpPoints);
             return true;
 
+        }
+
+        public bool RemovePvpPoints(string character, int pvpPoints) {
+            if(pvpPoints < 0 ) {
+                log.InfoFormat("RemovePvpPoints say: pvp points count must be > 0 [red]");
+                return false;
+            }
+
+            var store = GetOnlyPlayerStore(character);
+            if(store == null ) {
+                log.InfoFormat("RemovePvpPoints say: store of character must be not (null) [red]");
+                return false;
+            }
+
+            return store.RemovePvpPoints(pvpPoints);
         }
 
         public bool RemoveCredits(string login, string gameRefID, string characterID, int credits) {

@@ -8,6 +8,7 @@ using ServerClientCommon;
 
 namespace Nebula.Client.News {
     public class PostEntry : IInfoParser {
+
         public string postID { get; private set; }
         public DateTime time { get; private set; }
         public string message { get; private set; }
@@ -28,6 +29,8 @@ namespace Nebula.Client.News {
         public PostEntry(Hashtable info) {
             ParseInfo(info);
         }
+
+        public PostEntry() { }
 
         public bool hasURL {
             get {

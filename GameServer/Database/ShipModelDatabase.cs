@@ -22,14 +22,14 @@ namespace Nebula.Database {
         public static ShipModelDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new ShipModelDatabase();
+                    s_Instance = new ShipModelDatabase(GameApplication.Instance.databaseConnectionString);
                 }
                 return s_Instance;
             }
         }
 
-        private ShipModelDatabase() {
-            DbClient = new MongoClient(GameServerSettings.Default.DatabaseConnectionString);
+        private ShipModelDatabase(string connectionString) {
+            DbClient = new MongoClient(connectionString);
             DbServer = DbClient.GetServer();
             Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             ShipModelDocuments = Database.GetCollection<ShipModelDocument>(GameServerSettings.Default.DatabaseShipModelCollectionName);

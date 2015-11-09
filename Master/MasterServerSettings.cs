@@ -14,7 +14,6 @@ namespace Master {
         public int MasterRelayPortUdp;
         public int MasterNodeId;
         public string S2SMasterAddress;
-        public string MongoConnectionString;
         public string DatabaseName;
         public string NewsCollectionName;
 
@@ -30,7 +29,6 @@ namespace Master {
                     MasterRelayPortWebSocket = 0,
                     PublicIPAddress = "192.168.1.102",
                     S2SMasterAddress = "192.168.1.102",
-                    MongoConnectionString = "mongodb://localhost",
                     DatabaseName = "master",
                     NewsCollectionName = "news"
                 };
@@ -44,7 +42,6 @@ namespace Master {
                     MasterRelayPortWebSocket = 0,
                     PublicIPAddress = "45.63.0.198",
                     S2SMasterAddress = "45.63.0.198",
-                    MongoConnectionString = "mongodb://104.207.135.55",
                     DatabaseName = "master",
                     NewsCollectionName = "news"
                 };

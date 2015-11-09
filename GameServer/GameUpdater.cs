@@ -47,8 +47,32 @@ namespace Nebula {
                 GameApplication.SetResourcePool(new ResourcePool(GameApplication.Instance.BinaryPath));
             }
             var globalResourceCheck = GameApplication.ResourcePool().Resource("global");
-            GameApplication.Instance.DatabaseManager.Setup(GameServerSettings.Default.DatabaseConnectionString);
 
+            /*
+#if LOCAL
+            if(application.CurrentRole().RoleName.ToLower().Contains("human")) {
+                log.InfoFormat("connect as: {0} [red]", "mongodb://human:87e898AA@localhost/nebula");
+                GameApplication.Instance.DatabaseManager.Setup("mongodb://human:87e898AA@localhost:27017/nebula");
+                
+            } else if(application.CurrentRole().RoleName.ToLower().Contains("borg")) {
+                log.InfoFormat("connect as: {0} [red]", "mongodb://borg:87e898AA@localhost/nebula");
+                GameApplication.Instance.DatabaseManager.Setup("mongodb://borg:87e898AA@localhost:27017/nebula");             
+            } else if(application.CurrentRole().RoleName.ToLower().Contains("crip")) {
+                log.InfoFormat("connect as: {0} [red]", "mongodb://crip:87e898AA@localhost/nebula");
+                GameApplication.Instance.DatabaseManager.Setup("mongodb://crip:87e898AA@localhost:27017/nebula");
+            } else if(application.CurrentRole().RoleName.ToLower().Contains("neutral")) {
+                log.InfoFormat("connect as: {0} [red]", "mongodb://neutral:87e898AA@localhost/nebula");
+                GameApplication.Instance.DatabaseManager.Setup("mongodb://neutral:87e898AA@localhost:27017/nebula");
+            } else {
+                log.InfoFormat("unknown role = {0} [red]", application.CurrentRole().RoleName);
+            }
+#else
+
+            GameApplication.Instance.DatabaseManager.Setup(GameServerSettings.Default.DatabaseConnectionString);
+#endif
+*/
+
+            
 
             foreach (string locationID in GameApplication.Instance.CurrentRole().Locations) {
                 MmoWorld world;

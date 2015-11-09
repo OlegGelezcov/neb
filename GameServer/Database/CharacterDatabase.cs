@@ -20,14 +20,14 @@ namespace Nebula.Database {
         public static CharacterDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new CharacterDatabase();
+                    s_Instance = new CharacterDatabase(GameApplication.Instance.databaseConnectionString);
                 }
                 return s_Instance;
             }
         }
 
-        public CharacterDatabase() {
-            DbClient = new MongoClient(GameServerSettings.Default.DatabaseConnectionString);
+        public CharacterDatabase(string connectionString) {
+            DbClient = new MongoClient(connectionString);
             DbServer = DbClient.GetServer();
             Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             CharacterDocuments = Database.GetCollection<StatsDocument>(GameServerSettings.Default.DatabaseStatsCollectionName);

@@ -21,14 +21,14 @@ namespace Nebula.Database {
         public static WeaponDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new WeaponDatabase();
+                    s_Instance = new WeaponDatabase(GameApplication.Instance.databaseConnectionString);
                 }
                 return s_Instance;
             }
         }
 
-        private WeaponDatabase() {
-            DbClient = new MongoClient(GameServerSettings.Default.DatabaseConnectionString);
+        private WeaponDatabase(string connectionString) {
+            DbClient = new MongoClient(connectionString);
             DbServer = DbClient.GetServer();
             Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             WeaponDocuments = Database.GetCollection<WeaponDocument>(GameServerSettings.Default.DatabaseWeaponCollectionName);

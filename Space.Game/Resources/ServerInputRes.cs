@@ -20,6 +20,9 @@ namespace Space.Game.Resources {
         public float standardFortificationHp { get; private set; }
         public float standardTurretHp { get; private set; }
 
+        public int pvpStoreMinLevel { get; private set; }
+
+
         /// <summary>
         /// Start player when he first entering to game
         /// </summary>
@@ -51,7 +54,7 @@ namespace Space.Game.Resources {
             standardTurretHp = Inputs.GetValue<float>("standard_turret_hp", 0f);
             startPlayerTime = Inputs.GetValue<int>("start_player_game_time", 0);
             timeForPass = Inputs.GetValue<int>("time_for_pass", 0);
-
+            pvpStoreMinLevel = Inputs.GetValue<int>("pvp_store_min_level", 0);
         }
 
         public T GetValue<T>(string key) {

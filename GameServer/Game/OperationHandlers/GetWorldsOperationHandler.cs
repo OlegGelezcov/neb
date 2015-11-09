@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// GetWorldsOperationHandler.cs
+// Nebula
+//
+// Created by Oleg Zheleztsov on Tuesday, November 3, 2015 2:01:33 PM
+// Copyright (c) 2015 KomarGames. All rights reserved.
+//
+using Common;
+using Nebula.Server.Operations;
 using Photon.SocketServer;
 using Space.Game;
-using Nebula.Server.Operations;
-using Common;
 using System.Collections;
 
 namespace Nebula.Game.OperationHandlers {

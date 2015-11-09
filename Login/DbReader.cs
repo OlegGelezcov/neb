@@ -1,15 +1,15 @@
-﻿using Common;
+﻿// DbReader.cs
+// Nebula
+//
+// Created by Oleg Zheleztsov on Thursday, November 5, 2015 4:23:01 PM
+// Copyright (c) 2015 KomarGames. All rights reserved.
+//
+using Common;
 using ExitGames.Logging;
-using Login.OperationHandlers;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using MongoDB.Driver.Builders;
 using ServerClientCommon;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Login {
     public class DbReader {

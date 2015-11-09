@@ -22,14 +22,14 @@ namespace Nebula.Database {
         public static SkillDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new SkillDatabase();
+                    s_Instance = new SkillDatabase(GameApplication.Instance.databaseConnectionString);
                 }
                 return s_Instance;
             }
         }
 
-        private SkillDatabase() {
-            DbClient = new MongoClient(GameServerSettings.Default.DatabaseConnectionString);
+        private SkillDatabase(string connectionString) {
+            DbClient = new MongoClient(connectionString);
             DbServer = DbClient.GetServer();
             Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             SkillsDocuments = Database.GetCollection<SkillsDocument>(GameServerSettings.Default.DatabaseSkillsCollectionName);

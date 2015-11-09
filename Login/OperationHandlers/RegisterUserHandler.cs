@@ -2,11 +2,6 @@
 using Login.Operations;
 using Photon.SocketServer;
 using ServerClientCommon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Login.OperationHandlers {
     public class RegisterUserHandler : BaseOperationHandler {
@@ -35,7 +30,9 @@ namespace Login.OperationHandlers {
                 return new OperationResponse(request.OperationCode, responseObject);
             }
 
-            if (!mLoginUtils.IsPasswordLengthValid(operation.password)) {
+            string password = StringChiper.Decrypt(operation.encryptedPassword);
+
+            if (!mLoginUtils.IsPasswordLengthValid(password)) {
                 RegisterUserResponse responseObject = new RegisterUserResponse {
                     login = operation.login,
                     gameRef = string.Empty,
@@ -53,7 +50,7 @@ namespace Login.OperationHandlers {
                 return new OperationResponse(request.OperationCode, responseObject);
             }
 
-            if(!mLoginUtils.IsPasswordCharactersValid(operation.password)) {
+            if(!mLoginUtils.IsPasswordCharactersValid(password)) {
                 RegisterUserResponse responseObject = new RegisterUserResponse {
                     login = operation.login,
                     gameRef = string.Empty,
@@ -97,7 +94,7 @@ namespace Login.OperationHandlers {
 
 
             LoginReturnCode code = LoginReturnCode.Ok;
-            var dbUser = database.CreateUser(operation.login, operation.password, operation.email, out code);
+            var dbUser = database.CreateUser(operation.login, password, operation.email, out code);
             application.LogedInUsers.OnUserLoggedIn(dbUser.login, dbUser.gameRef, peer as LoginClientPeer);
 
             if(code != LoginReturnCode.Ok) {

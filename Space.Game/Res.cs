@@ -108,7 +108,7 @@
         public void Load() {
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
-            this.SkillStorage = LoadSkills();
+            //this.SkillStorage = LoadSkills();
 
             skillDropping = new SkillDropping();
             skillDropping.Load(basePath);
@@ -231,10 +231,10 @@
             private set;
         }
 
-        public SkillStorage SkillStorage {
-            get;
-            private set;
-        }
+        //public SkillStorage SkillStorage {
+        //    get;
+        //    private set;
+        //}
 
         public WeaponDropSettings WeaponSettings {
             get;
@@ -318,14 +318,14 @@
         }
 
         #region Loading functions
-        private SkillStorage LoadSkills() {
-            string path = Path.Combine(basePath, "Data/Drop/skills.xml");
-            XDocument document = XDocument.Load(path);
-            var skills = document.Element("skills").Elements("skill").Select(e => {
-                return new SkillInfo { id = e.Attribute("id").Value, type = CommonUtils.GetEnum<ShipModelSlotType>(e.Attribute("type").Value) };
-            }).ToList();
-            return new SkillStorage(skills);
-        }
+        //private SkillStorage LoadSkills() {
+        //    string path = Path.Combine(basePath, "Data/Drop/skills.xml");
+        //    XDocument document = XDocument.Load(path);
+        //    var skills = document.Element("skills").Elements("skill").Select(e => {
+        //        return new SkillInfo { id = e.Attribute("id").Value, type = CommonUtils.GetEnum<ShipModelSlotType>(e.Attribute("type").Value) };
+        //    }).ToList();
+        //    return new SkillStorage(skills);
+        //}
 
         #endregion
 

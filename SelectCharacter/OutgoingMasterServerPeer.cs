@@ -190,6 +190,12 @@ namespace SelectCharacter {
                         application.Clients.HandleTransaction(end);
                         break;
                     }
+                case TransactionSource.PvpStore:
+                    {
+                        application.pvpStore.putTransactionPool.HandleTransaction(end);
+                        log.InfoFormat("transaction handled for buy pvp store item [red]");
+                    }
+                    break;
                 default:
                     {
                         log.ErrorFormat("Unsopprted PUT transaction source = {0}", (TransactionSource)end.transactionSource);

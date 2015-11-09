@@ -14,6 +14,7 @@ namespace Common {
         CommandsUpdate,
         Push,
         BankUpdate,
-        PvpPointUpdate
+        PvpPointUpdate,
+        PvpStorePurchaseStatus
     }
 }

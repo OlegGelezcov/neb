@@ -125,6 +125,7 @@
     <Compile Include="Notifications\NotificationService.cs" />
     <Compile Include="OperationHandlers\BaseOperationHandler.cs" />
     <Compile Include="OperationHandlers\BuyAuctionItemOperationHandler.cs" />
+    <Compile Include="OperationHandlers\BuyPvpItemOperationHandler.cs" />
     <Compile Include="OperationHandlers\ChangeGuildMemberStatusOperationHandler.cs" />
     <Compile Include="OperationHandlers\CreateCharacterOperationHandler.cs" />
     <Compile Include="OperationHandlers\CreateGuildOperationHandler.cs" />
@@ -153,6 +154,8 @@
     <Compile Include="Operations\BaseSuccessResponse.cs" />
     <Compile Include="Operations\BuyAuctionItemOperationRequest.cs" />
     <Compile Include="Operations\BuyAuctionItemOperationResponse.cs" />
+    <Compile Include="Operations\BuyPvpItemOperationRequest.cs" />
+    <Compile Include="Operations\BuyPvpItemOperationResponse.cs" />
     <Compile Include="Operations\ChangeGuildMemberStatusOperationRequest.cs" />
     <Compile Include="Operations\CreateCharacterOperationRequest.cs" />
     <Compile Include="Operations\CreateCharacterOperationResponse.cs" />
@@ -198,6 +201,7 @@
     <Compile Include="Operations\WriteMailMessageOperationResponse.cs" />
     <Compile Include="OutgoingMasterServerPeer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PvpStore\PvpStoreManager.cs" />
     <Compile Include="Races\RaceStat.cs" />
     <Compile Include="Races\RaceStats.cs" />
     <Compile Include="Races\RaceStatsService.cs" />
@@ -207,6 +211,8 @@
     <Compile Include="Resources\ItemPrice.cs" />
     <Compile Include="Resources\ItemPriceCollection.cs" />
     <Compile Include="Resources\NebulaElementItemPrice.cs" />
+    <Compile Include="Resources\PvpStoreItem.cs" />
+    <Compile Include="Resources\PvpStoreItemCollection.cs" />
     <Compile Include="S2SMethodInvoker.cs" />
     <Compile Include="SelectCharacterApplication.cs" />
     <Compile Include="SelectCharacterClientPeer.cs" />
@@ -243,12 +249,19 @@
     <None Include="app.config" />
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
+    <None Include="ClassDiagram3.cd" />
     <None Include="log4net.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\database_connection.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\database_connection_local.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\start_locations.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

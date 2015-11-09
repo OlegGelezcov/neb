@@ -8,6 +8,7 @@ namespace NebulaCommon {
         Store,
         Mail,
         PassManager,
-        Bank
+        Bank,
+        PvpStore
     }
 }

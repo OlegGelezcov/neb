@@ -32,6 +32,8 @@ namespace Master {
 
         public NewsService news { get; private set; }
 
+        public string databaseConnectionString { get; private set; }
+
         protected readonly byte LocalNodeId = 1;
 
         public bool IsMaster {
@@ -104,21 +106,27 @@ namespace Master {
             this.GameServers = new GameServerCollection();
             this.ServerInfoCollection = new ServerInfoCollection();
 
-            database = new DatabaseManager();
-            database.Setup(MasterServerSettings.Default.MongoConnectionString, MasterServerSettings.Default.DatabaseName, MasterServerSettings.Default.NewsCollectionName);
-
-            news = new NewsService(this);
-
-
 #if LOCAL
             string serverInfoFile = Path.Combine(this.BinaryPath, "assets/servers_local.xml");
+            string databaseConnectionFile = Path.Combine(BinaryPath, "assets/database_connection_local.txt");
 #else
             string serverInfoFile = Path.Combine(this.BinaryPath, "assets/servers.xml");
+            string databaseConnectionFile = Path.Combine(BinaryPath, "assets/database_connection.txt");
 #endif
 
             this.ServerInfoCollection.LoadFrom(serverInfoFile);
+            ReadDatabaseConnectionString(databaseConnectionFile);
 
             appVersion = GetAppVersion();
+
+            database = new DatabaseManager();
+            database.Setup(databaseConnectionString, MasterServerSettings.Default.DatabaseName, MasterServerSettings.Default.NewsCollectionName);
+
+            news = new NewsService(this);
+        }
+
+        private void ReadDatabaseConnectionString(string path) {
+            databaseConnectionString = File.ReadAllText(path).Trim();
         }
 
         public IPAddress GetInternalMasterNodeIpAddress() {

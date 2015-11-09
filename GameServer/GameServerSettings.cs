@@ -8,7 +8,7 @@ namespace Nebula {
         public int ConnectRetryInterval;
         public string MasterIPAddress;
         public int OutgoingMasterServerPeerPort;
-        public string DatabaseConnectionString;
+       // public string DatabaseConnectionString;
         public int UpdateInterval;
         public string DatabaseWorkshopCollectionName;
         public string DatabaseWeaponCollectionName;
@@ -29,7 +29,6 @@ namespace Nebula {
                     ConnectRetryInterval = 1000,
                     MasterIPAddress = "192.168.1.102",
                     OutgoingMasterServerPeerPort = 4520,
-                    DatabaseConnectionString = "mongodb://localhost",
                     UpdateInterval = 6,
                     DatabaseWorkshopCollectionName = "workshops",
                     DatabaseWeaponCollectionName = "weapons",
@@ -47,7 +46,6 @@ namespace Nebula {
                     ConnectRetryInterval = 1000,
                     MasterIPAddress = "45.63.0.198",
                     OutgoingMasterServerPeerPort = 4520,
-                    DatabaseConnectionString = "mongodb://104.207.135.55",
                     UpdateInterval = 6,
                     DatabaseWorkshopCollectionName = "workshops",
                     DatabaseWeaponCollectionName = "weapons",

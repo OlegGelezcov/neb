@@ -93,6 +93,8 @@
     <Compile Include="TestBehaviours\TestMain.cs" />
     <Compile Include="TestBehaviours\TestNebulaObject.cs" />
     <Compile Include="TestBehaviours\TestWorld.cs" />
+    <Compile Include="TestConnectingToMongoWithUserAndPassword.cs" />
+    <Compile Include="TestCryptoPassword.cs" />
     <Compile Include="TestDatabase\RemoteDatabase.cs" />
     <Compile Include="TestDatabase\TestDatabase.cs" />
     <Compile Include="TestDropping\TestDroppingProbs.cs" />
@@ -114,6 +116,14 @@
     <ProjectReference Include="..\GameMath\GameMath.csproj">
       <Project>{1e3cac5d-7bee-486a-b275-76cebc429e56}</Project>
       <Name>GameMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GameServer\GameServer.csproj">
+      <Project>{74f17503-cfec-46c7-80e3-92ddd35bc8e2}</Project>
+      <Name>GameServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Master\Master.csproj">
+      <Project>{cc47f0fe-42cc-4763-b63d-fc88a5d93c65}</Project>
+      <Name>Master</Name>
     </ProjectReference>
     <ProjectReference Include="..\SelectCharacter\SelectCharacter.csproj">
       <Project>{d65c51d1-feee-41c4-a846-1702f26ea1e4}</Project>

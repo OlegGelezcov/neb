@@ -1,15 +1,13 @@
-﻿using ServerClientCommon;
+﻿using Common;
+using Nebula.Inventory.Objects;
+using ServerClientCommon;
+using Space.Game.Inventory;
 using System;
+using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using Common;
-using Space.Game.Inventory;
-using Nebula.Inventory.Objects;
-using System.Collections;
 
 namespace SelectCharacter.Resources {
     public class ConsumableItemCollection : IInfoSource {

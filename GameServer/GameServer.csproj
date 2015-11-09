@@ -132,6 +132,7 @@
     <Compile Include="Game\Components\PlayerLoaderObject.cs" />
     <Compile Include="Game\Components\PlayerShipMovable.cs" />
     <Compile Include="Game\Components\PlayerSkills.cs" />
+    <Compile Include="Game\Components\PvpStore.cs" />
     <Compile Include="Game\Components\RaceableModelComponent.cs" />
     <Compile Include="Game\Components\RespawnableObject.cs" />
     <Compile Include="Game\Components\SharedChest.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Game\OperationHandlers\ExitWorkshopOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\ExitWorldOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\GetPropertiesOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\GetShipModelOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\GetWorldsOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\MoveInterestAreaOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\MoveOperationHandler.cs" />
@@ -375,6 +377,8 @@
     <Compile Include="Server\Operations\CreateGhost.cs" />
     <Compile Include="Server\Operations\EnterWorkshop.cs" />
     <Compile Include="Server\Operations\EnterWorkshopResponse.cs" />
+    <Compile Include="Server\Operations\GetShipModel.cs" />
+    <Compile Include="Server\Operations\GetShipModelResponse.cs" />
     <Compile Include="Server\Operations\GetWorldsOperation.cs" />
     <Compile Include="Server\Operations\GetWorldsOperationResponse.cs" />
     <Compile Include="Server\Operations\Login.cs" />
@@ -508,6 +512,12 @@
   <ItemGroup>
     <Content Include="assets\connection_config_local.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\database_connection.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\database_connection_local.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\role.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

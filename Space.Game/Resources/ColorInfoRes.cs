@@ -73,7 +73,7 @@ namespace Space.Game.Resources
         }
 
         private float[] RemapWeights(float[] sourceWeights, float remapWeight) {
-            remapWeight = Mathf.Clamp01(remapWeight / 2);
+            remapWeight = Mathf.Clamp01(remapWeight / 2.0f);
             float val = sourceWeights[sourceWeights.Length - 1] * remapWeight;
             sourceWeights[sourceWeights.Length - 1] -= val;
             float unitVal = val / (sourceWeights.Length - 1);
