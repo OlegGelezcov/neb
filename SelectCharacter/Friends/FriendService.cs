@@ -87,10 +87,19 @@ namespace SelectCharacter.Friends {
                         if(!sourceFriend.Data.IsFriend(targetFriend.Data)) {
                             sourceFriend.Data.AddFriend(toGameRefID, toLogin);
                             sourceFriend.Changed = true;
+
+                            var sourceCharacter = sourcePlayer.Data.SelectedCharacter();
+
                             ChatMessage msg = new ChatMessage {
-                                chatGroup = (int)ChatGroup.whisper, links = new List<ChatLinkedObject>(),
-                                message = string.Format("{0} now friend with {1}", fromLogin, toLogin), messageID = Guid.NewGuid().ToString(),
-                                sourceCharacterID = sourcePlayer.Data.SelectedCharacterId, sourceLogin = "Service", targetCharacterID = sourcePlayer.Data.SelectedCharacterId, targetLogin = fromLogin
+                                chatGroup = (int)ChatGroup.whisper,
+                                links = new List<ChatLinkedObject>(),
+                                message = string.Format("{0} now friend with {1}", fromLogin, toLogin),
+                                messageID = Guid.NewGuid().ToString(),
+                                sourceCharacterID = sourcePlayer.Data.SelectedCharacterId,
+                                sourceLogin = "Service",
+                                targetCharacterID = sourcePlayer.Data.SelectedCharacterId,
+                                targetLogin = fromLogin,
+                                sourceCharacterName = (sourceCharacter != null ) ? sourceCharacter.Name : string.Empty
                             };
                             application.Chat.SendMessage(msg);
                         }
@@ -98,10 +107,18 @@ namespace SelectCharacter.Friends {
                         if(!targetFriend.Data.IsFriend(sourceFriend.Data)) {
                             targetFriend.Data.AddFriend(fromGameRefID, fromLogin);
                             targetFriend.Changed = true;
+                            var sourceCharacter = targetPlayer.Data.SelectedCharacter();
+
                             ChatMessage msg = new ChatMessage {
-                                chatGroup = (int)ChatGroup.whisper, links = new List<ChatLinkedObject>(),
-                                message = string.Format("{0} now friend with {1}", toLogin, fromLogin), messageID = Guid.NewGuid().ToString(),
-                                sourceCharacterID = targetPlayer.Data.SelectedCharacterId, sourceLogin = "Service", targetCharacterID = targetPlayer.Data.SelectedCharacterId, targetLogin = toLogin
+                                chatGroup = (int)ChatGroup.whisper,
+                                links = new List<ChatLinkedObject>(),
+                                message = string.Format("{0} now friend with {1}", toLogin, fromLogin),
+                                messageID = Guid.NewGuid().ToString(),
+                                sourceCharacterID = targetPlayer.Data.SelectedCharacterId,
+                                sourceLogin = "Service",
+                                targetCharacterID = targetPlayer.Data.SelectedCharacterId,
+                                targetLogin = toLogin,
+                                 sourceCharacterName = (sourceCharacter != null ) ? sourceCharacter.Name : string.Empty
                             };
                             application.Chat.SendMessage(msg);
                         }

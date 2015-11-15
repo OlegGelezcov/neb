@@ -220,7 +220,8 @@ namespace SelectCharacter {
                 MessageID = message.messageID,
                 SourceCharacterID = message.sourceCharacterID,
                 SourceLogin = message.sourceLogin,
-                TargetLogin = message.targetLogin
+                TargetLogin = message.targetLogin,
+                sourceCharacterName = message.sourceCharacterName
             };
 
             EventData data = new EventData((byte)SelectCharacterEventCode.ChatMessageEvent, chatEvent);

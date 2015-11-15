@@ -36,6 +36,8 @@ namespace SelectCharacter.Chat {
         /// Message text
         /// </summary>
         public string message { get; set; }
+
+        public string sourceCharacterName { get; set; }
         /// <summary>
         /// List of chat links
         /// </summary>

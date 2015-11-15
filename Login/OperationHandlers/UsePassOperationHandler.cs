@@ -22,7 +22,7 @@ namespace Login.OperationHandlers {
                     DebugMessage = operation.GetErrorMessage()
                 };
             }
-
+            operation.Prepare();
 
             var database = application.DbUserLogins;
             var dbUser = database.GetExistingUserForGameRef(operation.login, operation.gameRef);

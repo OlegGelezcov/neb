@@ -34,12 +34,16 @@ namespace Login {
             this.UserLogins = this.Database.GetCollection<DbUserLogin>(userLoginsCollectionName);
         }
 
-        public bool ExistLogin(string login) {
+        public bool ExistLogin(string inlogin) {
+            string login = inlogin.ToLower();
             var query = Query<DbUserLogin>.EQ(user => user.login, login);
             return UserLogins.Count(query) > 0;
         }
 
-        public bool CheckUserLoginAndPassword(string login, string password) {
+        public bool CheckUserLoginAndPassword(string inlogin, string password) {
+
+            string login = inlogin.ToLower();
+
             var query = Query.And(
                 Query<DbUserLogin>.EQ(user => user.login, login),
                 Query<DbUserLogin>.EQ(user => user.password, password)
@@ -47,7 +51,9 @@ namespace Login {
             return this.UserLogins.Count(query) > 0;
         }
 
-        public DbUserLogin GetExistingUser(string login, string password) {
+        public DbUserLogin GetExistingUser(string inlogin, string password) {
+            string login = inlogin.ToLower();
+
             var query = Query.And(
                 Query<DbUserLogin>.EQ(user => user.login, login),
                 Query<DbUserLogin>.EQ(user => user.password, password)
@@ -55,7 +61,9 @@ namespace Login {
             return UserLogins.FindOne(query);
         }
 
-        public DbUserLogin GetExistingUserForGameRef(string login, string gameRef) {
+        public DbUserLogin GetExistingUserForGameRef(string inlogin, string gameRef) {
+            string login = inlogin.ToLower();
+
             var query = Query.And(
                 Query<DbUserLogin>.EQ(user => user.login, login),
                 Query<DbUserLogin>.EQ(user => user.gameRef, gameRef)
@@ -79,7 +87,8 @@ namespace Login {
             return this.UserLogins.Count(query) > 0;
         }
 
-        public DbUserLogin CreateUser(string login, string password, string email, out LoginReturnCode code) {
+        public DbUserLogin CreateUser(string inlogin, string password, string email, out LoginReturnCode code) {
+            string login = inlogin.ToLower();
             code = LoginReturnCode.Ok;
 
             DbUserLogin dbUser = new DbUserLogin {
@@ -99,7 +108,9 @@ namespace Login {
             UserLogins.Save(user);
         }
 
-        public DbUserLogin GetExistingUser(string login, string password, out LoginReturnCode code) {
+        public DbUserLogin GetExistingUser(string inlogin, string password, out LoginReturnCode code) {
+            string login = inlogin.ToLower();
+
             code = LoginReturnCode.Ok;
 
             if (!mLoginUtilities.IsLoginCharactersValid(login)) {

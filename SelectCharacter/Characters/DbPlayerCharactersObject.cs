@@ -43,6 +43,17 @@ namespace SelectCharacter.Characters {
         /// </summary>
         public List<DbPlayerCharacter> Characters { get; set; }
 
+        public DbPlayerCharacter SelectedCharacter() {
+            if(Characters != null && !string.IsNullOrEmpty(SelectedCharacterId)) {
+                foreach(var character in Characters ) {
+                    if(character.CharacterId == SelectedCharacterId ) {
+                        return character;
+                    }
+                }
+            }
+            return null;
+        }
+
         /// <summary>
         /// Update only modules for character
         /// </summary>
@@ -175,7 +186,7 @@ namespace SelectCharacter.Characters {
 
             var result = new Hashtable {
                 {(int)SPC.GameRefId, this.GameRefId },
-                {(int)SPC.DisplayName, this.Login },
+                {(int)SPC.DisplayName, this.Login.ToLower() },
                 {(int)SPC.SelectedCharacterId, this.SelectedCharacterId  }
             };
 

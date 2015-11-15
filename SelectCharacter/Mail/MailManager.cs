@@ -187,7 +187,9 @@ namespace SelectCharacter.Mail {
             }
         }
 
-        public bool StartPutAttachmentToStation(string login, string messageID, string attachmentID, string targetServer) {
+        public bool StartPutAttachmentToStation(string inlogin, string messageID, string attachmentID, string targetServer) {
+
+            string login = inlogin.ToLower();
 
             log.InfoFormat("PUT ATTCHMENT to inventory started");
 

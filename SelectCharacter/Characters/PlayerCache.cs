@@ -12,11 +12,12 @@ namespace SelectCharacter.Characters {
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
 
-        public bool TryGetPlayerByLogin(string login, out DbObjectWrapper<DbPlayerCharactersObject> result) {
+        public bool TryGetPlayerByLogin(string inlogin, out DbObjectWrapper<DbPlayerCharactersObject> result) {
+            string login = inlogin.ToLower();
             result = null;
             lock(syncObject) {
                 foreach(var pair in this ) {
-                    if(pair.Value.Data.Login == login) {
+                    if(pair.Value.Data.Login.ToLower() == login) {
                         result = pair.Value;
                         return true;
                     }

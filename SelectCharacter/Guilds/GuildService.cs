@@ -293,7 +293,7 @@ namespace SelectCharacter.Guilds {
                 gameRefId = player.Data.GameRefId,
                 guildStatus = (int)GuildMemberStatus.Member,
                 exp = character.Exp,
-                login = player.Data.Login
+                login = player.Data.Login.ToLower()
             };
 
             if(!AddMember(guildID, member)) {

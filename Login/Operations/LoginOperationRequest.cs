@@ -16,5 +16,11 @@ namespace Login.Operations {
         [DataMember(Code =(byte)ParameterCode.Password, IsOptional =false)]
         public string encryptedPassword { get; set; }
 
+        public void Prepare() {
+            if(login != null ) {
+                login = login.ToLower();
+            }
+        }
+
     }
 }

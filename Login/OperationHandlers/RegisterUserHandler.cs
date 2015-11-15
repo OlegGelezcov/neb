@@ -20,6 +20,7 @@ namespace Login.OperationHandlers {
                     DebugMessage = operation.GetErrorMessage()
                 };
             }
+            operation.Prepare();
 
             if(!mLoginUtils.IsLoginLengthValid(operation.login)) {
                 RegisterUserResponse responseObject = new RegisterUserResponse {

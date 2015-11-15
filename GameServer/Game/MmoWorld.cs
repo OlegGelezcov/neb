@@ -55,6 +55,8 @@
         {
             try
             {
+                log.InfoFormat("world = {0} cons()", name);
+
                 this.resource = resource;
                 this.name = name;
                 this.zone = (Resource().Zones.ExistZone(this.name) ? Resource().Zones.Zone(this.name) : Resource().Zones.Default(this.name));
@@ -65,6 +67,8 @@
                 asteroidManager = new WorldAsteroidManager(this);
                 npcManager = new WorldNpcManager(this);
                 nebulaObjectManager = new MmoWorldNebulaObjectManager(this);
+
+                log.InfoFormat("base init completed");
 
                 //load world info from database
                 LoadWorldInfo();
@@ -98,6 +102,8 @@
                 underAttack = worldDocument.info.underAttack;
                 mAttackedRace = worldDocument.info.attackRace;
             }
+
+            log.InfoFormat("load world info completed...");
         }
 
         private void LoadWorldState() {
@@ -109,7 +115,7 @@
             } else {
                 mWorldState.CheckMembers();
             }
-
+            log.InfoFormat("load world state completed");
 
         }
 
@@ -129,8 +135,13 @@
         public void SaveWorldState() {
             if(mWorldState != null ) {
                 mWorldState.FillSaves(this);
-                GameApplication.Instance.DatabaseManager.worldStates.Save(mWorldState);
                 log.InfoFormat("saving world state = {0} [dy]", Zone.Id);
+                try {
+                    GameApplication.Instance.DatabaseManager.worldStates.Save(mWorldState);
+                } catch (System.Exception exception ) {
+                    log.InfoFormat(exception.Message);
+                    log.InfoFormat(exception.StackTrace);
+                }
             }
         }
 
@@ -474,6 +485,8 @@
         }
 
         public void Tick(float deltaTime) {
+            //log.InfoFormat("world = {0} tick", zone.Id);
+
             playerCountOnStartFrame = playerCount;
             ItemCache.Tick(deltaTime);
 

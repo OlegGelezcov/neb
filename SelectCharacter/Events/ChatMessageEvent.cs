@@ -30,5 +30,8 @@ namespace SelectCharacter.Events {
 
         [DataMember(Code =(byte)ParameterCode.Attachments)]
         public object[] Links { get; set; }
+
+        [DataMember(Code = (byte)ParameterCode.DisplayName)]
+        public string sourceCharacterName { get; set; }
     }
 }

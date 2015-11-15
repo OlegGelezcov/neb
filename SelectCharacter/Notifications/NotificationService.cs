@@ -85,7 +85,7 @@ namespace SelectCharacter.Notifications {
 
                             DbPlayerCharactersObject player;
                             if (mApplication.Players.TryGetPlayer(peer.id, out player)) {
-                                mApplication.Groups.HandleNotification(peer.id, characterId, player.Login, notification.data as Hashtable);
+                                mApplication.Groups.HandleNotification(peer.id, characterId, player.Login.ToLower(), notification.data as Hashtable);
                             } else {
                                 log.Info("player not found");
                             }

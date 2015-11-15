@@ -16,5 +16,11 @@ namespace Login.Operations {
         [DataMember(Code =(byte)ParameterCode.Email, IsOptional = false)]
         public string email { get; set; }
 
+        public void Prepare() {
+            if(login != null ) {
+                login = login.ToLower();
+            }
+        }
+
     }
 }

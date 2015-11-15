@@ -397,12 +397,14 @@ namespace Nebula.Game.Components.BotAI {
         }
 
         public void OnNewDamage(DamageInfo info) {
-            if (!mTarget.hasTarget) {
-                NebulaObject attacker;
-                if ((nebulaObject.world as MmoWorld).TryGetObject((byte)info.DamagerType, info.DamagerId, out attacker)) {
+            if (mTarget != null) {
+                if (!mTarget.hasTarget) {
+                    NebulaObject attacker;
+                    if ((nebulaObject.world as MmoWorld).TryGetObject((byte)info.DamagerType, info.DamagerId, out attacker)) {
 
-                    mResetTargetTimer = RESET_TARGET_INTERVAL;
-                    mTarget.SetTarget(attacker);
+                        mResetTargetTimer = RESET_TARGET_INTERVAL;
+                        mTarget.SetTarget(attacker);
+                    }
                 }
             }
         }

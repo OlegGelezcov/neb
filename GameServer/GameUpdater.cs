@@ -72,7 +72,9 @@ namespace Nebula {
 #endif
 */
 
-            
+            foreach(string loc in GameApplication.Instance.CurrentRole().Locations) {
+                log.InfoFormat("Localtion: " + loc);
+            }
 
             foreach (string locationID in GameApplication.Instance.CurrentRole().Locations) {
                 MmoWorld world;
@@ -91,10 +93,11 @@ namespace Nebula {
                 }
             }
 
+            log.InfoFormat("before updater start");
             mFiber = new PoolFiber();
             mFiber.Start();
             mLoop = mFiber.ScheduleOnInterval(Update, UPDATE_INTERVAL, UPDATE_INTERVAL);
-
+            log.InfoFormat("after updater start");
         }
 
         public IFiber fiber {
@@ -105,6 +108,11 @@ namespace Nebula {
 
         private void Update() {
             try {
+                //if(GameApplication.Instance.CurrentRole().RoleName == "BorguzandsGame") {
+                //    log.InfoFormat("borguzands tick");
+                //} else {
+                //    log.InfoFormat("invalid role name: {0}", GameApplication.Instance.CurrentRole().RoleName);
+                //}
                 //log.InfoFormat("server  = {0} tick", GameApplication.Instance.ApplicationName);
                 Time.Tick();
                 //log.InfoFormat("STARTED: tick at time: {0}, delta = {1}", Time.curtime(), Time.deltaTime());

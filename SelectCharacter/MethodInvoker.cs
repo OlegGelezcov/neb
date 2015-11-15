@@ -144,6 +144,7 @@ namespace SelectCharacter {
             string message, 
             string targetLogin, 
             string targetCharacterID, 
+            string sourceCharacterName,
             Hashtable linkHash ) {
 
             object[] links = (object[])linkHash[(int)SPC.Data];
@@ -168,7 +169,8 @@ namespace SelectCharacter {
                 sourceCharacterID = sourceCharacterID,
                 sourceLogin = sourceLogin,
                 targetCharacterID = targetCharacterID,
-                targetLogin = targetLogin
+                targetLogin = targetLogin,
+                sourceCharacterName = sourceCharacterName
             };
 
             application.Chat.SendMessage(m);

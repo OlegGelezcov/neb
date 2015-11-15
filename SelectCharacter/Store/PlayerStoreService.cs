@@ -195,6 +195,7 @@ namespace SelectCharacter.Store {
         /// <returns></returns>
         public bool BuyAuctionItem(string login, string gameRefID, string characterID, string storeItemID ) {
 
+            
             //Get item from auction
             AuctionItem auctionItem = mApplication.Auction.GetItem(storeItemID);
             if(auctionItem == null ) {

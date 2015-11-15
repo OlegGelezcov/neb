@@ -16,6 +16,7 @@ namespace Login.OperationHandlers {
                     DebugMessage = "Login operation parameters invalid"
                 };
             }
+            operation.Prepare();
 
             string password = StringChiper.Decrypt(operation.encryptedPassword);
 

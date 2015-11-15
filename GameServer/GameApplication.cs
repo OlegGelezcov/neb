@@ -48,7 +48,7 @@ public class GameApplication : ApplicationBase
 
     public GameUpdater updater { get; private set; }
 
-    private DatabaseUsers mDatabaseUsers;
+    //private DatabaseUsers mDatabaseUsers;
 
 
     private readonly DatabaseManager databaseManager = new DatabaseManager();
@@ -104,8 +104,8 @@ public class GameApplication : ApplicationBase
         ReceiveRoleName();
         ReceiveRole();
 
-        mDatabaseUsers = new DatabaseUsers();
-        mDatabaseUsers.Load(BinaryPath);
+        //mDatabaseUsers = new DatabaseUsers();
+        //mDatabaseUsers.Load(BinaryPath);
 
         UpdateMasterEndPoint();
         this.GamingTcpPort = currentRole.GamingTcpPort;
@@ -158,12 +158,13 @@ public class GameApplication : ApplicationBase
 
     protected override void Setup() {
         try {
+            
             Instance = this;
 
             AppDomain.CurrentDomain.UnhandledException += AppDomain_OnUnhandledException;
 
             this.InitLogging();
-
+            log.InfoFormat("GameApplication.Setup()");
 
             CounterPublisher.AddCounter(new CpuUsageCounterReader(), "Cpu");
             CounterPublisher.AddCounter(PhotonCounter.EventSentPerSec, "Events/sec");
@@ -214,11 +215,6 @@ public class GameApplication : ApplicationBase
         resourcePool = pool;
     }
 
-    //public static void SetCooperativeGroups(CooperativeGroups cooperativeGroups) {
-    //    PlayerGroups = cooperativeGroups;
-    //}
-
-
 
 
 
@@ -228,13 +224,6 @@ public class GameApplication : ApplicationBase
     }
 
     protected override ServerPeerBase CreateServerPeer(InitResponse initResponse, object state) {
-//#if !LOCAL
-//        Task.Factory.StartNew(() => {
-//            string slackMsg = string.Format("connected to master, local ip = {0}, remote ip = {1}", initResponse.LocalIP, initResponse.RemoteIP);
-//            string response = NetUtils.SendToSlack("Game Server", slackMsg);
-//            log.InfoFormat(response + "[green]");
-//        });
-//#endif
         Thread.VolatileWrite(ref this.isReconnecting, 0);
         this.MasterPeer = new OutgoingMasterServerPeer(initResponse.Protocol, initResponse.PhotonPeer, this);
         return this.MasterPeer;
@@ -242,11 +231,11 @@ public class GameApplication : ApplicationBase
 
     protected override void TearDown()
     {
-#if LOCAL
-        if (roleName.ToLower().Contains("humans")) {
-            NetUtils.SendToSlack("", "LOCAL SERVER WAS RESTARTED");
-        }
-#endif
+//#if LOCAL
+//        if (roleName.ToLower().Contains("humans")) {
+//            NetUtils.SendToSlack("", "LOCAL SERVER WAS RESTARTED");
+//        }
+//#endif
         //if (PlayerGroups != null) {
         //    PlayerGroups.Dispose();
         //    PlayerGroups = null;
@@ -328,6 +317,7 @@ public class GameApplication : ApplicationBase
     }
 
     public void ConnectToMaster() {
+        log.InfoFormat("ConnectToMaster()");
         if (this.Running == false) {
             return;
         }

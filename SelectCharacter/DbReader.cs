@@ -72,7 +72,9 @@ namespace SelectCharacter {
             return result;
         }
 
-        public DbPlayerCharactersObject GetByLogin(string login) {
+        public DbPlayerCharactersObject GetByLogin(string inlogin) {
+            string login = inlogin.ToLower();
+
             var query = Query<DbPlayerCharactersObject>.EQ(player => player.Login, login);
             return PlayerCharacters.FindOne(query);
         }
@@ -81,7 +83,9 @@ namespace SelectCharacter {
             var result = this.PlayerCharacters.Save(document);
         }
 
-        public BankSave LoadBank(string login ) {
+        public BankSave LoadBank(string inlogin ) {
+            string login = inlogin.ToLower();
+
             var query = Query<BankSave>.EQ(b => b.login, login);
             var bank = banks.FindOne(query);
             if(bank != null ) {

@@ -17,5 +17,11 @@ namespace Login.Operations {
 
         [DataMember(Code =(byte)ParameterCode.GameRefId, IsOptional = false)]
         public string gameRef { get; set; }
+
+        public void Prepare() {
+            if(login != null ) {
+                login = login.ToLower();
+            }
+        }
     }
 }

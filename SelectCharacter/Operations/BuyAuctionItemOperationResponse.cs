@@ -9,5 +9,6 @@ namespace SelectCharacter.Operations {
     public class BuyAuctionItemOperationResponse {
         [DataMember(Code =(byte)ParameterCode.Status)]
         public bool status { get; set; }
+
     }
 }
