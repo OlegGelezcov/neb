@@ -142,6 +142,8 @@ namespace Nebula.Game.Components.BotAI {
                 if(mReturningToStartPosition) {
                     MoveToStartPosition(deltaTime);
                     return;
+                } else {
+
                 }
 
                 if (mTarget.hasTarget) {

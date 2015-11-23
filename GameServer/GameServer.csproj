@@ -95,6 +95,7 @@
     <Compile Include="Game\Components\Activators\SpawnPiratesActivator.cs" />
     <Compile Include="Game\Components\AsteroidComponent.cs" />
     <Compile Include="Game\Components\DatabaseObject.cs" />
+    <Compile Include="Game\Components\GodState.cs" />
     <Compile Include="Game\Components\IChest.cs" />
     <Compile Include="Game\Components\BaseShip.cs" />
     <Compile Include="Game\Components\BaseWeapon.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="Game\PlayerMailBoxManager.cs" />
     <Compile Include="Game\PlayerSkill.cs" />
     <Compile Include="Game\RespawnData.cs" />
+    <Compile Include="Game\SaveWorldTimer.cs" />
     <Compile Include="Game\ShiftKeyState.cs" />
     <Compile Include="Game\Skills\EmptySkillExecutor.cs" />
     <Compile Include="Game\Skills\SkillExecutor.cs" />
@@ -472,14 +474,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram3.cd" />
-    <None Include="ClassDiagram4.cd" />
-    <None Include="ClassDiagram5.cd" />
-    <None Include="ClassDiagram6.cd" />
     <None Include="MmoWorld.cd" />
     <None Include="MmoActor.cd" />
-    <None Include="ClassDiagram2.cd" />
     <None Include="log4net.config">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

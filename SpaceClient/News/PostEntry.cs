@@ -26,6 +26,15 @@ namespace Nebula.Client.News {
             postID = info.GetValue<string>((int)SPC.Id, string.Empty);
         }
 
+        public PostEntry(string inPostId, int iTimeIn, string inMessage, string inLang, string inPostUrl, string inImageUrl ) {
+            postID = inPostId;
+            time = CommonUtils.START_DATE.AddSeconds(iTimeIn);
+            message = inMessage;
+            lang = inLang;
+            postURL = inPostUrl;
+            imageURL = inImageUrl;
+        }
+
         public PostEntry(Hashtable info) {
             ParseInfo(info);
         }

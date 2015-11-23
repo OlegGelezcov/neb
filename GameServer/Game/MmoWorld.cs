@@ -22,6 +22,8 @@
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
         public const int MAX_UNDER_ATTACK_INTERVAL = 3600;
         private const int INVULENRABLE_INTERVAL = 3600;
+        
+
 
         private readonly string name;
         private readonly ZoneData zone;
@@ -49,6 +51,7 @@
         private WorldState mWorldState;
         private bool mStateRestored = false;
 
+        private readonly SaveWorldTimer mSaveWorldTimer = new SaveWorldTimer();
 
         public MmoWorld(string name, Vector minCorner, Vector maxCorner, Vector tileDimensions, Res resource)
             : base(minCorner, maxCorner, tileDimensions, new MmoItemCache() )
@@ -493,6 +496,10 @@
             asteroidManager.Update(deltaTime);
             npcManager.Update(deltaTime);
             nebulaObjectManager.Update(deltaTime);
+
+            if(mSaveWorldTimer.Update(deltaTime)) {
+                GameApplication.Instance.DatabaseManager.SetWorld(this);
+            }
 
             //restore saved objects
             if(!mStateRestored) {

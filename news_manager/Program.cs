@@ -21,8 +21,8 @@ namespace news_manager {
         private static void InitConnection(MasterServerSettings settings) {
             client = new MongoClient("mongodb://localhost");
             server = client.GetServer();
-            database = server.GetDatabase(settings.DatabaseName);
-            news = database.GetCollection<PostEntry>(settings.NewsCollectionName);
+            database = server.GetDatabase("master");
+            news = database.GetCollection<PostEntry>("news");
         }
 
         private static void PrintHeader() {

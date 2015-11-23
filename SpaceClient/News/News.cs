@@ -31,5 +31,28 @@ namespace Nebula.Client.News {
         }
 
 
+        public void FromJson(string json) {
+            var newsList = MiniJSON.Json.Deserialize(json) as List<object>;
+            if(entries == null ) {
+                entries = new Dictionary<string, PostEntry>();
+            }
+            entries.Clear();
+
+            if(newsList != null ) {
+                foreach(object postObject in newsList ) {
+                    Dictionary<string, object> postDictionary = postObject as Dictionary<string, object>;
+                    if(postDictionary != null ) {
+                        string postId = postDictionary["post_id"].ToString();
+                        int time = int.Parse(postDictionary["time"].ToString());
+                        string message = postDictionary["message"].ToString();
+                        string lang = postDictionary["lang"].ToString();
+                        string postUrl = postDictionary["post_url"].ToString();
+                        string imageUrl = postDictionary["image_url"].ToString();
+                        entries.Add(postId, new PostEntry(postId, time, message, lang, postUrl, imageUrl));
+
+                    }
+                }
+            }
+        }
     }
 }

@@ -58,12 +58,16 @@ namespace Nebula.Game {
         }
 
         public static bool IAmBotAndNoPlayers(this NebulaObject nebulaObject) {
-            if(nebulaObject.Type != (byte)ItemType.Avatar) {
+            if(nebulaObject.IAmBot()) {
                 if(nebulaObject.mmoWorld().playerCountOnStartFrame == 0 ) {
                     return true;
                 }
             }
             return false;
+        }
+
+        public static bool IAmBot(this NebulaObject nebulaObject) {
+            return (nebulaObject.Type != (byte)ItemType.Avatar);
         }
     }
 }

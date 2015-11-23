@@ -734,6 +734,8 @@ namespace Space.Game {
                         ObjectCreate.SharedChest(nebulaObject.mmoWorld(), transform.position, chestTime, allInventoryItems).AddToWorld();
                         ClearInventory();
                         log.InfoFormat("create shared chest when player die, items count = {0}  on time = {1} [purple]", allInventoryItems.Count, chestTime);
+                        GetComponent<PlayerLoaderObject>().SaveInventory();
+
                     } else {
                         log.InfoFormat("you dont drop loot via passive bonus [red]");
                     }

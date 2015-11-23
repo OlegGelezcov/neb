@@ -60,6 +60,14 @@ namespace Nebula.Game.Components {
             }
         }
 
+        public void SaveInventory() {
+            var character = GetComponent<PlayerCharacterObject>();
+            if (character == null) {
+                return;
+            }
+            InventoryDatabase.instance.SaveInventory(character.characterId, player.Inventory);
+        }
+
         public override int behaviourId {
             get {
                 return (int)ComponentID.PlayerLoader;

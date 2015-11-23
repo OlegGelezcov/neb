@@ -14,12 +14,22 @@ using System.Text;
 namespace Nebula.Game.Components {
     public abstract class DamagableObject  : NebulaBehaviour{
 
+        
+
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
+        private readonly GodState mGodState = new GodState();
         private const float NO_ABSORB = -1f;
 
         private float mHealth = 1000;
 
-        public bool god { get; private set; }
+        public bool god {
+            get {
+                return mGodState.god;
+            }
+            private set {
+                mGodState.SetGod(value);
+            }
+        }
 
         public ConcurrentDictionary<string, DamageInfo> damagers { get; private set; } = new ConcurrentDictionary<string, DamageInfo>();
 
@@ -28,10 +38,6 @@ namespace Nebula.Game.Components {
         protected float mIgnoreDamageTimer = 0f;
         protected bool mCreateChestOnKilling = true;
         private bool mWasKilled = false;
-
-        //private float mDamagePerSec = 0f;
-        //private float mDamagePerSecTimer = -1f;
-
         private float mRestorPerSec = 0f;
         private float mRestorPerSecTimer = -1f;
 
@@ -134,8 +140,13 @@ namespace Nebula.Game.Components {
 
         public override void Update(float deltaTime) {
 
-            if(nebulaObject.IAmBotAndNoPlayers()) {
-                return;
+            if (nebulaObject.IAmBot()) {
+                //update god timer for infinite god state error only on bots (not players)
+                mGodState.Update(deltaTime);
+
+                if (nebulaObject.IAmBotAndNoPlayers()) {
+                    return;
+                }
             }
 
 
@@ -333,6 +344,40 @@ namespace Nebula.Game.Components {
             return damage;
         }
 
+        private float myDifficultyMult {
+            get {
+                float d = 1.0f;
+                BotShip botShip = GetComponent<BotShip>();
+
+                if (botShip != null) {
+                    if (nebulaObject.HasTag((byte)PS.Difficulty)) {
+                        d = nebulaObject.resource.GetDifficultyMult((Difficulty)(byte)nebulaObject.Tag((byte)PS.Difficulty));
+                    }
+                    //difficulty = nebulaObject.resource.GetDifficultyMult(GetComponent<BotShip>().difficulty);
+                }
+                return d;
+            }
+        }
+
+        private float myLevel {
+            get {
+                float level = 1.0f;
+                var character = GetComponent<CharacterObject>();
+                if(character != null ) {
+                    level = character.level;
+                }
+                return level;
+            }
+        }
+
+        private float DamagerPlayerLevel(NebulaObject damager) {
+            var playerCharacter = damager.GetComponent<PlayerCharacterObject>();
+            if(playerCharacter != null ) {
+                return playerCharacter.level;
+            }
+            return 1.0f;
+        }
+
         public virtual void Death() {
             int damagerCount = 0;
             foreach (var damager in damagers) {
@@ -347,33 +392,28 @@ namespace Nebula.Game.Components {
                     GivePvpPoints();
 
                 }
+
+                float difficulty = myDifficultyMult;
+                float npcLevel = myLevel;
+
                 foreach (var damager in damagers) {
                     if (damager.Value.DamagerType == ItemType.Avatar) {
                         NebulaObject damagerObject;
                         if (nebulaObject.world.TryGetObject((byte)damager.Value.DamagerType, damager.Value.DamagerId, out damagerObject)) {
-
                             int baseExp = 20;
-                            float difficulty = 1;
-                            float npcLevel = 1;
-                            float playerLevel = 1;
+                            float playerLevel = DamagerPlayerLevel(damagerObject);
 
-                            if (GetComponent<BotShip>()) {
-                                if (nebulaObject.HasTag((byte)PS.Difficulty)) {
-                                    difficulty = nebulaObject.resource.GetDifficultyMult((Difficulty)(byte)nebulaObject.Tag((byte)PS.Difficulty));
-                                }
-                                //difficulty = nebulaObject.resource.GetDifficultyMult(GetComponent<BotShip>().difficulty);
+                            float levelRat = npcLevel / playerLevel;
+
+                            float bexp = (difficulty * levelRat * (baseExp));
+                            float hpExp = difficulty * Mathf.ClampLess(maximumHealth - 1000, 0f) * 0.01f;
+                            if(levelRat < 1.0f ) {
+                                hpExp *= levelRat;
                             }
+                            int exp = (int)Math.Round(bexp + hpExp);
 
-
-                            if (GetComponent<CharacterObject>()) {
-                                npcLevel = GetComponent<CharacterObject>().level;
-                            }
-
-                            if (damagerObject.GetComponent<PlayerCharacterObject>()) {
-                                playerLevel = damagerObject.GetComponent<PlayerCharacterObject>().level;
-                            }
-
-                            int exp = (int)(baseExp * difficulty * (npcLevel / playerLevel));
+                            log.InfoFormat("sended exp = {0} for bot difficulty = {1}, hp exp bonus = {2}", 
+                                exp, difficulty, (int)(difficulty * Mathf.ClampLess(maximumHealth - 1000, 0f) * 0.01f));
                             damagerObject.GetComponent<PlayerCharacterObject>().AddExp(exp);
                             damagerObject.SendMessage(ComponentMessages.OnEnemyDeath, nebulaObject);
                         }
