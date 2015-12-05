@@ -49,7 +49,7 @@
             return defValue;
         }
 
-        public static float GetValueByte(this Hashtable hash, byte key, byte defValue = 0) {
+        public static byte GetValueByte(this Hashtable hash, byte key, byte defValue = 0) {
             if (hash.ContainsKey(key)) {
                 object val = hash[key];
                 Type valType = val.GetType();
@@ -120,6 +120,28 @@
             return defValue;
         }
 
+        public static float[] GetValueFloatArray(this Hashtable hash, byte key) {
+            if (hash.ContainsKey(key)) {
+                float[] res = hash[key] as float[];
+                if (res == null) {
+                    res = new float[] { 0, 0, 0 };
+                }
+                return res;
+            }
+            return new float[] { 0, 0, 0 };
+        }
+
+        public static float[] GetValueFloatArray(this Hashtable hash, byte key, float[] defValue) {
+            if (hash.ContainsKey(key)) {
+                float[] res = hash[key] as float[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
+        }
+
         //=================================INT KEY==========================================
         public static int GetValueInt(this Hashtable hash, int key, int defValue = 0) {
             if (hash.ContainsKey(key)) {
@@ -164,7 +186,7 @@
             return defValue;
         }
 
-        public static float GetValueByte(this Hashtable hash, int key, byte defValue = 0) {
+        public static byte GetValueByte(this Hashtable hash, int key, byte defValue = 0) {
             if (hash.ContainsKey(key)) {
                 object val = hash[key];
                 Type valType = val.GetType();
@@ -234,6 +256,28 @@
             return defValue;
         }
 
+        public static float[] GetValueFloatArray(this Hashtable hash, int key) {
+            if (hash.ContainsKey(key)) {
+                float[] res = hash[key] as float[];
+                if (res == null) {
+                    res = new float[] { 0, 0, 0 };
+                }
+                return res;
+            }
+            return new float[] { 0, 0, 0 };
+        }
+
+        public static float[] GetValueFloatArray(this Hashtable hash, int key, float[] defValue) {
+            if (hash.ContainsKey(key)) {
+                float[] res = hash[key] as float[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
+        }
+
         //=====================================STRING KEY=========================================
         public static int GetValueInt(this Hashtable hash, string key, int defValue = 0) {
             if (hash.ContainsKey(key)) {
@@ -278,7 +322,7 @@
             return defValue;
         }
 
-        public static float GetValueByte(this Hashtable hash, string key, byte defValue = 0) {
+        public static byte GetValueByte(this Hashtable hash, string key, byte defValue = 0) {
             if (hash.ContainsKey(key)) {
                 object val = hash[key];
                 Type valType = val.GetType();
@@ -340,6 +384,28 @@
         public static Hashtable GetValueHash(this Hashtable hash, string key, Hashtable defValue) {
             if (hash.ContainsKey(key)) {
                 Hashtable res = hash[key] as Hashtable;
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
+        }
+
+        public static float[] GetValueFloatArray(this Hashtable hash, string key) {
+            if (hash.ContainsKey(key)) {
+                float[] res = hash[key] as float[];
+                if (res == null) {
+                    res = new float[] { 0, 0, 0 };
+                }
+                return res;
+            }
+            return new float[] { 0, 0, 0 };
+        }
+
+        public static float[] GetValueFloatArray(this Hashtable hash, string key, float[] defValue) {
+            if (hash.ContainsKey(key)) {
+                float[] res = hash[key] as float[];
                 if (res == null) {
                     res = defValue;
                 }
