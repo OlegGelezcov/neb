@@ -142,6 +142,28 @@
             return defValue;
         }
 
+        public static object[] GetValueObjectArray(this Hashtable hash, byte key) {
+            if (hash.ContainsKey(key)) {
+                object[] res = hash[key] as object[];
+                if (res == null) {
+                    res = new object[] { };
+                }
+                return res;
+            }
+            return new object[] { };
+        }
+
+        public static object[] GetValueObjectArray(this Hashtable hash, byte key, object[] defValue) {
+            if (hash.ContainsKey(key)) {
+                object[] res = hash[key] as object[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
+        }
+
         //=================================INT KEY==========================================
         public static int GetValueInt(this Hashtable hash, int key, int defValue = 0) {
             if (hash.ContainsKey(key)) {
@@ -278,6 +300,27 @@
             return defValue;
         }
 
+        public static object[] GetValueObjectArray(this Hashtable hash, int key) {
+            if (hash.ContainsKey(key)) {
+                object[] res = hash[key] as object[];
+                if (res == null) {
+                    res = new object[] { };
+                }
+                return res;
+            }
+            return new object[] { };
+        }
+
+        public static object[] GetValueObjectArray(this Hashtable hash, int key, object[] defValue) {
+            if (hash.ContainsKey(key)) {
+                object[] res = hash[key] as object[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
+        }
         //=====================================STRING KEY=========================================
         public static int GetValueInt(this Hashtable hash, string key, int defValue = 0) {
             if (hash.ContainsKey(key)) {
@@ -406,6 +449,28 @@
         public static float[] GetValueFloatArray(this Hashtable hash, string key, float[] defValue) {
             if (hash.ContainsKey(key)) {
                 float[] res = hash[key] as float[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
+        }
+
+        public static object[] GetValueObjectArray(this Hashtable hash, string key) {
+            if (hash.ContainsKey(key)) {
+                object[] res = hash[key] as object[];
+                if (res == null) {
+                    res = new object[] { };
+                }
+                return res;
+            }
+            return new object[] { };
+        }
+
+        public static object[] GetValueObjectArray(this Hashtable hash, string key, object[] defValue) {
+            if (hash.ContainsKey(key)) {
+                object[] res = hash[key] as object[];
                 if (res == null) {
                     res = defValue;
                 }
