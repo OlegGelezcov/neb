@@ -4,6 +4,7 @@
     using System;
     using System.Collections;
     using ServerClientCommon;
+    
 
     public class ClientPlayerCharactersContainer : IInfoParser {
 
@@ -23,6 +24,7 @@
         }
 
         public void ParseInfo(Hashtable info) {
+
             GameRefId = info.Value<string>((int)SPC.GameRefId);
             SelectedCharacterId = info.Value<string>((int)SPC.SelectedCharacterId);
 
@@ -32,7 +34,7 @@
                 Characters.Clear();
             }
 
-            Hashtable characters = info.Value<Hashtable>((int)SPC.Characters);
+            Hashtable characters = info.GetValue<Hashtable>((int)SPC.Characters, new Hashtable());
             if(characters == null ) {
                 return;
             }

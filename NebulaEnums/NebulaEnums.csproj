@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A629D298-9994-402B-9A47-4C35D567AE78}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NebulaEnums</RootNamespace>
+    <AssemblyName>NebulaEnums</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ACTION_RESULT.cs" />
+    <Compile Include="ActivatorType.cs" />
+    <Compile Include="AttachmentType.cs" />
+    <Compile Include="AuctionFilterType.cs" />
+    <Compile Include="AuctionObjectType.cs" />
+    <Compile Include="BonusType.cs" />
+    <Compile Include="BotAIState.cs" />
+    <Compile Include="BotItemSubType.cs" />
+    <Compile Include="ChatGroup.cs" />
+    <Compile Include="ComponentID.cs" />
+    <Compile Include="CustomEventCode.cs" />
+    <Compile Include="Difficulty.cs" />
+    <Compile Include="DropList.cs" />
+    <Compile Include="EventCode.cs" />
+    <Compile Include="EventReceiver.cs" />
+    <Compile Include="FractionRelation.cs" />
+    <Compile Include="FractionType.cs" />
+    <Compile Include="GameEventState.cs" />
+    <Compile Include="GroupActionRequestType.cs" />
+    <Compile Include="InventoryObjectType.cs" />
+    <Compile Include="InventoryType.cs" />
+    <Compile Include="ItemType.cs" />
+    <Compile Include="LevelType.cs" />
+    <Compile Include="LogFilter.cs" />
+    <Compile Include="LogicErrorCode.cs" />
+    <Compile Include="LoginEventCode.cs" />
+    <Compile Include="MailMessageSenderReceiverType.cs" />
+    <Compile Include="MaterialType.cs" />
+    <Compile Include="ModuleSetBonusType.cs" />
+    <Compile Include="MoneyType.cs" />
+    <Compile Include="ObjectColor.cs" />
+    <Compile Include="ObjectQuality.cs" />
+    <Compile Include="OperationCode.cs" />
+    <Compile Include="PageDirection.cs" />
+    <Compile Include="ParameterCode.cs" />
+    <Compile Include="PassiveBonusType.cs" />
+    <Compile Include="PlacingType.cs" />
+    <Compile Include="PlanetType.cs" />
+    <Compile Include="PlayerState.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PS.cs" />
+    <Compile Include="PushType.cs" />
+    <Compile Include="Race.cs" />
+    <Compile Include="RaceCommandKey.cs" />
+    <Compile Include="RaceStatus.cs" />
+    <Compile Include="ReturnCode.cs" />
+    <Compile Include="RPCErrorCode.cs" />
+    <Compile Include="SaveProperties.cs" />
+    <Compile Include="SelectCharacterEventCode.cs" />
+    <Compile Include="SelectCharacterGenericEventSubCode.cs" />
+    <Compile Include="SelectCharacterOperationCode.cs" />
+    <Compile Include="ServiceMessageType.cs" />
+    <Compile Include="ShipModelSlotType.cs" />
+    <Compile Include="SkillType.cs" />
+    <Compile Include="SPC.cs" />
+    <Compile Include="TagType.cs" />
+    <Compile Include="WeaponChargeType.cs" />
+    <Compile Include="WeaponDamageType.cs" />
+    <Compile Include="WeaponType.cs" />
+    <Compile Include="Workshop.cs" />
+    <Compile Include="WorkshopStrategyType.cs" />
+    <Compile Include="WorldObjectType.cs" />
+    <Compile Include="WorldType.cs" />
+    <Compile Include="ZoneType.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

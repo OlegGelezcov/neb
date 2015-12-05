@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\Users\Dev\Documents\SpaceMMO\Assets\Plugins\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -95,6 +95,8 @@
     <Compile Include="Help\HelpSubSection.cs" />
     <Compile Include="Help\TipInfo.cs" />
     <Compile Include="Help\Tips.cs" />
+    <Compile Include="Inaps\SubscriptionItem.cs" />
+    <Compile Include="Inaps\Subscriptions.cs" />
     <Compile Include="Inventory\IColorInfo.cs" />
     <Compile Include="Inventory\Objects\DrillSchemeObjectInfo.cs" />
     <Compile Include="Inventory\Objects\FortificationInventoryObjectInfo.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Store\StoreItem.cs" />
     <Compile Include="TextureNotFoundedException.cs" />
     <Compile Include="Inventory\Objects\WeaponInventoryObjectInfo.cs" />
+    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Worlds\WorldCollection.cs" />
     <Compile Include="Worlds\WorldInfo.cs" />
   </ItemGroup>
@@ -211,6 +214,10 @@
     <ProjectReference Include="..\GameMath\GameMath.csproj">
       <Project>{1e3cac5d-7bee-486a-b275-76cebc429e56}</Project>
       <Name>GameMath</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NebulaEnums\NebulaEnums.csproj">
+      <Project>{a629d298-9994-402b-9a47-4c35d567ae78}</Project>
+      <Name>NebulaEnums</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

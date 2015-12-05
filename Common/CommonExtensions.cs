@@ -11,6 +11,7 @@ namespace Common
 {
     public static class CommonExtensions 
     {
+
         public static string ReplaceVariables(this string sourceString, Hashtable variablesInfo)
         {
             string result = sourceString;
@@ -21,6 +22,9 @@ namespace Common
             }
             return result;
         }
+
+
+
 
         public static T GetValue<T>(this Hashtable ht, byte key, T defaultValue)
         {

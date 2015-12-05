@@ -1,9 +1,8 @@
 ﻿using Common;
 using ServerClientCommon;
-using System.Collections;
 using System.Collections.Generic;
-using System;
 using Nebula.Client.Inventory;
+using System.Collections;
 
 namespace Nebula.Client {
     public class ClientShipModule : IInventoryObjectInfo

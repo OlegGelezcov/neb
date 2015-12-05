@@ -72,7 +72,7 @@ namespace Common {
         }
 
         public static int selectLevel(this Hashtable hash) {
-            if(hash.Contains((int)SPC.Level)) {
+            if(hash.ContainsKey((int)SPC.Level)) {
                 return (int)hash[(int)SPC.Level];
             }
             return 0;

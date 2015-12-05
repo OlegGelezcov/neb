@@ -81,8 +81,11 @@ namespace TestClient {
             test.CheckUsers();*/
             // test.TestDatabaseManager();
 
+            /*
             TestCryptoPassword testCrypto = new TestCryptoPassword();
-            testCrypto.Test();
+            testCrypto.Test();*/
+
+            Console.WriteLine(CommonUtils.SecondsFrom1970());
         }
 
         private static void OldTests() {
