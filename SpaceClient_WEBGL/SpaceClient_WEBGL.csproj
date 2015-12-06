@@ -81,8 +81,19 @@
     <Compile Include="Groups\FoundedGroup.cs" />
     <Compile Include="Groups\FoundedGroupCollection.cs" />
     <Compile Include="Groups\FoundedMember.cs" />
+    <Compile Include="Guilds\FoundedGuild.cs" />
+    <Compile Include="Guilds\FoundedGuildSearchResult.cs" />
+    <Compile Include="Guilds\Guild.cs" />
+    <Compile Include="Guilds\GuildMember.cs" />
     <Compile Include="HealDron.cs" />
     <Compile Include="HealShotEventInfo.cs" />
+    <Compile Include="Help\Help.cs" />
+    <Compile Include="Help\HelpSection.cs" />
+    <Compile Include="Help\HelpSubSection.cs" />
+    <Compile Include="Help\TipInfo.cs" />
+    <Compile Include="Help\Tips.cs" />
+    <Compile Include="Inaps\SubscriptionItem.cs" />
+    <Compile Include="Inaps\Subscriptions.cs" />
     <Compile Include="InvalidRaceException.cs" />
     <Compile Include="Inventory\ClientInventoryItem.cs" />
     <Compile Include="Inventory\IColorInfo.cs" />
@@ -107,17 +118,86 @@
     <Compile Include="Inventory\Objects\WeaponInventoryObjectInfo.cs" />
     <Compile Include="IServiceMessage.cs" />
     <Compile Include="IServiceMessageReceiver.cs" />
+    <Compile Include="Mail\MailAttachment.cs" />
+    <Compile Include="Mail\MailBox.cs" />
+    <Compile Include="Mail\MailMessage.cs" />
     <Compile Include="MiniJSON.cs" />
     <Compile Include="MiningStationInfo.cs" />
     <Compile Include="NebulaException.cs" />
     <Compile Include="NebulaExtensions.cs" />
+    <Compile Include="News\News.cs" />
+    <Compile Include="News\PostEntry.cs" />
+    <Compile Include="Notifications\CharacterNotifications.cs" />
+    <Compile Include="Notifications\Notification.cs" />
+    <Compile Include="PassiveBonuses\PassiveBonusInfo.cs" />
+    <Compile Include="PassiveBonuses\PlayerPassiveBonuses.cs" />
+    <Compile Include="Planets\PlanetObjectInfo.cs" />
+    <Compile Include="Planets\PlanetSlot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PvpStore\PvpStore.cs" />
+    <Compile Include="PvpStore\PvpStoreItem.cs" />
+    <Compile Include="RaceCommand\RaceCommand.cs" />
+    <Compile Include="RaceCommand\RaceCommandMember.cs" />
+    <Compile Include="RaceCommand\RaceCommands.cs" />
+    <Compile Include="Races\RaceStat.cs" />
+    <Compile Include="Races\RaceStats.cs" />
+    <Compile Include="Res\AsteroidData.cs" />
+    <Compile Include="Res\LevelSkillPair.cs" />
+    <Compile Include="Res\Location.cs" />
+    <Compile Include="Res\ModuleSkillLeveling.cs" />
+    <Compile Include="Res\NebulaElementData.cs" />
+    <Compile Include="Res\ResAsteroids.cs" />
+    <Compile Include="Res\ResBuffData.cs" />
+    <Compile Include="Res\ResConsumable.cs" />
+    <Compile Include="Res\ResConsumableInfo.cs" />
+    <Compile Include="Res\ResGameEventData.cs" />
+    <Compile Include="Res\ResGameEvents.cs" />
+    <Compile Include="Res\ResHelp.cs" />
+    <Compile Include="Res\ResHelpElement.cs" />
+    <Compile Include="Res\ResLoader.cs" />
+    <Compile Include="Res\ResLocations.cs" />
+    <Compile Include="Res\ResMaterialData.cs" />
+    <Compile Include="Res\ResMiscInventoryItemData.cs" />
+    <Compile Include="Res\ResMiscInventoryItems.cs" />
+    <Compile Include="Res\ResModuleData.cs" />
+    <Compile Include="Res\ResNebulaElements.cs" />
+    <Compile Include="Res\ResPassiveBonusData.cs" />
+    <Compile Include="Res\ResPassiveBonuses.cs" />
+    <Compile Include="Res\ResPrefabsDB.cs" />
+    <Compile Include="Res\ResRaces.cs" />
+    <Compile Include="Res\ResSchemeData.cs" />
+    <Compile Include="Res\ResSchemes.cs" />
+    <Compile Include="Res\ResSetData.cs" />
+    <Compile Include="Res\ResSkillData.cs" />
+    <Compile Include="Res\ResSkillLeveling.cs" />
+    <Compile Include="Res\ResStrings.cs" />
+    <Compile Include="Res\ResTooltipData.cs" />
+    <Compile Include="Res\ResWeapons.cs" />
+    <Compile Include="Res\ResWeaponTemplate.cs" />
+    <Compile Include="Res\ResWorkshopStats.cs" />
+    <Compile Include="Res\ResZoneInfo.cs" />
+    <Compile Include="Res\ResZones.cs" />
+    <Compile Include="Res\SubZoneWorldCollection.cs" />
+    <Compile Include="Res\SubZoneWorldConnection.cs" />
+    <Compile Include="Res\WorkshopSkillLeveling.cs" />
+    <Compile Include="Res\WorkshopStatData.cs" />
+    <Compile Include="Servers\ClientServerCollection.cs" />
     <Compile Include="ServiceMessage.cs" />
     <Compile Include="ServiceMessageReceiver.cs" />
     <Compile Include="SkillData.cs" />
     <Compile Include="SkillUseEventInfo.cs" />
+    <Compile Include="Store\ColoredItemPrice.cs" />
+    <Compile Include="Store\ConsumableCollection.cs" />
+    <Compile Include="Store\IDItemPrice.cs" />
+    <Compile Include="Store\ItemPrice.cs" />
+    <Compile Include="Store\ItemPriceCollection.cs" />
+    <Compile Include="Store\NebulaElementItemPrice.cs" />
+    <Compile Include="Store\PlayerStore.cs" />
+    <Compile Include="Store\StoreItem.cs" />
     <Compile Include="TextureNotFoundedException.cs" />
     <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Worlds\WorldCollection.cs" />
+    <Compile Include="Worlds\WorldInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common_WEBGL\Common_WEBGL.csproj">
@@ -137,6 +217,7 @@
       <Name>ServerClientCommon</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
