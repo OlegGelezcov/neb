@@ -2,6 +2,7 @@
 using ServerClientCommon;
 using ExitGames.Client.Photon;
 using System.Collections.Generic;
+using Nebula.Client.Utils;
 
 namespace Nebula.Client {
     public class ClientSearchGroup : IInfoParser {
@@ -21,8 +22,8 @@ namespace Nebula.Client {
             }
             this.members.Clear();
 
-            Hashtable membersHash = info.GetValue<Hashtable>((int)SPC.Members, new Hashtable());
-            foreach (DictionaryEntry entry in membersHash) {
+            Hashtable membersHash = info.GetValueHash((int)SPC.Members);
+            foreach (System.Collections.DictionaryEntry entry in membersHash) {
                 this.members.Add(entry.Key.ToString(), new ClientSearchGroupMember(entry.Value as Hashtable));
             }
         }
