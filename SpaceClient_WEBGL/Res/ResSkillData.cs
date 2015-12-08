@@ -3,7 +3,7 @@
 namespace Nebula.Client.Res
 {
     using Common;
-    using System.Collections;
+    using ExitGames.Client.Photon;
 
     public class ResSkillData
     {

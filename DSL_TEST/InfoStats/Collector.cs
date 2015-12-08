@@ -28,16 +28,16 @@ namespace DSL_TEST.InfoStats {
         }
 
         public void CollectTests(int level) {
-            mStatList.Clear();
-            foreach(Workshop workshop in Enum.GetValues(typeof(Workshop))) {
-                StatsData stats = new StatsData(workshop, level);
-                for(int counter = 0; counter < NUM_TESTS_FOR_WORKSHOP; counter++) {
-                    stats.Aggregate(CreateNewNebulaObject(workshop, level));
-                }
-                mStatList.Add(stats);
-            }
+            //mStatList.Clear();
+            //foreach(Workshop workshop in Enum.GetValues(typeof(Workshop))) {
+            //    StatsData stats = new StatsData(workshop, level);
+            //    for(int counter = 0; counter < NUM_TESTS_FOR_WORKSHOP; counter++) {
+            //        stats.Aggregate(CreateNewNebulaObject(workshop, level));
+            //    }
+            //    mStatList.Add(stats);
+            //}
 
-            WriteResults();
+            //WriteResults();
         }
 
         private float maximumDamage {
@@ -101,23 +101,23 @@ namespace DSL_TEST.InfoStats {
             root.Save("stats.xml");
         }
 
-        private NebulaObject CreateNewNebulaObject(Workshop workshop, int level) {
-            ZoneNpcInfo info = new ZoneNpcInfo {
-                aiType = new FreeFlyNearPointAIType { battleMovingType = AttackMovingType.AttackPurchase, radius = 100 },
-                Difficulty = Common.Difficulty.none,
-                fraction = Common.FractionType.Pirate,
-                Id = Guid.NewGuid().ToString(),
-                level = level,
-                name = "BOT",
-                Position = new float[] { 0, 0, 0 },
-                Race = CommonUtils.RaceForWorkshop(workshop),
-                RespawnInterval = 100,
-                Rotation = new float[] { 0, 0, 0 },
-                Workshop = workshop
-            };
-            var obj = ObjectCreate.CombatNpc(mWorld, info);
-            obj.Update(0);
-            return obj;
-        }
+        //private NebulaObject CreateNewNebulaObject(Workshop workshop, int level) {
+        //    ZoneNpcInfo info = new ZoneNpcInfo {
+        //        aiType = new FreeFlyNearPointAIType { battleMovingType = AttackMovingType.AttackPurchase, radius = 100 },
+        //        Difficulty = Common.Difficulty.none,
+        //        fraction = Common.FractionType.Pirate,
+        //        Id = Guid.NewGuid().ToString(),
+        //        level = level,
+        //        name = "BOT",
+        //        Position = new float[] { 0, 0, 0 },
+        //        Race = CommonUtils.RaceForWorkshop(workshop),
+        //        RespawnInterval = 100,
+        //        Rotation = new float[] { 0, 0, 0 },
+        //        Workshop = workshop
+        //    };
+        //    var obj = ObjectCreate.CombatNpc(mWorld, info);
+        //    obj.Update(0);
+        //    return obj;
+        //}
     }
 }

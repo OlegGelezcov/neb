@@ -8,6 +8,7 @@ namespace Nebula.Client.Res
     using System.Linq;
     using System.Xml.Linq;
     using ExitGames.Client.Photon;
+    using Space.Game.Resources;
 
     public static class ResLoader
     {
