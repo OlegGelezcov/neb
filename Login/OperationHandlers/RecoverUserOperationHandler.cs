@@ -1,6 +1,7 @@
 ﻿using Common;
 using ExitGames.Logging;
 using Login.Operations;
+using Nebula.Server.Login;
 using Photon.SocketServer;
 using ServerClientCommon;
 using System;
@@ -42,7 +43,7 @@ namespace Login.OperationHandlers {
             }
 
             var database = application.DbUserLogins;
-            DbUserLogin dbUser = database.GetExistingUserForEmail(operation.email);
+            DbUserLogin dbUser = database.GetUser(new Email(operation.email));
             if(dbUser == null ) {
                 RecoverUserResponse responseObject = new RecoverUserResponse {
                     returnCode = (int)LoginReturnCode.UserNotFound

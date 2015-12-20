@@ -1,6 +1,9 @@
 ﻿using Common;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
-
+#endif
 namespace Nebula.Client.Res {
     public class ResPassiveBonusData {
         public PassiveBonusType type { get; private set; }
@@ -17,6 +20,18 @@ namespace Nebula.Client.Res {
             return elementsForTier * tier;
         }
 
+#if UP
+        public ResPassiveBonusData(PassiveBonusType inType, UPXElement element) {
+            type = inType;
+            timeToSingleTier = element.GetFloat("time");
+            valueForTier = element.GetFloat("value");
+            elementsForTier = element.GetInt("elements");
+            nebulaElementID = element.GetString("element_id");
+            name = element.GetString("name");
+            description = element.GetString("description");
+            icon = element.GetString("icon");
+        }
+#else
         public ResPassiveBonusData(PassiveBonusType inType, XElement element) {
             type = inType;
             timeToSingleTier    = element.GetFloat  ("time");
@@ -27,5 +42,6 @@ namespace Nebula.Client.Res {
             description         = element.GetString ("description");
             icon                = element.GetString ("icon");
         }
+#endif
     }
 }

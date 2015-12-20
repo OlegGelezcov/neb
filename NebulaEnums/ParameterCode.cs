@@ -53,8 +53,10 @@ namespace Common
         GuildId = 16,
         Page = 17,
         Email = 18,
-        Passes = 19,
-        ExpireTime = 20,
+        FacebookId = 19,
+        VkontakteId = 20,
+        //Passes = 19,
+        //ExpireTime = 20,
         CurrentTime = 21,
         Language = 22,
         ServerId = 23,
@@ -226,6 +228,7 @@ namespace Common
         Body = 133,
         Attachments = 134,
 
+        Method = 135,
         //EnterToStation = 135,
         
         Info = 136,         //different info types, typically hashtable

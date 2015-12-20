@@ -1,13 +1,22 @@
 ﻿using Common;
-using System.Xml.Linq;
-using System;
 using ExitGames.Client.Photon;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class TeleportComponentData : MultiComponentData {
+#if UP
+        public TeleportComponentData(UPXElement e) {
+
+        }
+#else
         public TeleportComponentData(XElement e) {
 
         }
+#endif
         public TeleportComponentData() { }
 
         public TeleportComponentData(Hashtable hash) {

@@ -4,7 +4,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Xml.Linq;
+#if UP
+    using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
     public class ResWeapons
     {
@@ -17,7 +21,11 @@
 
         public void Load(string xml)
         {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             this.weapons = document.Element("weapons").Elements("weapon").Select(e =>
                 {
                     string id = e.Attribute("id").Value;

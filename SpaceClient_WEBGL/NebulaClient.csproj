@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nebula.Client</RootNamespace>
-    <AssemblyName>SpaceClient_WEBGL</AssemblyName>
+    <AssemblyName>NebulaClient_ALL</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,8 +16,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Users\Dev\Documents\SpaceMMO\Assets\Plugins\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <OutputPath>..\..\..\Users\Dev\Documents\Nebula_Android\Assets\Plugins\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -150,11 +150,9 @@
     <Compile Include="Common\Nebula\Server\NoneAIType.cs" />
     <Compile Include="Common\Nebula\Server\OrbitAroundPointAIType.cs" />
     <Compile Include="Common\Nebula\Server\PatrolAIType.cs" />
-    <Compile Include="Common\RegexUtilities.cs" />
     <Compile Include="Common\ServerInfo.cs" />
     <Compile Include="Common\Size.cs" />
     <Compile Include="Common\SphericalCoord.cs" />
-    <Compile Include="Common\StringChiper.cs" />
     <Compile Include="Common\WorldClasses.cs" />
     <Compile Include="DamageDron.cs" />
     <Compile Include="Election\CommanderCandidate.cs" />
@@ -286,6 +284,8 @@
     <Compile Include="Store\PlayerStore.cs" />
     <Compile Include="Store\StoreItem.cs" />
     <Compile Include="TextureNotFoundedException.cs" />
+    <Compile Include="UP\UPXDocument.cs" />
+    <Compile Include="UP\UPXElement.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Worlds\WorldCollection.cs" />
     <Compile Include="Worlds\WorldInfo.cs" />

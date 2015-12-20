@@ -1,7 +1,11 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Res {
     public class ResLocations {
@@ -13,7 +17,11 @@ namespace Nebula.Client.Res {
         }
 
         public void Load(string xml) {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             var locations = document.Element("zones").Elements("zone").Select(ze => {
                 return Location.Parse(ze);
             }).ToList();

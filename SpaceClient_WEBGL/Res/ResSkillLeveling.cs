@@ -2,7 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Res {
     public class ResSkillLeveling {
@@ -13,7 +17,11 @@ namespace Nebula.Client.Res {
         }
 
         public void Add(string xml) {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             string workshopsRaw = document.Element("skill_dropping").GetString("workshops");
             List<Workshop> workshops = workshopsRaw.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(s => {
                 return (Workshop)Enum.Parse(typeof(Workshop), s);

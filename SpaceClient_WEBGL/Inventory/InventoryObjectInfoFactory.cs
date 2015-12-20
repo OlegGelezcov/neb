@@ -58,8 +58,9 @@ namespace Nebula.Client.Inventory {
                         return new TurretInventoryObjectInfo(info);
                     case InventoryObjectType.nebula_element:
                         return new NebulaElementObjectInfo(info);
-                    case InventoryObjectType.pass:
-                        return new PassInventoryObjectInfo(info);
+
+                    //case InventoryObjectType.pass:
+                        //return new PassInventoryObjectInfo(info);
                     //case InventoryObjectType.credits:
                     //    return new CreditsObjectInfo(info);
                     default:

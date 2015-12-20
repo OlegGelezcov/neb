@@ -1,17 +1,26 @@
 ﻿using Common;
 using System;
-using System.Xml.Linq;
 using ExitGames.Client.Photon;
 using ServerClientCommon;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class BotComponentData : ComponentData, IDatabaseComponentData {
 
         public BotItemSubType subType { get; private set; }
-
+#if UP
+        public BotComponentData(UPXElement e) {
+            subType = (BotItemSubType)Enum.Parse(typeof(BotItemSubType), e.GetString("bot_sub_type"));
+        }
+#else
         public BotComponentData(XElement e) {
             subType = (BotItemSubType)Enum.Parse(typeof(BotItemSubType), e.GetString("bot_sub_type"));
         }
+#endif
 
         public BotComponentData(BotItemSubType subType) {
             this.subType = subType;

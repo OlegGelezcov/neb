@@ -8,6 +8,7 @@ namespace Nebula.Game.Components {
     using Common;
     using ExitGames.Logging;
     using GameMath;
+    using global::Common;
     using Nebula.Engine;
     using Photon.SocketServer;
     using ServerClientCommon;

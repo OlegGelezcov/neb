@@ -1,9 +1,10 @@
 ﻿using Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Res {
     public class WorkshopStatData {
@@ -14,7 +15,17 @@ namespace Nebula.Client.Res {
         //public int cargo { get; private set; }
         public int optimalDistance { get; private set; }
         public int critChance { get; private set; }
-
+#if UP
+        public WorkshopStatData(UPXElement e) {
+            workshop = (Workshop)Enum.Parse(typeof(Workshop), e.GetString("name"));
+            damage = e.GetInt("damage");
+            speed = e.GetInt("speed");
+            hp = e.GetInt("hp");
+            //cargo = e.GetInt("cargo");
+            optimalDistance = e.GetInt("optimal_distance");
+            critChance = e.GetInt("crit_chance");
+        }
+#else
         public WorkshopStatData(XElement e) {
             workshop = (Workshop)Enum.Parse(typeof(Workshop), e.GetString("name"));
             damage = e.GetInt("damage");
@@ -24,7 +35,7 @@ namespace Nebula.Client.Res {
             optimalDistance = e.GetInt("optimal_distance");
             critChance = e.GetInt("crit_chance");
         }
-
+#endif
 
     }
 }

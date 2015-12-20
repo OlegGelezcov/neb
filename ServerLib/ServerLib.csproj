@@ -7,7 +7,7 @@
     <ProjectGuid>{5AA767B7-0441-4993-8AE7-7E92B9F60DD5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ServerLib</RootNamespace>
+    <RootNamespace>Nebula.Server</RootNamespace>
     <AssemblyName>ServerLib</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -101,6 +101,14 @@
     <Compile Include="ISaver.cs" />
     <Compile Include="IState.cs" />
     <Compile Include="LoginTextUtilities.cs" />
+    <Compile Include="Login\Email.cs" />
+    <Compile Include="Login\FacebookId.cs" />
+    <Compile Include="Login\FullUserAuth.cs" />
+    <Compile Include="Login\GameRefId.cs" />
+    <Compile Include="Login\LoginAuth.cs" />
+    <Compile Include="Login\LoginGameRef.cs" />
+    <Compile Include="Login\LoginId.cs" />
+    <Compile Include="Login\VkontakteId.cs" />
     <Compile Include="Nebula\AppVersion.cs" />
     <Compile Include="Nebula\Server\AIType.cs" />
     <Compile Include="Nebula\Server\CombatAIType.cs" />
@@ -163,7 +171,6 @@
     <Compile Include="Nebula\Server\OrbitAroundPointAIType.cs" />
     <Compile Include="Nebula\Server\PatrolAIType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegexUtilities.cs" />
     <Compile Include="SafeDictionary.cs" />
     <Compile Include="SafeEnumerable.cs" />
     <Compile Include="SafeEnumerator.cs" />
@@ -172,7 +179,6 @@
     <Compile Include="Space\Game\Resources\FractionResolver.cs" />
     <Compile Include="Space\Game\Resources\Leveling.cs" />
     <Compile Include="SphericalCoord.cs" />
-    <Compile Include="StringChiper.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="WorldClasses.cs" />
   </ItemGroup>

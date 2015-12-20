@@ -2,6 +2,7 @@
 
 namespace Nebula.Client {
     using Common;
+    using global::Common;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;

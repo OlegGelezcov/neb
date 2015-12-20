@@ -2,7 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 
 namespace Nebula.Client.Res {
@@ -11,7 +15,11 @@ namespace Nebula.Client.Res {
         private Dictionary<Race, ClientRace> races = new Dictionary<Race, ClientRace>();
 
         public void Load(string xml) {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             var document = XDocument.Parse(xml);
+#endif
             this.races = document.Element("races").Elements("race").Select(re => {
                 Race raceId = (Race)Enum.Parse(typeof(Race), re.GetString("id"));
                 string raceNameId = re.GetString("name");

@@ -1,6 +1,10 @@
 ﻿
 using Common;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class MiningStationComponentData : ComponentData {
@@ -15,7 +19,11 @@ namespace Nebula.Server.Components {
 
         public string characterID { get; private set; }
 
+#if UP
+        public MiningStationComponentData(UPXElement element) { }
+#else
         public MiningStationComponentData(XElement element) { }
+#endif
 
         public MiningStationComponentData(string inNebulaElementID, int inMaxCount, float inTimeToGetSingleElement, string inSourcePlanetID, string inOwnedPlayerID, int inTotalCount, string inCharacterID) {
             nebulaElementID = inNebulaElementID;

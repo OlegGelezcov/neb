@@ -1,5 +1,9 @@
 ﻿using Common;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Help {
     public class TipInfo {
@@ -9,6 +13,15 @@ namespace Nebula.Client.Help {
         public string image { get; private set; }
         public string eventName { get; private set; }
 
+#if UP
+        public TipInfo(UPXElement element) {
+            id = element.GetString("id");
+            textId = element.GetString("text");
+            type = (TipType)System.Enum.Parse(typeof(TipType), element.GetString("type"));
+            image = element.GetString("image");
+            eventName = element.GetString("event_name");
+        }
+#else
         public TipInfo(XElement element) {
             id = element.GetString("id");
             textId = element.GetString("text");
@@ -16,6 +29,7 @@ namespace Nebula.Client.Help {
             image = element.GetString("image");
             eventName = element.GetString("event_name");
         }
+#endif
     }
 
     public enum TipType {

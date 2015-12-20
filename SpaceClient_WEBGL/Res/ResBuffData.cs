@@ -7,6 +7,7 @@
 namespace Nebula.Client.Res
 {
     using Common;
+    using global::Common;
 
     public class ResBuffData
     {

@@ -5,6 +5,7 @@
 // Copyright (c) 2015 KomarGames. All rights reserved.
 //
 using ExitGames.Logging;
+using Nebula.Server.Login;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -27,14 +28,14 @@ namespace Login {
         /// <param name="loginId"></param>
         /// <param name="accessToken"></param>
         /// <param name="gameRefId"></param>
-        public void OnUserLoggedIn(string login, string gameRef, LoginClientPeer peer) {
+        public void OnUserLoggedIn(FullUserAuth auth, LoginClientPeer peer) {
             lock(syncRoot) {
                 LoggedInUser user;
-                if(this.TryGetValue(login, out user)) {
-                    this.Remove(login);
+                if(this.TryGetValue(auth.login, out user)) {
+                    this.Remove(auth.login);
                 }
-                this.Add(login, new LoggedInUser(login, gameRef, peer) );
-                log.InfoFormat("added user = {0} yellow", login);
+                this.Add(auth.login, new LoggedInUser(auth, peer) );
+                log.InfoFormat("added user = {0} yellow", auth.login);
             }
         }
 
@@ -42,23 +43,17 @@ namespace Login {
         /// called when user log out make
         /// </summary>
         /// <param name="loginId"></param>
-        public void OnLogOut(string loginId ) {
+        public void OnLogOut(LoginId login) {
             lock(this.syncRoot) {
-                this.Remove(loginId);
-                log.InfoFormat("removed user = {0} yellow", loginId);
+                if (login != null) {
+                    this.Remove(login.value);
+                    log.InfoFormat("removed user = {0} yellow", login.value);
+                }
             }
 
             DeleteNotValidUsers();
         }
 
-        public void SendPassesUpdateEvent(DbUserLogin dbUser) {
-            lock(syncRoot) {
-                LoggedInUser user;
-                if(TryGetValue(dbUser.login, out user)) {
-                    user.SendPassesUpdateEvent(dbUser);
-                }
-            }
-        }
 
         private void DeleteNotValidUsers() {
             lock(syncRoot) {

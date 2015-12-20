@@ -12,6 +12,7 @@ namespace Nebula.Client {
     using System;
     using ExitGames.Client.Photon;
     using Utils;
+    using global::Common;
 
     public class ClientPlayerSkill : IInfo {
         public int Id { get; private set; }

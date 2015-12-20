@@ -1,5 +1,9 @@
 ﻿using Common;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Help {
     public class HelpSubSection {
@@ -12,11 +16,18 @@ namespace Nebula.Client.Help {
             this.titleId = title;
             this.contentId = content;
         }
-
+#if UP
+        public HelpSubSection(UPXElement element) {
+            id = element.GetString("id");
+            titleId = element.GetString("title");
+            contentId = element.GetString("content");
+        }
+#else
         public HelpSubSection(XElement element) {
             id = element.GetString("id");
             titleId = element.GetString("title");
             contentId = element.GetString("content");
         }
+#endif
     }
 }

@@ -74,11 +74,11 @@ namespace Nebula.Game.Components {
                 return;
             }
 
-            mCurrentEnergy += deltaTime * mEnergyRestoration;
+            mCurrentEnergy += deltaTime * ApplyRestoreEnergyPassiveBonus ( mEnergyRestoration );
 
             if(mAI) {
                 if(mAI.shiftState.keyPressed) {
-                    float costedEnergy = ApplyRestoreEnergyPassiveBonus(mEnergyCostPerShiftMoving) * deltaTime;
+                    float costedEnergy = mEnergyCostPerShiftMoving * deltaTime;
                     if( costedEnergy <= mCurrentEnergy) {
 
                         //handle god mod for player
@@ -89,6 +89,8 @@ namespace Nebula.Game.Components {
                         }
 
                         mCurrentEnergy -= costedEnergy;
+                        //log.InfoFormat("remove {0} energy, current = {1}", costedEnergy, mCurrentEnergy);
+
                         if(currentEnergy <= 0f) {
                             mAI.shiftState.OnKeyUp();
                         }

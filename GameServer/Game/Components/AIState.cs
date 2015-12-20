@@ -36,7 +36,13 @@ namespace Nebula.Game.Components {
 
         public void SetShift(bool value) {
             if(value) {
+
+                if (controlState != PlayerState.MoveDirection) {
+                    controlState = PlayerState.MoveDirection;
+                }
+
                 shiftState.OnKeyDown(Time.curtime());
+
             } else {
                 shiftState.OnKeyUp();
             }

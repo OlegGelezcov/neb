@@ -3,6 +3,7 @@
     using System.Xml.Linq;
     using System;
     using System.Collections;
+    using global::Common;
 
     public class OutpostComponentData : ComponentData, IDatabaseComponentData  {
         public OutpostComponentData(XElement e) {

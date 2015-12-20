@@ -282,6 +282,7 @@ namespace ServerClientCommon {
         PreviousRace,
         Icon,
         PvpPoints,
-        GuildName
+        GuildName,
+        ShiftState
     }
 }

@@ -1,6 +1,8 @@
 ﻿namespace Nebula.Client.Res
 {
     using Common;
+    using global::Common;
+
     public class ResWeaponTemplate
     {
         private readonly string id;

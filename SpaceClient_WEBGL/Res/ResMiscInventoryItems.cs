@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExitGames.Client.Photon;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 using Common;
 
 
@@ -11,7 +15,11 @@ namespace Nebula.Client.Res {
         private Dictionary<string, ResMiscInventoryItemData> items;
 
         public void Load(string xml) {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
 
             this.items = document.Element("items").Elements("item").Select(e => {
                 string id = e.GetString("id");

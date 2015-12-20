@@ -48,10 +48,12 @@ namespace Master {
 
 
         private ServerType GetServerTypeForTransaction(IEventData eventData) {
+            /*
             TransactionSource transactionSource = (TransactionSource)eventData.Parameters.GetValue<byte>((byte)ServerToServerParameterCode.TransactionSource, (byte)TransactionSource.Mail);
-            if(transactionSource == TransactionSource.PassManager) {
+            
+            if (transactionSource == TransactionSource.PassManager) {
                 return ServerType.Login;
-            }
+            }*/
             return ServerType.SelectCharacter;
         }
 

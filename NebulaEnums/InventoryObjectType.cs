@@ -25,6 +25,6 @@ namespace Common
         mining_station,
         nebula_element,
         //pass elenment
-        pass
+        //pass
     }
 }

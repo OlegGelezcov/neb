@@ -1,17 +1,27 @@
 ﻿using Common;
 using System;
-using System.Xml.Linq;
 using ExitGames.Client.Photon;
 using ServerClientCommon;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class RaceableComponentData : ComponentData, IDatabaseComponentData {
 
         public Race race { get; private set; }
 
+#if UP
+        public RaceableComponentData(UPXElement element) {
+            race = (Race)Enum.Parse(typeof(Race), element.GetString("race"));
+        }
+#else
         public RaceableComponentData(XElement element) {
             race = (Race)Enum.Parse(typeof(Race), element.GetString("race"));
         }
+#endif
 
         public RaceableComponentData(Race race) {
             this.race = race;

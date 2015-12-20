@@ -1,7 +1,11 @@
 ﻿using Common;
 using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Help {
     public class HelpSection {
@@ -18,6 +22,17 @@ namespace Nebula.Client.Help {
             this.subSections = subSections;
         }
 
+#if UP
+        public HelpSection(UPXElement element) {
+            id = element.GetString("id");
+            titleId = element.GetString("title");
+            contentId = element.GetString("content");
+
+            subSections = element.Elements("subsection").Select(e => {
+                return new HelpSubSection(e);
+            }).ToList();
+        }
+#else
         public HelpSection(XElement element) {
             id = element.GetString("id");
             titleId = element.GetString("title");
@@ -27,6 +42,7 @@ namespace Nebula.Client.Help {
                 return new HelpSubSection(e);
             }).ToList();
         }
+#endif
 
         public bool HasSubSection(string subID) {
             foreach (var ss in subSections) {

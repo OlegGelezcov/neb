@@ -16,6 +16,12 @@ namespace Login.Operations {
         [DataMember(Code =(byte)ParameterCode.Email, IsOptional = false)]
         public string email { get; set; }
 
+        [DataMember(Code = (byte)ParameterCode.FacebookId, IsOptional = false)]
+        public string facebookId { get; set; }
+
+        [DataMember(Code = (byte)ParameterCode.VkontakteId, IsOptional = false)]
+        public string vkontakteId { get; set; }
+
         public void Prepare() {
             if(login != null ) {
                 login = login.ToLower();

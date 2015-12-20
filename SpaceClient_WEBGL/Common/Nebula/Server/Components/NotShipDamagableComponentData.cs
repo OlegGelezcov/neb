@@ -1,7 +1,11 @@
 ﻿using Common;
 using ServerClientCommon;
 using ExitGames.Client.Photon;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class NotShipDamagableComponentData : MultiComponentData {
@@ -11,6 +15,20 @@ namespace Nebula.Server.Components {
         public float ignoreDamageInterval { get; private set; }
         public bool createChestOnKilling { get; private set; }
 
+#if UP
+        public NotShipDamagableComponentData(UPXElement e) {
+            maxHealth = e.GetFloat("max_health");
+
+
+            ignoreDamageAtStart = e.GetBool("ignore_damage_at_start");
+            ignoreDamageInterval = e.GetFloat("ignore_damage_interval");
+
+            if (e.HasAttribute("create_chest_when_killed"))
+                createChestOnKilling = e.GetBool("create_chest_when_killed");
+            else
+                createChestOnKilling = true;
+        }
+#else
         public NotShipDamagableComponentData(XElement e) {
             maxHealth = e.GetFloat("max_health");
 
@@ -23,7 +41,7 @@ namespace Nebula.Server.Components {
             else
                 createChestOnKilling = true;
         }
-
+#endif
         public NotShipDamagableComponentData(float maxHealth, bool ignoreDamageAtStart, float ignoreDamageInterval, bool createChestOnKilling) {
             this.maxHealth = maxHealth;
             this.ignoreDamageAtStart = ignoreDamageAtStart;

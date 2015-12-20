@@ -10,7 +10,7 @@ namespace Nebula.Client {
             this.time = DateTime.UtcNow;
         }
 
-        public Common.ServiceMessageType Type {
+        public ServiceMessageType Type {
             get;
             private set;
         }

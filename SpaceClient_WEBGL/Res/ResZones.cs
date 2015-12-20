@@ -1,7 +1,12 @@
 ﻿namespace Nebula.Client.Res {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Xml.Linq;
+#if UP
+    using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
+
     public class ResZones
     {
         private Dictionary<string, ResZoneInfo> zones;
@@ -13,7 +18,11 @@
 
         public void Load(string xml)
         {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             this.zones = document.Element("zones").Elements("zone").Select(e =>
                 {
                     string id = e.Attribute("id").Value;

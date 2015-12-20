@@ -24,7 +24,7 @@ namespace Common
         GetUsersOnline = 2,
         GetServerVersion = 3,
         GetNews = 4,
-        AddPass = 5,
+        //AddPass = 5,
         RequestServerId = 6,
         GetShipModel = 7,
         /// <summary>
@@ -151,8 +151,8 @@ namespace Common
         SelectCharacter = 124,
         AddCharacter = 125,
         RegisterUser = 126,
-        GetUserPasses = 127,
+        //GetUserPasses = 127,
         RecoverUser = 128,
-        UsePass = 129,
+        //UsePass = 129,
     }
 }

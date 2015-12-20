@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Help {
     public class Tips {
@@ -12,10 +16,17 @@ namespace Nebula.Client.Help {
         }
 
         public void Load(string xml) {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+            tips = document.Element("tips").Elements("tip").Select(e => {
+                return new TipInfo(e);
+            }).ToList();
+#else
             XDocument document = XDocument.Parse(xml);
             tips = document.Element("tips").Elements("tip").Select(e => {
                 return new TipInfo(e);
             }).ToList();
+#endif
         }
 
         public TipInfo GetTip(string id) {

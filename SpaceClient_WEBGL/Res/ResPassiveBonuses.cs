@@ -1,6 +1,10 @@
 ﻿using Common;
 using System.Collections.Generic;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Res {
     public class ResPassiveBonuses {
@@ -8,7 +12,11 @@ namespace Nebula.Client.Res {
 
         public void Load(string xml) {
             bonuses = new List<ResPassiveBonusData>();
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             var parent = document.Element("passive_bonuses");
             bonuses.Add(new ResPassiveBonusData(Common.PassiveBonusType.Speed, parent.Element("speed")));
             bonuses.Add(new ResPassiveBonusData(Common.PassiveBonusType.DamageDron, parent.Element("damage_dron")));

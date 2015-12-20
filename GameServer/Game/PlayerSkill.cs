@@ -1,6 +1,7 @@
 ﻿namespace Nebula.Game.Components {
     using Common;
     using GameMath;
+    using global::Common;
     using Nebula.Engine;
     using Nebula.Game.Bonuses;
     using Nebula.Game.Skills;

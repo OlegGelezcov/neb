@@ -4,6 +4,7 @@ using ExitGames.Logging;
 using ExitGames.Logging.Log4Net;
 using log4net;
 using log4net.Config;
+using Nebula.Server.Login;
 using NebulaCommon;
 using Photon.SocketServer;
 using Photon.SocketServer.ServerToServer;
@@ -37,7 +38,7 @@ namespace Login {
         public IPAddress PublicIpAddress { get; protected set; }
         protected int ConnectRetryIntervalSeconds { get; set; }
 
-        public PassManager passManager { get; private set; }
+        //public PassManager passManager { get; private set; }
 
         /// <summary>
         /// Server settings file reader
@@ -101,7 +102,7 @@ namespace Login {
 
                 this.LogedInUsers = new LoggedInUserCollection(this);
 
-                passManager = new PassManager(this);
+                //passManager = new PassManager(this);
 
                 serverSettings = new ServerInputsRes();
                 serverSettings.Load(BinaryPath, GameServerSettings.Default.assets.SERVER_INPUTS_FILE);
@@ -217,8 +218,16 @@ namespace Login {
             return true;
         }
 
-        public DbUserLogin GetExistingUser( string login, string password, out LoginReturnCode code) {
-            return this.DbUserLogins.GetExistingUser(login, password, out code);
+        public DbUserLogin GetUser( LoginAuth auth ) {
+            return this.DbUserLogins.GetUser(auth);
+        }
+
+        public DbUserLogin GetUser(FacebookId fbId ) {
+            return DbUserLogins.GetUser(fbId);
+        }
+
+        public DbUserLogin GetUser(VkontakteId vkId ) {
+            return DbUserLogins.GetUser(vkId);
         }
     }
 }

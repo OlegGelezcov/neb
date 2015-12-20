@@ -1,5 +1,6 @@
 ﻿using Common;
 using Login.Operations;
+using Nebula.Server.Login;
 using Photon.SocketServer;
 using ServerClientCommon;
 
@@ -74,7 +75,7 @@ namespace Login.OperationHandlers {
 
             var database = application.DbUserLogins;
 
-            if(database.ExistLogin(operation.login)) {
+            if(database.ExistsUser(new LoginId ( operation.login))) {
                 RegisterUserResponse responseObject = new RegisterUserResponse {
                     login = operation.login,
                     gameRef = string.Empty,
@@ -83,7 +84,7 @@ namespace Login.OperationHandlers {
                 return new OperationResponse(request.OperationCode, responseObject);
             }
 
-            var emailUser = database.GetExistingUserForEmail(operation.email);
+            var emailUser = database.GetUser(new Email( operation.email));
             if(emailUser != null ) {
                 RegisterUserResponse responseObject = new RegisterUserResponse {
                     login = operation.login,
@@ -95,8 +96,19 @@ namespace Login.OperationHandlers {
 
 
             LoginReturnCode code = LoginReturnCode.Ok;
-            var dbUser = database.CreateUser(operation.login, password, operation.email, out code);
-            application.LogedInUsers.OnUserLoggedIn(dbUser.login, dbUser.gameRef, peer as LoginClientPeer);
+
+
+            LoginAuth loginAuth = new LoginAuth(operation.login, password);
+            Email email = new Email(operation.email);
+            FacebookId fbId = new FacebookId(operation.facebookId);
+            VkontakteId vkId = new VkontakteId(operation.vkontakteId);
+           
+            var dbUser = database.CreateUser(loginAuth, email, fbId, vkId);
+
+            FullUserAuth fullAuth = new FullUserAuth(loginAuth.login, dbUser.gameRef, fbId.value, vkId.value);
+
+
+            application.LogedInUsers.OnUserLoggedIn(fullAuth, peer as LoginClientPeer);
 
             if(code != LoginReturnCode.Ok) {
                 RegisterUserResponse responseObject = new RegisterUserResponse {

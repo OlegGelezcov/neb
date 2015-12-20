@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using ExitGames.Client.Photon;
 using ServerClientCommon;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class NebulaObjectComponentData : ComponentData, IDatabaseComponentData {
@@ -13,8 +17,26 @@ namespace Nebula.Server.Components {
         public string badge { get; private set; }
         public float size { get; private set; } = 1f;
         public int subZoneID { get; private set; } = 0;
-        
 
+#if UP
+        public NebulaObjectComponentData(UPXElement element) {
+            itemType = (ItemType)Enum.Parse(typeof(ItemType), element.GetString("item_type"));
+            badge = element.GetString("badge");
+
+            if (element.HasAttribute("size"))
+                size = element.GetFloat("size");
+            if (element.HasAttribute("subzone_id")) {
+                subZoneID = element.GetInt("subzone_id");
+            }
+            tags = new Dictionary<byte, object>();
+            var dump = element.Elements("tag").Select(te => {
+                var kv = ParseTag(te);
+                tags.Add(kv.Key, kv.Value);
+                return kv.Key;
+            }).ToList();
+
+        }
+#else
         public NebulaObjectComponentData(XElement element) {
             itemType = (ItemType)Enum.Parse(typeof(ItemType), element.GetString("item_type"));
             badge = element.GetString("badge");
@@ -32,6 +54,7 @@ namespace Nebula.Server.Components {
             }).ToList();
 
         }
+#endif
 
         public NebulaObjectComponentData(ItemType itemType, Dictionary<byte, object> tags, string badge, float size, int subZone) {
             this.itemType = itemType;
@@ -56,6 +79,15 @@ namespace Nebula.Server.Components {
             }
         }
 
+#if UP
+        private KeyValuePair<byte, object> ParseTag(UPXElement element) {
+            string value = element.GetString("value");
+            TagType type = (TagType)Enum.Parse(typeof(TagType), element.GetString("type"));
+            byte key = (byte)element.GetInt("key");
+            object val = CommonUtils.ParseValue(value, type);
+            return new KeyValuePair<byte, object>(key, val);
+        }
+#else
         private KeyValuePair<byte, object> ParseTag(XElement element) {
             string value = element.GetString("value");
             TagType type = (TagType)Enum.Parse(typeof(TagType), element.GetString("type"));
@@ -63,7 +95,7 @@ namespace Nebula.Server.Components {
             object val = CommonUtils.ParseValue(value, type);
             return new KeyValuePair<byte, object>(key, val);
         }
-
+#endif
         public Hashtable AsHash() {
             return new Hashtable {
                 { (int)SPC.ItemType, (int)itemType },

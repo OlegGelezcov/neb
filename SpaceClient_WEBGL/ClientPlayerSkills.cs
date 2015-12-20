@@ -9,7 +9,7 @@ namespace Nebula.Client {
     using System;
     using System.Collections.Generic;
     using ExitGames.Client.Photon;
-
+    using global::Common;
 
     public class ClientPlayerSkills : IInfo {
         private Dictionary<int, ClientPlayerSkill> skills;

@@ -4,6 +4,7 @@ namespace Nebula.Client.Res
 {
     using Common;
     using ExitGames.Client.Photon;
+    using global::Common;
 
     public class ResSkillData
     {

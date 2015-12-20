@@ -1017,16 +1017,36 @@ namespace Space.Game {
             return info;
         }
 
+        /// <summary>
+        /// RPC when player button 'shift' for accelerated movement
+        /// </summary>
+        /// <returns></returns>
         public Hashtable OnShiftDown()
         {
-            this.Player.GetComponent<AIState>().SetShift(true);
-            return GetSuccessResponse("ok");
+            var playerAI = Player.GetComponent<AIState>();
+
+            playerAI.SetShift(true);
+
+            return new Hashtable {
+                { (int)SPC.ControlState, (byte)playerAI.controlState },
+                { (int)SPC.ShiftState, playerAI.shiftState.keyPressed }
+            };
         }
 
+        /// <summary>
+        /// RPC when player unpressed button shift for accelerated movement
+        /// </summary>
+        /// <returns></returns>
         public Hashtable OnShiftUp()
         {
-            this.Player.GetComponent<AIState>().SetShift(false);
-            return GetSuccessResponse("ok");
+            var playerAI = Player.GetComponent<AIState>();
+
+            playerAI.SetShift(false);
+
+            return new Hashtable {
+                { (int)SPC.ControlState, (byte)playerAI.controlState },
+                { (int)SPC.ShiftState, playerAI.shiftState.keyPressed }
+            };
         }
 
         public Hashtable Respawn()

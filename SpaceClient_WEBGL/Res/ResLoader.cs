@@ -6,15 +6,24 @@ namespace Nebula.Client.Res
     using System;
     using System.Collections.Generic;
     using System.Linq;
+#if UP
+    using Nebula.Client.UP;
+#else
     using System.Xml.Linq;
+#endif
     using ExitGames.Client.Photon;
     using Space.Game.Resources;
+    using global::Common;
 
     public static class ResLoader
     {
         public static List<ResModuleData> LoadModules(string text)
         {
+#if UP
+            UPXDocument document = new UPXDocument(text);
+#else
             XDocument document = XDocument.Parse(text);
+#endif
             return document.Element("modules").Elements("module").Select(e =>
                 {
                     return new ResModuleData
@@ -32,7 +41,11 @@ namespace Nebula.Client.Res
 
         public static List<ResMaterialData> LoadOres(string text)
         {
+#if UP
+            UPXDocument document = new UPXDocument(text);
+#else
             XDocument document = XDocument.Parse(text);
+#endif
             return document.Element("materials").Elements("material").Select(e =>
             {
 
@@ -48,7 +61,11 @@ namespace Nebula.Client.Res
 
         public static List<ResSkillData> LoadSkills(string text)
         {
+#if UP
+            UPXDocument document = new UPXDocument(text);
+#else
             XDocument document = XDocument.Parse(text);
+#endif
             return document.Element("skills").Elements("skill").Select(e => {
                 Hashtable inputs = new Hashtable();
                 var dump = e.Element("inputs").Elements("input").Select(i =>
@@ -73,7 +90,11 @@ namespace Nebula.Client.Res
 
         public static List<ResSetData> LoadSets(string text)
         {
+#if UP
+            UPXDocument document = new UPXDocument(text);
+#else
             XDocument document = XDocument.Parse(text);
+#endif
             var moduleSets = document.Element("sets").Elements("set").Select(setElement =>
             {
                 string id = setElement.Attribute("id").Value;
@@ -91,7 +112,11 @@ namespace Nebula.Client.Res
 
         public static Dictionary<string, ResTooltipData> LoadTooltips(string text)
         {
+#if UP
+            UPXDocument document = new UPXDocument(text);
+#else
             XDocument document = XDocument.Parse(text);
+#endif
             return document.Element("tooltips").Elements("tooltip").Select(e =>
                 {
                     string id = e.GetString("id");
@@ -102,7 +127,11 @@ namespace Nebula.Client.Res
 
         public static Dictionary<BonusType, ResBuffData> LoadBuffs(string text)
         {
+#if UP
+            UPXDocument document = new UPXDocument(text);
+#else
             XDocument document = XDocument.Parse(text);
+#endif
             return document.Element("buffs").Elements("buff").Select(e =>
                 {
                     return new ResBuffData
@@ -117,7 +146,11 @@ namespace Nebula.Client.Res
 
         public static Dictionary<string, string> LoadStrings(string xml)
         {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             return document.Element("strings").Elements("string").Select(e =>
                 {
                     string key = e.Attribute("key").Value;

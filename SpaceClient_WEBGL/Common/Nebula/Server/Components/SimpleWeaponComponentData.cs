@@ -1,8 +1,11 @@
 ﻿using Common;
-using System.Xml.Linq;
-using System;
 using ExitGames.Client.Photon;
 using ServerClientCommon;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class SimpleWeaponComponentData : MultiComponentData, IDatabaseComponentData{
@@ -13,6 +16,18 @@ namespace Nebula.Server.Components {
         public bool useTargetHPForDamage { get; private set; }
         public float targetHPPercentDamage { get; private set; }
 
+#if UP
+        public SimpleWeaponComponentData(UPXElement e) {
+            optimalDistance = e.GetFloat("optimal_distance");
+            damage = e.GetFloat("damage");
+            cooldown = e.GetFloat("cooldown");
+
+            if (e.HasAttribute("use_target_hp"))
+                useTargetHPForDamage = e.GetBool("use_target_hp");
+            if (e.HasAttribute("target_hp_percent"))
+                targetHPPercentDamage = e.GetFloat("target_hp_percent");
+        }
+#else
         public SimpleWeaponComponentData(XElement e) {
             optimalDistance = e.GetFloat("optimal_distance");
             damage = e.GetFloat("damage");
@@ -23,7 +38,7 @@ namespace Nebula.Server.Components {
             if(e.HasAttribute("target_hp_percent"))
                 targetHPPercentDamage = e.GetFloat("target_hp_percent");
         }
-
+#endif
         public SimpleWeaponComponentData(float optimalDistance, float damage, float cooldown, bool useTargetHPForDamage, float targetHPPercentDamage) {
             this.optimalDistance = optimalDistance;
             this.damage = damage;

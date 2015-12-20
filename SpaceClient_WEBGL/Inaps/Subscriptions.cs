@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿/*
+using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Inaps {
     public class Subscriptions {
@@ -8,7 +13,11 @@ namespace Nebula.Client.Inaps {
         public Dictionary<string, SubscriptionItem> subscriptions { get; private set; }
 
         public void Load(string xml) {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             if (subscriptions == null) {
                 subscriptions = new Dictionary<string, SubscriptionItem>();
             }
@@ -43,3 +52,4 @@ namespace Nebula.Client.Inaps {
         }
     }
 }
+*/

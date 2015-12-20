@@ -9,6 +9,7 @@ namespace Nebula.Client.Inventory.Objects {
     using ServerClientCommon;
     using ExitGames.Client.Photon;
     using Utils;
+    using global::Common;
 
     public class DrillSchemeObjectInfo : IInventoryObjectInfo {
         private string id;

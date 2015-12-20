@@ -1,7 +1,11 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 using Common;
 
 namespace Nebula.Client.Res {
@@ -10,7 +14,11 @@ namespace Nebula.Client.Res {
         public Dictionary<string, string> prefabs { get; private set; }
 
         public void Load(string xml) {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             prefabs = document.Element("prefabs").Elements("prefab").Select(prefabElement => {
                 string id = prefabElement.GetString("id");
                 string path = prefabElement.GetString("path");

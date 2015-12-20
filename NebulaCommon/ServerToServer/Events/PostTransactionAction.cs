@@ -11,8 +11,8 @@ namespace NebulaCommon.ServerToServer.Events {
         RemoveMailAttachment,
         PutItemsToAttachment,
         BuyStoreItem,
-        DecreasePasses,
-        IncreasePasses,
+        //DecreasePasses,
+        //IncreasePasses,
         WithdrawFromBank,
         AddToBank,
         RemovePvpPoints

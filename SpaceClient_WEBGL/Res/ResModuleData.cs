@@ -3,6 +3,7 @@
 namespace Nebula.Client.Res
 {
     using Common;
+    using global::Common;
     using System.Collections.Generic;
 
     public class ResModuleData

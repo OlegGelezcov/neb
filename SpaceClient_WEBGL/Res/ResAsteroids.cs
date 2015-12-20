@@ -1,7 +1,11 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Res {
     public class ResAsteroids {
@@ -10,7 +14,11 @@ namespace Nebula.Client.Res {
 
         public void Load(string xml) {
             mAsteroids.Clear();
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             mAsteroids = document.Element("asteroids").Elements("asteroid").Select(e => {
                 AsteroidData data = new AsteroidData(e);
                 return data;

@@ -7,7 +7,7 @@
     <ProjectGuid>{A629D298-9994-402B-9A47-4C35D567AE78}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NebulaEnums</RootNamespace>
+    <RootNamespace>Nebula.Common</RootNamespace>
     <AssemblyName>NebulaEnums</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -63,6 +63,7 @@
     <Compile Include="LogicErrorCode.cs" />
     <Compile Include="LoginEventCode.cs" />
     <Compile Include="LoginReturnCode.cs" />
+    <Compile Include="LoginMethod.cs" />
     <Compile Include="MailMessageSenderReceiverType.cs" />
     <Compile Include="MaterialType.cs" />
     <Compile Include="ModuleSetBonusType.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Race.cs" />
     <Compile Include="RaceCommandKey.cs" />
     <Compile Include="RaceStatus.cs" />
+    <Compile Include="RegexUtilities.cs" />
     <Compile Include="ReturnCode.cs" />
     <Compile Include="RPCErrorCode.cs" />
     <Compile Include="SaveProperties.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="ShipModelSlotType.cs" />
     <Compile Include="SkillType.cs" />
     <Compile Include="SPC.cs" />
+    <Compile Include="StringChiper.cs" />
     <Compile Include="TagType.cs" />
     <Compile Include="WeaponChargeType.cs" />
     <Compile Include="WeaponDamageType.cs" />

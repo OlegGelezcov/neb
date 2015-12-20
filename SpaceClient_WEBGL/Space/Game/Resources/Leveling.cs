@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Xml.Linq;
 using Common;
 using System.IO;
 using GameMath;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Space.Game.Resources
 {
@@ -17,16 +21,36 @@ namespace Space.Game.Resources
         public void Load(string basePath)
         {
             string fullPath = Path.Combine(basePath, "Data/leveling.xml");
+#if UP
+            UPXDocument document = new UPXDocument();
+            document.LoadFromFile(fullPath);
+#else
             XDocument document = XDocument.Load(fullPath);
+#endif
             this.LoadFromDocument(document);
         }
 
         public void LoadFromXmlText(string xml)
         {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
             this.LoadFromDocument(document);
         }
-
+#if UP
+        private void LoadFromDocument(UPXDocument document) {
+            this.levelExpDictionary.Clear();
+            this.levelCap = document.Element("leveling").Attribute("level_cap").ToInt();
+            this.levelExpDictionary = document.Element("leveling").Elements("data").Select(e =>
+            {
+                int level = e.Attribute("level").ToInt();
+                int expForLevel = e.Attribute("exp_for_level").ToInt();
+                return new { Level = level, ExpForLevel = expForLevel };
+            }).ToDictionary(obj => obj.Level, obj => obj.ExpForLevel);
+        }
+#else
         private void LoadFromDocument(XDocument document)
         {
             this.levelExpDictionary.Clear();
@@ -38,7 +62,7 @@ namespace Space.Game.Resources
                     return new { Level = level, ExpForLevel = expForLevel };
                 }).ToDictionary(obj => obj.Level, obj => obj.ExpForLevel);
         }
-
+#endif
 
 
         public int LevelForExp(int exp)

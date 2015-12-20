@@ -7,7 +7,7 @@ namespace NebulaCommon {
     public enum TransactionSource : byte {
         Store,
         Mail,
-        PassManager,
+        //PassManager,
         Bank,
         PvpStore
     }

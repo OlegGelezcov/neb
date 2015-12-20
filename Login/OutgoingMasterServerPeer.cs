@@ -1,16 +1,12 @@
-﻿using Photon.SocketServer.ServerToServer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Photon.SocketServer;
-using PhotonHostRuntimeInterfaces;
+﻿using Common;
 using ExitGames.Logging;
-using NebulaCommon.ServerToServer.Operations;
 using NebulaCommon;
+using NebulaCommon.ServerToServer.Operations;
+using Photon.SocketServer;
+using Photon.SocketServer.ServerToServer;
+using PhotonHostRuntimeInterfaces;
+using System;
 using System.Net;
-using Common;
-using NebulaCommon.ServerToServer.Events;
 
 namespace Login {
     public class OutgoingMasterServerPeer : ServerPeerBase {
@@ -74,6 +70,9 @@ namespace Login {
 
 
         protected override void OnEvent(IEventData eventData, SendParameters sendParameters) {
+
+            //S2S operations with passes not applicable more
+            /*
             try {
                 switch((S2SEventCode)eventData.Code) {
                     case S2SEventCode.GETInventoryItemEnd:
@@ -114,7 +113,7 @@ namespace Login {
             } catch(Exception exception) {
                 log.InfoFormat(exception.Message);
                 log.InfoFormat(exception.StackTrace);
-            }
+            }*/
         }
 
         protected override void OnOperationRequest(OperationRequest operationRequest, SendParameters sendParameters) {

@@ -4,6 +4,7 @@ namespace Nebula.Server.Components {
     using System.Xml.Linq;
     using System;
     using System.Collections;
+    using global::Common;
 
     public class TargetComponentData : ComponentData, IDatabaseComponentData {
         public TargetComponentData(XElement e) {

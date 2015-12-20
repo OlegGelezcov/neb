@@ -1,8 +1,12 @@
 ﻿using Common;
 using System;
-using System.Xml.Linq;
 using ExitGames.Client.Photon;
 using ServerClientCommon;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class BotCharacterComponentData : MultiComponentData, IDatabaseComponentData {
@@ -11,11 +15,19 @@ namespace Nebula.Server.Components {
         public int level { get; private set; }
         public FractionType fraction { get; private set; }
 
+#if UP
+        public BotCharacterComponentData(UPXElement e) {
+            workshop = (Workshop)Enum.Parse(typeof(Workshop), e.GetString("workshop"));
+            level = e.GetInt("level");
+            fraction = (FractionType)Enum.Parse(typeof(FractionType), e.GetString("fraction"));
+        }
+#else
         public BotCharacterComponentData(XElement e) {
             workshop = (Workshop)Enum.Parse(typeof(Workshop), e.GetString("workshop"));
             level = e.GetInt("level");
             fraction = (FractionType)Enum.Parse(typeof(FractionType), e.GetString("fraction"));
         }
+#endif
 
         public BotCharacterComponentData(Workshop workshop, int level, FractionType fraction) {
             this.workshop = workshop;

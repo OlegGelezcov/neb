@@ -1,8 +1,11 @@
 ﻿using Common;
 using ServerClientCommon;
 using ExitGames.Client.Photon;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
-using System;
+#endif
 
 namespace Nebula.Server.Components {
     public class PersonalBeaconComponentData : MultiComponentData, IDatabaseComponentData {
@@ -21,10 +24,15 @@ namespace Nebula.Server.Components {
             }
         }
 
+#if UP
+        public PersonalBeaconComponentData(UPXElement element) {
+            time = element.GetFloat("time");
+        }
+#else
         public PersonalBeaconComponentData(XElement element) {
             time = element.GetFloat("time");
         }
-
+#endif
         public PersonalBeaconComponentData(float time) {
             this.time = time;
         }

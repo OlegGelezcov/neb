@@ -14,6 +14,15 @@ namespace Login.Operations {
         [DataMember(Code =(byte)ParameterCode.Login)]
         public string Login { get; set; }
 
+        [DataMember(Code = (byte)ParameterCode.FacebookId)]
+        public string facebookId { get; set; }
+
+        [DataMember(Code = (byte)ParameterCode.VkontakteId)]
+        public string vkontakteId { get; set; }
+
+        [DataMember(Code = (byte)ParameterCode.Method)]
+        public byte method { get; set; }
+
         [DataMember(Code =(byte)ParameterCode.Status)]
         public int returnCode { get; set; }
 

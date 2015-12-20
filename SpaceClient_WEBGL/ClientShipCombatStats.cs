@@ -9,6 +9,7 @@ namespace Nebula.Client {
     using ServerClientCommon;
     using ExitGames.Client.Photon;
     using Utils;
+    using global::Common;
 
     public class ClientShipCombatStats : IInfoParser {
         public float maxHealth { get; private set; }

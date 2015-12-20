@@ -1,16 +1,25 @@
 ﻿using Common;
-using System.Xml.Linq;
-using System;
 using ExitGames.Client.Photon;
 using ServerClientCommon;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Nebula.Server.Components {
     public class SimpleMovableComponentData : MultiComponentData, IDatabaseComponentData {
         public float speed { get; private set; }
+
+#if UP
+        public SimpleMovableComponentData(UPXElement componentElement) {
+            speed = componentElement.GetFloat("speed");
+        }
+#else
         public SimpleMovableComponentData(XElement componentElement) {
             speed = componentElement.GetFloat("speed");
         }
-
+#endif
         public SimpleMovableComponentData(float speed) {
             this.speed = speed;
         }

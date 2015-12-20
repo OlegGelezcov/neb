@@ -6,7 +6,11 @@
 //
 using System.Collections.Generic;
 using System.Linq;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Res {
     public class SubZoneWorldCollection {
@@ -15,7 +19,11 @@ namespace Nebula.Client.Res {
 
         public void Load(string xmlText ) {
             mConnections.Clear();
+#if UP
+            UPXDocument document = new UPXDocument(xmlText);
+#else
             XDocument document = XDocument.Parse(xmlText);
+#endif
             mConnections = document.Element("subzones").Elements("subzone").Select(element => {
                 return new SubZoneWorldConnection(element);
             }).ToDictionary(s => s.subZone, s => s);

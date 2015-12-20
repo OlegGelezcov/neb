@@ -1,15 +1,23 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using Common;
+#if UP
+using Nebula.Client.UP;
+#else
+using System.Xml.Linq;
+#endif
 
 namespace Nebula.Client.Res {
     public class ResGameEvents {
         public Dictionary<string, Dictionary<string, ResGameEventData>> eventCaches { get; private set; }
 
         public Dictionary<string, Dictionary<string, ResGameEventData>> LoadFile(string xml) {
+#if UP
+            UPXDocument document = new UPXDocument(xml);
+#else
             XDocument document = XDocument.Parse(xml);
+#endif
 
             return document.Element("zones").Elements("zone").Select(zoneElement => {
                 string zoneId = zoneElement.GetString("id");

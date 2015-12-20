@@ -3,7 +3,12 @@ using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+#if UP
+using System.Xml;
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 using GameMath;
 using System.Globalization;
 
@@ -353,6 +358,17 @@ namespace Common {
             return arr[rIndex];
         }
 
+#if UP
+        public static int ToInt(this XmlAttribute attr) {
+            return int.Parse(attr.Value);
+        }
+        public static float ToFloat(this XmlAttribute attr) {
+            return float.Parse(attr.Value, System.Globalization.CultureInfo.InvariantCulture);
+        }
+        public static bool ToBool(this XmlAttribute attr) {
+            return bool.Parse(attr.Value);
+        }
+#else
         public static int ToInt(this XAttribute attr) {
             return int.Parse(attr.Value);
         }
@@ -364,6 +380,7 @@ namespace Common {
         public static bool ToBool(this XAttribute attr) {
             return bool.Parse(attr.Value);
         }
+#endif
 
         public static float[] RandomizeInRadius(this float[] center, float radius) {
             float val = Rand.Float(radius);
@@ -430,7 +447,7 @@ namespace Common {
         }
 
 
-        #region Public Methods
+#region Public Methods
 
         /// <summary>
         ///   Converts a <see cref = "Vector" /> to a float array.
@@ -547,10 +564,60 @@ namespace Common {
 
         #endregion
 
+#if UP
+        public static float GetFloat(this UPXElement element, string name) {
+            return element.GetAttributeFloat(name);
+        }
+        public static float[] GetFloatArray(this UPXElement element, string name) {
+            string arrStr = element.GetAttributeString(name);
+            string[] arr = arrStr.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (arr.Length == 0) {
+                return new float[] { 0, 0, 0 };
+            } else if (arr.Length == 1) {
+                return new float[] { float.Parse(arr[0], CultureInfo.InvariantCulture), 0, 0 };
+            } else if (arr.Length == 2) {
+                return new float[] { float.Parse(arr[0], CultureInfo.InvariantCulture), float.Parse(arr[1], CultureInfo.InvariantCulture), 0 };
+            } else {
+                return new float[]
+                {
+                    float.Parse(arr[0], CultureInfo.InvariantCulture),
+                    float.Parse(arr[1], CultureInfo.InvariantCulture),
+                    float.Parse(arr[2], CultureInfo.InvariantCulture)
+                };
+            }
+        }
+
+        public static List<Vector3> ToVector3List(this UPXElement element, string name) {
+            string source = element.GetAttributeString(name);
+            List<Vector3> result = new List<Vector3>();
+            string[] sourceArr = source.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string s in sourceArr) {
+                result.Add(s.ToFloatArray3().ToVector3());
+            }
+            return result;
+        }
+        public static T GetEnum<T>(this UPXElement e, string name) {
+            return (T)System.Enum.Parse(typeof(T), e.GetAttributeString(name));
+        }
+
+        public static int GetInt(this UPXElement e, string name) {
+            return e.GetAttributeInt(name);
+        }
+        public static string GetString(this UPXElement e, string name) {
+            return e.GetAttributeString(name);
+        }
+        public static bool GetBool(this UPXElement e, string name) {
+            return e.GetAttributeBool(name);
+        }
+        public static bool HasAttribute(this UPXElement element, string name) {
+            return element.HasAtt(name);
+        }
+#else
 
         public static float GetFloat(this XElement element, string name) {
             return float.Parse(element.Attribute(name).Value, CultureInfo.InvariantCulture);
         }
+
 
 
         public static float[] GetFloatArray(this XElement element, string name) {
@@ -572,6 +639,7 @@ namespace Common {
             }
         }
 
+
         public static List<Vector3> ToVector3List(this XElement element, string name) {
             List<Vector3> result = new List<Vector3>();
             string source = element.GetString(name);
@@ -582,9 +650,12 @@ namespace Common {
             return result;
         }
 
+
         public static T GetEnum<T>(this XElement e, string name) {
             return (T)System.Enum.Parse(typeof(T), e.Attribute(name).Value);
         }
+
+
 
         public static int GetInt(this XElement e, string name) {
             return int.Parse(e.Attribute(name).Value);
@@ -605,7 +676,7 @@ namespace Common {
             }
             return false;
         }
-
+#endif
 
 
         public static void AddVector3(this float[] arr, Vector3 vec) {

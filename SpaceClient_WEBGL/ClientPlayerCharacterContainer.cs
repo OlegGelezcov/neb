@@ -5,7 +5,6 @@
     using ExitGames.Client.Photon;
     using ServerClientCommon;
 
-
     public class ClientPlayerCharactersContainer : IInfoParser {
 
         public string GameRefId { get; private set; }
@@ -21,6 +20,48 @@
 
         public ClientPlayerCharactersContainer(Hashtable info) {
             ParseInfo(info);
+        }
+
+        public ClientPlayerCharactersContainer(string json ) {
+            Dictionary<string, object> charDict = MiniJSON.Json.Deserialize(json) as Dictionary<string, object>;
+            if(charDict != null ) {
+                if(charDict.ContainsKey("GameRefId")) {
+                    object objGameRef = charDict["GameRefId"];
+                    if(objGameRef != null ) {
+                        GameRefId = objGameRef.ToString();
+                    } else {
+                        GameRefId = string.Empty;
+                    }
+                } else {
+                    GameRefId = string.Empty;
+                }
+
+                if(charDict.ContainsKey("SelectedCharacterId")) {
+                    object objSelCharacter = charDict["SelectedCharacterId"];
+                    if(objSelCharacter != null ) {
+                        SelectedCharacterId = objSelCharacter.ToString();
+                    } else {
+                        SelectedCharacterId = string.Empty;
+                    }
+                } else {
+                    SelectedCharacterId = string.Empty;
+                }
+
+                Characters = new List<ClientPlayerCharacter>();
+                if(charDict.ContainsKey("Characters")) {
+                    List<object> objCharacterList = charDict["Characters"] as List<object>;
+                    if(objCharacterList != null ) {
+                        foreach(var cObj in objCharacterList ) {
+                            Dictionary<string, object> singleCharacterDict = cObj as Dictionary<string, object>;
+                            if(singleCharacterDict != null ) {
+                                Characters.Add(new ClientPlayerCharacter(singleCharacterDict));
+                            }
+                        }
+                    }
+                }
+            }
+
+
         }
 
         public void ParseInfo(Hashtable info) {

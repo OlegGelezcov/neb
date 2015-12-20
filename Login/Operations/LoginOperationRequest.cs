@@ -16,11 +16,13 @@ namespace Login.Operations {
         [DataMember(Code =(byte)ParameterCode.Password, IsOptional =false)]
         public string encryptedPassword { get; set; }
 
-        public void Prepare() {
-            if(login != null ) {
-                login = login.ToLower();
-            }
-        }
+        [DataMember(Code =(byte)ParameterCode.FacebookId, IsOptional = false)]
+        public string facebookId { get; private set; }
 
+        [DataMember(Code = (byte)ParameterCode.VkontakteId, IsOptional = false)]
+        public string vkontakteId { get; private set; }
+
+        [DataMember(Code = (byte)ParameterCode.Method, IsOptional = false)]
+        public byte method { get; private set; }
     }
 }

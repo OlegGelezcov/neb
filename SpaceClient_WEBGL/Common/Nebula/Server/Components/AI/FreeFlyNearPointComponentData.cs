@@ -1,6 +1,10 @@
 ﻿using Common;
 using System;
+#if UP
+using Nebula.Client.UP;
+#else
 using System.Xml.Linq;
+#endif
 using ExitGames.Client.Photon;
 using ServerClientCommon;
 
@@ -10,10 +14,17 @@ namespace Nebula.Server.Components {
         public float radius { get; private set; }
         public AttackMovingType battleMovingType { get; private set; }
 
+#if UP
+        public FreeFlyNearPointComponentData(UPXElement e) : base(e) {
+            radius = e.GetFloat("radius");
+            battleMovingType = (AttackMovingType)Enum.Parse(typeof(AttackMovingType), e.GetString("attack_moving_type"));
+        }
+#else
         public FreeFlyNearPointComponentData(XElement e) : base(e) {
             radius = e.GetFloat("radius");
             battleMovingType = (AttackMovingType)Enum.Parse(typeof(AttackMovingType), e.GetString("attack_moving_type"));
         }
+#endif
 
         public FreeFlyNearPointComponentData(bool inAlignWithForwardDirection, float inRotationSpeed, float radius, AttackMovingType battleMovingType, bool useHitProbForAgro = false)
             : base(inAlignWithForwardDirection, inRotationSpeed, useHitProbForAgro) {

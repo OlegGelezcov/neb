@@ -1,10 +1,9 @@
 ﻿using Common;
 using ExitGames.Logging;
 using Login.OperationHandlers;
-using Login.Operations;
+using Nebula.Server.Login;
 using Photon.SocketServer;
 using PhotonHostRuntimeInterfaces;
-using ServerClientCommon;
 using System.Collections.Generic;
 
 namespace Login {
@@ -12,7 +11,7 @@ namespace Login {
 
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
         private LoginApplication application;
-        public string login { get; private set; } = string.Empty;
+        public LoginId login { get; private set; }
 
         private readonly Dictionary<OperationCode, BaseOperationHandler> mOperationHandlers;
 
@@ -28,10 +27,10 @@ namespace Login {
             mOperationHandlers.Add(OperationCode.Login, new LoginOperationHandler(application, this));
             mOperationHandlers.Add(OperationCode.GetUsersOnline, new GetUsersOnlineHandler(application, this));
             mOperationHandlers.Add(OperationCode.RegisterUser, new RegisterUserHandler(application, this));
-            mOperationHandlers.Add(OperationCode.GetUserPasses, new GetUserPassesOperationHandler(application, this));
+            //mOperationHandlers.Add(OperationCode.GetUserPasses, new GetUserPassesOperationHandler(application, this));
             mOperationHandlers.Add(OperationCode.RecoverUser, new RecoverUserOperationHandler(application, this));
-            mOperationHandlers.Add(OperationCode.UsePass, new UsePassOperationHandler(application, this));
-            mOperationHandlers.Add(OperationCode.AddPass, new AddPassOperationHandler(application, this));
+            //mOperationHandlers.Add(OperationCode.UsePass, new UsePassOperationHandler(application, this));
+            //mOperationHandlers.Add(OperationCode.AddPass, new AddPassOperationHandler(application, this));
             mOperationHandlers.Add(OperationCode.ExecAction, new InvokeMethodOperationHandler(application, this));
         }
 
