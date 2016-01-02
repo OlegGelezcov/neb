@@ -139,6 +139,15 @@
 
             dropLists = new DropListCollection();
             dropLists.Load(Path.Combine(basePath, "Data/Drop/drop_lists.xml"));
+
+            petParameters = new PetParameters();
+            petParameters.Load(Path.Combine(basePath, "Data/pets.xml"));
+
+        }
+
+        public PetParameters petParameters {
+            get;
+            private set;
         }
 
         public DropListCollection dropLists {

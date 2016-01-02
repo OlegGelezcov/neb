@@ -4,6 +4,7 @@
     using System;
     using ExitGames.Client.Photon;
     using ServerClientCommon;
+    using global::Common;
 
     public class ClientPlayerCharactersContainer : IInfoParser {
 

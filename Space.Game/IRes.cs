@@ -64,6 +64,8 @@ namespace Space.Game {
         ColorListCollection colorLists { get; }
 
         DropListCollection dropLists { get; }
+
+        PetParameters petParameters { get; }
     }
 
 }
