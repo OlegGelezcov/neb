@@ -11,9 +11,9 @@ using System.Text;
 namespace Nebula.Database {
     public class WeaponDatabase {
         private static ILogger log = LogManager.GetCurrentClassLogger();
-        private MongoClient DbClient { get; set; }
-        private MongoServer DbServer { get; set; }
-        private MongoDatabase Database { get; set; }
+        //private MongoClient DbClient { get; set; }
+        //private MongoServer DbServer { get; set; }
+        //private MongoDatabase Database { get; set; }
         private MongoCollection<WeaponDocument> WeaponDocuments { get; set; }
 
         private static WeaponDatabase s_Instance = null;
@@ -21,17 +21,17 @@ namespace Nebula.Database {
         public static WeaponDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new WeaponDatabase(GameApplication.Instance.databaseConnectionString);
+                    s_Instance = new WeaponDatabase();
                 }
                 return s_Instance;
             }
         }
 
-        private WeaponDatabase(string connectionString) {
-            DbClient = new MongoClient(connectionString);
-            DbServer = DbClient.GetServer();
-            Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            WeaponDocuments = Database.GetCollection<WeaponDocument>(GameServerSettings.Default.DatabaseWeaponCollectionName);
+        private WeaponDatabase() {
+            //DbClient = new MongoClient(connectionString);
+            //DbServer = DbClient.GetServer();
+            //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            WeaponDocuments = GameApplication.Instance.defaultDatabase.GetCollection<WeaponDocument>(GameServerSettings.Default.DatabaseWeaponCollectionName);
         }
 
         public void SaveWeapon(string characterID, ShipWeaponSave weaponSave) {

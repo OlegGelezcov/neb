@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-
-namespace Common
-{
+﻿namespace Common {
     public enum InventoryObjectType : byte
     {
         Weapon,
@@ -24,6 +17,11 @@ namespace Common
         outpost,
         mining_station,
         nebula_element,
+        exp_boost,
+        loot_box,
+        resource,
+        pet_scheme,
+        pet
         //pass elenment
         //pass
     }

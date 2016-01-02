@@ -6,6 +6,7 @@
 //
 using ExitGames.Logging;
 using Nebula.Server.Login;
+using Photon.SocketServer;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -68,6 +69,22 @@ namespace Login {
                 foreach (var k in keys) {
                     log.InfoFormat("delete not valid user = {0} [red]", k);
                     Remove(k);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Send event to client with game ref
+        /// </summary>
+        /// <param name="gameRef">Game ref of player</param>
+        /// <param name="eventData">Event data passed to player</param>
+        public void SendEvent(GameRefId gameRef, EventData eventData ) {
+            lock(syncRoot) {
+                foreach(var client in this ) {
+                    if(client.Value.auth.gameRef == gameRef.value ) {
+                        client.Value.SendEvent(eventData);
+                        break;
+                    }
                 }
             }
         }

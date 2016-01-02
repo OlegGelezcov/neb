@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using Common;
-using System.Linq;
-using System.Collections;
+﻿using Common;
+using Nebula.Game.Components;
+using Nebula.Inventory;
+using ServerClientCommon;
 using Space.Game.Drop;
 using Space.Game.Inventory.Objects;
 using Space.Game.Ship;
-using ServerClientCommon;
-using Nebula.Game.Components;
+using System;
+using System.Collections;
 using System.Collections.Concurrent;
-using Nebula.Inventory.Objects;
-using Nebula.Inventory;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Space.Game.Inventory
-{
+namespace Space.Game.Inventory {
     public class ServerInventory : Common.Inventory<ServerInventoryItem, IInventoryObject>, IInfo
     {
 
@@ -183,6 +181,32 @@ namespace Space.Game.Inventory
                 }
             }
             return counter;
+        }
+
+        public bool HasSlotsForItems(List<string> items) {
+            int counter = 0;
+            foreach(var itemId in items ) {
+                if(!HasItem(itemId)) {
+                    counter++;
+                }
+            }
+            return (counter <= FreeSlots);
+        }
+
+
+        public int NumSlotsForItems(List<string> items ) {
+            int counter = 0;
+            foreach (var itemId in items) {
+                if (!HasItem(itemId)) {
+                    counter++;
+                }
+            }
+
+            int diff = counter - FreeSlots;
+            if(diff < 0 ) {
+                diff = 0;
+            }
+            return diff;
         }
 
         public bool EnoughSpace(Dictionary<string, InventoryObjectType> ids) {

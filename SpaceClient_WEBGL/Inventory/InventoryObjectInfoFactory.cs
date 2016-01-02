@@ -58,7 +58,10 @@ namespace Nebula.Client.Inventory {
                         return new TurretInventoryObjectInfo(info);
                     case InventoryObjectType.nebula_element:
                         return new NebulaElementObjectInfo(info);
-
+                    case InventoryObjectType.exp_boost:
+                        return new ExpBoostObjectInfo(info);
+                    case InventoryObjectType.loot_box:
+                        return new LootBoxObjectInfo(info);
                     //case InventoryObjectType.pass:
                         //return new PassInventoryObjectInfo(info);
                     //case InventoryObjectType.credits:

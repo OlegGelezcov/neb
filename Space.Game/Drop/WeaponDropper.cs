@@ -56,35 +56,39 @@ namespace Space.Game.Drop
             return DropWeapon();
         }
 
-        public WeaponObject DropWeapon() {
-
-            ColorInfo colorInfo = SelectColor(dropParams.resource);
-
+        public WeaponObject DropWeapon(ColorInfo colorInfo) {
             WeaponData data = dropParams.resource.RandomWeapon(dropParams.workshop);
-            if(data == null ) {
+            if (data == null) {
                 throw new Exception("not found weapon data");
             }
 
             WeaponWorkshopSetting setting;
-            if(!dropParams.resource.WeaponSettings.TryGetSetting(dropParams.workshop, out setting)) {
+            if (!dropParams.resource.WeaponSettings.TryGetSetting(dropParams.workshop, out setting)) {
                 throw new Exception("Not found weapon settings");
             }
 
             int[] points = Rand.GenerateNumbers(2, 10);
 
-            float damage = BalanceFormulas.ComputeWeaponDAMAGE(colorInfo.factor, setting.base_damage, setting.base_damage_factor, 
+            float damage = BalanceFormulas.ComputeWeaponDAMAGE(colorInfo.factor, setting.base_damage, setting.base_damage_factor,
                 dropParams.level, points[0], setting.damage_points_value, setting.damage_points_factor) * mDmgDiff[dropParams.difficulty];
 
             float distance = BalanceFormulas.ComputeWeaponOPTIMALDISTANCE(colorInfo.factor, setting.base_optimal_distance, setting.base_optimal_distance_factor,
                 dropParams.level, points[1], setting.optimal_distance_points_value, setting.optimal_distance_points_factor);
 
             float critChance = 0f;
-            if(colorInfo.isBetterThanWhite) {
+            if (colorInfo.isBetterThanWhite) {
                 critChance = colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10);
             }
 
-            return new WeaponObject(Guid.NewGuid().ToString(), 
+            return new WeaponObject(Guid.NewGuid().ToString(),
                 data.Id, dropParams.level, damage, distance, colorInfo.color, dropParams.damageType, critChance, (int)(byte)dropParams.workshop);
+        }
+
+        public WeaponObject DropWeapon() {
+
+            ColorInfo colorInfo = SelectColor(dropParams.resource);
+            return DropWeapon(colorInfo);
+
         }
 
         private ColorInfo SelectColor(IRes resource) {

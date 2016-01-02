@@ -43,7 +43,13 @@ namespace Space.Game {
             {
                 case PlayerState.Idle:
                     {
-                        Player.GetComponent<AIState>().SetControlState((PlayerState)state);
+                        //if we setup shift - remove it first
+                        var ai = Player.GetComponent<AIState>();
+                        if(ai.shiftState.keyPressed) {
+                            ai.shiftState.OnKeyUp();
+                        }
+                        //and set idle state after this
+                        ai.SetControlState((PlayerState)state);
                     }
                     break;
                 case PlayerState.JumpToTarget:
@@ -1891,5 +1897,156 @@ namespace Space.Game {
             }
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError } };
         }
+
+        public Hashtable AddTimedEffect() {
+            ExpTimedEffect timedEffect = new ExpTimedEffect(1, (int)(CommonUtils.SecondsFrom1970() + 600), 1);
+            Player.GetComponent<PlayerTimedEffects>().AddTimedEffect(timedEffect);
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+            };
+        }
+
+        /// <summary>
+        /// Test RPC method, add some boost object to player inventory
+        /// </summary>
+        /// <returns></returns>
+        public Hashtable AddExpBoost() {
+            ExpBoostObject expObject = new ExpBoostObject("ginp0011", 1, 1200, 1);
+            if(Player.Inventory.HasSlotsForItems(new List<string> { expObject.Id })) {
+                Player.Inventory.Add(expObject, 1);
+                Player.EventOnInventoryUpdated();
+
+                return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
+            }
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError }
+            };
+        }
+
+        private ServerInventory GetInventory(byte inventoryType) {
+            ServerInventory serverInventory = null;
+            switch ((InventoryType)inventoryType) {
+                case InventoryType.ship: {
+                        serverInventory = Player.Inventory;
+                    }
+                    break;
+                case InventoryType.station: {
+                        serverInventory = Player.Station.StationInventory;
+                    }
+                    break;
+            }
+            return serverInventory;
+        }
+
+        public Hashtable UseLootBoxObject(byte inventoryType, string itemId ) {
+            ServerInventory serverInventory = GetInventory(inventoryType);
+            if(serverInventory == null ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.InvalidInventoryType }
+                };
+            }
+            ServerInventoryItem item;
+            if (!serverInventory.TryGetItem(InventoryObjectType.loot_box, itemId, out item)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.ItemNotFound }
+                };
+            }
+            LootBoxObject lootBoxObject = item.Object as LootBoxObject;
+            if(lootBoxObject == null ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.ObjectNotFound }
+                };
+            }
+
+            int level = Player.nebulaObject.Character().level;
+            Workshop workshop = (Workshop)Player.nebulaObject.Character().workshop;
+
+            Nebula.Drop.DropList dropList = Player.resource.dropLists.GetList(lootBoxObject.dropList);
+
+            if(dropList == null ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.DropListNotFound}
+                };
+            }
+
+            List<ServerInventoryItem> resultItems = dropList.Roll(Player.resource, level, workshop);
+            List<string> ids = resultItems.Select(it => it.Object.Id).ToList();
+
+            if (false == serverInventory.HasSlotsForItems( ids )) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.NeedFreeSlots },
+                    { (int)SPC.Count, serverInventory.NumSlotsForItems(ids) }
+                };
+            }
+
+            serverInventory.Remove(InventoryObjectType.loot_box, itemId, 1);
+
+            foreach(ServerInventoryItem newItem in resultItems ) {
+                serverInventory.Add(newItem.Object, newItem.Count);
+            }
+
+            object[] newItems = new object[resultItems.Count];
+            for(int i = 0; i < resultItems.Count; i++ ) {
+                newItems[i] = resultItems[i].GetInfo();
+            }
+
+            InventoryType invType = (InventoryType)inventoryType;
+
+            if (invType == InventoryType.ship) {
+                Player.EventOnInventoryUpdated();
+            } else if (invType == InventoryType.station) {
+                Player.EventOnStationHoldUpdated();
+            }
+
+            return new Hashtable {
+                {(int)SPC.ReturnCode, RPCErrorCode.Ok },
+                {(int)SPC.Items, newItems }
+            };
+        }
+
+        public Hashtable UseExpBoostObject(byte inventoryType, string itemId  ) {
+
+            ServerInventory serverInventory = GetInventory(inventoryType);
+
+            if(serverInventory == null ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.InvalidInventoryType }
+                };
+            }
+
+            ServerInventoryItem item;
+            if( !serverInventory.TryGetItem(InventoryObjectType.exp_boost, itemId, out item) ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.ItemNotFound }
+                };
+            }
+
+            ExpBoostObject expObject = item.Object as ExpBoostObject;
+
+            if(expObject == null ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.ObjectNotFound }
+                };
+            }
+
+            ExpTimedEffect expEffect = new ExpTimedEffect(expObject.value, CommonUtils.SecondsFrom1970() + expObject.interval, expObject.tag);
+            Player.GetComponent<PlayerTimedEffects>().AddTimedEffect(expEffect);
+            serverInventory.Remove(InventoryObjectType.exp_boost, itemId, 1);
+
+            InventoryType invType = (InventoryType)inventoryType;
+
+            if (invType == InventoryType.ship) {
+                Player.EventOnInventoryUpdated();
+            } else if(invType == InventoryType.station ) {
+                Player.EventOnStationHoldUpdated();
+            }
+
+            return new Hashtable {
+                {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                {(int)SPC.Interval, expObject.interval },
+                {(int)SPC.Value, expObject.value },
+                {(int)SPC.Tag, expObject.tag }
+            };
+        } 
     }
 }

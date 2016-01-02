@@ -11,6 +11,7 @@
         whisper,
         //local message don't handled by server
         local,
+        //send message to all race
         race
     }
 }

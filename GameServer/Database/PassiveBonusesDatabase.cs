@@ -10,9 +10,9 @@ namespace Nebula.Database {
     public class PassiveBonusesDatabase {
         private readonly static ILogger log = LogManager.GetCurrentClassLogger();
 
-        private MongoClient DbClient { get; set; }
-        private MongoServer DbServer { get; set; }
-        private MongoDatabase Database { get; set; }
+        //private MongoClient DbClient { get; set; }
+        //private MongoServer DbServer { get; set; }
+        //private MongoDatabase Database { get; set; }
 
         private MongoCollection<PassiveBonusesDocument> collection { get; set; }
 
@@ -20,17 +20,17 @@ namespace Nebula.Database {
         public static PassiveBonusesDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new PassiveBonusesDatabase(GameApplication.Instance.databaseConnectionString);
+                    s_Instance = new PassiveBonusesDatabase();
                 }
                 return s_Instance;
             }
         }
 
-        public PassiveBonusesDatabase(string connectionString) {
-            DbClient = new MongoClient(connectionString);
-            DbServer = DbClient.GetServer();
-            Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            collection = Database.GetCollection<PassiveBonusesDocument>(GameServerSettings.Default.PassiveBonusesCollectionName);
+        public PassiveBonusesDatabase() {
+            //DbClient = new MongoClient(connectionString);
+            //DbServer = DbClient.GetServer();
+            //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            collection = GameApplication.Instance.defaultDatabase.GetCollection<PassiveBonusesDocument>(GameServerSettings.Default.PassiveBonusesCollectionName);
         }
 
 

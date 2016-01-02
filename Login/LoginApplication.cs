@@ -4,6 +4,7 @@ using ExitGames.Logging;
 using ExitGames.Logging.Log4Net;
 using log4net;
 using log4net.Config;
+using Nebula.Resources.Inaps;
 using Nebula.Server.Login;
 using NebulaCommon;
 using Photon.SocketServer;
@@ -65,6 +66,8 @@ namespace Login {
 
         public LoggedInUserCollection LogedInUsers { get; private set; }
         public DbReader DbUserLogins { get; private set; }
+        public InapManager inaps { get; private set; }
+        public InapCollection inapResource { get; private set; }
 
 
         public LoginApplication() {
@@ -106,6 +109,12 @@ namespace Login {
 
                 serverSettings = new ServerInputsRes();
                 serverSettings.Load(BinaryPath, GameServerSettings.Default.assets.SERVER_INPUTS_FILE);
+
+                inapResource = new InapCollection();
+                inapResource.Load(System.IO.Path.Combine(BinaryPath, "assets/game_inaps.xml"));
+                log.InfoFormat("inaps loaded: {0}", inapResource.inaps.Count);
+
+                inaps = new InapManager(this);
 
                 Protocol.AllowRawCustomValues = true;
                 this.PublicIpAddress = PublicIPAddressReader.ParsePublicIpAddress(GameServerSettings.Default.PublicIPAddress);
@@ -228,6 +237,14 @@ namespace Login {
 
         public DbUserLogin GetUser(VkontakteId vkId ) {
             return DbUserLogins.GetUser(vkId);
+        }
+
+        public DbUserLogin GetUser(GameRefId gameRef  ) {
+            return DbUserLogins.GetUser(gameRef);
+        }
+
+        public void SaveUser(DbUserLogin user) {
+            DbUserLogins.SaveUser(user);
         }
     }
 }

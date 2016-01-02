@@ -708,6 +708,45 @@ namespace Common {
             }
             return 0;
         }
+
+        public static int GetIntParameter(this Dictionary<byte, object> source, ParameterCode key ) {
+            if(source.ContainsKey((byte)key)) {
+                return (int)source[(byte)key];
+            }
+            return 0;
+        }
+
+        public static float GetFloatParameter(this Dictionary<byte, object> source, ParameterCode key) {
+            if(source.ContainsKey((byte)key)) {
+                return (float)source[(byte)key];
+            }
+            return 0f;
+        }
+
+        public static string GetStringParameter(this Dictionary<byte, object> source, ParameterCode key) {
+            if(source.ContainsKey((byte)key)) {
+                return (string)source[(byte)key];
+            }
+            return string.Empty;
+        }
+
+        public static bool GetBoolParameter(this Dictionary<byte, object> source, ParameterCode key) {
+            if(source.ContainsKey((byte)key)) {
+                return (bool)source[(byte)key];
+            }
+            return false;
+        }
+
+        public static Hashtable GetHashParameter(this Dictionary<byte, object> source, ParameterCode key) {
+            if(source.ContainsKey((byte)key)) {
+                Hashtable hash = source[(byte)key] as Hashtable;
+                if(hash == null ) {
+                    hash = new Hashtable();
+                }
+                return hash;
+            }
+            return new Hashtable();
+        }
     }
 
 

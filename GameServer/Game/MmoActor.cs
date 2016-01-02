@@ -8,6 +8,7 @@ namespace Space.Game {
     using Nebula.Game;
     using Nebula.Game.Components;
     using Nebula.Game.OperationHandlers;
+    using Nebula.Game.Pets;
     using NebulaCommon.SelectCharacter;
     using Photon.SocketServer;
     using Photon.SocketServer.Rpc;
@@ -722,6 +723,11 @@ namespace Space.Game {
 
 
         public void Death() {
+
+            log.InfoFormat("MmoActor.Death()...destroying pets");
+
+            GetComponent<PetManager>().DestroyPets();
+
             Avatar.SendEventShipDestroyed(true);
             mTarget.Clear();
             if(!chestCreated) {

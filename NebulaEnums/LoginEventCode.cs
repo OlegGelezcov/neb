@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Common {
     public enum LoginEventCode : byte {
-        PassesUpdate = 1
+        PassesUpdate = 1,
+        InapStatusUpdate = 2,
+        NebulaCreditsUpdate = 3,
+
     }
 }

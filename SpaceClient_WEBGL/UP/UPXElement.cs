@@ -37,6 +37,23 @@ namespace Nebula.Client.UP {
             return string.Empty;
         }
 
+        public string GetString(string name) {
+            return GetAttributeString(name);
+        }
+
+        public int GetInt(string name) {
+            return GetAttributeInt(name);
+        }
+
+
+        public float GetFloat(string name) {
+            return GetAttributeFloat(name);
+        }
+
+        public bool GetBool(string name) {
+            return GetAttributeBool(name);
+        }
+
         public int GetAttributeInt(string name) {
             
             foreach(XmlAttribute attr in mElement.Attributes) {

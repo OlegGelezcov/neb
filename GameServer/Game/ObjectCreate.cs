@@ -15,6 +15,8 @@ using Nebula.Server.Components;
 using Nebula.Game.Components.Activators;
 using System.Collections.Concurrent;
 using Space.Game.Inventory;
+using Nebula.Engine;
+using Nebula.Game.Pets;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -608,15 +610,66 @@ namespace Nebula.Game {
             return chestObject;
         }
 
+        public static GameObject CreatePet(MmoWorld world, NebulaObject owner) {
+            Type[] components = new Type[] {
+                typeof(PetObject),
+                typeof(SimpleWeapon),
+                typeof(ModelComponent),
+                typeof(MmoMessageComponent),
+                typeof(CharacterObject),
+                typeof(NotShipDamagableObject),
+                typeof(PlayerBonuses),
+                typeof(PlayerTarget),
+                typeof(BotObject),
+                //typeof(PlayerSkills),
+                //typeof(ShipEnergyBlock),
+                typeof(RaceableObject),
+                typeof(PetMovable)
+            };
+
+            Vector3 startPosition = owner.transform.position + Rand.UnitVector3() * PetObject.OFFSET_RADIUS;
+
+            GameObject resultObject = new GameObject(
+                startPosition.ToVector(), 
+                new Hashtable(), 
+                Guid.NewGuid().ToString(), 
+                (byte)ItemType.Bot, 
+                world, 
+                new Dictionary<byte, object>(), 
+                1, 
+                owner.subZone, 
+                components
+            );
+
+            var petObject = resultObject.GetComponent<PetObject>();
+            petObject.Init(owner);
+
+            var weaponObject = resultObject.GetComponent<SimpleWeapon>();
+            weaponObject.Init(new SimpleWeaponComponentData(100, 10, 2, false, 0));
+
+            var modelObject = resultObject.GetComponent<ModelComponent>();
+            modelObject.Init(new ModelComponentData("pet"));
+
+            var characterObject = resultObject.GetComponent<CharacterObject>();
+            var ownerCharacter = owner.GetComponent<CharacterObject>();
+            characterObject.Init(new BotCharacterComponentData((Workshop)ownerCharacter.workshop, ownerCharacter.level, (FractionType)ownerCharacter.fraction));
+
+            var damagable = resultObject.GetComponent<NotShipDamagableObject>();
+            damagable.Init(new NotShipDamagableComponentData(1000, true, 60, false));
+
+            var botObject = resultObject.GetComponent<BotObject>();
+            botObject.Init(new BotComponentData(BotItemSubType.Pet));
+
+            var ownerRaceable = owner.GetComponent<RaceableObject>();
+            var raceableObject = resultObject.GetComponent<RaceableObject>();
+            raceableObject.Init(new RaceableComponentData((Race)ownerRaceable.race));
+
+            return resultObject;
+        }
 
         public static GameObject CombatNpc(MmoWorld world, ZoneNpcInfo zoneNpcInfo) {
-
             Type botAi = null;
-
-
-
             botAi = CombatBaseAI.ResolveAI(zoneNpcInfo.aiType.movingType);
-
             Type[] components = new Type[] {
                 botAi, typeof(ShipWeapon), typeof(BotShip),
                 typeof(MmoMessageComponent), typeof(CharacterObject), typeof(ShipBasedDamagableObject),
@@ -660,7 +713,6 @@ namespace Nebula.Game {
             obj.GetComponent<CombatBaseAI>().SetAIType(zoneNpcInfo.aiType);
             //obj.GetComponent<CombatBaseAI>().SetNpcTypeData(npcData);
             obj.name = "Test Bot";
-
             return obj;
         }
 

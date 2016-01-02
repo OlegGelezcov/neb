@@ -10,6 +10,7 @@ using Photon.SocketServer;
 using SelectCharacter.Events;
 using SelectCharacter.Auction;
 using ExitGames.Logging;
+using Nebula.Inventory;
 
 namespace SelectCharacter.Mail {
     public class MailManager : IServer2ServerTransactionHandler<PUTInventoryItemTransactionStart, PUTInventoryItemTransactionEnd>,
@@ -83,6 +84,81 @@ namespace SelectCharacter.Mail {
 
         public bool HandleTransaction(GETInventoryItemTransactionStart transactionStart, GETInventoryItemTransactionEnd transactionEnd) {
             return false;
+        }
+
+        public PUTInventoryItemTransactionEnd HandlePutMailTransactionStart(PUTInventoryItemTransactionStart transaction ) {
+
+            MailBox mail = GetMailBox(transaction.gameRefID);
+            if (mail != null) {
+                var inventoryObject = InventoryUtils.Create(transaction.targetObject);
+                if (inventoryObject != null) {
+
+                    string title = string.Empty;
+                    string body = string.Empty;
+                    Hashtable tagHash = transaction.tag as Hashtable;
+
+                    if (tagHash != null ) {
+                        title = tagHash.GetValue<string>((int)SPC.Title, string.Empty);
+                        body = tagHash.GetValue<string>((int)SPC.Body, string.Empty);
+                    }
+
+                    MailMessage message = new MailMessage {
+                        id = Guid.NewGuid().ToString(),
+                        title = title,
+                        body = body,
+                        receiverGameRefId = transaction.gameRefID,
+                        sendefGameRefId = string.Empty,
+                        senderLogin = "server",
+                        time = DateTime.UtcNow.ToString(System.Globalization.CultureInfo.InvariantCulture),
+                        attachments = new Dictionary<string, MailAttachment>()
+                    };
+                    message.AddAttachment(inventoryObject.GetInfo(), transaction.count);
+                    mail.AddNewMessage(message);
+                    SaveMails(mail);
+                    application.Clients.SendGenericEventToGameref(mail.gameRefId, new GenericEvent {
+                        subCode = (int)SelectCharacterGenericEventSubCode.NewMessageCountChanged,
+                        data = new Hashtable {
+                            { (int)SPC.Count, mail.newMessagesCount }
+                        }
+                    });
+                    EventData updateEvent = new EventData((byte)SelectCharacterEventCode.MailUpdateEvent, new MailUpdatedEvent {
+                        mailBox = mail.GetInfo()
+                    });
+                    application.SendEventToClient(transaction.gameRefID, updateEvent);
+                    log.InfoFormat("Item successfully placed at mail [red]");
+                    return new PUTInventoryItemTransactionEnd {
+                        characterID = transaction.characterID,
+                        count = transaction.count,
+                        gameRefID = transaction.gameRefID,
+                        inventoryType = transaction.inventoryType,
+                        itemID = transaction.itemID,
+                        result = 0,
+                        returnCode = (int)ReturnCode.Ok,
+                        success = true,
+                        transactionEndServer = transaction.transactionEndServer,
+                        transactionStartServer = transaction.transactionStartServer,
+                        transactionID = transaction.transactionID,
+                        transactionSource = transaction.transactionSource
+          
+
+                    };
+                }
+            }
+
+            return new PUTInventoryItemTransactionEnd {
+                characterID = transaction.characterID,
+                count = transaction.count,
+                gameRefID = transaction.gameRefID,
+                inventoryType = transaction.inventoryType,
+                itemID = transaction.itemID,
+                result = 1,
+                returnCode = (int)ReturnCode.ErrorOfAddingMail,
+                success = false,
+                transactionEndServer = transaction.transactionEndServer,
+                transactionStartServer = transaction.transactionStartServer,
+                transactionID = transaction.transactionID,
+                transactionSource = transaction.transactionSource
+            };
         }
 
         public bool HandleTransaction(GETInventoryItemsTransactionStart transactionStart, GETInventoryItemsTransactionEnd transactionEnd) {

@@ -80,6 +80,8 @@
     <Compile Include="Database\SkillsDocument.cs" />
     <Compile Include="Database\StationDatabase.cs" />
     <Compile Include="Database\StatsDocument.cs" />
+    <Compile Include="Database\TimedEffectsDatabase.cs" />
+    <Compile Include="Database\TimedEffectsDocument.cs" />
     <Compile Include="Database\WeaponDatabase.cs" />
     <Compile Include="Database\WeaponDocument.cs" />
     <Compile Include="Database\WorkshopDocument.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="Game\Components\Activators\SpawnPiratesActivator.cs" />
     <Compile Include="Game\Components\AsteroidComponent.cs" />
     <Compile Include="Game\Components\DatabaseObject.cs" />
+    <Compile Include="Game\Components\ExpTimedEffect.cs" />
     <Compile Include="Game\Components\GodState.cs" />
     <Compile Include="Game\Components\IChest.cs" />
     <Compile Include="Game\Components\BaseShip.cs" />
@@ -133,6 +136,7 @@
     <Compile Include="Game\Components\PlayerLoaderObject.cs" />
     <Compile Include="Game\Components\PlayerShipMovable.cs" />
     <Compile Include="Game\Components\PlayerSkills.cs" />
+    <Compile Include="Game\Components\PlayerTimedEffects.cs" />
     <Compile Include="Game\Components\PvpStore.cs" />
     <Compile Include="Game\Components\RaceableModelComponent.cs" />
     <Compile Include="Game\Components\RespawnableObject.cs" />
@@ -146,6 +150,8 @@
     <Compile Include="Game\Components\StationComponent.cs" />
     <Compile Include="Game\Components\SubZoneComponent.cs" />
     <Compile Include="Game\Components\Teleport.cs" />
+    <Compile Include="Game\Components\TimedEffect.cs" />
+    <Compile Include="Game\Components\TimedEffectType.cs" />
     <Compile Include="Game\Components\Turret.cs" />
     <Compile Include="Game\DamageInfo.cs" />
     <Compile Include="Game\DebugActionExecutor.cs" />
@@ -211,6 +217,9 @@
     <Compile Include="Game\OperationHandlers\SubscribeItemOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\UnsubscribeItemOperationHandler.cs" />
     <Compile Include="Game\PeerActionExecutor.cs" />
+    <Compile Include="Game\Pets\PetManager.cs" />
+    <Compile Include="Game\Pets\PetMovable.cs" />
+    <Compile Include="Game\Pets\PetObject.cs" />
     <Compile Include="Game\PlayerInfo.cs" />
     <Compile Include="Game\PlayerMailBoxManager.cs" />
     <Compile Include="Game\PlayerSkill.cs" />
@@ -350,6 +359,7 @@
     <Compile Include="Game\Spawn\SpawnCheckManager.cs" />
     <Compile Include="Game\TestElementAttribute.cs" />
     <Compile Include="Game\TestRPCAttribute.cs" />
+    <Compile Include="Game\Utils\LogColor.cs" />
     <Compile Include="Game\WeaponHitInfo.cs" />
     <Compile Include="Game\WorldAsteroidManager.cs" />
     <Compile Include="Game\WorldEvents.cs" />

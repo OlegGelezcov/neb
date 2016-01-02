@@ -36,6 +36,11 @@ namespace Common {
         LearningAlreadyStarted = 1027,
         UnableRemovePvpPointsFromBalance = 1028,
         DontEnoughPvpPoints = 1029,
+        InvalidInventoryType = 1030,
+        ItemNotFound = 1031,
+        DropListNotFound = 1032,
+        NeedFreeSlots = 1033,
+
         UnknownError = 10002,
         
     }

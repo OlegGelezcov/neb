@@ -9,9 +9,9 @@ using System.Text;
 
 namespace Nebula.Database {
     public class StationDatabase {
-        private MongoClient DbClient { get; set; }
-        private MongoServer DbServer { get; set; }
-        private MongoDatabase Database { get; set; }
+        //private MongoClient DbClient { get; set; }
+        //private MongoServer DbServer { get; set; }
+        //private MongoDatabase Database { get; set; }
 
         public MongoCollection<WorkshopDocument> StationDocuments { get; private set; }
 
@@ -20,17 +20,17 @@ namespace Nebula.Database {
         public static StationDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new StationDatabase(GameApplication.Instance.databaseConnectionString);
+                    s_Instance = new StationDatabase();
                 }
                 return s_Instance;
             }
         }
 
-        private StationDatabase(string connectionString) {
-            DbClient = new MongoClient(connectionString);
-            DbServer = DbClient.GetServer();
-            Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            StationDocuments = Database.GetCollection<WorkshopDocument>(GameServerSettings.Default.DatabaseWorkshopCollectionName);
+        private StationDatabase() {
+            //DbClient = new MongoClient(connectionString);
+            //DbServer = DbClient.GetServer();
+            //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            StationDocuments = GameApplication.Instance.defaultDatabase.GetCollection<WorkshopDocument>(GameServerSettings.Default.DatabaseWorkshopCollectionName);
         }
 
         public void SaveStation(string characterID, WorkhouseStation station) {

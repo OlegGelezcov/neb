@@ -94,6 +94,7 @@ namespace SelectCharacter {
             mHandlers.Add(SelectCharacterOperationCode.MoveItemFromStationToBank, new MoveItemFromStationToBankOperationHandler(application, this));
             mHandlers.Add(SelectCharacterOperationCode.MoveItemFromBankToStation, new MoveItemFromBankToStationOperationHandler(application, this));
             mHandlers.Add(SelectCharacterOperationCode.BuyPvpItem, new BuyPvpItemOperationHandler(application, this));
+            mHandlers.Add(SelectCharacterOperationCode.RequestServerId, new RequestServerIDOperationHandler(application, this));
         }
 
         protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail) {

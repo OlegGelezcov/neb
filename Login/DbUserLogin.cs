@@ -78,5 +78,12 @@ namespace Login {
         public void ForceExpire() {
             expireTime = CommonUtils.SecondsFrom1970();
         }*/
+
+        public void RemoveNebulaCredits(int count) {
+            nebulaCredits -= count;
+            if(nebulaCredits < 0 ) {
+                nebulaCredits = 0;
+            }
+        }
     }
 }

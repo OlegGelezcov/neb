@@ -179,6 +179,11 @@
     <Compile Include="Help\HelpSubSection.cs" />
     <Compile Include="Help\TipInfo.cs" />
     <Compile Include="Help\Tips.cs" />
+    <Compile Include="Inaps\InapCollection.cs" />
+    <Compile Include="Inaps\InapItem.cs" />
+    <Compile Include="Inaps\InapObject.cs" />
+    <Compile Include="Inaps\InapObjectCollection.cs" />
+    <Compile Include="Inaps\InapType.cs" />
     <Compile Include="Inaps\SubscriptionItem.cs" />
     <Compile Include="Inaps\Subscriptions.cs" />
     <Compile Include="InvalidRaceException.cs" />
@@ -187,10 +192,12 @@
     <Compile Include="Inventory\IInventoryObjectInfo.cs" />
     <Compile Include="Inventory\InventoryObjectInfoFactory.cs" />
     <Compile Include="Inventory\Objects\DrillSchemeObjectInfo.cs" />
+    <Compile Include="Inventory\Objects\ExpBoostObjectInfo.cs" />
     <Compile Include="Inventory\Objects\FortificationInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\FortUpgradeInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\IMultiCount.cs" />
     <Compile Include="Inventory\Objects\IRaceableInventoryObject.cs" />
+    <Compile Include="Inventory\Objects\LootBoxObjectInfo.cs" />
     <Compile Include="Inventory\Objects\MaterialInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\MiningStationInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\NebulaElementObjectInfo.cs" />
@@ -287,6 +294,7 @@
     <Compile Include="UP\UPXDocument.cs" />
     <Compile Include="UP\UPXElement.cs" />
     <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\StringUtils.cs" />
     <Compile Include="Worlds\WorldCollection.cs" />
     <Compile Include="Worlds\WorldInfo.cs" />
   </ItemGroup>

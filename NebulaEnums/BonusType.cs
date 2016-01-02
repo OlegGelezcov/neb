@@ -224,7 +224,9 @@ namespace Common {
         increase_dron_strength_on_pc,
         decrease_dron_strength_on_pc,
         increase_dron_strength_on_cnt,
-        decrease_dron_strength_on_cnt
+        decrease_dron_strength_on_cnt,
+
+        increase_exp_on_pc
     }
 
     /// <summary>
@@ -243,7 +245,8 @@ namespace Common {
         hp,
         healing,
         energy_cost,
-        dron_strength
+        dron_strength,
+        exp
     }
 
     public static class BuffUtils {
@@ -363,6 +366,8 @@ namespace Common {
                     return new BonusType[] { BonusType.decrease_energy_cost_on_pc, BonusType.decrease_energy_cost_on_cnt };
                 case BuffParameter.dron_strength:
                     return new BonusType[] { BonusType.increase_dron_strength_on_cnt, BonusType.increase_dron_strength_on_pc };
+                case BuffParameter.exp:
+                    return new BonusType[] { BonusType.increase_exp_on_pc };
                 default:
                     return new BonusType[] { };
             }

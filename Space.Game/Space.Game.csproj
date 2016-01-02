@@ -38,8 +38,12 @@
   <ItemGroup>
     <Compile Include="Balance\BalanceFormulas.cs" />
     <Compile Include="Drop\AsteroidDropper.cs" />
+    <Compile Include="Drop\DropList.cs" />
+    <Compile Include="Drop\DropListItem.cs" />
     <Compile Include="Drop\DropManager.cs" />
     <Compile Include="Drop\Dropper.cs" />
+    <Compile Include="Drop\ModuleDropListItem.cs" />
+    <Compile Include="Drop\WeaponDropListItem.cs" />
     <Compile Include="EmptyNebulaLogger.cs" />
     <Compile Include="Engine\BehaviourCollection.cs" />
     <Compile Include="Engine\BehaviourMissedException.cs" />
@@ -55,8 +59,10 @@
     <Compile Include="ILog.cs" />
     <Compile Include="INebulaLogger.cs" />
     <Compile Include="Inventory\InventoryUtils.cs" />
+    <Compile Include="Inventory\Objects\ExpBoostObject.cs" />
     <Compile Include="Inventory\Objects\FortificationInventoryObject.cs" />
     <Compile Include="Inventory\Objects\FortUpgradeObject.cs" />
+    <Compile Include="Inventory\Objects\LootBoxObject.cs" />
     <Compile Include="Inventory\Objects\MiningStationInventoryObject.cs" />
     <Compile Include="Inventory\Objects\NebulaElementObject.cs" />
     <Compile Include="Inventory\Objects\OutpostInventoryObject.cs" />
@@ -66,8 +72,14 @@
     <Compile Include="Inventory\Objects\RepairKitObject.cs" />
     <Compile Include="Inventory\Objects\RepairPatchObject.cs" />
     <Compile Include="Inventory\Objects\TurretInventoryObject.cs" />
+    <Compile Include="IRes.cs" />
     <Compile Include="NetUtils.cs" />
     <Compile Include="ResourcePool.cs" />
+    <Compile Include="Resources\ColorList.cs" />
+    <Compile Include="Resources\ColorListCollection.cs" />
+    <Compile Include="Resources\DropListCollection.cs" />
+    <Compile Include="Resources\Inaps\InapCollection.cs" />
+    <Compile Include="Resources\Inaps\InapItem.cs" />
     <Compile Include="Resources\MiscInventoryItemData.cs" />
     <Compile Include="Resources\MiscInventoryItemDataRes.cs" />
     <Compile Include="Resources\ModuleSetData.cs" />

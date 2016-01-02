@@ -32,6 +32,7 @@ namespace Login {
             //mOperationHandlers.Add(OperationCode.UsePass, new UsePassOperationHandler(application, this));
             //mOperationHandlers.Add(OperationCode.AddPass, new AddPassOperationHandler(application, this));
             mOperationHandlers.Add(OperationCode.ExecAction, new InvokeMethodOperationHandler(application, this));
+            mOperationHandlers.Add(OperationCode.GetNebulaCredits, new GetNebulaCreditsOperationHandler(application, this));
         }
 
         protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail) {

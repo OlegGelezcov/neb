@@ -10,9 +10,9 @@ namespace Nebula.Database {
     public class CharacterDatabase {
         private static ILogger log = LogManager.GetCurrentClassLogger();
 
-        private MongoClient DbClient { get; set; }
-        private MongoServer DbServer { get; set; }
-        private MongoDatabase Database { get; set; }
+        //private MongoClient DbClient { get; set; }
+        //private MongoServer DbServer { get; set; }
+        //private MongoDatabase Database { get; set; }
 
         public MongoCollection<StatsDocument> CharacterDocuments { get; private set; }
 
@@ -20,17 +20,17 @@ namespace Nebula.Database {
         public static CharacterDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new CharacterDatabase(GameApplication.Instance.databaseConnectionString);
+                    s_Instance = new CharacterDatabase();
                 }
                 return s_Instance;
             }
         }
 
-        public CharacterDatabase(string connectionString) {
-            DbClient = new MongoClient(connectionString);
-            DbServer = DbClient.GetServer();
-            Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            CharacterDocuments = Database.GetCollection<StatsDocument>(GameServerSettings.Default.DatabaseStatsCollectionName);
+        public CharacterDatabase() {
+            //DbClient = new MongoClient(connectionString);
+            //DbServer = DbClient.GetServer();
+            //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            CharacterDocuments = GameApplication.Instance.defaultDatabase.GetCollection<StatsDocument>(GameServerSettings.Default.DatabaseStatsCollectionName);
         }
 
         public void SaveCharacter(string characterID, PlayerCharacter character ) {

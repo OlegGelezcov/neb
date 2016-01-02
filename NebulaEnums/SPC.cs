@@ -283,6 +283,9 @@ namespace ServerClientCommon {
         Icon,
         PvpPoints,
         GuildName,
-        ShiftState
+        ShiftState,
+        Expire,
+        InapId,
+        DropList
     }
 }

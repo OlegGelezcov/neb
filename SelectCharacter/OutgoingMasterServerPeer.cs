@@ -135,6 +135,11 @@ namespace SelectCharacter {
                             HandlePUTInventoryTransactionEnd(eventData, sendParameters);
                             break;
                         }
+                        //called when from login inap store we put item to character mail
+                    case S2SEventCode.PUTMailTransactionStart: {
+                            HandlePutMailTransactionStart(eventData, sendParameters);
+                        }
+                        break;
                     case S2SEventCode.InvokeMethodStart:
                         {
                             string method = (string)eventData.Parameters[(byte)ServerToServerParameterCode.Method];
@@ -167,6 +172,19 @@ namespace SelectCharacter {
             }catch(Exception ex) {
                 log.Error(ex);
             }
+        }
+
+        /// <summary>
+        /// Place item to player mail and send back transaction end
+        /// </summary>
+        /// <param name="eventData">Input event data</param>
+        /// <param name="sendParameters">Input send parameters</param>
+        private void HandlePutMailTransactionStart(IEventData eventData, SendParameters sendParameters ) {
+            var startTransaction = new PUTInventoryItemTransactionStart(eventData);
+            var endTransaction = application.Mail.HandlePutMailTransactionStart(startTransaction);
+            EventData evt = new EventData((byte)S2SEventCode.PUTMaiTransactionEnd, endTransaction);
+            SendEvent(evt, sendParameters);
+            log.InfoFormat("Put Mail Transaction End Returned to Source :red");
         }
 
         private void HandlePUTInventoryTransactionEnd(IEventData eventData, SendParameters sendParameters) {

@@ -3,73 +3,14 @@
     using Common.Space.Game.Resources;
     using Nebula;
     using Nebula.Resources;
-    using Space.Game.Drop;
     using Space.Game.Resources;
     using Space.Game.Resources.Zones;
     using Space.Game.Ship;
-    using Space.Game.Skills;
     using System;
-    using System.Collections;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IO;
-    using System.Linq;
-    using System.Xml.Linq;
 
-    public interface IRes {
-        WeaponData RandomWeapon(Workshop workshop);
-
-        ColorInfo WeaponColor(ObjectColor color);
-
-        ColorInfo ModuleColor(ObjectColor color);
-
-        WeaponDropSettings WeaponSettings { get; }
-
-        ModuleSettingsRes ModuleSettings { get; }
-
-        ModuleSetRes Sets { get; }
-
-        ModuleInfoStorage ModuleTemplates { get; }
-
-        ServerInputsRes ServerInputs { get; }
-
-        Dictionary<ShipModelSlotType, string> StartModule(Race race, Workshop workshop);
-
-        MiscInventoryItemDataRes MiscItemDataRes {
-            get;
-        }
-
-        Leveling Leveling { get; }
-
-        SkillRes Skills { get; }
-
-        MaterialRes Materials { get; }
-
-        ColorInfoRes ColorRes { get; }
-
-        //NpcTypeDataRes NpcTypes { get; }
-
-        ZonesRes Zones { get; }
-
-        NpcGroupRes NpcGroups { get; }
-
-        //ResEvents Events { get; }
-
-        AsteroidsRes Asteroids { get; }
-
-        FractionResolver fractionResolver { get; }
-
-        SkillDropping skillDropping { get; }
-
-        string path { get; }
-
-        float GetDifficultyMult(Difficulty d);
-
-        ResSchemeCraftingMaterials CraftingMaterials {
-            get;
-        }
-        ResPassiveBonuses PassiveBonuses { get; }
-    }
 
     public class Res : IRes {
 
@@ -192,6 +133,22 @@
 
             PassiveBonuses = new ResPassiveBonuses();
             PassiveBonuses.Load(basePath);
+
+            colorLists = new ColorListCollection();
+            colorLists.Load(Path.Combine(basePath, "Data/Drop/color_lists.xml"));
+
+            dropLists = new DropListCollection();
+            dropLists.Load(Path.Combine(basePath, "Data/Drop/drop_lists.xml"));
+        }
+
+        public DropListCollection dropLists {
+            get;
+            private set;
+        }
+
+        public ColorListCollection colorLists {
+            get;
+            private set;
         }
 
         public ResPassiveBonuses PassiveBonuses { get; private set; }

@@ -38,6 +38,7 @@ namespace Nebula.Game.Components {
                 GetComponent<MmoActor>().LoadOther();
                 GetComponent<ShipWeapon>().Load();
                 GetComponent<PassiveBonusesComponent>().Load();
+                GetComponent<PlayerTimedEffects>().Load();
             }
         }
 
@@ -57,6 +58,7 @@ namespace Nebula.Game.Components {
                 SkillDatabase.instance.SaveSkills(character.characterId, GetComponent<PlayerSkills>().GetSave());
                 WeaponDatabase.instance.SaveWeapon(character.characterId, player.GetComponent<ShipWeapon>().GetSave());
                 PassiveBonusesDatabase.instance.SavePassiveBonuses(character.characterId, player.GetComponent<PassiveBonusesComponent>().GetSave());
+                TimedEffectsDatabase.instance.SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
             }
         }
 

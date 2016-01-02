@@ -2,6 +2,7 @@
 using ExitGames.Logging;
 using Nebula.Engine;
 using Nebula.Game.Bonuses;
+using Nebula.Game.Utils;
 using Nebula.Server.Components;
 using NebulaCommon.Group;
 using ServerClientCommon;
@@ -18,6 +19,7 @@ namespace Nebula.Game.Components {
 
         private MmoActor mPlayer;
         private PlayerShip mShip;
+
         public Group group { get; private set; }
 
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
@@ -69,7 +71,15 @@ namespace Nebula.Game.Components {
         }
 
         public void AddExp(int e) {
-            exp += (e );
+            float bonusAddition = 0f;
+            if(mBonuses != null && e > 0) {
+                bonusAddition = (float)System.Math.Ceiling( e * mBonuses.expPcBonus );
+            }
+            int additionalExp = (int)bonusAddition;
+
+            e += additionalExp;
+            exp += (e);
+            log.InfoFormat("added exp = {0}, additional exp = {1}".Color(LogColor.orange), e,  e - additionalExp);
             mPlayer.UpdateCharacterOnMaster();
             mPlayer.EventOnPlayerInfoUpdated();
             //mMessage.ReceiveServiceMessage(ServiceMessageType.Info, string.Format("exp received = {0}", e));

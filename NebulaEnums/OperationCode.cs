@@ -25,6 +25,7 @@ namespace Common
         GetServerVersion = 3,
         GetNews = 4,
         //AddPass = 5,
+        GetNebulaCredits = 5,
         RequestServerId = 6,
         GetShipModel = 7,
         /// <summary>

@@ -5,7 +5,10 @@ using ExitGames.Logging;
 using ExitGames.Logging.Log4Net;
 using log4net;
 using log4net.Config;
+using MongoDB.Driver;
 using Nebula;
+using Nebula.Game;
+using Nebula.Game.Utils;
 using NebulaCommon;
 using NebulaCommon.SelectCharacter;
 using NebulaCommon.ServerToServer.Operations;
@@ -62,9 +65,17 @@ public class GameApplication : ApplicationBase
     //private readonly PoolFiber loopFiber;
     
 
-        public string databaseConnectionString { get; private set; }
-         
+    public string databaseConnectionString { get; private set; }
 
+    private MongoClient m_MongoClient;
+    private MongoServer m_MongoServer;
+    private MongoDatabase m_DefaultDatabase;
+
+    public MongoDatabase defaultDatabase {
+        get {
+            return m_DefaultDatabase;
+        }
+    }
 
     public static new GameApplication Instance {
         get {
@@ -190,7 +201,18 @@ public class GameApplication : ApplicationBase
             string databaseConnectionFile = System.IO.Path.Combine(BinaryPath, "assets/database_connection.txt");
 #endif
             databaseConnectionString = File.ReadAllText(databaseConnectionFile).Trim();
-            DatabaseManager.Setup(databaseConnectionString);
+
+            
+            m_MongoClient = new MongoClient(databaseConnectionString);
+            log.InfoFormat("connected to: {0}".Color(LogColor.orange), databaseConnectionFile);
+
+            m_MongoServer = m_MongoClient.GetServer();
+            log.InfoFormat("connected to mongo server".Color(LogColor.orange));
+
+            m_DefaultDatabase = m_MongoServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            log.InfoFormat("received default database".Color(LogColor.orange));
+
+            DatabaseManager.Setup();
 
             updater = new GameUpdater(this);
 
@@ -203,6 +225,8 @@ public class GameApplication : ApplicationBase
         }
 
     }
+
+
 
     protected virtual void InitLogging() {
         LogManager.SetLoggerFactory(Log4NetLoggerFactory.Instance);

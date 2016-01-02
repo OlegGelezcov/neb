@@ -69,5 +69,9 @@ namespace Nebula.Game {
         public static bool IAmBot(this NebulaObject nebulaObject) {
             return (nebulaObject.Type != (byte)ItemType.Avatar);
         }
+
+        public static string Color(this string source, string color) {
+            return source + " :" + color;
+        }
     }
 }

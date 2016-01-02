@@ -112,6 +112,14 @@ namespace Master {
                             //Transport(eventData, sendParameters, GetServerTypeForTransaction(eventData));
                             break;
                         }
+                    case S2SEventCode.PUTMailTransactionStart: {
+                            TransportTransactionForward(eventData, sendParameters);
+                        }
+                        break;
+                    case S2SEventCode.PUTMaiTransactionEnd: {
+                            TransportTransactionBack(eventData, sendParameters);
+                        }
+                        break;
                     case S2SEventCode.InvokeMethodStart:
                         {
                             ServerType servType = (ServerType)(byte)eventData.Parameters[(byte)ServerToServerParameterCode.TargetServer];

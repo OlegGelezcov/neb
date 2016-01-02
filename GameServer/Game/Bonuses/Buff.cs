@@ -79,7 +79,7 @@ namespace Nebula.Game.Bonuses
 
 
 
-            public void SetTag(int inTag) {
+        public void SetTag(int inTag) {
             tag = inTag;
         }
         public void SetExpireAction(Action eAction) {

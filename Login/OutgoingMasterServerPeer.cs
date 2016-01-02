@@ -1,6 +1,7 @@
 ﻿using Common;
 using ExitGames.Logging;
 using NebulaCommon;
+using NebulaCommon.ServerToServer.Events;
 using NebulaCommon.ServerToServer.Operations;
 using Photon.SocketServer;
 using Photon.SocketServer.ServerToServer;
@@ -68,9 +69,30 @@ namespace Login {
         }
 
 
+        private void HandlePutMailTransactionEnd(IEventData eventData, SendParameters sendParameters) {
+            PUTInventoryItemTransactionEnd endTransaction = new PUTInventoryItemTransactionEnd(eventData);
+            switch((TransactionSource)endTransaction.transactionSource) {
+                case TransactionSource.Inaps: {
+                        application.inaps.putTransactionPool.HandleTransaction(endTransaction);
+                    }
+                    break;
+            }
+        }
+
 
         protected override void OnEvent(IEventData eventData, SendParameters sendParameters) {
+            try {
+                switch((S2SEventCode)eventData.Code) {
+                    case S2SEventCode.PUTMaiTransactionEnd: {
 
+                            HandlePutMailTransactionEnd(eventData, sendParameters);
+                        }
+                        break;
+                }
+            } catch (Exception exception) {
+                log.InfoFormat(exception.Message);
+                log.InfoFormat(exception.StackTrace);
+            }
             //S2S operations with passes not applicable more
             /*
             try {

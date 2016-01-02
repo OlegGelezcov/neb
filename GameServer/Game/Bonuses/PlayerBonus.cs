@@ -144,6 +144,20 @@ namespace Nebula.Game.Bonuses {
             return buffs.ContainsKey(buffId);
         } 
 
+        public BuffSearchResult Contains(string buffId, int tag ) {
+            BuffSearchResult result = BuffSearchResult.NotContains;
+            if(Contains(buffId)) {
+                result = BuffSearchResult.ContainsWithDifferentTag;
+                var buff = GetBuff(buffId);
+                if(buff != null ) {
+                    if(buff.tag == tag ) {
+                        result = BuffSearchResult.Contains;
+                    }
+                }
+            }
+            return result;
+        }
+
         public bool hasBuffs {
             get {
                 return buffs.Count > 0;
@@ -153,5 +167,14 @@ namespace Nebula.Game.Bonuses {
         public void Clear() {
             buffs.Clear();
         }
+    }
+
+    /// <summary>
+    /// Search results for buffs
+    /// </summary>
+    public enum BuffSearchResult {
+        NotContains,
+        ContainsWithDifferentTag,
+        Contains
     }
 }

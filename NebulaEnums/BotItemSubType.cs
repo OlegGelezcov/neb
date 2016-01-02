@@ -12,7 +12,8 @@
         Outpost,
         Turret,
         MainOutpost,
-        PvpStore
+        PvpStore,
+        Pet
     }
 }
 

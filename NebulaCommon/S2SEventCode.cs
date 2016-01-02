@@ -18,6 +18,8 @@ namespace NebulaCommon {
         RaceStatusChanged,
         GETInventoryItemsStart,
         GETInventoryItemsEnd,
-        WorldRaceChanged
+        WorldRaceChanged,
+        PUTMailTransactionStart,
+        PUTMaiTransactionEnd
     }
 }

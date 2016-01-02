@@ -131,6 +131,14 @@ namespace Common
             return false;
         }
 
+        public bool HasItem(string id ) {
+            T item = default(T);
+            if(TryGetItem(id, out item)) {
+                return item.Has;
+            }
+            return false;
+        }
+
         public override string ToString()
         {
             System.Text.StringBuilder sb = new StringBuilder();

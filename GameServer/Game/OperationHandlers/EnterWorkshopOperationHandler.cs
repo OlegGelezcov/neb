@@ -10,6 +10,7 @@ using Space.Server.Events;
 using Space.Server;
 using Nebula.Game.Components;
 using ExitGames.Logging;
+using Nebula.Game.Pets;
 
 namespace Nebula.Game.OperationHandlers {
     public class EnterWorkshopOperationHandler : BasePlayerOperationHandler {
@@ -53,6 +54,9 @@ namespace Nebula.Game.OperationHandlers {
                 if(damagable) {
                     damagable.SetHealth(damagable.maximumHealth);
                 }
+
+                actor.GetComponent<PetManager>().DestroyPets();
+
                 actor.GetComponent<PlayerTarget>().Clear();
                 SaveWorkshopInfo(actor);
                 var workshopEntered = new WorkshopEntered {

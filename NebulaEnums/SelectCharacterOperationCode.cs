@@ -36,6 +36,7 @@ namespace Common {
         SendPushToPlayers,
         MoveItemFromStationToBank,
         MoveItemFromBankToStation,
-        BuyPvpItem
+        BuyPvpItem,
+        RequestServerId
     }
 }

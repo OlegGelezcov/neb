@@ -14,6 +14,25 @@ namespace Nebula.Inventory {
     /// </summary>
     public static class InventoryUtils {
 
+
+        public static IInventoryObject Create(object info) {
+            if(info == null ) {
+                return null;
+            }
+            Hashtable hash = info as Hashtable;
+            if(hash == null ) {
+                return null;
+            }
+
+            if(!hash.ContainsKey((int)SPC.Count)) {
+                hash.Add((int)SPC.Count, 1);
+            }
+
+            int cnt = 0;
+            return Create(hash, out cnt);
+        }
+
+
         /// <summary>
         /// Create item from hashtable
         /// </summary>
@@ -55,6 +74,10 @@ namespace Nebula.Inventory {
                     return new TurretInventoryObject(itemInfo);
                 case InventoryObjectType.nebula_element:
                     return new NebulaElementObject(itemInfo);
+                case InventoryObjectType.exp_boost:
+                    return new ExpBoostObject(itemInfo);
+                case InventoryObjectType.loot_box:
+                    return new LootBoxObject(itemInfo);
                 //case InventoryObjectType.pass:
                    // return new PassInventoryObject(itemInfo);
                 //case InventoryObjectType.credits:

@@ -13,9 +13,9 @@ using System.Linq;
 namespace Space.Database {
     public class DatabaseManager {
 
-        public MongoClient DbClient { get; private set; }
-        public MongoServer DbServer { get; private set; }
-        public MongoDatabase Database { get; private set; }
+        //public MongoClient DbClient { get; private set; }
+        //public MongoServer DbServer { get; private set; }
+        //public MongoDatabase Database { get; private set; }
  
         public MongoCollection<WorldDocument> Worlds { get; private set; }
 
@@ -23,20 +23,20 @@ namespace Space.Database {
         public MongoCollection<WorldState> worldStates { get; private set; }
 
 
-        public void Setup(string connectionString) {
-            DbClient = new MongoClient(connectionString);
+        public void Setup() {
+            //DbClient = new MongoClient(connectionString);
             
-            DbServer = DbClient.GetServer();
+            //DbServer = DbClient.GetServer();
 
            
-            foreach(var cred in DbClient.Settings.Credentials) {
-                log.InfoFormat("credentials = {0}:{1} [red]", cred.Username, cred.Password);
-            }
+            //foreach(var cred in DbClient.Settings.Credentials) {
+            //    log.InfoFormat("credentials = {0}:{1} [red]", cred.Username, cred.Password);
+            //}
 
-            Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             
-            Worlds                  = Database.GetCollection<WorldDocument>(GameServerSettings.Default.WorldCollection);
-            worldStates = Database.GetCollection<WorldState>(GameServerSettings.Default.WorldStateCollectionName);
+            Worlds                  = GameApplication.Instance.defaultDatabase.GetCollection<WorldDocument>(GameServerSettings.Default.WorldCollection);
+            worldStates             = GameApplication.Instance.defaultDatabase.GetCollection<WorldState>(GameServerSettings.Default.WorldStateCollectionName);
             log.InfoFormat("world count = {0} [red]", Worlds.Count());
             //log.InfoFormat("world count: {0} [red]", )
         }

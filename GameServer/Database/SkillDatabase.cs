@@ -11,9 +11,9 @@ using System.Text;
 namespace Nebula.Database {
     public class SkillDatabase {
         private static ILogger log = LogManager.GetCurrentClassLogger();
-        private MongoClient DbClient { get; set; }
-        private MongoServer DbServer { get; set; }
-        private MongoDatabase Database { get; set; }
+        //private MongoClient DbClient { get; set; }
+        //private MongoServer DbServer { get; set; }
+        //private MongoDatabase Database { get; set; }
 
         private MongoCollection<SkillsDocument> SkillsDocuments { get; set; }
 
@@ -22,17 +22,17 @@ namespace Nebula.Database {
         public static SkillDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new SkillDatabase(GameApplication.Instance.databaseConnectionString);
+                    s_Instance = new SkillDatabase();
                 }
                 return s_Instance;
             }
         }
 
-        private SkillDatabase(string connectionString) {
-            DbClient = new MongoClient(connectionString);
-            DbServer = DbClient.GetServer();
-            Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            SkillsDocuments = Database.GetCollection<SkillsDocument>(GameServerSettings.Default.DatabaseSkillsCollectionName);
+        private SkillDatabase() {
+            //DbClient = new MongoClient(connectionString);
+            //DbServer = DbClient.GetServer();
+            //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            SkillsDocuments = GameApplication.Instance.defaultDatabase.GetCollection<SkillsDocument>(GameServerSettings.Default.DatabaseSkillsCollectionName);
         }
 
         public void SaveSkills(string characterID, PlayerSkillsSave skillSave ) {

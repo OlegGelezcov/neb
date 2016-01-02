@@ -3,6 +3,7 @@
     using ExitGames.Logging;
     using Nebula.Game.Components;
     using Nebula.Game.OperationHandlers;
+    using Nebula.Game.Pets;
     using NebulaCommon.SelectCharacter;
     using Photon.SocketServer;
     using Photon.SocketServer.Rpc;
@@ -185,7 +186,9 @@
                     typeof(PlayerTarget),
                     typeof(ShipEnergyBlock),
                     typeof(PlayerShipMovable),
-                    typeof(PassiveBonusesComponent)
+                    typeof(PassiveBonusesComponent),
+                    typeof(PlayerTimedEffects),
+                    typeof(PetManager)
                 };
 
                 Dictionary<byte, object> tags = new Dictionary<byte, object> {

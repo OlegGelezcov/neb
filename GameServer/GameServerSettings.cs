@@ -20,6 +20,7 @@ namespace Nebula {
         public string WorldCollection;
         public string WorldStateCollectionName;
         public string PassiveBonusesCollectionName;
+        public string TimedEffectsCollectionName;
 
 
         public static GameServerSettings Default {
@@ -39,7 +40,8 @@ namespace Nebula {
                     PassiveBonusesCollectionName = "passive_bonuses",
                     DatabaseName = "nebula",
                     WorldCollection = "world",
-                    WorldStateCollectionName = "world_state_collection"
+                    WorldStateCollectionName = "world_state_collection",
+                    TimedEffectsCollectionName = "timed_effects"
                 };
 #else
                 return new GameServerSettings {
@@ -56,7 +58,8 @@ namespace Nebula {
                     PassiveBonusesCollectionName = "passive_bonuses",
                     DatabaseName = "nebula",
                     WorldCollection = "world",
-                    WorldStateCollectionName = "world_state_collection"
+                    WorldStateCollectionName = "world_state_collection",
+                    TimedEffectsCollectionName = "timed_effects"
                 };
 #endif
             }

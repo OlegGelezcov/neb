@@ -15,6 +15,7 @@ namespace NebulaCommon.ServerToServer.Events {
         //IncreasePasses,
         WithdrawFromBank,
         AddToBank,
-        RemovePvpPoints
+        RemovePvpPoints,
+        RemoveNebulaCredits
     }
 }

@@ -1,12 +1,6 @@
 ﻿using MongoDB.Bson;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 using Space.Game;
-using Space.Game.Inventory.Objects;
-using Nebula.Game.Components;
+using System.Collections;
 
 namespace Space.Database {
     public class WeaponDocument {

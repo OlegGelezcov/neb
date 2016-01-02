@@ -80,6 +80,15 @@
             return new List<ModuleInfo>();
         }
 
+        public List<ModuleInfo> ModulesWithSet(Workshop workshop, ShipModelSlotType type) {
+            List<ModuleInfo> filteredModules = null;
+            if (modules.TryGetValue(workshop, out filteredModules)) {
+                return filteredModules.Where(m => m.hasSets && m.Type == type).ToList();
+            }
+            return new List<ModuleInfo>();
+        }
+
+
         public ModuleInfo Module(Workshop workshop, ShipModelSlotType type, string id )
         {
             List<ModuleInfo> filteredModules = null;

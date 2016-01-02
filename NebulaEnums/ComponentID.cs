@@ -46,6 +46,9 @@ namespace Common {
         DatabaseObject,
         PassiveBonuses,
         MiningStation,
-        PvpStore
+        PvpStore,
+        PlayerTimedEffects,
+        PetObject,
+        PetManager
     }
 }

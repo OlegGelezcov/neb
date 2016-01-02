@@ -63,18 +63,24 @@
   <ItemGroup>
     <Compile Include="DbReader.cs" />
     <Compile Include="DbUserLogin.cs" />
+    <Compile Include="Events\InapStatusUpdateEvent.cs" />
+    <Compile Include="Events\NebulaCreditsUpdateEvent.cs" />
     <Compile Include="GameServerSettings.cs" />
+    <Compile Include="InapManager.cs" />
     <Compile Include="LoggedInUser.cs" />
     <Compile Include="LoggedInUserCollection.cs" />
     <Compile Include="LoginApplication.cs" />
     <Compile Include="LoginClientPeer.cs" />
     <Compile Include="MethodInvoker.cs" />
     <Compile Include="OperationHandlers\BaseOperationHandler.cs" />
+    <Compile Include="OperationHandlers\GetNebulaCreditsOperationHandler.cs" />
     <Compile Include="OperationHandlers\GetUsersOnlineHandler.cs" />
     <Compile Include="OperationHandlers\InvokeMethodOperationHandler.cs" />
     <Compile Include="OperationHandlers\LoginOperationHandler.cs" />
     <Compile Include="OperationHandlers\RecoverUserOperationHandler.cs" />
     <Compile Include="OperationHandlers\RegisterUserHandler.cs" />
+    <Compile Include="Operations\GetNebulaCreditsRequest.cs" />
+    <Compile Include="Operations\GetNebulaCreditsResponse.cs" />
     <Compile Include="Operations\GetUserOnlineRequest.cs" />
     <Compile Include="Operations\GetUserOnlineResponse.cs" />
     <Compile Include="Operations\InvokeMethodOperationRequest.cs" />
@@ -87,6 +93,7 @@
     <Compile Include="Operations\RegisterUserResponse.cs" />
     <Compile Include="OutgoingMasterServerPeer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\InapItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameMath\GameMath.csproj">
@@ -117,9 +124,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="assets\database_connection.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

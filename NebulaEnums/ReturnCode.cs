@@ -99,6 +99,11 @@ namespace Common
         NotEnoughInventorySpace,
         ErrorAddingToInventory,
         NameAlreadyExists,
+        ErrorOfAddingMail,
+        UserNotFound,
+        ResourceNotFound,
+        NotEnoughCredits,
+        InvalidInapType, 
 
         OperationDenied = -3,
         OperationInvalid = -2,

@@ -14,9 +14,9 @@ namespace Nebula.Database {
 
         private static ILogger log = LogManager.GetCurrentClassLogger();
 
-        private MongoClient DbClient { get; set; }
-        private MongoServer DbServer { get; set; }
-        private MongoDatabase Database { get; set; }
+        //private MongoClient DbClient { get; set; }
+        //private MongoServer DbServer { get; set; }
+        //private MongoDatabase Database { get; set; }
 
         private MongoCollection<InventoryDocument> InventoryDocuments { get; set; }
 
@@ -32,10 +32,10 @@ namespace Nebula.Database {
         }
 
         private InventoryDatabase(string connectionString) {
-            DbClient = new MongoClient(connectionString);
-            DbServer = DbClient.GetServer();
-            Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            InventoryDocuments = Database.GetCollection<InventoryDocument>(GameServerSettings.Default.DatabaseInventoryCollectionName);
+            //DbClient = new MongoClient(connectionString);
+            //DbServer = DbClient.GetServer();
+            //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            InventoryDocuments = GameApplication.Instance.defaultDatabase.GetCollection<InventoryDocument>(GameServerSettings.Default.DatabaseInventoryCollectionName);
         }
 
         public void SaveInventory(string characterID, ServerInventory serverInventory) {

@@ -91,6 +91,14 @@ namespace Nebula.Game.Components {
             return false;
         }
 
+        public BuffSearchResult Contains(BonusType type, string buffId, int tag ) {
+            BuffSearchResult result = BuffSearchResult.NotContains;
+            if(bonuses.ContainsKey(type)) {
+                result = bonuses[type].Contains(buffId, tag);
+            }
+            return result;
+        }
+
         
         public float Value(BonusType type) {
             if(bonuses.ContainsKey(type)) {
@@ -438,6 +446,14 @@ namespace Nebula.Game.Components {
                 float sum = 0f;
                 sum += Value(BonusType.increase_healing_on_cnt);
                 sum -= Value(BonusType.decrease_healing_on_cnt);
+                return sum;
+            }
+        }
+
+        public float expPcBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.increase_exp_on_pc);
                 return sum;
             }
         }

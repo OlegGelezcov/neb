@@ -12,9 +12,9 @@ using System.Text;
 namespace Nebula.Database {
     public class ShipModelDatabase {
         private static ILogger log = LogManager.GetCurrentClassLogger();
-        private MongoClient DbClient { get; set; }
-        private MongoServer DbServer { get; set; }
-        private MongoDatabase Database { get; set; }
+        //private MongoClient DbClient { get; set; }
+        //private MongoServer DbServer { get; set; }
+        //private MongoDatabase Database { get; set; }
 
         private MongoCollection<ShipModelDocument> ShipModelDocuments { get; set; }
 
@@ -22,17 +22,17 @@ namespace Nebula.Database {
         public static ShipModelDatabase instance {
             get {
                 if(s_Instance == null ) {
-                    s_Instance = new ShipModelDatabase(GameApplication.Instance.databaseConnectionString);
+                    s_Instance = new ShipModelDatabase();
                 }
                 return s_Instance;
             }
         }
 
-        private ShipModelDatabase(string connectionString) {
-            DbClient = new MongoClient(connectionString);
-            DbServer = DbClient.GetServer();
-            Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            ShipModelDocuments = Database.GetCollection<ShipModelDocument>(GameServerSettings.Default.DatabaseShipModelCollectionName);
+        private ShipModelDatabase() {
+            //DbClient = new MongoClient(connectionString);
+            //DbServer = DbClient.GetServer();
+            //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
+            ShipModelDocuments = GameApplication.Instance.defaultDatabase.GetCollection<ShipModelDocument>(GameServerSettings.Default.DatabaseShipModelCollectionName);
         }
 
         public void SaveShipModel(string characterID, ShipModel shipModel) {
