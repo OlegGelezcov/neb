@@ -402,6 +402,23 @@ namespace Nebula.Game.Components {
         //    }
         //    return shotID;
         //}
+
+        public void SendPetSkillUsed(Hashtable properties) {
+            if(!nebulaObject) { return; }
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.PetSkillUsed,
+                EventData = properties
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            SendEventData(EventReceiver.ItemSubscriber, eventData, sendParameters);
+        }
+
         public void SendShot(EventReceiver receiver, Hashtable shotProperties) {
             if(!nebulaObject) {
                 return;

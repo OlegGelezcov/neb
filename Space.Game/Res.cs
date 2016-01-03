@@ -2,6 +2,7 @@
     using Common;
     using Common.Space.Game.Resources;
     using Nebula;
+    using Nebula.Pets;
     using Nebula.Resources;
     using Space.Game.Resources;
     using Space.Game.Resources.Zones;
@@ -143,6 +144,14 @@
             petParameters = new PetParameters();
             petParameters.Load(Path.Combine(basePath, "Data/pets.xml"));
 
+            petSkills = new PetSkillCollection();
+            petSkills.Load(Path.Combine(basePath, "Data/pet_active_skills.xml"));
+
+        }
+
+        public PetSkillCollection petSkills {
+            get;
+            private set;
         }
 
         public PetParameters petParameters {

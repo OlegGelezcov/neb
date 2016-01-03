@@ -3,13 +3,19 @@ using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using Nebula.Game.Utils;
+using Nebula.Pets;
 using Space.Server;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Nebula.Game.Pets {
     public class PetObject : NebulaBehaviour {
 
         private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
+
+        private const float kSkillUpdateInterval = 4;
 
         private const float UPDATE_OFFSET_COOLDOWN = 30;
         private const float MIN_DISTANCE = 1f;
@@ -18,14 +24,42 @@ namespace Nebula.Game.Pets {
         public const float OFFSET_RADIUS = 10;
 
         private NebulaObject m_Owner;
+        private PetInfo m_Info;
+
         private MmoMessageComponent m_Message;
         private Vector3 m_Offset;
         private float m_OffsetChangeTimer = UPDATE_OFFSET_COOLDOWN;
         private MovableObject m_Movable;
+        private readonly List<PetSkill> m_Skills = new List<PetSkill>();
+        private float m_SkillUpdateTimer = kSkillUpdateInterval;
 
-        public void Init(NebulaObject owner) {
-            m_Owner = owner;
+        public class PetObjectInitData {
+            private NebulaObject m_Owner;
+            private PetInfo m_Info;
+
+            public PetObjectInitData(NebulaObject owner, PetInfo info) {
+                m_Owner = owner;
+                m_Info = info;
+            }
+
+            public NebulaObject owner {
+                get {
+                    return m_Owner;
+                }
+            }
+
+            public PetInfo info {
+                get {
+                    return m_Info;
+                }
+            }
+        }
+
+        public void Init(PetObjectInitData data) {
+            m_Owner = data.owner;
+            m_Info = data.info;
             UpdateOffset();
+            CreateSkills();
         }
 
         public override void Start() {
@@ -50,6 +84,7 @@ namespace Nebula.Game.Pets {
         }
 
         public override void Update(float deltaTime) {
+
             base.Update(deltaTime);
 
             if(nebulaObject.subZone != m_Owner.subZone) {
@@ -111,6 +146,8 @@ namespace Nebula.Game.Pets {
                 //}
                 Move(oPos, oRot, nPos, nRot, spFinal);
             }
+
+            UpdateSkills(deltaTime);
         }
 
         private void Move(Vector3 oldPos, Vector3 oldRot, Vector3 newPos, Vector3 newRot, float speed) {
@@ -125,6 +162,34 @@ namespace Nebula.Game.Pets {
 
         private void  UpdateOffset() {
             m_Offset = Rand.UnitVector3() * OFFSET_RADIUS;
+        }
+
+        private void CreateSkills() {
+            m_Skills.Clear();
+            if(m_Info.skills != null ) {
+                PetSkillFactory factory = new PetSkillFactory();
+                foreach(int skillId in m_Info.skills ) {
+                    var skill = factory.Create(skillId, nebulaObject.resource);
+                    if(skill != null ) {
+                        m_Skills.Add(skill);
+                    }
+                }
+            }
+
+            s_Log.InfoFormat("{0} skills created".Color(LogColor.orange), m_Skills.Count);
+        }
+
+        private void UpdateSkills(float deltaTime) {
+            m_SkillUpdateTimer -= deltaTime;
+            if(m_SkillUpdateTimer <= 0f ) {
+                m_SkillUpdateTimer = kSkillUpdateInterval;
+
+                foreach(var skill in m_Skills ) {
+                    if(skill.Use(this)) {
+                        s_Log.InfoFormat("pet skill = {0} used success", skill.id);
+                    }
+                }
+            }
         }
 
         private Vector3 targetPoint {
@@ -142,6 +207,12 @@ namespace Nebula.Game.Pets {
                     s_Log.InfoFormat("Remove pet from pet manager [red]");
                     petManager.RemovePet(nebulaObject.Id);
                 }
+            }
+        }
+
+        public void SendPetSkill(Hashtable properties) {
+            if(m_Message) {
+                m_Message.SendPetSkillUsed(properties);
             }
         }
     }

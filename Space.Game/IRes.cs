@@ -1,5 +1,6 @@
 ﻿using Common;
 using Common.Space.Game.Resources;
+using Nebula.Pets;
 using Nebula.Resources;
 using Space.Game.Resources;
 using Space.Game.Resources.Zones;
@@ -66,6 +67,8 @@ namespace Space.Game {
         DropListCollection dropLists { get; }
 
         PetParameters petParameters { get; }
+
+        PetSkillCollection petSkills { get; }
     }
 
 }

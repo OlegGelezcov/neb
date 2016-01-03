@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\photon_server\deploy\Nebula\HumansGame\bin\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;LOCAL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -73,6 +73,8 @@
     <Compile Include="Database\InventoryItemDocumentElement.cs" />
     <Compile Include="Database\PassiveBonusesDatabase.cs" />
     <Compile Include="Database\PassiveBonusesDocument.cs" />
+    <Compile Include="Database\PetDatabase.cs" />
+    <Compile Include="Database\PetDocument.cs" />
     <Compile Include="Database\ShipModelDatabase.cs" />
     <Compile Include="Database\ShipModelDocument.cs" />
     <Compile Include="Database\ShipModuleDocumentElement.cs" />
@@ -217,9 +219,15 @@
     <Compile Include="Game\OperationHandlers\SubscribeItemOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\UnsubscribeItemOperationHandler.cs" />
     <Compile Include="Game\PeerActionExecutor.cs" />
+    <Compile Include="Game\Pets\AccelerationPetSkill.cs" />
+    <Compile Include="Game\Pets\Condition.cs" />
+    <Compile Include="Game\Pets\CooldownCondition.cs" />
     <Compile Include="Game\Pets\PetManager.cs" />
     <Compile Include="Game\Pets\PetMovable.cs" />
     <Compile Include="Game\Pets\PetObject.cs" />
+    <Compile Include="Game\Pets\PetSkill.cs" />
+    <Compile Include="Game\Pets\PetSkillFactory.cs" />
+    <Compile Include="Game\Pets\ProbCondition.cs" />
     <Compile Include="Game\PlayerInfo.cs" />
     <Compile Include="Game\PlayerMailBoxManager.cs" />
     <Compile Include="Game\PlayerSkill.cs" />

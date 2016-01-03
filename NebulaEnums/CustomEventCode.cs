@@ -37,7 +37,8 @@ namespace Common
         HealDron,
         GetPlanetInfo,
         GetMiningStationInfo,
-        WorldRaceChanged
+        WorldRaceChanged,
+        PetSkillUsed
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }
