@@ -106,6 +106,8 @@ namespace Login {
                 return false;
             }
 
+            s_Log.InfoFormat("request purchase inap = {0} with interval = {1}", inapId, inapItem.data.GetValue<int>("interval", 0));
+
             Hashtable objInfo = null;
             switch(inapItem.type) {
                 case InapObjectType.exp_boost: {

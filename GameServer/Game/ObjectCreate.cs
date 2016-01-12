@@ -17,6 +17,7 @@ using System.Collections.Concurrent;
 using Space.Game.Inventory;
 using Nebula.Engine;
 using Nebula.Game.Pets;
+using Nebula.Pets;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -610,14 +611,16 @@ namespace Nebula.Game {
             return chestObject;
         }
 
-        public static GameObject CreatePet(MmoWorld world, NebulaObject owner) {
+        public static GameObject CreatePet(MmoWorld world, NebulaObject owner, PetInfo petInfo) {
+            
+            
             Type[] components = new Type[] {
                 typeof(PetObject),
-                typeof(SimpleWeapon),
+                typeof(PetWeapon),
                 typeof(ModelComponent),
                 typeof(MmoMessageComponent),
                 typeof(CharacterObject),
-                typeof(NotShipDamagableObject),
+                typeof(PetDamagable),
                 typeof(PlayerBonuses),
                 typeof(PlayerTarget),
                 typeof(BotObject),
@@ -627,12 +630,14 @@ namespace Nebula.Game {
                 typeof(PetMovable)
             };
 
-            Vector3 startPosition = owner.transform.position + Rand.UnitVector3() * PetObject.OFFSET_RADIUS;
+            
+            Vector3 startPosition = owner.transform.position + Rand.UnitVector3() * PetIdleState.OFFSET_RADIUS;
 
+            
             GameObject resultObject = new GameObject(
                 startPosition.ToVector(), 
                 new Hashtable(), 
-                Guid.NewGuid().ToString(), 
+                petInfo.id, 
                 (byte)ItemType.Bot, 
                 world, 
                 new Dictionary<byte, object>(), 
@@ -642,20 +647,20 @@ namespace Nebula.Game {
             );
 
             var petObject = resultObject.GetComponent<PetObject>();
-            petObject.Init(owner);
+            petObject.Init(new PetObject.PetObjectInitData(owner, petInfo));
 
-            var weaponObject = resultObject.GetComponent<SimpleWeapon>();
-            weaponObject.Init(new SimpleWeaponComponentData(100, 10, 2, false, 0));
+            var weaponObject = resultObject.GetComponent<PetWeapon>();
+            //weaponObject.Init(new SimpleWeaponComponentData(100, 10, 2, false, 0));
 
             var modelObject = resultObject.GetComponent<ModelComponent>();
-            modelObject.Init(new ModelComponentData("pet"));
+            modelObject.Init(new ModelComponentData(petInfo.type));
 
             var characterObject = resultObject.GetComponent<CharacterObject>();
             var ownerCharacter = owner.GetComponent<CharacterObject>();
             characterObject.Init(new BotCharacterComponentData((Workshop)ownerCharacter.workshop, ownerCharacter.level, (FractionType)ownerCharacter.fraction));
 
-            var damagable = resultObject.GetComponent<NotShipDamagableObject>();
-            damagable.Init(new NotShipDamagableComponentData(1000, true, 60, false));
+            var damagable = resultObject.GetComponent<PetDamagable>();
+            //damagable.Init(new NotShipDamagableComponentData(1000, true, 60, false));
 
             var botObject = resultObject.GetComponent<BotObject>();
             botObject.Init(new BotComponentData(BotItemSubType.Pet));

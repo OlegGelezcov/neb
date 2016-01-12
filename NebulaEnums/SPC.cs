@@ -286,6 +286,10 @@ namespace ServerClientCommon {
         ShiftState,
         Expire,
         InapId,
-        DropList
+        DropList,
+        Skills,
+        PassiveSkill,
+        KilledTime,
+        Mastery
     }
 }

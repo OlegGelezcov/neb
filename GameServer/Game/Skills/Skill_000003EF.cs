@@ -28,6 +28,10 @@ namespace Nebula.Game.Skills {
 
             var targetObj = targetComp.targetObject;
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+            }
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
             if (hit.hitAllowed) {
@@ -48,8 +52,13 @@ namespace Nebula.Game.Skills {
 
                 float damage = sourceWeapon.GetDamage(false) * dmgMultArea;
 
-                foreach(var p in items) {
-                    p.Value.GetComponent<DamagableObject>().ReceiveDamage(source.Type, source.Id, damage, sourceChar.workshop, sourceChar.level, source.GetComponent<RaceableObject>().race);
+                InputDamage inpDamage = new InputDamage(source, damage);
+                if(mastery) {
+                    inpDamage.SetDamage(inpDamage.damage * 2);
+                }
+                foreach (var p in items) {
+                    
+                    p.Value.GetComponent<DamagableObject>().ReceiveDamage(inpDamage);
                 }
 
                 return true;

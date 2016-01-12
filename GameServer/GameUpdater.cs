@@ -170,6 +170,12 @@ namespace Nebula {
             CallS2SMethod(ServerType.SelectCharacter, "RequestGuildInfo", new object[] { gameRef, character });
         }
 
+        public void SetCreditsBonus(string characterId, float bonus ) {
+            CallS2SMethod(ServerType.SelectCharacter, "SetCreditsBonus", new object[] { characterId, bonus }); 
+        }
+
+        //public void SetCreditsBonus(string )
+
         public void SendS2SWorldRaceChanged(string worldID, byte previousRace, byte currentRace ) {
             mFiber.Enqueue(() => {
                 try {

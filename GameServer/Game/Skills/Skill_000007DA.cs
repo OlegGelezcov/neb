@@ -31,7 +31,12 @@ namespace Nebula.Game.Skills {
 
             var targetObject = source.GetComponent<PlayerTarget>().targetObject;
 
-
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                secondDmgMult *= 2;
+                time *= 2;
+            }
 
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
@@ -54,9 +59,10 @@ namespace Nebula.Game.Skills {
 
                 float damage = sourceWeapon.GetDamage(false) * dmgMult;
 
+                InputDamage inpDamage = new InputDamage(source, damage);
                 foreach(var pair in items) {
                     if(pair.Value.Id != targetObject.Id ) {
-                        pair.Value.GetComponent<DamagableObject>().ReceiveDamage(source.Type, source.Id, damage, sourceCharacter.workshop, sourceCharacter.level, race.race);
+                        pair.Value.GetComponent<DamagableObject>().ReceiveDamage(inpDamage);
                     }
 
                     sourceWeapon.AddAdditionalDamager(pair.Value.Id, new ShipWeapon.AdditionalDamage { damageMult = secondDmgMult, expireTime = curTime + time });

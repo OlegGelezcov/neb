@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Common;
 using Nebula.Engine;
 using Nebula.Game.Components;
-using Common;
 using System.Collections;
 
 namespace Nebula.Game.Skills {
@@ -22,6 +18,10 @@ namespace Nebula.Game.Skills {
             float hpPc = skill.data.Inputs.Value<float>("hp_pc");
             float hp = hpPc * damagable.maximumHealth;
             //damagable.SetHealth(damagable.health + hp);
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hp *= 2;
+            }
             damagable.RestoreHealth(source, hp);
             return true;
         }

@@ -49,7 +49,13 @@ namespace Nebula.Game.Skills {
                 return false;
             });
 
-            foreach(var pTarget in targets) {
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                time *= 2;
+            }
+
+            foreach (var pTarget in targets) {
                 WeaponHitInfo hit;
                 var shot = weapon.Fire(pTarget.Value, out hit, skill.data.Id, dmgMult, forceShot: true);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shot);

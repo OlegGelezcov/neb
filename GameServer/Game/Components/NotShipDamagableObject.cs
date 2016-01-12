@@ -22,7 +22,7 @@ namespace Nebula.Game.Components {
 
         public void Init(NotShipDamagableComponentData data) {
             SetMaximumHealth(data.maxHealth);
-            SetHealth(maximumHealth);
+            ForceSetHealth(maximumHealth);
             SetIgnoreDamageAtStart(data.ignoreDamageAtStart);
             SetIgnoreDamageInterval(data.ignoreDamageInterval);
             SetCreateChestOnKilling(data.createChestOnKilling);
@@ -31,7 +31,7 @@ namespace Nebula.Game.Components {
         public override void Start() {
             base.Start();
             mBonuses = GetComponent<PlayerBonuses>();
-            SetHealth(maximumHealth);
+            ForceSetHealth(maximumHealth);
             mBot = GetComponent<BotObject>();
             mEventedObject = GetComponent<EventedObject>();
         }
@@ -66,10 +66,11 @@ namespace Nebula.Game.Components {
             return damage;
         }
 
-        public override float ReceiveDamage(byte damagerType, string damagerID, float damage, byte workshop, int level, byte race) {
-            float damageFromBase = base.ReceiveDamage(damagerType, damagerID, damage, workshop, level, race);
+        public override InputDamage ReceiveDamage(InputDamage inputDamage) {
+            InputDamage damageFromBase = base.ReceiveDamage(inputDamage);
             if (!nebulaObject ) {
-                return 0f;
+                damageFromBase.SetDamage(0f);
+                return damageFromBase;
             }
             nebulaObject.SendMessage(ComponentMessages.InCombat);
 
@@ -77,27 +78,33 @@ namespace Nebula.Game.Components {
                 if(isFortification) {
                     log.InfoFormat("fortification ignored damage at start [blue]");
                 }
-                return 0.0f;
+                damageFromBase.SetDamage(0f);
+                return damageFromBase;
             }
             if (god) {
                 log.InfoFormat("[{0}]: Bot if GOD, damage ignored [blue]", (nebulaObject.world as MmoWorld).Zone.Id);
-                return 0f;
+                damageFromBase.SetDamage(0f);
+                return damageFromBase;
             }
 
             if(mBonuses) {
                 if(mBonuses.isImmuneToDamage) {
                     log.InfoFormat("Has bonus to ignore damage... [blue]");
-                    damageFromBase = 0f;
+                    damageFromBase.SetDamage(0.0f);
                 }
             }
-            float modifiedDamage = ModifyDamage(damageFromBase);
-            float absorbedDamage = AbsorbDamage(modifiedDamage);
 
-            SetHealth(health - absorbedDamage);
-            AddDamager(damagerID, damagerType, absorbedDamage, workshop, level, race);
+            damageFromBase.SetDamage(ModifyDamage(damageFromBase.damage));
+            damageFromBase.SetDamage(AbsorbDamage(damageFromBase.damage));
+
+            SubHealth(damageFromBase.damage);
+
+            if (damageFromBase.hasDamager) {
+                AddDamager(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.damage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race);
+            }
 
             if (mEventedObject != null) {
-                mEventedObject.ReceiveDamage(new DamageInfo(damagerID, damagerType, absorbedDamage, workshop, level, race));
+                mEventedObject.ReceiveDamage(new DamageInfo(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.damage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race));
             }
 
             if(health <= 0f ) {
@@ -105,7 +112,7 @@ namespace Nebula.Game.Components {
                 nebulaObject.SendMessage(ComponentMessages.OnWasKilled);
             }
 
-            return absorbedDamage;
+            return damageFromBase;
         }
 
         public override void Death() {

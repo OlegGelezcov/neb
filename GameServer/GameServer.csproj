@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\photon_server\deploy\Nebula\HumansGame\bin\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;LOCAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -120,6 +120,8 @@
     <Compile Include="Game\Components\DamagableObject.cs" />
     <Compile Include="Game\Components\EventedObject.cs" />
     <Compile Include="Game\Components\FixedInputDamageDamagableObject.cs" />
+    <Compile Include="Game\Components\InputDamage.cs" />
+    <Compile Include="Game\Components\InputHeal.cs" />
     <Compile Include="Game\Components\MainOutpost.cs" />
     <Compile Include="Game\Components\MiningStation.cs" />
     <Compile Include="Game\Components\MmoItemPropertyUpdater.cs" />
@@ -219,15 +221,49 @@
     <Compile Include="Game\OperationHandlers\SubscribeItemOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\UnsubscribeItemOperationHandler.cs" />
     <Compile Include="Game\PeerActionExecutor.cs" />
-    <Compile Include="Game\Pets\AccelerationPetSkill.cs" />
-    <Compile Include="Game\Pets\Condition.cs" />
-    <Compile Include="Game\Pets\CooldownCondition.cs" />
+    <Compile Include="Game\Pets\CollectContainerState.cs" />
+    <Compile Include="Game\Pets\Conditions\PetOwnerEnergyLessThanTargetEnergyCondition.cs" />
+    <Compile Include="Game\Pets\Conditions\PetOwnerHasSubscriberCondition.cs" />
+    <Compile Include="Game\Pets\Conditions\PetOwnerInCombatCondition.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\AutoLootPetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\CreditsPetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\DamagePetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\EmptyPetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\EnergyRegenPetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\InputDamagePetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\InputHealingPetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\OptimalDistancePetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\OutputHealingPetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\PassiveBonusFactory.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\PassivePetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\PvpPointsPetBonus.cs" />
+    <Compile Include="Game\Pets\PassiveBonuses\SpeedPetBonus.cs" />
+    <Compile Include="Game\Pets\Skills\AbsorbDamagePetSkill.cs" />
+    <Compile Include="Game\Pets\Skills\AccelerationPetSkill.cs" />
+    <Compile Include="Game\Pets\Conditions\Condition.cs" />
+    <Compile Include="Game\Pets\Conditions\CooldownCondition.cs" />
+    <Compile Include="Game\Pets\Skills\AdditionalDamagePetSkill.cs" />
+    <Compile Include="Game\Pets\Skills\DecreaseInputDamageSkill.cs" />
+    <Compile Include="Game\Pets\Skills\DecreasOwnerSubscriberDamageSkill.cs" />
+    <Compile Include="Game\Pets\Skills\IncreaseEnergyCostPetSkill.cs" />
+    <Compile Include="Game\Pets\Skills\OwnerTargetedPetSkill.cs" />
+    <Compile Include="Game\Pets\PetBaseState.cs" />
+    <Compile Include="Game\Pets\PetCombatState.cs" />
+    <Compile Include="Game\Pets\PetDamagable.cs" />
+    <Compile Include="Game\Pets\PetIdleState.cs" />
     <Compile Include="Game\Pets\PetManager.cs" />
     <Compile Include="Game\Pets\PetMovable.cs" />
     <Compile Include="Game\Pets\PetObject.cs" />
-    <Compile Include="Game\Pets\PetSkill.cs" />
-    <Compile Include="Game\Pets\PetSkillFactory.cs" />
-    <Compile Include="Game\Pets\ProbCondition.cs" />
+    <Compile Include="Game\Pets\Conditions\PetOwnerHpPcLessThanCondition.cs" />
+    <Compile Include="Game\Pets\Skills\PetSkill.cs" />
+    <Compile Include="Game\Pets\Skills\PetSkillFactory.cs" />
+    <Compile Include="Game\Pets\PetState.cs" />
+    <Compile Include="Game\Pets\PetWeapon.cs" />
+    <Compile Include="Game\Pets\Conditions\ProbCondition.cs" />
+    <Compile Include="Game\Pets\Skills\ReflectionDamageSkill.cs" />
+    <Compile Include="Game\Pets\Skills\RestoreHpPetSkill.cs" />
+    <Compile Include="Game\Pets\Skills\ResurrectGroupMemberPetSkill.cs" />
+    <Compile Include="Game\Pets\Skills\VampirismPetSkill.cs" />
     <Compile Include="Game\PlayerInfo.cs" />
     <Compile Include="Game\PlayerMailBoxManager.cs" />
     <Compile Include="Game\PlayerSkill.cs" />
@@ -368,6 +404,7 @@
     <Compile Include="Game\TestElementAttribute.cs" />
     <Compile Include="Game\TestRPCAttribute.cs" />
     <Compile Include="Game\Utils\LogColor.cs" />
+    <Compile Include="Game\PetOperations.cs" />
     <Compile Include="Game\WeaponHitInfo.cs" />
     <Compile Include="Game\WorldAsteroidManager.cs" />
     <Compile Include="Game\WorldEvents.cs" />

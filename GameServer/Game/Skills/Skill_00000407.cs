@@ -22,6 +22,12 @@ namespace Nebula.Game.Skills {
             var sourceChar = source.GetComponent<CharacterObject>();
             var sourceDamagable = source.GetComponent<DamagableObject>();
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                hp_pc *= 2;
+            }
+
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
 
@@ -41,6 +47,7 @@ namespace Nebula.Game.Skills {
                 });
 
                 float hp = hp_pc * sourceDamagable.maximumHealth;
+
                 foreach(var p in items) {
                     var d = p.Value.GetComponent<DamagableObject>();
                     d.RestoreHealth(source, hp);

@@ -15,6 +15,7 @@ using System.Collections;
 using ServerClientCommon;
 using GameMath;
 using ExitGames.Logging;
+using Nebula.Game.Pets;
 
 namespace Nebula.Game.Components {
 
@@ -82,7 +83,22 @@ namespace Nebula.Game.Components {
             //CreditsObject creadits = new CreditsObject(resource.MiscItemDataRes.CreditsObject());
             //creadits.SetCount(20);
             //newObjects.TryAdd(creadits.Id, creadits);
-            content.TryAdd(damager.DamagerId, newObjects);
+            if( content.TryAdd(damager.DamagerId, newObjects) ) {
+                if(damager.DamagerType == (byte)ItemType.Avatar) {
+                    NotifyChestDamager(damager);
+                }
+            }
+        }
+
+        private void NotifyChestDamager(DamageInfo damager) {
+            MmoWorld world = nebulaObject.mmoWorld();
+            NebulaObject playerObj;
+            if(world.TryGetObject((byte)damager.DamagerType, damager.DamagerId, out playerObj)) {
+                var petManager = playerObj.GetComponent<PetManager>();
+                if(petManager) {
+                    petManager.ChestFilled(nebulaObject);
+                }
+            }
         }
 
         private float GetColorRemapWeight(DamageInfo damager) {

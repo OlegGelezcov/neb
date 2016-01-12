@@ -8,6 +8,12 @@ namespace Nebula.Game.Skills {
             info = new Hashtable();
             float hpPc = skill.GetFloatInput("hp_pc");
             float hpTime = skill.GetFloatInput("hp_time");
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpTime *= 2;
+            }
+
             source.Skills().Set432(hpTime, hpPc);
             return true;
         }

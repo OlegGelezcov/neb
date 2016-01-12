@@ -20,6 +20,12 @@ namespace Nebula.Game.Skills {
             var targetObject = source.Target().targetObject;
 
             float damageMult = skill.GetFloatInput("dmg_mult");
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                damageMult *= 2;
+            }
+
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, damageMult);
             if(hit.hitAllowed) {

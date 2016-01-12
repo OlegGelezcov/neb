@@ -25,6 +25,11 @@ namespace Nebula.Game.Skills {
             float targetHeal = damage * healMult;
             float areaHeal = damage * healAreaMult;
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                targetHeal *= 2;
+                areaHeal *= 2;
+            }
             var weapon = source.Weapon();
             var heal = weapon.Heal(source.Target().targetObject, targetHeal, skill.data.Id);
 

@@ -12,6 +12,12 @@ namespace Nebula.Game.Skills {
             float hpRestorePc = skill.GetFloatInput("hp_restore_pc");
             float maxHpPc = skill.GetFloatInput("max_hp_pc");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                maxHpPc *= 2;
+                hpRestorePc *= 2;
+            }
+
             var damagable = source.Damagable();
             float restoredHp = hpRestorePc * damagable.baseMaximumHealth;
             damagable.RestoreHealth(source, restoredHp);

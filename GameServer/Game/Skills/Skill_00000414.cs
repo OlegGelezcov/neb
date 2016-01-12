@@ -21,11 +21,18 @@ namespace Nebula.Game.Skills {
             var damagable = source.Damagable();
             float restoredHp = hpPc * damagable.maximumHealth;
             float restoredHpPerSec = restoredHp / hpTime;
-            damagable.SetRestoreHPPerSec(restoredHpPerSec, hpTime);
+
+            string id = source.Id + skill.data.Id.ToString();
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpTime *= 2;
+            }
+            damagable.SetRestoreHPPerSec(restoredHpPerSec, hpTime, id);
 
             var items = GetHealTargets(source, source, radius);
             foreach(var pItem in items) {
-                pItem.Value.Damagable().SetRestoreHPPerSec(restoredHpPerSec, hpTime);
+                pItem.Value.Damagable().SetRestoreHPPerSec(restoredHpPerSec, hpTime, id);
             }
             return true;
         }

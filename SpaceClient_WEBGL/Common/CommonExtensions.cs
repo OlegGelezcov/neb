@@ -177,6 +177,10 @@ namespace Common {
             return ht.Contains(key) ? (T)ht[key] : defaultValue;
         }
 
+        public static T GetValue<T>(this System.Collections.IDictionary ht, int key, T defaultValue ) {
+            return ht.Contains(key) ? (T)ht[key] : defaultValue;
+        }
+
 
         public static ItemType toItemType(this byte b) {
             return (ItemType)b;

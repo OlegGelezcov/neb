@@ -26,6 +26,12 @@ namespace Nebula.Game.Skills {
             var targetBonuses = targetObject.Bonuses();
 
             float time = skill.GetFloatInput("time");
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2;
+            }
+
             //decrated skill do nothing (only for icons)
             Buff sourceDebuff = new Buff(skill.id, null, Common.BonusType.block_resist, time);
             sourceBonuses.SetBuff(sourceDebuff);

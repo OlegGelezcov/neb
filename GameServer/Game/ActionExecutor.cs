@@ -29,10 +29,12 @@ namespace Space.Game {
 
         private MmoActor _actor;
         private object syncObject = new object();
+        private PetOperations m_PetOps;
 
         public ActionExecutor(MmoActor actor) 
         {
             _actor = actor;
+            m_PetOps = new PetOperations(_actor);
         }
 
         public Hashtable ChangeControlState(byte state)
@@ -1189,7 +1191,7 @@ namespace Space.Game {
         public Hashtable multhp(float mult) {
             var targetObject = Player.nebulaObject.Target().targetObject;
             if(targetObject.Damagable()) {
-                targetObject.Damagable().SetHealth(targetObject.Damagable().health * mult);
+                targetObject.Damagable().ForceSetHealth(targetObject.Damagable().health * mult);
             }
             return new Hashtable();
         }
@@ -2041,6 +2043,8 @@ namespace Space.Game {
                 Player.EventOnStationHoldUpdated();
             }
 
+            Player.GetComponent<PlayerLoaderObject>().SaveTimedEffects();
+
             return new Hashtable {
                 {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
                 {(int)SPC.Interval, expObject.interval },
@@ -2048,5 +2052,52 @@ namespace Space.Game {
                 {(int)SPC.Tag, expObject.tag }
             };
         } 
+
+        public Hashtable ReceiveDamage(float dmg) {
+            float actual = Player.nebulaObject.Damagable().ReceiveDamage(new InputDamage(null, dmg)).damage;
+            return new Hashtable {
+                {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                {(int)SPC.Damage, dmg },
+                {(int)SPC.ActualDamage, actual}
+            };
+        }
+
+        //====================================Pet Operations=====================================
+        public Hashtable GetPets() {
+            return m_PetOps.GetPets();
+        }
+
+        public Hashtable AddRandomPet() {
+            return m_PetOps.AddRandomPet();
+        }
+
+        /*
+        public Hashtable ActivatePet(string id) {
+            return m_PetOps.ActivatePet(id);
+        }
+
+        public Hashtable DeactivatePet(string id) {
+            return m_PetOps.DeactivatePet(id);
+        }*/
+
+        public Hashtable ActivatePet(string deactivatePetId, string activatePetId ) {
+            return m_PetOps.ActivatePet(deactivatePetId, activatePetId);
+        }
+
+        public Hashtable AddOrReplaceActiveSkill(string petId, int oldSkill, int newSkill) {
+            return m_PetOps.AddOrReplaceActiveSkill(petId, oldSkill, newSkill);
+        }
+
+        public Hashtable SetCurrentEnergy(float en) {
+            Player.GetComponent<ShipEnergyBlock>().SetCurrentEnergy(en);
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                { (int)SPC.Energy, Player.GetComponent<ShipEnergyBlock>().currentEnergy }
+            };
+        }
+
+        public Hashtable SetPassiveSkill(string petId, int skillId ) {
+            return m_PetOps.SetPassiveSkill(petId, skillId);
+        }
     }
 }

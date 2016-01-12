@@ -56,10 +56,10 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public override float ReceiveDamage(byte damagerType, string damagerID, float damage, byte workshop, int level, byte race) {
-            float dmg =  base.ReceiveDamage(damagerType, damagerID, damage, workshop, level, race);
+        public override InputDamage ReceiveDamage(InputDamage inputDamage) {
+            InputDamage dmg =  base.ReceiveDamage(inputDamage);
             if(mOutpost) {
-                log.InfoFormat("outpost receive damage input = {0} output = {1} [blue]", damage, dmg);
+                log.InfoFormat("outpost receive damage input = {0} output = {1} [blue]", inputDamage.damage, dmg.damage);
             }
             return dmg;
         }
@@ -87,7 +87,7 @@ namespace Nebula.Game.Components {
                     int playerLevel = levelCalc.LevelForExp(playerCharacter.exp);
                     int expToNextLevel = levelCalc.ExpToNextLevel(playerLevel);
 
-                    float expPC = 50.0f / (50.0f + playerLevel * 20.0f);
+                    float expPC = 50.0f / (50.0f + playerLevel * 200.0f);
                     float finalExp = expToNextLevel * expPC;
 
                     playerCharacter.AddExp((int)finalExp);

@@ -22,6 +22,12 @@ namespace Nebula.Game.Skills {
             float speedTime = skill.GetFloatInput("time");
 
             float speedValue = sourceMovable.maximumSpeed * speedPc;
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                speedTime *= 2;
+            }
+
             Buff targetBuff = new Buff(skill.id, null, Common.BonusType.decrease_speed_on_cnt, speedTime, speedValue);
             targetBonuses.SetBuff(targetBuff);
             return true;

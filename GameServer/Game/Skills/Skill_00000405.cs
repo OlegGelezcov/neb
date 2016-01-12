@@ -15,8 +15,12 @@ namespace Nebula.Game.Skills {
 
             bool settedOnTarget = false;
             float time = skill.GetFloatInput("time");
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2;
+            }
 
-            if(sourceTarget.targetObject) {
+            if (sourceTarget.targetObject) {
                 var targetCharacter = sourceTarget.targetObject.Character();
                 if(targetCharacter) {
                     var sourceCharacter = source.Character();

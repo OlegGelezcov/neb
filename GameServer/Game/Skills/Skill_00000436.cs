@@ -24,6 +24,11 @@ namespace Nebula.Game.Skills {
             float optimalDistanceTime = skill.data.Inputs.Value<float>("optimal_distance_time");
             float radius = skill.data.Inputs.Value<float>("radius");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                optimalDistanceTime *= 2;
+            }
+
             var sourceChar = source.GetComponent<CharacterObject>();
 
             var items = (source.world as MmoWorld).GetItems((it) => {

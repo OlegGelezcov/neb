@@ -19,10 +19,17 @@ namespace Nebula.Game.Skills {
             float dmgMult = skill.data.Inputs.GetValue<float>("dmg_mult", 0f);
             float blockWeaponInterval = skill.data.Inputs.GetValue<float>("block_weapon_interval", 0f);
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+            }
             var weapon = source.GetComponent<BaseWeapon>();
             WeaponHitInfo hit;
             var shot = weapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {
+                if(mastery) {
+                    blockWeaponInterval *= 2;
+                }
                 Buff blockWeaponBuff = new Buff(skill.data.Id.ToString(), null, BonusType.block_weapon, blockWeaponInterval);
                 source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>().SetBuff(blockWeaponBuff);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shot);

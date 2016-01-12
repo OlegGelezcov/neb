@@ -51,6 +51,11 @@ namespace Nebula.Game.Skills {
                 source.GetComponent<MmoMessageComponent>().StartJumpToPosition(finalPoint);
             }
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgTime *= 2;
+            }
+
             Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_damage_on_pc, dmgTime, dmgPc);
             source.GetComponent<PlayerBonuses>().SetBuff(buff);
 

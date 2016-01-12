@@ -24,6 +24,10 @@ namespace Nebula.Game.Skills {
             var sourceCharacter = source.GetComponent<CharacterObject>();
 
             WeaponHitInfo hit;
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+            }
             var shot = weapon.Fire(out hit, skill.data.Id, dmgMult);
             if (hit.hitAllowed) {
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shot);
@@ -40,6 +44,9 @@ namespace Nebula.Game.Skills {
                     return false;
                 });
 
+                if(mastery) {
+                    critChanceTime *= 2;
+                }
                 foreach(var friend in friends ) {
                     Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_crit_chance_on_cnt, critChanceTime, critChanceCnt);
                     friend.Value.GetComponent<PlayerBonuses>().SetBuff(buff);

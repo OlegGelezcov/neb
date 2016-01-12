@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Nebula.Engine;
-using Nebula.Game.Components;
+﻿using Nebula.Engine;
 using Nebula.Game.Bonuses;
+using Nebula.Game.Components;
+using System.Collections;
 
 namespace Nebula.Game.Skills {
     public class Skill_00000450 : SkillExecutor {
@@ -19,7 +15,17 @@ namespace Nebula.Game.Skills {
             float hpBuffTime = skill.GetFloatInput("hpbuff_time");
 
             float hpForSec = damagable.maximumHealth * hpPc / hpTime;
-            damagable.SetRestoreHPPerSec(hpForSec, hpTime);
+            string id = source.Id + skill.data.Id.ToString();
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpForSec *= 2;
+                hpBuffTime *= 2;
+            }
+
+            damagable.SetRestoreHPPerSec(hpForSec, hpTime, id);
+
+            
 
             Buff buff = new Buff(skill.id, null, Common.BonusType.increase_healing_speed_on_pc, hpBuffTime, hpBuffPc);
             source.Bonuses().SetBuff(buff);

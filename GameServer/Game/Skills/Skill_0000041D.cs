@@ -20,12 +20,20 @@ namespace Nebula.Game.Skills {
 
             var weapon = source.Weapon();
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                restoreHP *= 2;
+            }
+
             var heal = weapon.Heal(targetObject, restoreHP, skill.data.Id);
             source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal);
 
             var targetEnergy = targetObject.GetComponent<ShipEnergyBlock>();
             if(targetEnergy ) {
                 float restoredEnergy = hpPc * targetEnergy.maximumEnergy;
+                if(mastery) {
+                    restoredEnergy *= 2;
+                }
                 targetEnergy.RestoreEnergy(restoredEnergy);
             }
             return true;

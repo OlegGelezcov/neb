@@ -32,6 +32,12 @@ namespace Nebula.Game.Skills {
                 return false;
             }
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                critDmgPcTime *= 2;
+            }
+
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {

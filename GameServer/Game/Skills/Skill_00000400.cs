@@ -20,6 +20,11 @@ namespace Nebula.Game.Skills {
             string buffID = source.Id + skill.data.Id;
             float buffSpeedPercent = skill.data.Inputs.Value<float>("b_speed_pc");
             float buffSpeedInterval = skill.data.Inputs.Value<float>("b_speed_interval");
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                buffSpeedInterval *= 2;
+            }
+
             Buff speedBuff = new Buff(buffID, null, BonusType.increase_speed_on_pc, buffSpeedInterval, buffSpeedPercent);
             sourceBonuses.SetBuff(speedBuff);
             return true;

@@ -47,6 +47,12 @@ namespace Nebula.Game.Skills {
 
             float odMult = skill.GetFloatInput("od_mult");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                odMult *= 2;
+            }
+
+
             float distanceToTarget = source.transform.DistanceTo(targetObject.transform);
             float limitDistance = sourceWeapon.optimalDistance * odMult;
 

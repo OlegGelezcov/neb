@@ -22,6 +22,10 @@ namespace Nebula.Game.Skills {
             if(!sourceDamagable) { return false; }
 
             //sourceDamagable.SetHealth(Mathf.Clamp( sourceDamagable.health + sourceDamagable.baseMaximumHealth * hpPercent, 0f, sourceDamagable.maximumHealth));
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpPercent *= 2;
+            }
             sourceDamagable.RestoreHealth(source, sourceDamagable.baseMaximumHealth * hpPercent);
             return true;
         }

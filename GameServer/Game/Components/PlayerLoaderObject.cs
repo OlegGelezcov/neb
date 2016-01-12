@@ -3,6 +3,7 @@ using ExitGames.Logging;
 using Nebula.Database;
 using Nebula.Engine;
 using Nebula.Game.Pets;
+using Nebula.Game.Utils;
 using Space.Game;
 
 namespace Nebula.Game.Components {
@@ -63,6 +64,15 @@ namespace Nebula.Game.Components {
                 TimedEffectsDatabase.instance.SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
                 PetDatabase.instance.SavePets(character.characterId, player.GetComponent<PetManager>().pets);
             }
+        }
+
+        public void SaveTimedEffects() {
+            log.InfoFormat("save timed effects....".Color(LogColor.orange));
+            var character = GetComponent<PlayerCharacterObject>();
+            if (character == null) {
+                return;
+            }
+            TimedEffectsDatabase.instance.SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
         }
 
         public void SaveInventory() {

@@ -469,7 +469,7 @@ namespace Nebula.Game.Components {
                         log.InfoFormat("Respawn by skill check, respawn prob = {0:F1}, random number = {1:F1} blue", respawnProb, randomNumber);
                         if(randomNumber < respawnProb) {
                             var damagable = nebulaObject.Damagable();
-                            damagable.SetHealth(damagable.maximumHealth * regeneratedHp);
+                            damagable.ForceSetHealth(damagable.maximumHealth * regeneratedHp);
                             nebulaObject.MmoMessage().SendResurrect();
                             return true;
                         }
@@ -485,7 +485,7 @@ namespace Nebula.Game.Components {
                         float randomNumber = Rand.Float01();
                         if(randomNumber < respawnProb) {
                             var damagable = nebulaObject.Damagable();
-                            damagable.SetHealth(damagable.maximumHealth * regeneratedHp);
+                            damagable.ForceSetHealth(damagable.maximumHealth * regeneratedHp);
                             nebulaObject.MmoMessage().SendResurrect();
                             return true;
                         }
@@ -500,7 +500,7 @@ namespace Nebula.Game.Components {
                         var hpPc = skill.GetFloatInput("hp_regen_pc");
                         if(Rand.Float01() < resurrectProb) {
                             var damagable = nebulaObject.Damagable();
-                            damagable.SetHealth(damagable.maximumHealth * hpPc);
+                            damagable.ForceSetHealth(damagable.maximumHealth * hpPc);
                             nebulaObject.MmoMessage().SendResurrect();
                             return true;
                         }
@@ -515,7 +515,7 @@ namespace Nebula.Game.Components {
                         var hpPc = skill.GetFloatInput("hp_regen_pc");
                         if(Rand.Float01() < resurrectProb) {
                             var damagable = nebulaObject.Damagable();
-                            damagable.SetHealth(damagable.maximumHealth * hpPc);
+                            damagable.ForceSetHealth(damagable.maximumHealth * hpPc);
                             nebulaObject.MmoMessage().SendResurrect();
                             return true;
                         }
@@ -625,7 +625,7 @@ namespace Nebula.Game.Components {
                 float eatedDamage = inputDamage * m404.value;
                 outputDamage = Mathf.ClampLess(inputDamage - eatedDamage, 0);
 
-                nebulaObject.Damagable().SetHealth(nebulaObject.Damagable().health - eatedDamage);
+                nebulaObject.Damagable().SubHealth(eatedDamage);
 
                 log.InfoFormat("eat ally damage = {0}", eatedDamage);
 

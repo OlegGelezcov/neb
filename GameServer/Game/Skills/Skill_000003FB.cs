@@ -53,6 +53,11 @@ namespace Nebula.Game.Skills {
             float debuffDamagePercent = skill.data.Inputs.Value<float>("db_dmg_pc");
             float debuffDamageInterval = skill.data.Inputs.Value<float>("db_dmg_interval");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                debuffDamageInterval *= 2;
+            }
+
             Buff damageImmunityBuff = new Buff(buffID, null, BonusType.damage_immunity, debuffDamageInterval);
             Buff damageDebuff = new Buff(buffID, null, BonusType.decrease_damage_on_pc, debuffDamageInterval, debuffDamagePercent);
             targetBonuses.SetBuff(damageImmunityBuff);

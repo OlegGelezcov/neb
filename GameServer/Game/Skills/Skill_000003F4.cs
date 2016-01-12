@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Common;
 using Nebula.Engine;
 using Nebula.Game.Components;
-using Common;
+using System.Collections;
 
 namespace Nebula.Game.Skills {
     public class Skill_000003F4 : SkillExecutor {
@@ -18,7 +14,11 @@ namespace Nebula.Game.Skills {
             float hpTime = skill.data.Inputs.Value<float>("hp_time");
             var sourceDamagable = source.GetComponent<DamagableObject>();
             var hpVal = sourceDamagable.maximumHealth * hpPc;
-            sourceDamagable.SetRestoreHPPerSec(hpVal, hpTime);
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpTime *= 2;
+            }
+            sourceDamagable.SetRestoreHPPerSec(hpVal, hpTime, source.Id + skill.data.Id.ToString());
             return true;
         }
     }

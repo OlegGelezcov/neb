@@ -48,7 +48,12 @@ namespace Nebula.Game.Skills {
 
             int counter = 0;
 
-            foreach(var itemPair in items ) {
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+            }
+
+            foreach (var itemPair in items ) {
                 if (counter >= Math.Min(dronCount, itemCount)) {
                     break;
                 }

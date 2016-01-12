@@ -17,6 +17,12 @@ namespace Nebula.Game.Skills {
             float dmgMult = skill.GetFloatInput("dmg_mult");
             float hpPc = skill.GetFloatInput("hp_pc");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                hpPc *= 2;
+            }
+
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {
                 sourceWeapon.Heal(source, source.Damagable().maximumHealth * hpPc);

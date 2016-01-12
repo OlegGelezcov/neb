@@ -19,7 +19,11 @@ namespace Nebula.Game.Skills {
             float optimalDistancePc = skill.data.Inputs.Value<float>("optimal_distance_pc");
             float optimalDistanceTime = skill.data.Inputs.Value<float>("optimal_distance_time");
 
-            if(CheckForShotFriend(source, skill)) {
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                optimalDistanceTime *= 2;
+            }
+            if (CheckForShotFriend(source, skill)) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_optimal_distance_on_pc, optimalDistanceTime, optimalDistancePc);
                 source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>().SetBuff(buff);
                 return true;

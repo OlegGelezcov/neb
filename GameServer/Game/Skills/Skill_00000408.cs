@@ -19,7 +19,11 @@ namespace Nebula.Game.Skills {
             float dmgMult = skill.GetFloatInput("dmg_mult");
             float critChancePc = skill.GetFloatInput("crit_chance_pc");
             float critChanceTime = skill.GetFloatInput("time");
-
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                critChanceTime *= 2;
+            }
             WeaponHitInfo hit;
             var shot = source.Weapon().Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {

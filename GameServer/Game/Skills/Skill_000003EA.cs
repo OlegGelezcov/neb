@@ -33,7 +33,10 @@ namespace Nebula.Game.Skills {
                 //Buff hpRestorBuff = new Buff(id, null, BonusType.restore_hp_on_pc_for_sec, hpRestorDur, hpRestorPc);
                 //source.GetComponent<PlayerBonuses>().SetBuff(hpRestorBuff);
                 var damagable = source.GetComponent<DamagableObject>();
-                damagable.SetRestoreHPPerSec(hpRestorPc * damagable.maximumHealth, hpRestorDur);
+                if(RollMastery(source)) {
+                    hpRestorDur *= 2;
+                }
+                damagable.SetRestoreHPPerSec(hpRestorPc * damagable.maximumHealth, hpRestorDur, id);
 
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;

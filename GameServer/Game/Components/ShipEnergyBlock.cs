@@ -28,6 +28,8 @@ namespace Nebula.Game.Components {
 
 
 
+
+
         private float mCurrentEnergy;
         private float mEnergyCostPerShiftMoving;
         private float mMaxEnergyFromResource;
@@ -44,6 +46,7 @@ namespace Nebula.Game.Components {
             mPlayer = GetComponent<MmoActor>();
             mDamagable = GetComponent<ShipBasedDamagableObject>();
             mBonuses = GetComponent<PlayerBonuses>();
+
 
             //energyBuffs = new Dictionary<string, float>();
            
@@ -74,7 +77,14 @@ namespace Nebula.Game.Components {
                 return;
             }
 
-            mCurrentEnergy += deltaTime * ApplyRestoreEnergyPassiveBonus ( mEnergyRestoration );
+            float bonMult = 1.0f;
+            float bonAdd = 0f;
+
+            if(mBonuses) {
+                bonMult = (1.0f + mBonuses.energyRegenPcBonus);
+                bonAdd = mBonuses.energyRegenCntBonus;
+            }
+            mCurrentEnergy += deltaTime * ApplyRestoreEnergyPassiveBonus ( mEnergyRestoration * bonMult + bonAdd );
 
             if(mAI) {
                 if(mAI.shiftState.keyPressed) {
@@ -137,6 +147,10 @@ namespace Nebula.Game.Components {
             float modifiedEnergy = en * (1.0f + mBonuses.energyCostPcBonus) + mBonuses.energyCostCntBonus;
             mCurrentEnergy -= modifiedEnergy;
             mCurrentEnergy = Mathf.Clamp(mCurrentEnergy, 0f, maximumEnergy);
+        }
+
+        public void SetCurrentEnergy(float en) {
+            mCurrentEnergy = Mathf.Clamp(en, 0f, maximumEnergy);
         }
 
         //public void SetEnergyBuf(string id, float buf) 

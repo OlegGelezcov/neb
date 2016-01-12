@@ -23,6 +23,11 @@ namespace Nebula.Game.Skills {
                 target = source;
             }
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                absorbedDamage *= 2;
+            }
+
             target.Damagable().SetAbsorbDamage(absorbedDamage);
             return true;
         }

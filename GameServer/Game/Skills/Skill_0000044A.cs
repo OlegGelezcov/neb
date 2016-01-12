@@ -33,6 +33,12 @@ namespace Nebula.Game.Skills {
             mUseCounter = Mathf.Clamp(mUseCounter, 0, 2);
             dmgMult = ModifyDamageMult(dmgMult);
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                hpTime *= 2;
+            }
+
             var sourceWeapon = source.Weapon();
             var targetObject = source.Target().targetObject;
             WeaponHitInfo hit;

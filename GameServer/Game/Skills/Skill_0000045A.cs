@@ -19,6 +19,12 @@ namespace Nebula.Game.Skills {
             float speedTime = skill.data.Inputs.Value<float>("speed_time");
 
             var sourceBonuses = source.GetComponent<PlayerBonuses>();
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                speedTime *= 2;
+            }
+
             Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_speed_on_pc, speedTime, speedPc);
             sourceBonuses.SetBuff(buff);
             return true;

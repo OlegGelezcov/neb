@@ -33,11 +33,14 @@ namespace Nebula.Game.Bonuses
         //additional info at buff
         public int tag { get; private set; }
 
+        private bool m_RequireSkill = true;
+
         //private int mStackCount;
 
         public Buff(string id, NebulaObject inOwner, BonusType inBuffType, 
             float inInterval = -1.0f, float inValue = 1.0f, 
-            Func<bool> inCustomCheck = null, int inSourceSkillId = -1)
+            Func<bool> inCustomCheck = null, int inSourceSkillId = -1, 
+            bool requireSkill = true)
         {
             this.id = id;
             buffType = inBuffType;
@@ -50,21 +53,24 @@ namespace Nebula.Game.Bonuses
 
             //set valid at moment creation
             valid = true;
-           // mStackCount = 1;
+            // mStackCount = 1;
+            m_RequireSkill = requireSkill;
 
             //if buff act indefinetly and object and skill not setted this error, impossible make check validity
             //indefinte buffs act only on self
-            if(interval <= 0 ) {
-                if(owner == null || (sourceSkillId == -1) ) {
-                    valid = false;
-                    throw new Exception("For unlimited buffs must be setted owner and source skill");
+            if (requireSkill) {
+                if (interval <= 0) {
+                    if (owner == null || (sourceSkillId == -1)) {
+                        valid = false;
+                        throw new Exception("For unlimited buffs must be setted owner and source skill");
+                    }
                 }
-            }
 
-            if(!(sourceSkillId == -1) && owner != null ) {
-                cachedSkills = owner.GetComponent<PlayerSkills>();
-                if(cachedSkills == null ) {
-                    throw new Exception("Owner of buff must have component PlayerSKills");
+                if (!(sourceSkillId == -1) && owner != null) {
+                    cachedSkills = owner.GetComponent<PlayerSkills>();
+                    if (cachedSkills == null) {
+                        throw new Exception("Owner of buff must have component PlayerSKills");
+                    }
                 }
             }
         }
@@ -112,47 +118,60 @@ namespace Nebula.Game.Bonuses
             if(!valid) {
                 return;
             }
-            //for timed buff update timer
-            if(interval > 0  ) {
-                mTimer -= deltaTime;
-                if(mTimer <= 0f ) {
-                    valid = false;
-                    if(mExpireAction != null) {
-                        mExpireAction();
+
+            if (m_RequireSkill) {
+                //for timed buff update timer
+                if (interval > 0) {
+                    mTimer -= deltaTime;
+                    if (mTimer <= 0f) {
+                        valid = false;
+                        if (mExpireAction != null) {
+                            mExpireAction();
+                        }
+                        return;
                     }
-                    return;
+                } else {
+                    //for non timed persistent buff check owner and state of owner skill
+                    if (!owner) {
+                        valid = false;
+                        return;
+                    }
+                    //check that skill present at owner
+                    var skill = cachedSkills.GetSkillById(sourceSkillId);
+                    if (skill == null) {
+                        valid = false;
+                        return;
+                    }
+
+                    //chect skill type
+                    if (skill.data.Type != SkillType.Persistent) {
+                        valid = false;
+                        return;
+                    }
+
+                    //check skill is enabled
+                    if (skill.isOn == false) {
+                        valid = false;
+                        return;
+                    }
+
                 }
+
+                if (customCheck != null) {
+                    if (!customCheck()) {
+                        valid = false;
+                        return;
+                    }
+                }
+
             } else {
-                //for non timed persistent buff check owner and state of owner skill
-                if(!owner) {
-                    valid = false;
-                    return;
-                }
-                //check that skill present at owner
-                var skill = cachedSkills.GetSkillById(sourceSkillId);
-                if(skill == null ) {
-                    valid = false;
-                    return;
-                }
-
-                //chect skill type
-                if(skill.data.Type != SkillType.Persistent) {
-                    valid = false;
-                    return;
-                }
-
-                //check skill is enabled
-                if(skill.isOn == false ) {
-                    valid = false;
-                    return;
-                }
-
-            }
-
-            if(customCheck != null) {
-                if(!customCheck()) {
-                    valid = false;
-                    return;
+                if(customCheck != null) {
+                    if(!customCheck()) {
+                        valid = false;
+                        return;
+                    }
+                } else {
+                    throw new Exception("Not required skill buff must have custom check function!!!");
                 }
             }
 

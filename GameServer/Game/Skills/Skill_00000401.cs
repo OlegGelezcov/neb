@@ -20,6 +20,10 @@ namespace Nebula.Game.Skills {
             }
 
             float speedTime = skill.data.Inputs.Value<float>("speed_time");
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                speedTime *= 2;
+            }
 
             var movable = source.GetComponent<PlayerTarget>().targetObject.GetComponent<MovableObject>();
             if(!movable) {

@@ -22,6 +22,11 @@ namespace Nebula.Game.Skills {
             float time = skill.data.Inputs.Value<float>("time");
             float dmgPc = skill.data.Inputs.Value<float>("dmg_pc");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2;
+            }
+
             DamagableObject targetDamagable = source.GetComponent<PlayerTarget>().targetObject.GetComponent<DamagableObject>();
 
             source.GetComponent<PlayerSkills>().AddDamageHealReceiver(new PlayerSkills.DamageReceiver { damagePercent = dmgPc, expireTime = Time.curtime() + time, target = targetDamagable });

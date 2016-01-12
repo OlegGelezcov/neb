@@ -1,15 +1,38 @@
 ﻿using Common;
-
+using Nebula.Pets;
 using System.Linq;
 using System.Xml.Linq;
 
 namespace Nebula.Resources {
     public class PetParameters {
-        public PetFFParameterCollection hpParameters { get; private set; }
-        public PetFFParameterCollection damageParameters { get; private set; }
-        public PetIFParameterCollection masteryParameters { get; private set; }
+        //public PetFFParameterCollection hpParameters { get; private set; }
+        //public PetFFParameterCollection damageParameters { get; private set; }
+        //public PetIFParameterCollection masteryParameters { get; private set; }
+
+        public IPetParamResource damage { get; private set; }
+        public IPetParamResource hp { get; private set; }
+        public IPetParamResource od { get; private set; }
+        public IPetParamResource cooldown { get; private set; }
+        public PetColorDropDataResource petColorDropResource { get; private set; }
+        public PetActiveSkillCountTable activeSkillCountTable { get; private set; }
+        public PetPassiveSkillCountTable passiveSkillCountTable { get; private set; }
+        public PetMasteryTable masteryTable { get; private set; }
+        public PetTypeTable typeTable { get; private set; }
 
         public void Load(string file) {
+
+            XDocument document = XDocument.Load(file);
+            damage          = new MainPetParameterResource(document.Element("pets").Element("attack")   );
+            hp              = new MainPetParameterResource(document.Element("pets").Element("hp")       );
+            od              = new MainPetParameterResource(document.Element("pets").Element("od")       );
+            cooldown        = new MainPetParameterResource(document.Element("pets").Element("cd")       );
+            petColorDropResource = new PetColorDropDataResource(document.Element("pets").Element("colors"));
+            activeSkillCountTable = new PetActiveSkillCountTable(document.Element("pets").Element("active_skills"));
+            passiveSkillCountTable = new PetPassiveSkillCountTable(document.Element("pets").Element("passive_skills"));
+            masteryTable = new PetMasteryTable(document.Element("pets").Element("mastery"));
+            typeTable = new PetTypeTable(document.Element("pets").Element("types"));
+
+            /*
             XDocument document = XDocument.Load(file);
             hpParameters = new PetFFParameterCollection();
             damageParameters = new PetFFParameterCollection();
@@ -40,7 +63,9 @@ namespace Nebula.Resources {
                 IntFloatPetParameter parameter = new IntFloatPetParameter(color, index, valVal);
                 masteryParameters.AddParameter(parameter);
                 return parameter;
-            }).ToList();
+            }).ToList();*/
+
+
         }
     }
 }

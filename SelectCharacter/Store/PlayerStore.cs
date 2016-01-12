@@ -1,4 +1,5 @@
 ﻿using Common;
+using GameMath;
 using MongoDB.Bson;
 using ServerClientCommon;
 using System;
@@ -20,6 +21,10 @@ namespace SelectCharacter.Store {
         public string gameRefID { get; set; } = string.Empty;
         public string characterID { get; set; } = string.Empty;
         public int credits { get; set; } = 0;
+
+        private float m_CreditsPcBonus = 0f;
+
+
 
         //Hold pvp points of player
         public int pvpPoints { get; set; } = 0;
@@ -43,6 +48,10 @@ namespace SelectCharacter.Store {
                     return (storeItems.Count < MAX_SLOTS);
                 }
             }
+        }
+
+        public void SetCreditsBonus(float bonus) {
+            m_CreditsPcBonus = bonus;
         }
 
         //public bool ContainsItem(string storeItemID) {
@@ -114,12 +123,21 @@ namespace SelectCharacter.Store {
             }
         }
 
-        public void AddCredits(int creds) {
+        public int AddCredits(int creds) {
             lock(syncRoot) {
+                if (creds > 0) {
+                    creds = ApplyCreditsBonus(creds);
+                }
                 credits += creds;
                 mChaged = true;
                 SelectCharacterApplication.Instance.Stores.SendStoreUpdate(this);
+                return creds;
             }
+        }
+
+        private int ApplyCreditsBonus(int value) {
+            float bonus = value * (1.0f + m_CreditsPcBonus);
+            return Mathf.RoundToInt(bonus);
         }
 
         public bool RemoveCredits(int creds) {

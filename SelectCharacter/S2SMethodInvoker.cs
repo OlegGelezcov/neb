@@ -20,6 +20,11 @@ namespace SelectCharacter {
             return (int)ReturnCode.Ok;
         }
 
+        public object SetCreditsBonus(string characterId, float bonus ) {
+            log.InfoFormat("try set credits bonus {0} for character {1}", bonus, characterId);
+            return mApplication.Stores.SetCreditsBonus(characterId, bonus);
+        }
+
         public object AddPvpPoints(string login, string gameRef, string character, string guild, byte race, int pvpPoints) {
             log.InfoFormat("{0}:{1} received pvp points [red]", character, pvpPoints);
 
@@ -43,7 +48,7 @@ namespace SelectCharacter {
                     var guild = mApplication.Guilds.GetGuild(characterObject.guildID);
                     if( guild != null ) {
                         return new Hashtable {
-                            { (int)SPC.Guild, guild.Id },
+                            { (int)SPC.Guild, guild.ownerCharacterId },
                             { (int)SPC.Name, guild.name },
                             { (int)SPC.GameRefId, gameRef }
                         };

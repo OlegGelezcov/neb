@@ -23,6 +23,12 @@ namespace Nebula.Game.Skills {
                 return false;
             }
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                healMult *= 2;
+                dmgMult *= 2;
+            }
+
             var weapon = source.Weapon();
             var message = source.MmoMessage();
             var targetObject = source.Target().targetObject;

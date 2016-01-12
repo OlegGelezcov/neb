@@ -28,6 +28,11 @@ namespace Nebula.Game.Skills {
             float reflectDamagePc = skill.data.Inputs.Value<float>("reflect_dmg_pc");
             float reflectDamageTime = skill.data.Inputs.Value<float>("reflect_dmg_time");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                reflectDamageTime *= 2;
+            }
 
             var sourceWeapon = source.GetComponent<BaseWeapon>();
             WeaponHitInfo hit;

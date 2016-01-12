@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Space.Game;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nebula.Pets {
     public class PetCollection {
@@ -15,6 +18,28 @@ namespace Nebula.Pets {
                 }
             }
             return null;
+        }
+
+        public bool ActivatePet(string id) {
+            var pet = GetPet(id);
+            if(pet != null ) {
+                if(!pet.active) {
+                    pet.SetActive(true);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeactivatePet(string id) {
+            var pet = GetPet(id);
+            if(pet != null ) {
+                if(pet.active) {
+                    pet.SetActive(false);
+                    return true;
+                }
+            }
+            return false;
         }
 
         public PetCollection() {
@@ -38,6 +63,42 @@ namespace Nebula.Pets {
                 }
             }
             return saves;
+        }
+
+        public List<PetInfo> pets {
+            get {
+                return m_Pets;
+            }
+        }
+
+        public void AddExp(string id, int exp) {
+            foreach(var pet in pets) {
+                if(pet.id == id ) {
+                    pet.AddExp(exp);
+                    break;
+                }
+            }
+        }
+
+        public void AddPet(PetInfo pet) {
+            pets.Add(pet);
+        }
+
+        public bool HasPet(string id) {
+            foreach(var pet in pets ) {
+                if(pet.id == id ) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public Hashtable GetInfo(IRes res) {
+            Hashtable hash = new Hashtable();
+            foreach(var pet in pets) {
+                hash.Add(pet.id, pet.GetInfo(res));
+            }
+            return hash;
         }
      
     }

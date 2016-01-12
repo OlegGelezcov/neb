@@ -20,8 +20,16 @@ namespace Nebula.Game.Skills {
             float resistPc = skill.GetFloatInput("resist_pc");
             float resistTime = skill.GetFloatInput("resist_time");
 
+
             float damage = source.Weapon().GetDamage(false);
             float healing = damage * healMult;
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                healing *= 2;
+                resistTime *= 2;
+            }
+
             var heal = source.Weapon().Heal(source.Target().targetObject, healing, skill.data.Id);
             source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal);
             Buff resistBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_resist_on_pc, resistTime, resistPc);

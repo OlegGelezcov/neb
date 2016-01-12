@@ -69,6 +69,7 @@ namespace Space.Game {
         PetParameters petParameters { get; }
 
         PetSkillCollection petSkills { get; }
+        KeyValueTable<int, PetPassiveBonusInfo> petPassiveBonuses { get; }
     }
 
 }

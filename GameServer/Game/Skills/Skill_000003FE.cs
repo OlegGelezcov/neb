@@ -26,7 +26,12 @@ namespace Nebula.Game.Skills {
 
             var bonuses = source.Bonuses();
 
-            if(damagable.health < damagable.maximumHealth * hpPc) {
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2;
+            }
+
+            if (damagable.health < damagable.maximumHealth * hpPc) {
                 float currentResistance = ship.damageResistance;
                 float resistanceDifference = Mathf.ClampLess(maxResist - currentResistance, 0f);
                 Buff buff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_resist_on_cnt, time, resistanceDifference);

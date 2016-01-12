@@ -19,10 +19,16 @@ namespace Nebula.Game.Skills {
 
             var items = GetHealTargets(targetObject, targetObject, radius);
 
-            foreach(var pItem in items) {
+            float buffMult = 1;
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                buffMult *= 2;
+            }
+
+            foreach (var pItem in items) {
                 var itemBonuses = pItem.Value.Bonuses();
                 foreach(var buffInfo in buffInfoCollection) {
-                    itemBonuses.SetBuff(new Buff(Guid.NewGuid().ToString(), null, buffInfo.bonusType, buffInfo.time, buffInfo.value));
+                    itemBonuses.SetBuff(new Buff(Guid.NewGuid().ToString(), null, buffInfo.bonusType, buffInfo.time * buffMult, buffInfo.value));
                 }
             }
             return true;

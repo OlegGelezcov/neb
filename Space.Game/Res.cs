@@ -147,6 +147,14 @@
             petSkills = new PetSkillCollection();
             petSkills.Load(Path.Combine(basePath, "Data/pet_active_skills.xml"));
 
+            petPassiveBonuses = new PetPassiveBonusCollection();
+            (petPassiveBonuses as PetPassiveBonusCollection).Load(Path.Combine(basePath, "Data/passive_pet_bonuses.xml"));
+
+        }
+
+        public KeyValueTable<int, PetPassiveBonusInfo> petPassiveBonuses {
+            get;
+            private set;
         }
 
         public PetSkillCollection petSkills {

@@ -16,8 +16,16 @@ namespace Nebula.Game.Skills {
             float blockHealInterval = skill.data.Inputs.GetValue<float>("block_heal_interval", 0f);
             var weapon = source.GetComponent<BaseWeapon>();
             WeaponHitInfo hit;
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+            }
             var shot = weapon.Fire(out hit, skill.data.Id, dmgMult);
             if (hit.hitAllowed) {
+                if(mastery) {
+                    blockHealInterval *= 2;
+                }
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.block_heal, blockHealInterval);
                 source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>().SetBuff(buff);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shot);

@@ -23,6 +23,11 @@ namespace Nebula.Game.Skills {
             float speedTime = skill.GetFloatInput("speed_time");
             float radius = skill.GetFloatInput("radius");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                speedTime *= 2;
+            }
             var sourceWeapon = source.Weapon();
             var sourceBonuses = source.Bonuses();
             WeaponHitInfo hit;

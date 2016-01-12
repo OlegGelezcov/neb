@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Nebula.Engine;
+﻿using Nebula.Engine;
 using Nebula.Game.Components;
+using System.Collections;
 
 namespace Nebula.Game.Skills {
     public class Skill_0000043A : SkillExecutor {
@@ -13,6 +9,12 @@ namespace Nebula.Game.Skills {
 
             hpPc = skill.GetFloatInput("hp_pc");
             dmgMult = skill.GetFloatInput("dmg_mult");
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpPc *= 2;
+                dmgMult *= 2;
+            }
 
             return true;
         }

@@ -9,6 +9,7 @@ namespace Nebula.Pets {
         private float m_Prob;
         private float m_Cooldown;
         private ConcurrentDictionary<string, object> m_Inputs;
+        private bool m_Auto;
 
         public int id {
             get {
@@ -28,6 +29,12 @@ namespace Nebula.Pets {
             }
         }
 
+        public bool auto {
+            get {
+                return m_Auto;
+            }
+        }
+
         public ConcurrentDictionary<string, object> inputs {
             get {
                 return m_Inputs;
@@ -38,6 +45,7 @@ namespace Nebula.Pets {
             m_Id = element.GetInt("id");
             m_Prob = element.GetFloat("prob");
             m_Cooldown = element.GetFloat("cooldown");
+            m_Auto = element.GetBool("auto");
 
             m_Inputs = new ConcurrentDictionary<string, object>();
             if(element.Element("inputs") != null ) {

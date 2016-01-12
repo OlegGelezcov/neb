@@ -2,7 +2,7 @@
 using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
-using Nebula.Game.Skills;
+using Nebula.Game.Pets;
 using Nebula.Server.Components;
 using Space.Game;
 
@@ -19,6 +19,7 @@ namespace Nebula.Game.Components {
         private PlayerTarget mTarget;
         private PlayerSkills mSkills;
         private PassiveBonusesComponent mPassiveBonuses;
+        private MmoMessageComponent m_Message;
 
         private static ILogger log = LogManager.GetCurrentClassLogger();
 
@@ -43,17 +44,18 @@ namespace Nebula.Game.Components {
 
             float initHealth = maximumHealth;
             //log.InfoFormat("Set health at start to {0}", initHealth);
-            SetHealth(initHealth);
+            ForceSetHealth(initHealth);
             mpcHPRegenNonCombatPerSec = nebulaObject.resource.ServerInputs.GetValue<float>("hp_regen_non_combat");
             player = GetComponent<MmoActor>();
             mTarget = GetComponent<PlayerTarget>();
             mSkills = GetComponent<PlayerSkills>();
             mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
             mEventedObject = GetComponent<EventedObject>();
+            m_Message = GetComponent<MmoMessageComponent>();
         }
 
         public void Respawn() {
-            SetHealth(baseMaximumHealth);
+            ForceSetHealth(baseMaximumHealth);
         }
         
 
@@ -96,7 +98,7 @@ namespace Nebula.Game.Components {
                 }
                 if(!mTarget.inCombat) {
                     if(health < maximumHealth) {
-                        SetHealth(health + ApplyRestoreHpPassiveBonus(mpcHPRegenNonCombatPerSec) * increaseRegenMultiplier * deltaTime * maximumHealth);
+                        Heal(new InputHeal(ApplyRestoreHpPassiveBonus(mpcHPRegenNonCombatPerSec) * increaseRegenMultiplier * deltaTime * maximumHealth));
                     }
                 }
             }
@@ -135,23 +137,30 @@ namespace Nebula.Game.Components {
             return inputResist;
         }
 
-        public override float ReceiveDamage(byte damagerType, string damagerID, float damage, byte workshop, int level, byte race) {
+        public override InputDamage ReceiveDamage(InputDamage inputDamage) {
 
             //firs call base behaviour
-            base.ReceiveDamage(damagerType, damagerID, damage, workshop, level, race);
-            if (!nebulaObject) { return 0f; }
+            inputDamage = base.ReceiveDamage(inputDamage);
+
+            if (!nebulaObject) {
+                inputDamage.SetDamage(0.0f);
+                return inputDamage;
+            }
+
             nebulaObject.SendMessage(ComponentMessages.InCombat);
 
-            if (ignoreDamageAtStart) {
-                if (GetComponent<MmoActor>()) {
-                    log.Info("player damage ignored");
-                }
-                return 0f;
+            if (ignoreDamageAtStart || god) {
+                //if (GetComponent<MmoActor>()) {
+                //    log.Info("player damage ignored");
+                //}
+                //return 0f;
+                inputDamage.SetDamage(0.0f);
+                return inputDamage;
             }
-            if(god) {
-                log.Info("ShipBasedDamagableObject is GOD, return 0 damage");
-                return 0f;
-            }
+            //if(god) {
+            //    //log.Info("ShipBasedDamagableObject is GOD, return 0 damage");
+            //    return 0f;
+            //}
 
             if(mShip == null ) {
                 mShip = GetComponent<BaseShip>();
@@ -162,47 +171,84 @@ namespace Nebula.Game.Components {
             }
             resist = ApplyResistPassiveBonus(resist);
 
-            damage *= (1.0f - Mathf.Clamp01(resist));
-
-            damage = AbsorbDamage(damage);
+            inputDamage.SetDamage(inputDamage.damage * (1.0f - Mathf.Clamp01(resist)));
+            inputDamage.SetDamage(AbsorbDamage(inputDamage.damage));
 
             if (!god) {
                 if(mBonuses) {
                     if(mBonuses.isImmuneToDamage) {
-                        damage = 0f;
+                        inputDamage.SetDamage(0f);
                     }
                 }
 
                 if(nebulaObject.IsPlayer()) {
-                    damage = mTarget.MoveDamageToSubscriber(damage);
+                    inputDamage.SetDamage(mTarget.MoveDamageToSubscriber(inputDamage.damage));
                 }
-                SetHealth(health - damage);
+                SubHealth(inputDamage.damage);
             }
-            AddDamager(damagerID, damagerType, damage, workshop, level, race);
 
-            if(mEventedObject != null ) {
-                mEventedObject.ReceiveDamage(new DamageInfo(damagerID, damagerType, damage, workshop, level, race));
+            if (inputDamage.hasDamager) {
+                AddDamager(inputDamage.sourceId, inputDamage.sourceType, inputDamage.damage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race);
+            }
+
+            if(mEventedObject != null && inputDamage.hasDamager) {
+                mEventedObject.ReceiveDamage(new DamageInfo(inputDamage.sourceId, inputDamage.sourceType, inputDamage.damage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race));
             }
 
             if(health <= 0f) {
                 if (NotRespawnBySkill()) {
                     SetWasKilled(true);
+                } else {
+                    if(nebulaObject.Type == (byte)ItemType.Avatar ) {
+                        if(m_Message) {
+                            m_Message.ResurrectBySkillEffect();
+                        }
+                    }
                 }
             }
-            return damage;
+            return inputDamage;
         }
 
 
         
         private bool NotRespawnBySkill() {
             if(mSkills) {
-                return (!mSkills.RespawnBySkill());
+                bool notRespawned =  (false == mSkills.RespawnBySkill());
+                if(notRespawned) {
+                    return NotRespawnByPets();
+                }
             }
             return true;
         }
 
+        private bool NotRespawnByPets() {
+            return (false == RespawnByPets());
+        }
 
+        private bool RespawnByPets() {
+            var playerCharacter = GetComponent<PlayerCharacterObject>();
+            if (!playerCharacter) {
+                return false;
+            }
+            if(playerCharacter.hasGroup) {
+                var memberPlayers = playerCharacter.GroupMemberPlayers(300);
+                if(memberPlayers.Count == 0 ) {
+                    return false;
+                }
 
-
+                foreach(var player in memberPlayers) {
+                    var petManager = player.GetComponent<PetManager>();
+                    if(petManager) {
+                        if(petManager.HasPetWithValidActiveSkill(11)) {
+                            if(petManager.UseExplicit(11, nebulaObject)) {
+                                ForceSetHealth(maximumHealth);
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

@@ -38,7 +38,13 @@ namespace Nebula.Game.Skills {
             var sourceCharacter = source.Character();
             var sourceRace = source.Raceable();
 
-            foreach(var target in filteredTargets) {
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                damagePerTarget *= 2;
+                dmgAreaMult *= 2;
+            }
+
+            foreach (var target in filteredTargets) {
                 WeaponHitInfo hit;
                 var shot = weapon.Fire(target, out hit, skill.data.Id, damagePerTarget);
                 if(hit.hitAllowed) {
@@ -46,9 +52,10 @@ namespace Nebula.Game.Skills {
 
                     var nearItems = GetTargets(source, target, radius);
 
+                    InputDamage inpDamage = new InputDamage(source, weapon.GenerateDamage() * dmgAreaMult);
                     foreach(var pNear in nearItems) {
                         if(NoId(filteredTargets, pNear.Key)) {
-                            pNear.Value.Damagable().ReceiveDamage(source.Type, source.Id, weapon.GenerateDamage() * dmgAreaMult, sourceCharacter.workshop, sourceCharacter.level, sourceRace.race);
+                            pNear.Value.Damagable().ReceiveDamage(inpDamage);
                         }
                     }
 

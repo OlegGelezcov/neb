@@ -16,6 +16,13 @@ namespace Nebula.Game.Skills {
             float speedTime = skill.GetFloatInput("speed_time");
             float dmgPc = skill.GetFloatInput("dmg_pc");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgPc *= 2;
+                speedPc *= 2;
+            }
+
+
             var sourceWeapon = source.Weapon();
             var targetObject = source.Target().targetObject;
             var targetBonuses = targetObject.Bonuses();

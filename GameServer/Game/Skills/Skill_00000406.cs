@@ -10,6 +10,10 @@ namespace Nebula.Game.Skills {
             if(result ) {
                 var damagable = source.Damagable();
                 float hpPc = skill.GetFloatInput("hp_pc");
+                bool mastery = RollMastery(source);
+                if(mastery) {
+                    hpPc *= 2;
+                }
                 damagable.RestoreHealth(source, damagable.maximumHealth * hpPc);
             }
             return result;

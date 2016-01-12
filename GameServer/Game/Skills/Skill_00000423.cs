@@ -15,6 +15,10 @@ namespace Nebula.Game.Skills {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
             float radius = skill.GetFloatInput("radius");
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                radius *= 2;
+            }
 
             var targets = GetTargets(source, source, radius);
             foreach(var pTarget in targets) {

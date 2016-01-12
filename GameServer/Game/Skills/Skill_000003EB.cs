@@ -25,8 +25,17 @@ namespace Nebula.Game.Skills {
             var targetBonuses = source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>();
 
             WeaponHitInfo hit;
+            bool mastery = RollMastery(source);
+
+            if(mastery) {
+                dmgMult *= 2;
+            }
+
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {
+                if(mastery) {
+                    resistTime *= 2;
+                }
                 Buff resistDebuff = new Buff(debuffID, null, BonusType.decrease_resist_on_pc, resistTime, resistPc);
                 targetBonuses.SetBuff(resistDebuff);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);

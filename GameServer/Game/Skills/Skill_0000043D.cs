@@ -29,6 +29,11 @@ namespace Nebula.Game.Skills {
             bonuses.MultInterval(BonusType.decrease_speed_on_cnt, mult);
             bonuses.MultInterval(BonusType.decrease_speed_on_pc, mult);
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2;
+            }
+
             Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.decrease_time_of_negative_speed_buffs, time, mult);
             bonuses.SetBuff(buff);
             return true;

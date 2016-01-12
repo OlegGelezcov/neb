@@ -14,6 +14,12 @@ namespace Nebula.Game.Skills {
             float dronPc = skill.GetFloatInput("dron_pc");
             float dronTime = skill.GetFloatInput("dron_time");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgPc *= 2;
+                dronTime *= 2;
+            }
+
             ActionOnEnemyTargets((item) => {
                 Buff buff = new Buff(skill.id, null, Common.BonusType.decrease_damage_on_pc, dmgTime, dmgPc);
                 item.Bonuses().SetBuff(buff);

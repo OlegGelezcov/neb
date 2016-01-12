@@ -19,6 +19,11 @@ namespace Nebula.Game.Skills {
             }
 
             float dmgMult = skill.data.Inputs.Value<float>("dmg_mult");
+
+            if(RollMastery(source)) {
+                dmgMult *= 2;
+            }
+
             string id = source.Id + skill.data.Id;
 
 

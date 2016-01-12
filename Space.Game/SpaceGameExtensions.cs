@@ -29,6 +29,18 @@ namespace Space.Game
             string s = e.Attribute(name).Value;
             return (IdleStateType)Enum.Parse(typeof(IdleStateType), s);
         }
+
+        public static List<T> Shuffle<T>(this List<T> source) {
+            int i = source.Count;
+            while( i > 1) {
+                i -= 1;
+                int j = Rand.Int(0, i - 1);
+                T temp = source[j];
+                source[j] = source[i];
+                source[i] = temp;
+            }
+            return source;
+        }
     }
 
     

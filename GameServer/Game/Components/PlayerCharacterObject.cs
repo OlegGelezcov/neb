@@ -1,13 +1,16 @@
 ﻿using Common;
 using ExitGames.Logging;
+using GameMath;
 using Nebula.Engine;
 using Nebula.Game.Bonuses;
+using Nebula.Game.Pets;
 using Nebula.Game.Utils;
 using Nebula.Server.Components;
 using NebulaCommon.Group;
 using ServerClientCommon;
 using Space.Game;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Nebula.Game.Components {
 
@@ -32,6 +35,7 @@ namespace Nebula.Game.Components {
         private float mUpdateRaceStatusBonusTimer = 0;
         private PlayerBonuses mBonuses;
         private RaceableObject mRace;
+        private PetManager m_PetManager;
 
 
         public void Init(PlayerCharacterComponentData data) {
@@ -47,6 +51,7 @@ namespace Nebula.Game.Components {
             mMessage = GetComponent<MmoMessageComponent>();
             mBonuses = GetComponent<PlayerBonuses>();
             mRace = GetComponent<RaceableObject>();
+            m_PetManager = GetComponent<PetManager>();
         }
 
         public string characterId { get; private set; }
@@ -84,6 +89,10 @@ namespace Nebula.Game.Components {
             mPlayer.EventOnPlayerInfoUpdated();
             //mMessage.ReceiveServiceMessage(ServiceMessageType.Info, string.Format("exp received = {0}", e));
             mMessage.ReceiveExp(e);
+
+            if(m_PetManager) {
+                m_PetManager.AddExp((int)System.Math.Round((float)(e + additionalExp) * 0.5f));
+            }
         }
 
         public override void SetFraction(FractionType inFraction) {
@@ -157,6 +166,34 @@ namespace Nebula.Game.Components {
             group = grp;
         }
 
+        public bool hasGroup {
+            get {
+                return (group != null) && (false == string.IsNullOrEmpty(group.groupID));
+            }
+        }
+
+        public List<NebulaObject> GroupMemberPlayers(float radius) {
+            List<NebulaObject> result = new List<NebulaObject>();
+
+            if (group.members != null) {
+                MmoWorld mmoWorld = nebulaObject.world as MmoWorld;
+
+                List<string> gameRefs = new List<string>();
+                foreach (var groupMember in group.members) {
+                    gameRefs.Add(groupMember.Value.gameRefID);
+                }
+
+                var actors = mmoWorld.GetMmoActorsConcurrent((player) => {
+                    return gameRefs.Contains(player.nebulaObject.Id) && (transform.DistanceTo(player.transform) < radius);
+                });
+
+                foreach (var pActor in actors) {
+                    result.Add(pActor.Value.nebulaObject);
+                }
+            }
+            return result;
+        }
+
         /// <summary>
         /// Called by server 
         /// </summary>
@@ -174,7 +211,16 @@ namespace Nebula.Game.Components {
             if(mRace == null ) {
                 mRace = GetComponent<RaceableObject>();
             }
+
+
+            points = ApplyPvpPointsBonus(points);
             mPlayer.application.updater.GivePvpPoints(login, nebulaObject.Id, characterId, guildId, mRace.race , points);
+        }
+
+        private int ApplyPvpPointsBonus(int points) {
+            float bonus = points * (1 + mBonuses.pvpPointsPcBonus);
+            int iBonus = Mathf.RoundToInt(bonus);
+            return iBonus;
         }
     }
 }

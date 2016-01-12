@@ -449,6 +449,15 @@ namespace SelectCharacter.Store {
             return null;
         }
 
+        public bool SetCreditsBonus(string characterId,  float bonus ) {
+            var store = GetOnlyPlayerStore(characterId);
+            if(store == null ) {
+                return false;
+            }
+            store.SetCreditsBonus(bonus);
+            return true;
+        }
+
         public bool HasCredits(string login, string gameRefID, string characterID, int credits) {
             var store = GetOrCreatePlayerStore(login, gameRefID, characterID);
             if (store == null) {
@@ -471,7 +480,7 @@ namespace SelectCharacter.Store {
                 return false;
             }
 
-            store.AddCredits(credits);
+            credits = store.AddCredits(credits);
 
             SelectCharacterClientPeer peer;
             if(mApplication.Clients.TryGetPeerForGameRefId(gameRefID, out peer)) {

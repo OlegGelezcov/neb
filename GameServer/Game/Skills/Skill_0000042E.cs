@@ -32,13 +32,23 @@ namespace Nebula.Game.Skills {
             var sourceCharacter = source.Character();
             var sourceRace = source.Raceable();
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                dmgAreaMult *= 2;
+                dmgTime *= 2;
+            }
 
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed ) {
                 sourceMessage.SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
+
+                InputDamage inpDamage = new InputDamage(source, sourceWeapon.GenerateDamage() * dmgAreaMult);
+
                 foreach(var pTarget in GetTargets(source, source.Target().targetObject, radius)) {
-                    pTarget.Value.Damagable().ReceiveDamage(source.Type, source.Id, sourceWeapon.GenerateDamage() * dmgAreaMult, sourceCharacter.workshop, sourceCharacter.level, sourceRace.race);
+
+                    pTarget.Value.Damagable().ReceiveDamage(inpDamage);
                     if(sourceBonuses.GetBuffCountWithTag( Common.BonusType.increase_damage_on_pc, skill.data.Id) < stackCount ) {
                         Buff buff = new Buff(Guid.NewGuid().ToString(), null, Common.BonusType.increase_damage_on_pc, dmgTime, dmgPc);
                         buff.SetTag(skill.data.Id);

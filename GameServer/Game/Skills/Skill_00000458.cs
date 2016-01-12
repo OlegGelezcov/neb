@@ -34,11 +34,19 @@ namespace Nebula.Game.Skills {
                 damageMult = 1;
             }
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                damageMult *= 2;
+            }
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, damageMult);
             if(hit.hitAllowed) {
                 if(targetDamagable.killed) {
                     float resotedHp = source.Damagable().maximumHealth * hpRestoredPc;
+                    if(mastery) {
+                        resotedHp *= 2;
+                    }
+
                     source.Damagable().RestoreHealth(source, resotedHp);
                 }
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);

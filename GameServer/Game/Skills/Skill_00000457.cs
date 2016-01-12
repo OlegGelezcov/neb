@@ -30,6 +30,11 @@ namespace Nebula.Game.Skills {
             float critChancePc = skill.GetFloatInput("crit_chance_pc");
             float time = skill.GetFloatInput("time");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2;
+            }
+
             Buff critDamageBuff = new Buff(skill.id, null, Common.BonusType.increase_crit_damage_on_pc, time, critDamagePc);
             Buff critChanceBuff = new Buff(skill.id, null, Common.BonusType.increase_crit_chance_on_cnt, time, critChancePc);
             sourceBonuses.SetBuff(critDamageBuff);

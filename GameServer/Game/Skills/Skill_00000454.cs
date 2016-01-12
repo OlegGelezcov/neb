@@ -35,7 +35,12 @@ namespace Nebula.Game.Skills {
                 return false;
             }
 
-            if((sourceSkills.lastSkill != skill.data.Id) || 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgTime *= 2;
+            }
+
+            if ((sourceSkills.lastSkill != skill.data.Id) || 
                 (sourceSkills.lastSkill == skill.data.Id && sourceSkills.sequenceSkillCounter == 0)) {
 
                 Buff buff = new Buff(skill.data.Id.ToString() + "0", null, BonusType.increase_damage_on_pc, dmgTime, dmgMultMult);

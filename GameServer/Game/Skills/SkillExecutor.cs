@@ -3,6 +3,7 @@ using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using Nebula.Game.Pets;
 using Space.Server;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -209,6 +210,14 @@ namespace Nebula.Game.Skills {
             executorFactory.Add(SkilIDFromHexString("0000045F"), () => new Skill_0000045F());
             executorFactory.Add(SkilIDFromHexString("000007E0"), () => new Skill_000007E0());
             executorFactory.Add(SkilIDFromHexString("00000459"), () => new Skill_00000459());
+        }
+
+        protected bool RollMastery(NebulaObject source) {
+            var pm = source.GetComponent<PetManager>();
+            if(pm) {
+                return pm.RollMastery();
+            }
+            return false;
         }
 
         public static int SkilIDFromHexString(string str) {

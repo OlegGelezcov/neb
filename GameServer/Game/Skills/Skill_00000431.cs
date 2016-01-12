@@ -20,10 +20,15 @@ namespace Nebula.Game.Skills {
             if(!source) { return false; }
             float hpPc = skill.data.Inputs.Value<float>("hp_pc");
             float hpTime = skill.data.Inputs.Value<float>("hp_time");
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpTime *= 2;
+            }
 
+            string id = source.Id + skill.data.Id.ToString();
             var damagable = source.GetComponent<DamagableObject>();
             float hpRestore = damagable.maximumHealth * hpPc;
-            damagable.SetRestoreHPPerSec(hpRestore / hpTime, hpTime);
+            damagable.SetRestoreHPPerSec(hpRestore / hpTime, hpTime, id);
             return true;
         }
     }

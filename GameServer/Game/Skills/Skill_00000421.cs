@@ -19,6 +19,12 @@ namespace Nebula.Game.Skills {
             float pc = skill.GetFloatInput("hpdmg_pc");
             float time = skill.GetFloatInput("time");
             var bonuses = source.Bonuses();
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2;
+            }
+
             Buff damageBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_damage_on_pc, time, pc);
             Buff healingBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_healing_on_pc, time, pc);
             log.InfoFormat("set damage and healing buff {0}:{1} green", pc, time);

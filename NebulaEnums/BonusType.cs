@@ -226,7 +226,25 @@ namespace Common {
         increase_dron_strength_on_cnt,
         decrease_dron_strength_on_cnt,
 
-        increase_exp_on_pc
+        increase_exp_on_pc,
+
+        decrease_input_damage_on_pc,
+        increase_input_damage_on_pc,
+        reflection_pc,
+        restore_hp_at_sec_on_pc,
+        restore_hp_at_sec_on_cnt,
+
+        absorb_damage_pc,
+        convert_absorbed_damage_to_hp_pc,
+        vampirism_pc,
+
+        increase_pvp_points,
+        increase_credits,
+        increase_energy_regen_on_pc,
+        increase_energy_regen_on_cnt,
+        decrease_energy_regen_on_pc,
+        decrease_energy_regen_on_cnt,
+        auto_loot_chest
     }
 
     /// <summary>
@@ -246,7 +264,13 @@ namespace Common {
         healing,
         energy_cost,
         dron_strength,
-        exp
+        exp,
+        input_damage,
+        reflection,
+        restore_hp_on_sec,
+        absorb_damage,
+        convert_damage_to_hp,
+        vampirism
     }
 
     public static class BuffUtils {
@@ -285,6 +309,7 @@ namespace Common {
                 case BonusType.increase_energy_cost_on_cnt:
                 case BonusType.decrease_dron_strength_on_cnt:
                 case BonusType.decrease_dron_strength_on_pc:
+                case BonusType.increase_input_damage_on_pc:
                     return true;
                 default:
                     return false;
@@ -328,6 +353,8 @@ namespace Common {
                     return new BonusType[] { BonusType.increase_energy_cost_on_pc, BonusType.increase_energy_cost_on_cnt };
                 case BuffParameter.dron_strength:
                     return new BonusType[] { BonusType.decrease_dron_strength_on_pc, BonusType.decrease_dron_strength_on_cnt };
+                case BuffParameter.input_damage:
+                    return new BonusType[] { BonusType.increase_input_damage_on_pc };
                 default:
                     return new BonusType[] { };
 
@@ -368,6 +395,18 @@ namespace Common {
                     return new BonusType[] { BonusType.increase_dron_strength_on_cnt, BonusType.increase_dron_strength_on_pc };
                 case BuffParameter.exp:
                     return new BonusType[] { BonusType.increase_exp_on_pc };
+                case BuffParameter.input_damage:
+                    return new BonusType[] { BonusType.decrease_input_damage_on_pc };
+                case BuffParameter.reflection:
+                    return new BonusType[] { BonusType.reflection_pc };
+                case BuffParameter.restore_hp_on_sec:
+                    return new BonusType[] { BonusType.restore_hp_at_sec_on_pc, BonusType.restore_hp_at_sec_on_cnt };
+                case BuffParameter.absorb_damage:
+                    return new BonusType[] { BonusType.absorb_damage_pc };
+                case BuffParameter.convert_damage_to_hp:
+                    return new BonusType[] { BonusType.convert_absorbed_damage_to_hp_pc };
+                case BuffParameter.vampirism:
+                    return new BonusType[] { BonusType.vampirism_pc };
                 default:
                     return new BonusType[] { };
             }

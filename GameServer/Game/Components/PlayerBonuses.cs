@@ -458,6 +458,106 @@ namespace Nebula.Game.Components {
             }
         }
 
+        public float inputDamagePcBonus {
+            get {
+                float sum = 0.0f;
+                sum += Value(BonusType.increase_input_damage_on_pc);
+                sum -= Value(BonusType.decrease_input_damage_on_pc);
+                sum = Mathf.ClampLess(sum, 0.0f);
+                return sum;
+            }
+        }
+
+        public float reflectionPc {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.reflection_pc);
+                return sum;
+            }
+        }
+
+        public float restoreHpAtSecPcBonus {
+            get {
+                float sum = 0.0f;
+                sum += Value(BonusType.restore_hp_at_sec_on_pc);
+                return sum;
+            }
+        }
+
+        public float restoreHpAtSecCntBonus {
+            get {
+                float sum = 0.0f;
+                sum += Value(BonusType.restore_hp_at_sec_on_cnt);
+                return sum;
+            }
+        }
+
+        public float absrodDamagePcBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.absorb_damage_pc);
+                return Mathf.Clamp01(sum);
+            }
+        }
+
+        public float convertAbsorbedDamageToHpPcBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.convert_absorbed_damage_to_hp_pc);
+                return sum;
+            }
+        }
+
+        public float vampirismPcBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.vampirism_pc);
+                return sum;
+            }
+        }
+
+        public float pvpPointsPcBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.increase_pvp_points);
+                return sum;
+            }
+        }
+
+        public float creditsPcBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.increase_credits);
+                return sum;
+            }
+        }
+
+        public float energyRegenPcBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.increase_energy_regen_on_pc);
+                sum -= Value(BonusType.decrease_energy_regen_on_pc);
+                return sum;
+            }
+        }
+
+        public float energyRegenCntBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.increase_energy_regen_on_cnt);
+                sum -= Value(BonusType.decrease_energy_regen_on_cnt);
+                return sum;
+            }
+        }
+
+        public float autoLootBonus {
+            get {
+                float sum = 0f;
+                sum += Value(BonusType.auto_loot_chest);
+                return sum;
+            }
+        }
+
         public bool isImmuneToDamage {
             get {
                 return (false == Mathf.Approximately(Value(BonusType.damage_immunity), 0f));

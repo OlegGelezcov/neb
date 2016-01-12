@@ -24,6 +24,11 @@ namespace Nebula.Game.Skills {
             }
 
             float healPerItem = totalHealing / items.Count;
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                healPerItem *= 2;
+            }
+
             var message = source.MmoMessage();
             foreach(var pitem in items) {
                 var heal = weapon.Heal(pitem.Value, healPerItem, skill.data.Id);

@@ -26,6 +26,11 @@ namespace Nebula.Game.Skills {
             float critDmgTime = skill.GetFloatInput("crit_dmg_time");
             int stackCount = skill.GetIntInput("stack_count");
 
+            bool mastery = RollMastery(mySkills.nebulaObject);
+            if(mastery) {
+                critDmgTime *= 2;
+            }
+
             int buffsCount = mySkills.bonuses.GetBuffCountWithTag(Common.BonusType.increase_crit_damage_on_pc, skillID);
             if(buffsCount < stackCount) {
                 Buff newBuff = new Buff(Guid.NewGuid().ToString(), null, Common.BonusType.increase_crit_damage_on_pc, critDmgTime, critDmgPc);

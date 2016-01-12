@@ -15,6 +15,12 @@ namespace Nebula.Game.Skills {
             info = new Hashtable();
             float hpPc = skill.GetFloatInput("hp_pc");
             float hpTime = skill.GetFloatInput("hp_time");
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpTime *= 2;
+            }
+
             Buff buff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_healing_speed_on_pc, hpTime, hpPc);
             source.Bonuses().SetBuff(buff);
             return true;

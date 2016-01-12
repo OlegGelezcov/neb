@@ -129,6 +129,7 @@
             }
             return new float[] { 0, 0, 0 };
         }
+    
 
         public static float[] GetValueFloatArray(this Hashtable hash, byte key, float[] defValue) {
             if (hash.ContainsKey(key)) {
@@ -140,6 +141,29 @@
             }
             return defValue;
         }
+
+        public static int[] GetValueIntArray(this Hashtable hash, byte key) {
+            if (hash.ContainsKey(key)) {
+                int[] res = hash[key] as int[];
+                if (res == null) {
+                    res = new int[] { };
+                }
+                return res;
+            }
+            return new int[] { };
+        }
+
+        public static int[] GetValueIntArray(this Hashtable hash, byte key, int[] defValue) {
+            if (hash.ContainsKey(key)) {
+                int[] res = hash[key] as int[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
+        }
+
 
         public static object[] GetValueObjectArray(this Hashtable hash, byte key) {
             if(hash.ContainsKey(key)) {
@@ -309,6 +333,28 @@
                 return res;
             }
             return new float[] { 0, 0, 0 };
+        }
+
+        public static int[] GetValueIntArray(this Hashtable hash, int key) {
+            if (hash.ContainsKey(key)) {
+                int[] res = hash[key] as int[];
+                if (res == null) {
+                    res = new int[] { };
+                }
+                return res;
+            }
+            return new int[] { };
+        }
+
+        public static int[] GetValueIntArray(this Hashtable hash, int key, int[] defValue) {
+            if (hash.ContainsKey(key)) {
+                int[] res = hash[key] as int[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
         }
 
         public static float[] GetValueFloatArray(this Hashtable hash, int key, float[] defValue) {
@@ -491,6 +537,28 @@
             return new float[] { 0, 0, 0 };
         }
 
+        public static int[] GetValueIntArray(this Hashtable hash, string key) {
+            if (hash.ContainsKey(key)) {
+                int[] res = hash[key] as int[];
+                if (res == null) {
+                    res = new int[] { };
+                }
+                return res;
+            }
+            return new int[] { };
+        }
+
+        public static int[] GetValueIntArray(this Hashtable hash, string key, int[] defValue) {
+            if (hash.ContainsKey(key)) {
+                int[] res = hash[key] as int[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
+        }
+
         public static float[] GetValueFloatArray(this Hashtable hash, string key, float[] defValue) {
             if (hash.ContainsKey(key)) {
                 float[] res = hash[key] as float[];
@@ -669,6 +737,28 @@
                 return res;
             }
             return new float[] { 0, 0, 0 };
+        }
+
+        public static int[] GetValueIntArray(this Hashtable hash, short key) {
+            if (hash.ContainsKey(key)) {
+                int[] res = hash[key] as int[];
+                if (res == null) {
+                    res = new int[] { };
+                }
+                return res;
+            }
+            return new int[] { };
+        }
+
+        public static int[] GetValueIntArray(this Hashtable hash, short key, int[] defValue) {
+            if (hash.ContainsKey(key)) {
+                int[] res = hash[key] as int[];
+                if (res == null) {
+                    res = defValue;
+                }
+                return res;
+            }
+            return defValue;
         }
 
         public static float[] GetValueFloatArray(this Hashtable hash, short key, float[] defValue) {

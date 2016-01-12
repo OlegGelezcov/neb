@@ -23,8 +23,17 @@ namespace Nebula.Game.Skills {
             }
             var sourceWeapon = source.GetComponent<BaseWeapon>();
             WeaponHitInfo hit;
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+            }
+
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {
+                if(mastery) {
+                    speed_time *= 2;
+                }
                 Buff buff = new Buff(id, null, BonusType.increase_speed_on_pc, speed_time, speed_pc);
                 source.GetComponent<PlayerBonuses>().SetBuff(buff);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);

@@ -58,9 +58,16 @@ namespace Nebula.Game.Skills {
                 return false;
             }
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                damageMult *= 2;
+            }
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, damageMult);
             if(hit.hitAllowed) {
+                if(mastery) {
+                    buffDamageInterval *= 2;
+                }
                 Buff damageBuff = new Buff(id, null, BonusType.increase_damage_on_pc, buffDamageInterval, buffDamagePercent);
                 source.GetComponent<PlayerBonuses>().SetBuff(damageBuff);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);

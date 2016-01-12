@@ -20,6 +20,12 @@ namespace Nebula.Game.Skills {
             float speedPc = skill.GetFloatInput("speed_pc");
             float speedTime = skill.GetFloatInput("speed_time");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                speedTime *= 2;
+            }
+
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {
                 Buff buff = new Buff(skill.id, null, Common.BonusType.increase_speed_on_pc, speedTime, speedPc);

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Common;
 using Nebula.Engine;
 using Nebula.Game.Components;
-using Common;
+using System.Collections;
 
 namespace Nebula.Game.Skills {
     public class Skill_000003F6 : SkillExecutor  {
@@ -22,7 +18,13 @@ namespace Nebula.Game.Skills {
 
             float selfRestoreHP = selfDamagable.maximumHealth * hpPc;
             float alliesRestoreHP = selfDamagable.maximumHealth * hpAlliesPc;
-            selfDamagable.SetRestoreHPPerSec(selfRestoreHP / hpRestoreTime, hpRestoreTime);
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                selfRestoreHP *= 2;
+                alliesRestoreHP *= 2;
+            }
+            selfDamagable.SetRestoreHPPerSec(selfRestoreHP / hpRestoreTime, hpRestoreTime, source.Id + skill.data.Id.ToString());
 
             var allies = source.mmoWorld().GetItems(ItemType.Avatar, (item) => {
                 if (item.Id != source.Id) {

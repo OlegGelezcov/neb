@@ -52,7 +52,7 @@ namespace Nebula.Game.OperationHandlers {
                 //fully restore health when enter to station
                 var damagable = actor.GetComponent<DamagableObject>();
                 if(damagable) {
-                    damagable.SetHealth(damagable.maximumHealth);
+                    damagable.ForceSetHealth(damagable.maximumHealth);
                 }
 
                 actor.GetComponent<PetManager>().DestroyPets();

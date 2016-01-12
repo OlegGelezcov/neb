@@ -328,6 +328,21 @@ namespace Nebula.Game.Components {
             (nebulaObject as Item).EventChannel.Publish(msg);
         }
 
+        public void SendCollectChest(Hashtable hash) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.CollectChest,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            SendEventData(EventReceiver.ItemSubscriber, eventData, sendParameters);
+        }
+
         public void SendResurrect() {
             var eventInstance = new ItemGeneric {
                 ItemId = nebulaObject.Id,
@@ -369,6 +384,21 @@ namespace Nebula.Game.Components {
             SendParameters sendParameters = new SendParameters { ChannelId = Settings.ItemEventChannel, Unreliable = false };
             var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
             SendEventData(receiver, eventData, sendParameters);
+        }
+
+        public void ResurrectBySkillEffect() {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.ResurrectByKillEffect,
+                EventData = new Hashtable()
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            SendEventData(EventReceiver.OwnerAndSubscriber, eventData, sendParameters);
         }
 
         

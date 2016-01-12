@@ -72,7 +72,7 @@ namespace Nebula.Game.Events {
 
             pirateStation.GetComponent<EventedObject>().SetOwnedEvent(this);
             pirateStation.GetComponent<NotShipDamagableObject>().SetMaximumHealth(5000);
-            pirateStation.GetComponent<NotShipDamagableObject>().SetHealth(5000);
+            pirateStation.GetComponent<NotShipDamagableObject>().ForceSetHealth(5000);
             pirateStation.GetComponent<CharacterObject>().SetFraction(FractionType.EventBot);
             pirateStation.GetComponent<CharacterObject>().SetLevel((nebulaObject.world as MmoWorld).Zone.Level);
             pirateStation.GetComponent<RaceableObject>().SetRace((byte)Race.Borguzands);

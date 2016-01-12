@@ -25,6 +25,11 @@ namespace Nebula.Game.Skills {
             float dmgBuffPc = skill.data.Inputs.Value<float>("dmg_buff_pc");
             float radius = skill.data.Inputs.Value<float>("radius");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgDebuffTime *= 2;
+            }
+
             var sourceBonuses = source.GetComponent<PlayerBonuses>();
             var sourceChar = source.GetComponent<CharacterObject>();
 

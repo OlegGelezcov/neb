@@ -72,7 +72,7 @@ namespace Nebula.Game.Components {
             if(mConstructionTimer > 0 ) {
                 mConstructionTimer -= deltaTime;
                 if(mConstructionTimer <= 0f) {
-                    mDamagable.SetHealth(mDamagable.maximumHealth);
+                    mDamagable.ForceSetHealth(mDamagable.maximumHealth);
                     SetUnderConstruction(false);
                 }
                 nebulaObject.properties.SetProperty((byte)PS.ConstructionTimer, constructProgress);

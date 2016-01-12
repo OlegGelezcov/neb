@@ -14,6 +14,11 @@ namespace Nebula.Game.Skills {
             info = new Hashtable();
             float odMult = skill.GetFloatInput("od_mult");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                odMult *= 2;
+            }
+
             var sourceTarget = source.Target();
             if(sourceTarget.targetObject) {
                 var targetObject = sourceTarget.targetObject;
@@ -23,6 +28,7 @@ namespace Nebula.Game.Skills {
                     if(source.Character().RelationTo(targetCharacter) == Common.FractionRelation.Friend ) {
 
                         var sourceWeapon = source.Weapon();
+
                         if(source.transform.DistanceTo(targetObject.transform) <= odMult * sourceWeapon.optimalDistance) {
 
                             

@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nebula.Client</RootNamespace>
-    <AssemblyName>NebulaClient_UP</AssemblyName>
+    <AssemblyName>NebulaClient_ALL</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,8 +16,8 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Users\Dev\Documents\Nebula_UnityWebPlayer\Assets\Plugins\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;UP</DefineConstants>
+    <OutputPath>..\..\..\Users\Dev\Documents\Nebula_Android\Assets\Plugins\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -225,6 +225,11 @@
     <Compile Include="Notifications\Notification.cs" />
     <Compile Include="PassiveBonuses\PassiveBonusInfo.cs" />
     <Compile Include="PassiveBonuses\PlayerPassiveBonuses.cs" />
+    <Compile Include="Pets\PetCollection.cs" />
+    <Compile Include="Pets\PetInfo.cs" />
+    <Compile Include="Pets\PetSkillInfoFactory.cs" />
+    <Compile Include="Pets\UseOwnedTargetedPetSkillInfo.cs" />
+    <Compile Include="Pets\UsePetSkillInfo.cs" />
     <Compile Include="Planets\PlanetObjectInfo.cs" />
     <Compile Include="Planets\PlanetSlot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -240,6 +245,8 @@
     <Compile Include="Res\Location.cs" />
     <Compile Include="Res\ModuleSkillLeveling.cs" />
     <Compile Include="Res\NebulaElementData.cs" />
+    <Compile Include="Res\PetData.cs" />
+    <Compile Include="Res\PetPlayerCount.cs" />
     <Compile Include="Res\ResAsteroids.cs" />
     <Compile Include="Res\ResBuffData.cs" />
     <Compile Include="Res\ResConsumable.cs" />
@@ -257,6 +264,7 @@
     <Compile Include="Res\ResNebulaElements.cs" />
     <Compile Include="Res\ResPassiveBonusData.cs" />
     <Compile Include="Res\ResPassiveBonuses.cs" />
+    <Compile Include="Res\ResPets.cs" />
     <Compile Include="Res\ResPrefabsDB.cs" />
     <Compile Include="Res\ResRaces.cs" />
     <Compile Include="Res\ResSchemeData.cs" />

@@ -21,6 +21,12 @@ namespace Nebula.Game.Skills {
             float speedTime = skill.GetFloatInput("speed_time");
             float radius = skill.GetFloatInput("radius");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                speedTime *= 2;
+            }
+
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if (hit.hitAllowed) {
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);

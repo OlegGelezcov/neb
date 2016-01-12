@@ -18,11 +18,21 @@ namespace Nebula.Game.Skills {
             float hpPcTimed = skill.GetFloatInput("hp_pc_timed");
             float hpTime = skill.GetFloatInput("hp_time");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpPc *= 2;
+                hpTime *= 2;
+            }
+
             float restoreInstance = damagable.maximumHealth * hpPc;
             damagable.RestoreHealth(source, restoreInstance);
 
             float hpPerSec = damagable.maximumHealth * hpPcTimed / hpTime;
-            damagable.SetRestoreHPPerSec(hpPerSec, hpTime);
+
+            string id = source.Id + skill.data.Id.ToString();
+
+            damagable.SetRestoreHPPerSec(hpPerSec, hpTime, id);
+
             return true;
         }
 

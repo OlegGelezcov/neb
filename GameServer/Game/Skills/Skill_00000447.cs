@@ -19,6 +19,12 @@ namespace Nebula.Game.Skills {
             float dmgAreaMult = skill.GetFloatInput("dmg_area_mult");
             float radius = skill.GetFloatInput("radius");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                dmgAreaMult *= 2;
+            }
+
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {

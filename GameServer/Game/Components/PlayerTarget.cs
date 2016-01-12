@@ -1,11 +1,9 @@
-﻿using System;
-using Common;
-using Nebula.Engine;
-using Space.Game;
+﻿using Common;
 using ExitGames.Logging;
+using Nebula.Engine;
 using Nebula.Server.Components;
+using Space.Game;
 using System.Collections;
-using ServerClientCommon;
 using System.Collections.Concurrent;
 
 namespace Nebula.Game.Components {
@@ -31,12 +29,53 @@ namespace Nebula.Game.Components {
             mInitData = data;
         }
 
+        public bool noTarget {
+            get {
+                return (false == hasTarget);
+            }
+        }
+
+        public bool targetIsEnemySubscriber {
+            get {
+                if(targetObject) {
+                    if(mSubscribers.ContainsKey(targetObject.Id)) {
+                        var targetCharacter = targetObject.Character();
+                        if (targetCharacter) {
+                            var meCharacter = nebulaObject.Character();
+                            var relation = meCharacter.RelationTo(targetCharacter);
+                            return (relation == FractionRelation.Enemy) || (relation == FractionRelation.Neutral);
+                        }
+                    }
+                }
+                return false;
+            }
+        }
+
         public override void Start() {
             hasTarget = false;
             targetId = string.Empty;
             targetType = (byte)ItemType.Avatar;
             UnsubscribeFromTarget();
             mPlayer = GetComponent<MmoActor>();
+        }
+
+        public NebulaObject anyEnemySubscriber {
+            get {
+                var meCharacter = GetComponent<CharacterObject>();
+
+                foreach(var pSub in mSubscribers) {
+                    var sub = pSub.Value;
+                    if(sub && sub.Character() && sub.Target()) {
+                        FractionRelation relation = sub.Character().RelationTo(meCharacter);
+                        if(relation == FractionRelation.Enemy || relation == FractionRelation.Neutral ) {
+                            if (sub.Target().inCombat) {
+                                return sub;
+                            }
+                        }
+                    }
+                }
+                return null;
+            }
         }
 
         public int subscriberCount {
@@ -279,6 +318,19 @@ namespace Nebula.Game.Components {
                 return mInitData.AsHash();
             }
             return new Hashtable();
+        }
+
+        public bool IsTarget(string id) {
+            if(hasTarget) {
+                if(targetId == id ) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IsNotTarget(string id) {
+            return (false == IsTarget(id));
         }
     }
 }

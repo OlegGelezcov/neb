@@ -38,7 +38,9 @@ namespace Common
         GetPlanetInfo,
         GetMiningStationInfo,
         WorldRaceChanged,
-        PetSkillUsed
+        PetSkillUsed,
+        ResurrectByKillEffect,
+        CollectChest
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

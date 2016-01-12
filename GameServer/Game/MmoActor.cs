@@ -702,6 +702,21 @@ namespace Space.Game {
             }
         }
 
+        public bool atStation {
+            get {
+                if(workshopSaveInfo != null ) {
+                    return workshopSaveInfo.NowInWorkshop;
+                }
+                return false;
+            }
+        }
+
+        public bool atSpace {
+            get {
+                return (false == atStation);
+            }
+        }
+
         #region ICombatActor
 
 
@@ -726,7 +741,7 @@ namespace Space.Game {
 
             log.InfoFormat("MmoActor.Death()...destroying pets");
 
-            GetComponent<PetManager>().DestroyPets();
+            
 
             Avatar.SendEventShipDestroyed(true);
             mTarget.Clear();

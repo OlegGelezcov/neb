@@ -13,6 +13,11 @@ namespace Nebula.Game.Skills {
             float time = skill.GetFloatInput("time");
             float hpPc = skill.GetFloatInput("hp_pc");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2;
+            }
+
             source.Skills().Set41C(time, hpPc);
             return true;
         }

@@ -42,6 +42,10 @@
             return (float)Math.Sqrt(f);
         }
 
+        public static int RoundToInt(float val) {
+            return (int)Math.Round(val);
+        }
+
         public static float Abs(float f)
         {
             return (float)Math.Abs(f);

@@ -60,6 +60,9 @@ namespace Nebula.Game.Skills {
                 return false;
             }
 
+            if(RollMastery(source)) {
+                dmgMult *= 2;
+            }
 
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);

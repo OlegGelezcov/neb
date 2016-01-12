@@ -22,6 +22,12 @@ namespace Nebula.Game.Skills {
             float dmgMult = skill.GetFloatInput("dmg_mult");
             float radius = skill.GetFloatInput("radius");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                radius *= 2;
+            }
+
             BaseWeapon sourceWeapon = source.Weapon();
             MmoMessageComponent message = source.MmoMessage();
             NebulaObject targetObject = source.Target().targetObject;

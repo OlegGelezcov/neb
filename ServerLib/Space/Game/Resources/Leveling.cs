@@ -6,10 +6,11 @@ using System.Xml.Linq;
 using Common;
 using System.IO;
 using GameMath;
+using Nebula.Server.Space.Game.Resources;
 
 namespace Space.Game.Resources
 {
-    public class Leveling
+    public class Leveling : ILeveling
     {
         private int levelCap;
         private Dictionary<int, int> levelExpDictionary = new Dictionary<int, int>();

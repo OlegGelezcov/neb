@@ -20,6 +20,12 @@ namespace Nebula.Game.Skills {
             float hpPc = skill.GetFloatInput("hp_pc");
             float hpTime = skill.GetFloatInput("hp_time");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                hpTime *= 2;
+            }
+
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {

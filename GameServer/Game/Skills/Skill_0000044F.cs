@@ -18,6 +18,11 @@ namespace Nebula.Game.Skills {
             float hpTime = skill.data.Inputs.Value<float>("hp_time");
             float radius = skill.data.Inputs.Value<float>("radius");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                hpPc *= 2;
+            }
+
             var sourceChar = source.GetComponent<CharacterObject>();
             var sourceDamagable = source.GetComponent<DamagableObject>();
             var sourceBonuses = source.Bonuses();
@@ -38,11 +43,13 @@ namespace Nebula.Game.Skills {
 
             int counter = 0;
 
-            foreach(var p in items ) {
+            string id = source.Id + skill.data.Id.ToString();
+
+            foreach (var p in items ) {
                 var d = p.Value.GetComponent<DamagableObject>();
                 float hpRestor = d.maximumHealth * hpPc ;
                 hpRestor = hpRestor * (1f + sourceBonuses.dronStrengthPcBonus) + sourceBonuses.dronStrengthCntBonus;
-                d.SetRestoreHPPerSec(hpRestor / hpTime, hpTime);
+                d.SetRestoreHPPerSec(hpRestor / hpTime, hpTime, id);
                 info.Add(p.Key, p.Value.Type);
                 counter++;
                 if(counter >= dronCnt ) {
@@ -57,7 +64,7 @@ namespace Nebula.Game.Skills {
             }
 
             if( sumRestore > 0f ) {
-                sourceDamagable.SetRestoreHPPerSec(sumRestore / hpTime, hpTime);
+                sourceDamagable.SetRestoreHPPerSec(sumRestore / hpTime, hpTime, id);
             }
             return true;
         }

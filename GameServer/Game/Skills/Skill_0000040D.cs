@@ -18,6 +18,11 @@ namespace Nebula.Game.Skills {
             float damagePc = skill.data.Inputs.Value<float>("damage_pc");
             float damageTime = skill.data.Inputs.Value<float>("damage_time");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                damageTime *= 2;
+            }
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if (hit.hitAllowed) {

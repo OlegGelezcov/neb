@@ -15,7 +15,7 @@ namespace Nebula.Game.Components {
         }
 
         protected override float AbsorbDamage(float inputDamage) {
-            return inputDamage;
+            return mFixedDamage;
         }
     }
 }

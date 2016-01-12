@@ -25,6 +25,12 @@ namespace Nebula.Game.Skills {
 
             var sourceWeapon = source.GetComponent<BaseWeapon>();
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+                enPc *= 2;
+            }
+
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed ) {

@@ -17,6 +17,12 @@ namespace Nebula.Game.Skills
             float speedPc = skill.GetFloatInput("speed_pc");
             float speedTime = skill.GetFloatInput("speed_time");
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                cdTime *= 2;
+                speedTime *= 2;
+            }
+
             Buff cdBuff = new Buff(skill.id, null, Common.BonusType.decrease_cooldown_on_pc, cdTime, cdPc);
             Buff speedBuff = new Buff(skill.id, null, Common.BonusType.increase_speed_on_pc, speedTime, speedPc);
             var sourceBonuses = source.Bonuses();

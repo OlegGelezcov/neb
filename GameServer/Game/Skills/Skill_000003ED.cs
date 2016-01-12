@@ -19,11 +19,20 @@ namespace Nebula.Game.Skills {
             
             var sourceWeapon = source.GetComponent<BaseWeapon>();
 
+            bool mastery = RollMastery(source);
+
+            if(mastery) {
+                dmgMult *= 2;
+            }
+
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
             if (hit.hitAllowed) {
                 var targ = source.GetComponent<PlayerTarget>().targetObject;
                 if(targ ) {
+                    if(mastery) {
+                        dmgPerSecTime *= 2;
+                    }
                     targ.GetComponent<DamagableObject>().SetTimedDamage(dmgPerSecTime, hit.ActualDamage * dmgPerSecPC);
                 }
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);

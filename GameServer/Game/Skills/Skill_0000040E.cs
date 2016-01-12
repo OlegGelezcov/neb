@@ -16,6 +16,11 @@ namespace Nebula.Game.Skills {
             float damage = weapon.GetDamage(false);
             float healValue = damage * healMult;
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                healValue *= 2;
+            }
+
             var heal = source.Weapon().Heal(source.Target().targetObject, healValue, skill.data.Id);
             source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal);
             return true;

@@ -3,7 +3,9 @@ using ExitGames.Concurrency.Fibers;
 using ExitGames.Logging;
 using Nebula;
 using Nebula.Engine;
+using Nebula.Game;
 using Nebula.Game.Components;
+using Nebula.Game.Utils;
 using Nebula.Inventory;
 using NebulaCommon;
 using NebulaCommon.Group;
@@ -146,7 +148,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
         if( success ) {
             log.InfoFormat("method {0} successfully called on server {1}", method, serverType);
             if(result != null ) {
-                log.InfoFormat("method call result = {0}", result.ToString());
+                log.InfoFormat("method {0} call result = {1}".Color(LogColor.orange), method, result.ToString());
 
                 switch(method) {
                     case "RequestGuildInfo":

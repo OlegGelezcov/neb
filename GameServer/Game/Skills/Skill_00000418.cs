@@ -29,7 +29,12 @@ namespace Nebula.Game.Skills {
                 return false;
             });
 
-            foreach(var p in items ) {
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                cooldownTime *= 2;
+            }
+
+            foreach (var p in items ) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_cooldown_on_cnt, cooldownTime, cooldownCnt);
                 p.Value.GetComponent<PlayerBonuses>().SetBuff(buff);
             }

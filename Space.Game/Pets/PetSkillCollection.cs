@@ -1,4 +1,6 @@
-﻿using System.Collections.Concurrent;
+﻿using Space.Game;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -29,6 +31,12 @@ namespace Nebula.Pets {
                 }
             }
             return null;
+        }
+
+        public List<int> GetRandomSkills(int count) {
+            List<int> allSklls = new List<int>(m_Skills.Keys);
+            allSklls = allSklls.Shuffle();
+            return allSklls.Take(count).ToList();
         }
     }
 }

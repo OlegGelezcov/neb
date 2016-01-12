@@ -24,11 +24,21 @@ namespace Nebula.Game.Skills {
             float baseDamage = sourceWeapon.GetDamage(false);
             float secondDamage = baseDamage * dmgAreaMult;
 
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                dmgMult *= 2;
+
+            }
             var shot = source.Weapon().Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
+
+                InputDamage inpDamage = new InputDamage(source, secondDamage);
+                if(mastery) {
+                    inpDamage.SetDamage(inpDamage.damage * 2);
+                }
                 foreach(var pitem in GetTargets(source, source.Target().targetObject, radius)) {
-                    pitem.Value.Damagable().ReceiveDamage(source.Type, source.Id, secondDamage, sourceCharacter.workshop, sourceCharacter.level, sourceRaceable.race);
+                    pitem.Value.Damagable().ReceiveDamage(inpDamage);
                 }
                 return true;
             } else {
