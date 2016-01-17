@@ -290,6 +290,10 @@ namespace ServerClientCommon {
         Skills,
         PassiveSkill,
         KilledTime,
-        Mastery
+        Mastery,
+        Skin,
+        PetColor,
+        Pet,
+        MovedCount
     }
 }

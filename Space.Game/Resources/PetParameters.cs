@@ -18,6 +18,9 @@ namespace Nebula.Resources {
         public PetPassiveSkillCountTable passiveSkillCountTable { get; private set; }
         public PetMasteryTable masteryTable { get; private set; }
         public PetTypeTable typeTable { get; private set; }
+        public PetUpgradeTable petUpgrades { get; private set; }
+        public PetMasteryUpgradeTable masteryUpgrades { get; private set; }
+        public PetDefaultModelTable defaultModels { get; private set; }
 
         public void Load(string file) {
 
@@ -31,6 +34,9 @@ namespace Nebula.Resources {
             passiveSkillCountTable = new PetPassiveSkillCountTable(document.Element("pets").Element("passive_skills"));
             masteryTable = new PetMasteryTable(document.Element("pets").Element("mastery"));
             typeTable = new PetTypeTable(document.Element("pets").Element("types"));
+            petUpgrades = new PetUpgradeTable(document.Element("pets").Element("upgrades"));
+            masteryUpgrades = new PetMasteryUpgradeTable(document.Element("pets").Element("mastery_upgrades"));
+            defaultModels = new PetDefaultModelTable(document.Element("pets").Element("default_model"));
 
             /*
             XDocument document = XDocument.Load(file);

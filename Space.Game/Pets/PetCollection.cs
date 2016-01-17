@@ -6,9 +6,10 @@ using System.Linq;
 namespace Nebula.Pets {
     public class PetCollection {
         private readonly List<PetInfo> m_Pets;
+        private readonly int m_MaxCount;
 
-        public void Add(PetInfo pet) {
-            m_Pets.Add(pet);
+        public bool Add(PetInfo pet) {
+            return AddPet(pet);
         }
 
         public PetInfo GetPet(string id) {
@@ -42,11 +43,13 @@ namespace Nebula.Pets {
             return false;
         }
 
-        public PetCollection() {
+        public PetCollection(int maxCount) {
+            m_MaxCount = maxCount;
             m_Pets = new List<PetInfo>();
         }
 
-        public PetCollection(List<PetSave> pets) {
+        public PetCollection(List<PetSave> pets, int maxCount) {
+            m_MaxCount = maxCount;
             m_Pets = new List<PetInfo>();
             if(pets != null ) {
                 foreach(var save in pets) {
@@ -80,8 +83,22 @@ namespace Nebula.Pets {
             }
         }
 
-        public void AddPet(PetInfo pet) {
-            pets.Add(pet);
+        public bool AddPet(PetInfo pet) {
+            if (pets.Count < m_MaxCount) {
+                pets.Add(pet);
+                return true;
+            }
+            return false;
+        }
+
+        public bool RemovePet(string id) {
+            if(HasPet(id)) {
+                var pet = GetPet(id);
+                if(pet != null ) {
+                    return pets.Remove(pet);
+                }
+            }
+            return false;
         }
 
         public bool HasPet(string id) {
@@ -91,6 +108,42 @@ namespace Nebula.Pets {
                 }
             }
             return false;
+        }
+
+        public bool ImproveColor(string petId) {
+            var pet = GetPet(petId);
+            if(pet == null ) {
+                return false;
+            }
+            if(pet.hasMaxColor) {
+                return false;
+            }
+            pet.SetColor(pet.nextColor);
+            return true;
+        }
+
+        public bool ImproveMastery(string petId ) {
+            var pet = GetPet(petId);
+            if(pet == null ) {
+                return false;
+            }
+            return pet.ImproveMastery();
+        }
+
+
+        public bool hasFreeSpace {
+            get {
+                return (pets.Count < m_MaxCount);
+            }
+        }
+
+        public bool SetModel( string petID, string model) {
+            var pet = GetPet(petID);
+            if(pet == null ) {
+                return false;
+            }
+            pet.SetType(model);
+            return true;
         }
 
         public Hashtable GetInfo(IRes res) {

@@ -3,9 +3,11 @@ using ExitGames.Logging;
 using Nebula.Game.Components;
 using Nebula.Game.Pets;
 using Nebula.Game.Utils;
+using Nebula.Inventory.Objects;
 using Nebula.Pets;
 using ServerClientCommon;
 using Space.Game;
+using Space.Game.Inventory;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -46,11 +48,85 @@ namespace Nebula.Game{
             settings.SetRace((Race)player.GetComponent<RaceableObject>().race);
 
             PetDropper dropper = new PetDropper();
-            PetInfo info = dropper.Drop(player.resource.petParameters, settings, player.resource.petSkills);
+            PetInfo info = dropper.Drop(player.resource.petParameters, settings, player.resource.petSkills, player.resource.petPassiveBonuses);
             player.GetComponent<PetManager>().AddPet(info);
             return new Hashtable {
                 {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
                 {(int)SPC.Info, info.GetInfo(player.resource) }
+            };
+        }
+
+
+        public Hashtable TransformPetSchemeToPet(string schemeId) {
+            var inventory = player.Station.StationInventory;
+            var petManager = player.GetComponent<PetManager>();
+            var playerRaceable = player.GetComponent<RaceableObject>();
+
+            if(false == inventory.HasItem(InventoryObjectType.pet_scheme, schemeId)) {
+                return CreateResponse(RPCErrorCode.ItemNotFound);
+            }
+            ServerInventoryItem schemeItem = null;
+            if( false == inventory.TryGetItem(InventoryObjectType.pet_scheme, schemeId, out schemeItem) ) {
+                return CreateResponse(RPCErrorCode.ErrorOfGettingInventoryItem);
+            }
+
+            PetSchemeObject petSchemeObject = schemeItem.Object as PetSchemeObject;
+
+            if(false == petManager.hasFreeSpace) {
+                return CreateResponse(RPCErrorCode.LowPetAngarSpace);
+            }
+
+            string model = player.resource.petParameters.defaultModels[(Race)playerRaceable.race];
+            if(string.IsNullOrEmpty(model)) {
+                return CreateResponse(RPCErrorCode.ResourceDataError);
+            }
+
+            PetDropper.PetDropSettings settings = new PetDropper.PetDropSettings();
+
+            settings.OffGenerateColor();
+            settings.SetColor(petSchemeObject.petColor);
+
+            settings.OffGenerateModel();
+            settings.SetModel(model);
+
+            settings.OnGeneratePassiveSkill();
+            settings.OnGenerateActiveSkills();
+            settings.OnGenerateDamageType();
+
+            settings.OnSetMastery();
+            settings.SetMastery(0);
+
+            settings.OffGenerateRace();
+            settings.SetRace((Race)playerRaceable.race);
+
+            PetDropper dropper = new PetDropper();
+            PetInfo petInfo = dropper.Drop(player.resource.petParameters, settings, player.resource.petSkills, player.resource.petPassiveBonuses);
+
+            inventory.Remove(InventoryObjectType.pet_scheme, schemeId, 1);
+
+            if(false == petManager.AddPet(petInfo)) {
+                return CreateResponse(RPCErrorCode.ErrorOfAddingPetToCollection);
+            }
+
+            player.EventOnStationHoldUpdated();
+
+            Hashtable hash = CreateResponse(RPCErrorCode.Ok);
+            hash.Add((int)SPC.Pet, petInfo.GetInfo(player.resource));
+
+            return hash;
+        }
+
+        public Hashtable DestroyPet(string petId ) {
+            var petManager = player.GetComponent<PetManager>();
+            bool success = petManager.RemovePetInfo(petId);
+            var response = CreateResponse(RPCErrorCode.Ok);
+            response.Add((int)SPC.Status, success);
+            return response;
+        }
+
+        private Hashtable CreateResponse(RPCErrorCode code) {
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)code }
             };
         }
 
@@ -115,6 +191,192 @@ namespace Nebula.Game{
                 {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
                 {(int)SPC.Status, success }
             };
+        }
+
+        public Hashtable AddPetScheme() {
+            PetSchemeObject schemeObject = new PetSchemeObject(Guid.NewGuid().ToString(), PetColor.gray, false);
+            var inventory = player.Inventory;
+            if(inventory.HasSlotsForItems(new List<string> { schemeObject.Id })) {
+                inventory.Add(schemeObject, 1);
+                player.EventOnInventoryUpdated();
+                return new Hashtable {
+                    {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                    {(int)SPC.Status, true }
+                };
+            }
+            return new Hashtable {
+                {(int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError }
+            };
+        }
+
+        public Hashtable AddAllCraftResources() {
+            var stationInventory = player.Station.StationInventory;
+            foreach(var data in player.resource.craftObjects.all) {
+                if(false == stationInventory.HasSlotsForItems(new List<string> { data.id })) {
+                    break;
+                } else {
+                    CraftResourceObject obj = new CraftResourceObject(data.id, data.color, false);
+                    stationInventory.Add(obj, 10);
+                }
+            }
+            player.EventOnStationHoldUpdated();
+            return CreateResponse(RPCErrorCode.Ok);
+        }
+
+        public Hashtable AddPetSkin() {
+            string skin = player.resource.petParameters.typeTable.GetRandomType((Race)player.GetComponent<RaceableObject>().race);
+            if(false == string.IsNullOrEmpty(skin)) {
+                PetSkinObject skinObject = new PetSkinObject(Guid.NewGuid().ToString(), skin, false);
+                var inventory = player.Inventory;
+                if(inventory.HasSlotsForItems(new List<string> { skinObject.Id })) {
+                    if(inventory.Add(skinObject, 1)) {
+                        player.EventOnInventoryUpdated();
+                        return new Hashtable {
+                            {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                            {(int)SPC.Status, true }
+                        };
+                    }
+                }
+            }
+            return new Hashtable {
+                {(int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError }
+            };
+        }
+
+        public Hashtable ImprovePetColor(string petId) {
+            var petManager = player.GetComponent<PetManager>();
+            var petData = petManager.GetPetInfo(petId);
+            if(petData == null ) {
+                return CreateResponse(RPCErrorCode.PetNotFound);
+            }
+
+            if(petData.hasMaxColor) {
+                return CreateResponse(RPCErrorCode.PetAlreadyHasMaxColor);
+            }
+
+            var requirement = player.resource.petParameters.petUpgrades[petData.color];
+            if(requirement == null ) {
+                return CreateResponse(RPCErrorCode.ResourceDataError);
+            }
+
+            var stationInventory = player.Station.StationInventory;
+            if(false == stationInventory.HasCraftResourceItems(requirement.entries)) {
+                return CreateResponse(RPCErrorCode.NotEnoughInventoryItems);
+            }
+
+            if(false == petManager.ImproveColor(petId)) {
+                return CreateResponse(RPCErrorCode.UnknownError);
+            }
+
+            if(false == stationInventory.RemoveCraftResourceItems(requirement.entries)) {
+                return CreateResponse(RPCErrorCode.UnknownError);
+            }
+
+            UpgradeSkillWhenColorUp(petData);
+
+            var message = player.GetComponent<MmoMessageComponent>();
+            player.EventOnStationHoldUpdated();
+            message.ReceivePetsUpdate();
+            return CreateResponse(RPCErrorCode.Ok);
+        }
+
+        private void UpgradeSkillWhenColorUp(PetInfo pet) {
+            var maxSkills = player.resource.petParameters.activeSkillCountTable[pet.color];         
+            if(maxSkills > pet.skills.Count) {
+                int count = maxSkills - pet.skills.Count;
+                List<PetActiveSkill> newSkills = player.resource.petSkills.GetRandomSkills(count, pet.skills);
+                if(newSkills.Count > 0 ) {
+                    foreach(var skill in newSkills) {
+                        pet.AddActiveSkill(skill);
+                    }
+                }
+            }
+        }
+
+        public Hashtable ImprovePetMastery(string petId) {
+            var petManager = player.GetComponent<PetManager>();
+            var petInfo = petManager.GetPetInfo(petId);
+            if(petInfo == null ) {
+                return CreateResponse(RPCErrorCode.PetNotFound);
+            }
+
+            if(petInfo.hasMaxMastery) {
+                return CreateResponse(RPCErrorCode.PetAlreadyHasMaxMastery);
+            }
+
+            var requirement = player.resource.petParameters.masteryUpgrades[petInfo.mastery];
+            if(requirement == null ) {
+                return CreateResponse(RPCErrorCode.ResourceDataError);
+            }
+
+            var stationInventory = player.Station.StationInventory;
+            if(false == stationInventory.HasCraftResourceItems(requirement.entries)) {
+                return CreateResponse(RPCErrorCode.NotEnoughInventoryItems);
+            }
+
+            if(petInfo.nextMastery > petInfo.maxAllowedMastery) {
+                return CreateResponse(RPCErrorCode.PetColorNotEnoughForImproving);
+            }
+
+            if(false == petManager.ImproveMastery(petId)) {
+                return CreateResponse(RPCErrorCode.UnknownError);
+            }
+
+            if(false == stationInventory.RemoveCraftResourceItems(requirement.entries)) {
+                return CreateResponse(RPCErrorCode.UnknownError);
+            }
+
+            var message = player.GetComponent<MmoMessageComponent>();
+            player.EventOnStationHoldUpdated();
+            message.ReceivePetsUpdate();
+            return CreateResponse(RPCErrorCode.Ok);
+        }
+
+        public Hashtable ChangePetSkin(string skinItemId, string petId ) {
+            var petManager = player.GetComponent<PetManager>();
+            var petInfo = petManager.GetPetInfo(petId);
+            if (petInfo == null) {
+                return CreateResponse(RPCErrorCode.PetNotFound);
+            }
+
+            var stationInventory = player.Station.StationInventory;
+            if(false == stationInventory.HasItem(InventoryObjectType.pet_skin, skinItemId)) {
+                return CreateResponse(RPCErrorCode.ItemNotFound);
+            }
+
+            ServerInventoryItem skinItem;
+            if(false == stationInventory.TryGetItem(InventoryObjectType.pet_skin, skinItemId, out skinItem)) {
+                return CreateResponse(RPCErrorCode.UnknownError);
+            }
+
+            var petSkinObject = skinItem.Object as PetSkinObject;
+
+            if(petSkinObject.skin == petInfo.type ) {
+                return CreateResponse(RPCErrorCode.PetAlreadySettedThisSkin);
+            }
+
+            if(false == player.resource.petParameters.typeTable.HasType(petSkinObject.skin)) {
+                return CreateResponse(RPCErrorCode.ResourceDataError);
+            }
+            var typeObj = player.resource.petParameters.typeTable[petSkinObject.skin];
+
+            var playerRaceable = player.GetComponent<RaceableObject>();
+
+            if(typeObj != (Race)playerRaceable.race) {
+                return CreateResponse(RPCErrorCode.InvalidRace);
+            }
+
+            if(false == petManager.SetModel(petId, petSkinObject.skin)) {
+                return CreateResponse(RPCErrorCode.UnknownError);
+            }
+
+            stationInventory.Remove(InventoryObjectType.pet_skin, skinItemId, 1);
+            player.EventOnStationHoldUpdated();
+
+            var message = player.GetComponent<MmoMessageComponent>();
+            message.ReceivePetsUpdate();
+
+            return CreateResponse(RPCErrorCode.Ok);
         }
     }
 }

@@ -78,6 +78,12 @@ namespace Nebula.Inventory {
                     return new ExpBoostObject(itemInfo);
                 case InventoryObjectType.loot_box:
                     return new LootBoxObject(itemInfo);
+                case InventoryObjectType.craft_resource:
+                    return new CraftResourceObject(itemInfo);
+                case InventoryObjectType.pet_skin:
+                    return new PetSkinObject(itemInfo);
+                case InventoryObjectType.pet_scheme:
+                    return new PetSchemeObject(itemInfo);
                 //case InventoryObjectType.pass:
                    // return new PassInventoryObject(itemInfo);
                 //case InventoryObjectType.credits:
@@ -85,6 +91,18 @@ namespace Nebula.Inventory {
                 default:
                     throw new Exception("Not supported object type: {0}".f(objType));
             }
+        }
+
+        public static Hashtable ItemHash(string id, int level, ObjectColor color, InventoryObjectType type, PlacingType placingType, bool binded, bool splittable) {
+            return new Hashtable {
+                { (int)SPC.Id, id },
+                { (int)SPC.Level, level },
+                { (int)SPC.Color, (int)(byte)color },
+                { (int)SPC.ItemType, (int)(byte)type },
+                { (int)SPC.PlacingType, (int)placingType },
+                { (int)SPC.Binded, binded },
+                { (int)SPC.Splittable, splittable }
+            };
         }
     }
 }

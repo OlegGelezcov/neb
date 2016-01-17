@@ -230,6 +230,25 @@ namespace Space.Game.Inventory {
             }
         }
 
+        public bool HasCraftResourceItems(List<IDCountPair> items) {
+            bool ok = true;
+            foreach(var pair in items) {
+                if(ItemCount(InventoryObjectType.craft_resource, pair.ID) < pair.count) {
+                    ok = false;
+                    break;
+                }
+            }
+            return ok;
+        }
+
+        public bool RemoveCraftResourceItems(List<IDCountPair> items) {
+            bool ok = true;
+            foreach(var pair in items) {
+                Remove(InventoryObjectType.craft_resource, pair.ID, pair.count);
+            }
+            return ok;
+        }
+
         public bool HasFreeSpace() {
             return this.FreeSlots > 0;
         }

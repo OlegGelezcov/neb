@@ -52,5 +52,23 @@ namespace Nebula.Client.Res {
             }
             return null;
         }
+
+        public int petCount {
+            get {
+                return m_Pets.Count;
+            }
+        }
+
+        public int minPlayerLevelForUnlockPet {
+            get {
+                PetPlayerCount min = m_PetPlayerCountList[0];
+                foreach(var pc in m_PetPlayerCountList) {
+                    if(pc.count > 0 && pc.count < min.count ) {
+                        min = pc;
+                    } 
+                }
+                return min.minLevel;
+            }
+        }
     }
 }

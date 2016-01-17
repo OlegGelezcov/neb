@@ -25,6 +25,10 @@ namespace Nebula.Client.Store {
                     return InventoryObjectType.Material;
                 case "nebula_element":
                     return InventoryObjectType.nebula_element;
+                case "craft_resource":
+                    return InventoryObjectType.craft_resource;
+                case "pet_scheme":
+                    return InventoryObjectType.pet_scheme;
                 default:
                     return InventoryObjectType.Weapon;
             }

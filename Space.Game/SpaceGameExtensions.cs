@@ -41,6 +41,11 @@ namespace Space.Game
             }
             return source;
         }
+
+        public static T AnyElement<T>(this List<T> list) {
+            int index = Rand.Int(0, list.Count - 1);
+            return list[index];
+        }
     }
 
     

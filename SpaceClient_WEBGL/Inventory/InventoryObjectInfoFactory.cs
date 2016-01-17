@@ -62,6 +62,12 @@ namespace Nebula.Client.Inventory {
                         return new ExpBoostObjectInfo(info);
                     case InventoryObjectType.loot_box:
                         return new LootBoxObjectInfo(info);
+                    case InventoryObjectType.craft_resource:
+                        return new CraftResourceInventoryObjectInfo(info);
+                    case InventoryObjectType.pet_scheme:
+                        return new PetSchemeInventoryObjectInfo(info);
+                    case InventoryObjectType.pet_skin:
+                        return new PetSkinInventoryObjectInfo(info);
                     //case InventoryObjectType.pass:
                         //return new PassInventoryObjectInfo(info);
                     //case InventoryObjectType.credits:

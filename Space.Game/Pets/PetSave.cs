@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 
 namespace Nebula.Pets {
     public class PetSave {
@@ -7,7 +8,7 @@ namespace Nebula.Pets {
         public int color { get; set; }
         public string type { get; set; }
         public int passiveSkill { get; set; }
-        public List<int> activeSkills { get; set; }
+        public List<Hashtable> activeSkills { get; set; }
         public bool active { get; set; }
 
         public float attackBaseAdd { get; set; }

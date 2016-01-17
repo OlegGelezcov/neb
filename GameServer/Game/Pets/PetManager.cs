@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System;
 using System.Collections;
 using GameMath;
+using Nebula.Inventory.Objects;
 
 namespace Nebula.Game.Pets {
     public class PetManager : NebulaBehaviour, IInfoSource {
@@ -19,6 +20,8 @@ namespace Nebula.Game.Pets {
         private readonly float kPetRespawnInterval = 60;
         private const float kRecreateKilledPetsInterval = 10.0f;
         private const int kAutoLootPetBonus = 11;
+        public const int kMaxPetCount = 10;
+        private const string kCraftResourceForPetDeconstruction = "res_034";
 
 
         private static ILogger s_Log = LogManager.GetCurrentClassLogger();
@@ -31,7 +34,7 @@ namespace Nebula.Game.Pets {
         private float m_RecreateKilledPetsTimer = kRecreateKilledPetsInterval;
 
         private readonly ConcurrentDictionary<string, PetObject> m_Pets = new ConcurrentDictionary<string, PetObject>();
-        private PetCollection m_PetInfoCollection = new PetCollection();
+        private PetCollection m_PetInfoCollection = new PetCollection(kMaxPetCount);
 
 
         private bool m_Initialized = false;
@@ -66,11 +69,15 @@ namespace Nebula.Game.Pets {
                         CreateKilledPets();
                     }
                 }
-                s_Log.InfoFormat("pet manager updated");
+                //s_Log.InfoFormat("pet manager updated");
             } catch(Exception exception) {
                 s_Log.InfoFormat(exception.Message);
                 s_Log.InfoFormat(exception.StackTrace);
             }
+        }
+
+        public bool SetModel(string petId, string model) {
+            return pets.SetModel(petId, model);
         }
 
         /// <summary>
@@ -123,13 +130,54 @@ namespace Nebula.Game.Pets {
         /// Add pet to collection and recreate if needed
         /// </summary>
         /// <param name="pet"></param>
-        public void AddPet(PetInfo pet) {
-            pets.Add(pet);
+        public bool AddPet(PetInfo pet) {
+            bool success = pets.Add(pet);
 
-            var player = GetComponent<MmoActor>();
-            if ((player && player.atSpace) || (false == player)) {
-                Reinitialize();
-            } 
+            if (success) {
+                var player = GetComponent<MmoActor>();
+                if ((player && player.atSpace) || (false == player)) {
+                    Reinitialize();
+                }
+            }
+            return success;
+        }
+
+        public bool RemovePetInfo(string id) {
+            var pet = pets.GetPet(id);
+            if (pet != null) {
+
+                bool success = pets.RemovePet(id);
+
+                if(pet.color != PetColor.gray) {
+
+                    if(m_Player) {
+
+                        var stationInventory = m_Player.Station.StationInventory;
+
+                        if(stationInventory.HasSlotsForItems(new List<string> { kCraftResourceForPetDeconstruction })) {
+
+                            var craftData = resource.craftObjects[kCraftResourceForPetDeconstruction];
+
+                            if(craftData != null ) {
+
+                                CraftResourceObject craftResource = new CraftResourceObject(kCraftResourceForPetDeconstruction, craftData.color, false);
+                                if(stationInventory.Add(craftResource, 1)) {
+                                    m_Player.EventOnStationHoldUpdated();
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                if(success) {
+                    if(m_Player) {
+                        GetComponent<MmoMessageComponent>().ReceivePetsUpdate();
+                    }
+                }
+                return success;
+            }
+            return false;
         }
 
         private void ReinitPetObject(PetInfo pet) {
@@ -174,7 +222,7 @@ namespace Nebula.Game.Pets {
                 return false;
             }
 
-            bool success = pet.AddActiveSkill(skill);
+            bool success = pet.AddActiveSkill(new PetActiveSkill {  id = skill, activated = true });
             if(success) {
                 ReinitPetObject(pet);
             }
@@ -286,7 +334,7 @@ namespace Nebula.Game.Pets {
                 NebulaObject newPet = ObjectCreate.CreatePet(nebulaObject.world as MmoWorld, nebulaObject, pet);
                 (newPet as GameObject).AddToWorld();
                 m_Pets.TryAdd(newPet.Id, newPet.GetComponent<PetObject>());
-                s_Log.InfoFormat("pet = {0} spawned".Color(LogColor.white), pet.id);
+                //s_Log.InfoFormat("pet = {0} spawned".Color(LogColor.white), pet.id);
             } catch(Exception exception) {
                 s_Log.InfoFormat(exception.Message);
                 s_Log.InfoFormat(exception.StackTrace);
@@ -297,13 +345,27 @@ namespace Nebula.Game.Pets {
         /// Spawn killed pets in space
         /// </summary>
         private void CreateKilledPets() {
+           // s_Log.InfoFormat("CreateKilledPets(): pet collection count = {0}".Color(LogColor.orange), pets.pets.Count);
+            //s_Log.InfoFormat("CreateKilledPets(): pet views count = {0}".Color(LogColor.orange), m_Pets.Count);
+
             if(ownerAtSpace) {
                 foreach(var pet in pets.pets) {
                     if(pet.active) {
                         if(NoPetObject(pet.id) && RespawnOk(pet) && ownerNotCombat) {
+                            s_Log.InfoFormat("spawn pet".Color(LogColor.orange));
                             SpawnPet(pet);
+                        } else {
+                            //if(false == NoPetObject(pet.id)) {
+                            //    s_Log.InfoFormat("CreateKilledPets(): such pet already has view".Color(LogColor.orange));
+                            //} else if(false == RespawnOk(pet)) {
+                            //    s_Log.InfoFormat("CreateKilledPets(): respawn interval not completed".Color(LogColor.orange));
+                            //} else if(false == ownerNotCombat) {
+                            //    s_Log.InfoFormat("CreateKilledPets(): owner yet in combat".Color(LogColor.orange));
+                            //}
                         }
-                    }
+                    } else {
+                        //s_Log.InfoFormat("CreateKilledPets(): pet not active".Color(LogColor.orange));
+                    } 
                 }
             }
         }
@@ -357,7 +419,19 @@ namespace Nebula.Game.Pets {
             return (false == HasPetObject(id));
         }
         private bool HasPetObject(string id) {
-            return m_Pets.ContainsKey(id);
+            bool contains =  m_Pets.ContainsKey(id);
+            if(contains) {
+
+                PetObject val;
+
+                if(m_Pets.TryGetValue(id, out val)) {
+                    if(val == null || (false == val.nebulaObject)) {
+                        m_Pets.TryRemove(id, out val);
+                        return false;
+                    }
+                }
+            }
+            return contains;
         }
         private PetObject GetPetObject(string id) {
             PetObject obj;
@@ -379,18 +453,18 @@ namespace Nebula.Game.Pets {
         /// Called when owner death occurs
         /// </summary>
         public void Death() {
-            s_Log.InfoFormat("Owner Death() and pets destroyed".Color(LogColor.orange));
+            //s_Log.InfoFormat("Owner Death() and pets destroyed".Color(LogColor.orange));
             DestroyPets();
         }
 
         public void RemovePet(string id) {
             PetObject pet;
             if(m_Pets.TryRemove(id, out pet)) {
-                s_Log.InfoFormat("successfully removed pet = {0} [red]", id);
+                //s_Log.InfoFormat("successfully removed pet = {0} [red]", id);
             }
 
             if(m_Pets.Count == 0 ) {
-                s_Log.InfoFormat("PetManager pets now is empty [red]");
+                //s_Log.InfoFormat("PetManager pets now is empty [red]");
             }
         }
 
@@ -398,7 +472,7 @@ namespace Nebula.Game.Pets {
         /// Update killed time on killed pet
         /// </summary>
         public void UpdateKilledTime(PetObject pet) {
-            s_Log.InfoFormat("update killed time on pet = {0}".Color(LogColor.orange), CommonUtils.SecondsFrom1970());
+           // s_Log.InfoFormat("update killed time on pet = {0}".Color(LogColor.orange), CommonUtils.SecondsFrom1970());
             var info = m_PetInfoCollection.GetPet(pet.nebulaObject.Id);
             info.SetKilledTime(CommonUtils.SecondsFrom1970());
         }
@@ -406,6 +480,24 @@ namespace Nebula.Game.Pets {
         public PetCollection pets {
             get {
                 return m_PetInfoCollection;
+            }
+        }
+
+        public PetInfo GetPetInfo(string petId ) {
+            return pets.GetPet(petId);
+        }
+
+        public bool ImproveColor(string petId ) {
+            return pets.ImproveColor(petId);
+        }
+
+        public bool ImproveMastery(string petId) {
+            return pets.ImproveMastery(petId);
+        }
+
+        public bool hasFreeSpace {
+            get {
+                return pets.hasFreeSpace;
             }
         }
 

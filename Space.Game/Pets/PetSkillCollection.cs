@@ -33,10 +33,35 @@ namespace Nebula.Pets {
             return null;
         }
 
-        public List<int> GetRandomSkills(int count) {
+        public List<PetActiveSkill> GetRandomSkills(int count) {
             List<int> allSklls = new List<int>(m_Skills.Keys);
             allSklls = allSklls.Shuffle();
-            return allSklls.Take(count).ToList();
+            var resultIds =  allSklls.Take(count).ToList();
+            List<PetActiveSkill> resultSkills = new List<PetActiveSkill>();
+            foreach(var id in resultIds) {
+                resultSkills.Add(new PetActiveSkill { id = id, activated = true });
+            }
+            return resultSkills;
+        }
+
+        public List<PetActiveSkill> GetRandomSkills(int count, List<PetActiveSkill> except) {
+            List<int> allSklls = new List<int>(m_Skills.Keys);
+            var filtered = allSklls.Where(s => (false == ListContains(except, s))).ToList().Shuffle();
+            var ids = filtered.Take(count).ToList();
+            List<PetActiveSkill> result = new List<PetActiveSkill>();
+            foreach(var id in ids) {
+                result.Add(new PetActiveSkill { id = id, activated = true });
+            }
+            return result;
+        }
+
+        private bool ListContains(List<PetActiveSkill> source, int s) {
+            foreach(var skill in source) {
+                if(skill.id == s ) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

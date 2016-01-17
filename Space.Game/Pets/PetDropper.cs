@@ -71,7 +71,7 @@ namespace Nebula.Pets {
             public void SetPassiveSkill(int skill) {
                 overwrite.SetPassiveSkill(skill);
             }
-            public void SetActiveSkills(List<int> activeSkills ) {
+            public void SetActiveSkills(List<PetActiveSkill> activeSkills ) {
                 overwrite.SetActiveSkills(activeSkills);
             }
             public void SetDamageType(WeaponDamageType damageType ) {
@@ -102,10 +102,10 @@ namespace Nebula.Pets {
                 }
             }
 
-            public List<int> overwriteActiveSkills {
+            public List<PetActiveSkill> overwriteActiveSkills {
                 get {
                     if(overwrite.activeSkills == null ) {
-                        overwrite.SetActiveSkills(new List<int>());
+                        overwrite.SetActiveSkills(new List<PetActiveSkill>());
                     }
                     return overwrite.activeSkills;
                 }
@@ -134,7 +134,7 @@ namespace Nebula.Pets {
             public PetColor color { get;  private set; }
             public string model { get; private set; }
             public int passiveSkill { get; private set; }
-            public List<int> activeSkills { get; private set; }
+            public List<PetActiveSkill> activeSkills { get; private set; }
             public WeaponDamageType damageType { get; private set; }
             public int mastery { get; private set; }
             public Race race { get; private set; }
@@ -148,7 +148,7 @@ namespace Nebula.Pets {
             public void SetPassiveSkill(int ps) {
                 passiveSkill = ps;
             }
-            public void SetActiveSkills(List<int> ass) {
+            public void SetActiveSkills(List<PetActiveSkill> ass) {
                 activeSkills = ass;
             } 
             public void SetDamageType(WeaponDamageType dt) {
@@ -164,14 +164,14 @@ namespace Nebula.Pets {
 
         }
 
-        public PetInfo Drop(PetParameters parameters, PetDropSettings settings, PetSkillCollection skills) {
+        public PetInfo Drop(PetParameters parameters, PetDropSettings settings, PetSkillCollection skills, PetPassiveBonusCollection passiveBonuses) {
             PetInfo pet = new PetInfo();
             pet.SetId(Guid.NewGuid().ToString());
             pet.SetExp(0);
 
             pet.SetColor(GetColor(parameters, settings));
             pet.SetType(GetType(parameters, settings));
-            pet.SetPassiveSkill(GetPassiveSkill(parameters, settings));
+            pet.SetPassiveSkill(GetPassiveSkill(parameters, settings, passiveBonuses));
             pet.SetActiveSkills(GetActiveSkills(pet.color, parameters, settings, skills));
             pet.SetActive(false);
 
@@ -212,20 +212,22 @@ namespace Nebula.Pets {
             }
         }
 
-        private int GetPassiveSkill(PetParameters parameters, PetDropSettings settings) {
+        private int GetPassiveSkill(PetParameters parameters, PetDropSettings settings, PetPassiveBonusCollection passiveBonuses) {
             if(settings.generatePassiveSkill) {
-                return GeneratePassiveSkill(parameters);
+                return GeneratePassiveSkill(parameters, passiveBonuses);
             } else {
                 return settings.overwritePassiveSkill;
             }
         }
 
-        private int GeneratePassiveSkill(PetParameters parameters) {
+        private int GeneratePassiveSkill(PetParameters parameters, PetPassiveBonusCollection passiveBonuses) {
             //not realized yet
-            return -1;
+            //return -1;
+
+            return passiveBonuses.randomBonus;
         }
 
-        private List<int> GetActiveSkills(PetColor color, PetParameters parameters, PetDropSettings settings, PetSkillCollection skills) {
+        private List<PetActiveSkill> GetActiveSkills(PetColor color, PetParameters parameters, PetDropSettings settings, PetSkillCollection skills) {
             if(settings.generateActiveSkills) {
                 return GenerateActiveSkills(color, parameters,  skills);
             } else {
@@ -262,7 +264,7 @@ namespace Nebula.Pets {
             }
         }
 
-        private List<int> GenerateActiveSkills(PetColor color, PetParameters parameters, PetSkillCollection skills) {
+        private List<PetActiveSkill> GenerateActiveSkills(PetColor color, PetParameters parameters, PetSkillCollection skills) {
             return skills.GetRandomSkills(parameters.activeSkillCountTable[color]);
         }
 

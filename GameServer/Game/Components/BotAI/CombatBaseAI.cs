@@ -4,6 +4,7 @@ using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Game.Skills;
+using Nebula.Inventory.DropList;
 using Nebula.Server;
 using Nebula.Server.Components;
 using ServerClientCommon;
@@ -325,12 +326,19 @@ namespace Nebula.Game.Components.BotAI {
                         log.InfoFormat("Successfully rolled chest for npc difficulty = {0} yellow", difficulty);
 
                         ChestSourceInfo sourceInfo = new ChestSourceInfo { hasWorkshop = true, level = mCharacter.level, sourceWorkshop = (Workshop)mCharacter.workshop, difficulty = difficulty };
+                        var dropListComponent = GetComponent<DropListComponent>();
+                        ItemDropList itemDropList = null;
+                        if(dropListComponent != null ) {
+                            itemDropList = dropListComponent.dropList;
+                        }
+
                         ObjectCreate.Chest(
                             nebulaObject.world as MmoWorld,
                             transform.position,
                             mChestLiveDuration,
                             GetComponent<DamagableObject>().damagers,
-                            sourceInfo
+                            sourceInfo,
+                            itemDropList
                             ).AddToWorld();
                     }
                 }

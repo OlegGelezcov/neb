@@ -40,7 +40,8 @@ namespace Common
         WorldRaceChanged,
         PetSkillUsed,
         ResurrectByKillEffect,
-        CollectChest
+        CollectChest,
+        PetsUpdate
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

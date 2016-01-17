@@ -1,4 +1,6 @@
 ﻿using Nebula.Resources;
+using Space.Game;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -15,6 +17,13 @@ namespace Nebula.Pets {
                 this[bonusInfo.id] = bonusInfo;
                 return bonusInfo;
             }).ToList();
+        }
+
+        public int randomBonus {
+            get {
+                List<int> ids = new List<int>(dict.Keys);
+                return ids.AnyElement();
+            }
         }
     }
 }

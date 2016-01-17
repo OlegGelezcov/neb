@@ -35,5 +35,23 @@ namespace Nebula.Resources {
             List<string> ids = new List<string>(dict.Keys);
             return ids[Rand.Int(0, ids.Count - 1)];
         }
+
+        public string GetRandomType(Race race) {
+            List<string> ids = new List<string>();
+            foreach(var pair in dict) {
+                if(pair.Value == race) {
+                    ids.Add(pair.Key);
+                }
+            }
+            if(ids.Count == 0 ) {
+                return string.Empty;
+            } else {
+                return ids[Rand.Int(0, ids.Count - 1)];
+            }
+        }
+
+        public bool HasType(string skin) {
+            return dict.ContainsKey(skin);
+        }
     }
 }

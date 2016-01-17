@@ -23,6 +23,15 @@ namespace Space.Game.Inventory.Objects
 
         public void Bind() { binded = true; }
 
+        public MaterialObject(string id) {
+            this.id = id;
+            this.workshop = Workshop.Arlen;
+            this.level = 1;
+            this.materialType = MaterialType.ore;
+            this.name = string.Empty;
+            this.templateId = id;
+        }
+
         public MaterialObject(string id, Workshop workshop, int level, MaterialData data)
         {
             this.id = id;

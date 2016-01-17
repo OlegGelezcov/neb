@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using Nebula.Game.Pets;
 using Nebula.Pets;
 using Space.Game;
 using System;
@@ -22,7 +23,7 @@ namespace Nebula.Database {
             if(pets == null ) {
                 pets = new List<PetSave>();
             }
-            return new PetCollection(pets);
+            return new PetCollection(pets, PetManager.kMaxPetCount);
         }
 
     }

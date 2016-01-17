@@ -18,6 +18,7 @@ using Space.Game.Inventory;
 using Nebula.Engine;
 using Nebula.Game.Pets;
 using Nebula.Pets;
+using Nebula.Inventory.DropList;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -112,6 +113,10 @@ namespace Nebula.Game {
                     case ComponentID.DatabaseObject:
                         {
                             components.Add(typeof(DatabaseObject));
+                        }
+                        break;
+                    case ComponentID.DropList: {
+                            components.Add(typeof(DropListComponent));
                         }
                         break;
                     case ComponentID.Bot:
@@ -383,6 +388,10 @@ namespace Nebula.Game {
                             nebObject.GetComponent<DatabaseObject>().Init(comp.Value as DatabaseObjectComponentData);
                         }
                         break;
+                    case ComponentID.DropList: {
+                            nebObject.GetComponent<DropListComponent>().Init(comp.Value as DropListComponentData);
+                        }
+                        break;
                     case ComponentID.Bot:
                         {
                             nebObject.GetComponent<BotObject>().Init(comp.Value as BotComponentData);
@@ -565,7 +574,12 @@ namespace Nebula.Game {
         //    return activatorObject;
         //}
 
-        public static GameObject Chest(MmoWorld world, Vector3 position, float duration, ConcurrentDictionary<string, DamageInfo> inDamagers, ChestSourceInfo sourceInfo) {
+        public static GameObject Chest(MmoWorld world, 
+            Vector3 position, 
+            float duration, 
+            ConcurrentDictionary<string, DamageInfo> inDamagers, 
+            ChestSourceInfo sourceInfo, 
+            ItemDropList dropList) {
             int subZone = world.ResolvePositionSubzone(position);
 
             GameObject chestObject = new GameObject(
@@ -582,7 +596,7 @@ namespace Nebula.Game {
             chestObject.name = "Container";
             ChestComponent chest = chestObject.GetComponent<ChestComponent>();
             chest.SetDuration(duration);
-            chest.Fill(inDamagers, sourceInfo);
+            chest.Fill(inDamagers, dropList, sourceInfo);
             return chestObject;
         }
 

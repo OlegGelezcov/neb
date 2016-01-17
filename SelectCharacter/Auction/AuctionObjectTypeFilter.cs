@@ -28,6 +28,10 @@ namespace SelectCharacter.Auction {
                         return true;
                     } else if(itemType == InventoryObjectType.nebula_element && mAuctionObjectType == AuctionObjectType.nebula_element ) {
                         return true;
+                    } else if(itemType == InventoryObjectType.craft_resource && mAuctionObjectType == AuctionObjectType.craft_resource ) {
+                        return true;
+                    } else if(itemType == InventoryObjectType.pet_scheme && mAuctionObjectType == AuctionObjectType.pet_scheme) {
+                        return true;
                     }
                 }
             }

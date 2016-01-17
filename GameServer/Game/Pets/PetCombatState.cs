@@ -1,8 +1,12 @@
-﻿using GameMath;
+﻿using ExitGames.Logging;
+using GameMath;
 using Nebula.Game.Components;
+using Nebula.Game.Utils;
 
 namespace Nebula.Game.Pets {
     public class PetCombatState : PetBaseState {
+
+        private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
         public readonly float kSpeed = 25.0f;
         private readonly float kConvergencePc = 0.7f;
@@ -27,20 +31,27 @@ namespace Nebula.Game.Pets {
         }
 
         public override void Update(float deltaTime) {
-            if(false == m_OwnerTarget.inCombat) {
+            if((false == m_OwnerTarget.inCombat) && (m_OwnerTarget.subscriberCount == 0)) {
+              //  s_Log.InfoFormat("set idle state with not combat".Color(LogColor.orange));
                 pet.SetState(new PetIdleState(pet));
             }
             if(pet.info.damageType == Common.WeaponDamageType.heal) {
+           //     s_Log.InfoFormat("set idle state not damager".Color(LogColor.orange));
                 pet.SetState(new PetIdleState(pet));
             }
 
             if(!m_PetTarget.targetObject) {
+
                 var enemy = m_OwnerTarget.anyEnemySubscriber;
+
                 if(enemy) {
-                    m_PetTarget.SetTarget(enemy);
+                    if ((false == m_PetTarget.hasTarget) || (m_PetTarget.targetId != enemy.Id)) {
+                        m_PetTarget.SetTarget(enemy);
+                    }
                     MoveToTarget(deltaTime);
                     FireAtTarget();
                 } else {
+                 //   s_Log.InfoFormat("set idle state with invalid enemy".Color(LogColor.orange));
                     pet.SetState(new PetIdleState(pet));
                 }
             } else {

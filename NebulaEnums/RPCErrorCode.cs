@@ -40,6 +40,16 @@ namespace Common {
         ItemNotFound = 1031,
         DropListNotFound = 1032,
         NeedFreeSlots = 1033,
+        ErrorOfGettingInventoryItem = 1034,
+        LowPetAngarSpace = 1035,
+        ResourceDataError = 1036,
+        ErrorOfAddingPetToCollection = 1037,
+        PetNotFound = 1038,
+        PetAlreadyHasMaxColor = 1039,
+        NotEnoughInventoryItems = 1040,
+        PetAlreadyHasMaxMastery = 1041,
+        PetColorNotEnoughForImproving = 1042,
+        PetAlreadySettedThisSkin = 1043,
 
         UnknownError = 10002,
         

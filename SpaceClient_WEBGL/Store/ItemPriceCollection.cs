@@ -41,9 +41,12 @@ namespace Nebula.Client.Store {
                 case "scheme":
                     return new ColoredItemPrice(hash);
                 case "ore":
+                case "craft_resource":
                     return new IDItemPrice(hash);
                 case "nebula_element":
                     return new NebulaElementItemPrice(hash);
+                case "pet_scheme":
+                    return new PetSchemeItemPrice(hash);
                 default:
                     return null;
             }
@@ -65,6 +68,7 @@ namespace Nebula.Client.Store {
                     }
                     return false;
                 case InventoryObjectType.Material:
+                case InventoryObjectType.craft_resource:
                     foreach (var p in prices) {
                         if (p is IDItemPrice) {
                             if ((p as IDItemPrice).id == invObject.Id) {
@@ -77,6 +81,14 @@ namespace Nebula.Client.Store {
                 case InventoryObjectType.nebula_element:
                     foreach (var p in prices) {
                         if (p is NebulaElementItemPrice) {
+                            price = p.price;
+                            return true;
+                        }
+                    }
+                    return false;
+                case InventoryObjectType.pet_scheme:
+                    foreach(var p in prices) {
+                        if(p is PetSchemeItemPrice) {
                             price = p.price;
                             return true;
                         }

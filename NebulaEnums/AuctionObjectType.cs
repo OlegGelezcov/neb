@@ -9,6 +9,8 @@ namespace Common {
         Scheme,
         Ore,
         Module,
-        nebula_element
+        nebula_element,
+        craft_resource,
+        pet_scheme
     }
 }

@@ -16,6 +16,8 @@ using ServerClientCommon;
 using GameMath;
 using ExitGames.Logging;
 using Nebula.Game.Pets;
+using Nebula.Inventory.DropList;
+using Nebula.Inventory.Objects;
 
 namespace Nebula.Game.Components {
 
@@ -36,17 +38,22 @@ namespace Nebula.Game.Components {
             timer = duration;
         }
 
-        public void Fill(ConcurrentDictionary<string, DamageInfo> inDamagers, ChestSourceInfo sourceInfo = null) {
+        public void Fill(ConcurrentDictionary<string, DamageInfo> inDamagers, ItemDropList dropList, ChestSourceInfo sourceInfo = null) {
+
             content = new ConcurrentDictionary<string, ConcurrentDictionary<string, ServerInventoryItem>>();
+
+
             foreach(var damagePair in inDamagers) {
-                FillForDamager(damagePair.Value, sourceInfo);
+                FillForDamager(damagePair.Value, dropList, sourceInfo);
             }
         }
 
-        private void FillForDamager(DamageInfo damager, ChestSourceInfo sourceInfo) {
+        private void FillForDamager(DamageInfo damager, ItemDropList dropList, ChestSourceInfo sourceInfo) {
+
             ConcurrentDictionary<string, ServerInventoryItem> newObjects = new ConcurrentDictionary<string, ServerInventoryItem>();
 
             Workshop lootWorkshop = (Workshop)damager.workshop;
+
             //in 10% dropped source workshop items
             if (sourceInfo != null && sourceInfo.hasWorkshop) {
                 if (Rand.Float01() < 0.1f) {
@@ -71,11 +78,22 @@ namespace Nebula.Game.Components {
 
             float remapWeight = GetColorRemapWeight(damager);
 
-            //generate single weapon
-            GenerateWeapons(dropManager, lootLevel, lootWorkshop, d, newObjects, remapWeight);
+            if (dropList == null) {
+                //generate single weapon
+                GenerateWeapons(dropManager, lootLevel, lootWorkshop, d, newObjects, remapWeight);
 
-            GenerateSchemes(dropManager, lootLevel, lootWorkshop, d, newObjects, remapWeight);
-
+                GenerateSchemes(dropManager, lootLevel, lootWorkshop, d, newObjects, remapWeight);
+            } else {
+                GenerateFromDropList(
+                    (Race)damager.race,
+                    dropManager,
+                    lootLevel,
+                    lootWorkshop,
+                    d,
+                    newObjects,
+                    remapWeight,
+                    dropList);
+            }
             //generate single scheme
 
 
@@ -90,6 +108,67 @@ namespace Nebula.Game.Components {
             }
         }
 
+        private void GenerateFromDropList(
+            Race race,
+            DropManager dropManager,
+            int lootLevel,
+            Workshop lootWorkshop,
+            Difficulty difficulty,
+            ConcurrentDictionary<string, ServerInventoryItem> newObjects,
+            float remapWeight,
+            ItemDropList dropList) {
+
+            foreach(var dropItem in dropList.items) {
+                int count;
+                if(dropItem.Roll(out count)) {
+                    if(count > 0 ) {
+                        switch(dropItem.type) {
+                            case InventoryObjectType.Weapon: {
+                                    for(int i = 0; i < count; i++) {
+                                        GenerateWeapon(dropManager, lootLevel, lootWorkshop, difficulty, newObjects, remapWeight);
+                                    }
+                                }
+                                break;
+                            case InventoryObjectType.Scheme: {
+                                    for(int i = 0; i < count; i++ ) {
+                                        GenerateScheme(dropManager, lootLevel, lootWorkshop, difficulty, newObjects, remapWeight);
+                                    }
+                                }
+                                break;
+                            case InventoryObjectType.Material: {
+                                    var matDropItem = dropItem as MaterialDropItem;
+                                    if(matDropItem != null ) {
+                                        GenerateMaterials(matDropItem.templateId, count, newObjects);
+                                    }
+                                }
+                                break;
+                            case InventoryObjectType.nebula_element: {
+                                    var nebElemDropItem = dropItem as NebulaElementDropItem;
+                                    if(nebElemDropItem != null ) {
+                                        GenerateNebulaElements(nebElemDropItem.templateId, count, newObjects);
+                                    }
+                                }
+                                break;
+                            case InventoryObjectType.craft_resource: {
+                                    var craftResourceDropItem = dropItem as CraftResourceDropItem;
+                                    if(craftResourceDropItem != null ) {
+                                        GenerateCraftResource(craftResourceDropItem.templateId, count, newObjects);
+                                    }
+                                }
+                                break;
+                            case InventoryObjectType.pet_scheme: {
+                                    var petSchemeDropItem = dropItem as PetSchemeDropItem;
+                                    if(petSchemeDropItem != null ) {
+                                        GeneratePetScheme(race ,petSchemeDropItem.template, petSchemeDropItem.petColor, count, newObjects);
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+
         private void NotifyChestDamager(DamageInfo damager) {
             MmoWorld world = nebulaObject.mmoWorld();
             NebulaObject playerObj;
@@ -99,6 +178,45 @@ namespace Nebula.Game.Components {
                     petManager.ChestFilled(nebulaObject);
                 }
             }
+        }
+
+        private void GeneratePetScheme(Race race, string template, PetColor color, int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects) {
+            if(string.IsNullOrEmpty(template)) {
+                if (race != Race.None) {
+                    template = resource.petParameters.defaultModels[race];
+                } else {
+                    template = "hp_1";
+                }
+            }
+            PetSchemeObject obj = new PetSchemeObject(template, color, false);
+            newObjects.TryAdd(obj.Id, new ServerInventoryItem(obj, count));
+        }
+
+        private void GenerateCraftResource(string template, int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects) {
+            if(string.IsNullOrEmpty(template)) {
+                template = resource.craftObjects.random.id;
+            }
+            var data = resource.craftObjects[template];
+            if (data != null) {
+                CraftResourceObject obj = new CraftResourceObject(data.id, data.color, false);
+                newObjects.TryAdd(obj.Id, new ServerInventoryItem(obj, count));
+            }
+        }
+
+        private void GenerateNebulaElements(string template, int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects) {
+            if(string.IsNullOrEmpty(template)) {
+                template = resource.PassiveBonuses.allData[Rand.Int(0, resource.PassiveBonuses.allData.Length - 1)].elementID;
+            }
+            NebulaElementObject obj = new NebulaElementObject(template, template);
+            newObjects.TryAdd(obj.Id, new ServerInventoryItem(obj, count));
+        }
+
+        private void GenerateMaterials(string template, int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects) {
+            if(string.IsNullOrEmpty(template)) {
+                template = resource.Materials.Ores.AnyElement().Id;
+            }
+            MaterialObject mat = new MaterialObject(template);
+            newObjects.TryAdd(mat.Id, new ServerInventoryItem(mat, count));
         }
 
         private float GetColorRemapWeight(DamageInfo damager) {
@@ -122,10 +240,27 @@ namespace Nebula.Game.Components {
                 var schemeDropper = dropManager.GetSchemeDropper(lootWorkshop, lootLevel, remapWeight);
                 IInventoryObject schemeObject = schemeDropper.Drop() as IInventoryObject;
                 newObjects.TryAdd(schemeObject.Id, new ServerInventoryItem(schemeObject, 1));
-                log.InfoFormat("scheme of level = {0} generated", schemeObject.Level);
+                //log.InfoFormat("scheme of level = {0} generated", schemeObject.Level);
             }
         }
 
+        private void GenerateScheme(DropManager dropManager, int lootLevel, Workshop lootWorkshop, Difficulty d, ConcurrentDictionary<string, ServerInventoryItem> newObjects, float remapWeight) {
+            var moduleTemplate = resource.ModuleTemplates.RandomModule(lootWorkshop, CommonUtils.RandomEnumValue<ShipModelSlotType>());
+            var schemeDropper = dropManager.GetSchemeDropper(lootWorkshop, lootLevel, remapWeight);
+            IInventoryObject schemeObject = schemeDropper.Drop() as IInventoryObject;
+            newObjects.TryAdd(schemeObject.Id, new ServerInventoryItem(schemeObject, 1));
+            //log.InfoFormat("scheme of level = {0} generated", schemeObject.Level);
+        }
+
+
+        private void GenerateWeapon(DropManager dropManager, int lootLevel, Workshop lootWorkshop, Difficulty d, ConcurrentDictionary<string, ServerInventoryItem> newObjects, float remapWeight) {
+            ObjectColor color = resource.ColorRes.GenColor(ColoredObjectType.Weapon).color;
+            WeaponDropper.WeaponDropParams weaponParams = new WeaponDropper.WeaponDropParams(resource, lootLevel, lootWorkshop, WeaponDamageType.damage, Difficulty.none);
+            var weaponDropper = dropManager.GetWeaponDropper(weaponParams, remapWeight);
+            IInventoryObject weaponObject = weaponDropper.Drop() as IInventoryObject;
+            newObjects.TryAdd(weaponObject.Id, new ServerInventoryItem(weaponObject, 1));
+            //log.InfoFormat("weapon of level = {0} generated", weaponObject.Level);
+        }
         private void GenerateWeapons(DropManager dropManager, int lootLevel, Workshop lootWorkshop, Difficulty d, ConcurrentDictionary<string, ServerInventoryItem> newObjects, float remapWeight) {
             for(int i = 0; i < ChestUtils.NumOfWeapons(d); i++) {
                 ObjectColor color = resource.ColorRes.GenColor(ColoredObjectType.Weapon).color;
@@ -133,7 +268,7 @@ namespace Nebula.Game.Components {
                 var weaponDropper = dropManager.GetWeaponDropper(weaponParams, remapWeight);
                 IInventoryObject weaponObject = weaponDropper.Drop() as IInventoryObject;
                 newObjects.TryAdd(weaponObject.Id, new ServerInventoryItem(weaponObject, 1));
-                log.InfoFormat("weapon of level = {0} generated", weaponObject.Level);
+                //log.InfoFormat("weapon of level = {0} generated", weaponObject.Level);
             }
         }
 

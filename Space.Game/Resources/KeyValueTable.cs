@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Space.Game;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,13 @@ namespace Nebula.Resources {
                     m_Dict = new ConcurrentDictionary<T, U>();
                 }
                 return m_Dict;
+            }
+        }
+
+        public U random {
+            get {
+                List<T> keys = new List<T>(dict.Keys);
+                return this[keys.AnyElement()];
             }
         }
     }

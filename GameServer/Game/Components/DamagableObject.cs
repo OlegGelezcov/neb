@@ -81,6 +81,7 @@ namespace Nebula.Game.Components {
                     if(GetComponent<MmoActor>()) {
                         mmoMessanger.SendKilled(EventReceiver.OwnerAndSubscriber);
                     } else {
+                        
                         mmoMessanger.SendKilled(EventReceiver.ItemSubscriber);
                     }
                 }

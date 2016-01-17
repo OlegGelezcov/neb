@@ -36,9 +36,12 @@ namespace SelectCharacter.Resources {
                     case "scheme":
                         return (ItemPrice)(new ColoredItemPrice { itemType = sType, color = (ObjectColor)Enum.Parse(typeof(ObjectColor), e.GetString("color")), price = e.GetInt("price") });
                     case "ore":
+                    case "craft_resource":
                         return (ItemPrice)(new IDItemPrice { itemType = sType, id = e.GetString("id"), price = e.GetInt("price") });
                     case "nebula_element":
                         return (ItemPrice)(new NebulaElementItemPrice { itemType = sType, price = e.GetInt("price") });
+                    case "pet_scheme":
+                        return (ItemPrice)(new PetSchemeItemPrice { itemType = sType, price = e.GetInt("price") });
                     default:
                         throw new Exception("invalid item price type");
                 }
@@ -80,14 +83,21 @@ namespace SelectCharacter.Resources {
                 } else if(itemType == InventoryObjectType.Material) {
                     string id = objectInfo.Value<string>((int)SPC.Id);
                     foreach (var pr in mPrices) {
-                        if (pr.itemType == "ore" && ((IDItemPrice)pr).id == id) {
+                        if ( ((pr.itemType == "ore") || (pr.itemType == "craft_resource")) && ((IDItemPrice)pr).id == id) {
                             price = pr.price;
                             return true;
-                        }
+                        } 
                     }
                 } else if(itemType == InventoryObjectType.nebula_element) {
                     foreach(var pr in mPrices) {
                         if(pr.itemType == "nebula_element") {
+                            price = pr.price;
+                            return true;
+                        }
+                    }
+                } else if(itemType == InventoryObjectType.pet_scheme) {
+                    foreach(var pr in mPrices) {
+                        if(pr.itemType == "pet_scheme") {
                             price = pr.price;
                             return true;
                         }

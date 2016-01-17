@@ -39,7 +39,7 @@ namespace Space.Game {
 
         public Hashtable ChangeControlState(byte state)
         {
-            log.InfoFormat("control state try change to = {0}", (PlayerState)state);
+            //log.InfoFormat("control state try change to = {0}", (PlayerState)state);
 
             switch ((PlayerState)state)
             {
@@ -200,16 +200,16 @@ namespace Space.Game {
             try
             {
                 Player.nebulaObject.SetInvisibility(false);
-                log.Info("add from container called...");
+                //log.Info("add from container called...");
                 Item containerItem;
                 if (!this.Player.World.ItemCache.TryGetItem(containerItemType, containerItemId, out containerItem))
                 {
-                    log.Error("container not found");
+                   // log.Error("container not found");
                     return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.ObjectNotFound } };//GetErrorResponse("EM0011");
                 }
 
                 if(Player.transform.DistanceTo(containerItem.transform) > 70) {
-                    log.Error("Player is very far from container");
+                  //  log.Error("Player is very far from container");
                     return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.DistanceIsFar } }; //GetErrorResponse("EM0011");
                 }
 
@@ -217,7 +217,7 @@ namespace Space.Game {
 
                 if (iChest == null)
                 {
-                    log.Info("container don't have IChest interface");
+                    //log.Info("container don't have IChest interface");
                     return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError} };//GetErrorResponse("EM0012"); 
                 } 
 
@@ -227,7 +227,7 @@ namespace Space.Game {
                 ConcurrentDictionary<string, ServerInventoryItem> filteredObjects;
                 chest.TryGetActorObjects(Player.nebulaObject.Id, out filteredObjects);
                 int sourceCount = (filteredObjects != null) ? filteredObjects.Count : 0;
-                log.InfoFormat("receive {0} of chest objects", sourceCount);
+              //  log.InfoFormat("receive {0} of chest objects", sourceCount);
 
                 if(Player.Inventory.FreeSlots <= 0 && sourceCount > 0) {
                     var result =  new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.LowInventorySpace } };
@@ -238,7 +238,7 @@ namespace Space.Game {
                 }
                 ConcurrentBag<ServerInventoryItem> addedObjects = null;
                 if(!Player.Inventory.AddAllFromChest(chest, Player.nebulaObject.Id, out addedObjects)) {
-                    log.Info("error of adding from container objects");
+                 //   log.Info("error of adding from container objects");
                     return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError} };//GetErrorResponse("EM0016");
                 } 
 
@@ -363,13 +363,53 @@ namespace Space.Game {
             };
         }
 
+        public Hashtable MoveAllFromInventoryToStation() {
+            var inventory = Player.Inventory;
+            var station = Player.Station.StationInventory;
+
+            List<string> itemCheckList = new List<string>();
+            List<ServerInventoryItem> removeFromInventory = new List<ServerInventoryItem>();
+
+            foreach(var pTyped in inventory.Items) {
+
+                foreach(var pItem in pTyped.Value) {
+
+                    itemCheckList.Clear();
+                    itemCheckList.Add(pItem.Value.Object.Id);
+
+                    if(station.HasSlotsForItems(itemCheckList)) {
+
+                        if(station.Add(pItem.Value.Object, pItem.Value.Count)) {
+                            removeFromInventory.Add(pItem.Value);
+                        }
+
+                    }
+
+                }
+
+            }
+
+            foreach(var movedItem in removeFromInventory) {
+                inventory.Remove(movedItem.Object.Type, movedItem.Object.Id, movedItem.Count);
+            }
+
+            if(removeFromInventory.Count > 0 ) {
+                Player.EventOnStationHoldUpdated();
+                Player.EventOnInventoryUpdated();
+            }
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } ,
+                { (int)SPC.MovedCount, removeFromInventory.Count }
+            };
+        }
+
         public Hashtable MoveItemFromInventoryToStation(byte inventoryObjectType, string inventoryItemId, int count )
         {
             ServerInventoryItem sourceItem = null;
 
             if ( !this.Player.Inventory.TryGetItem((InventoryObjectType)inventoryObjectType, inventoryItemId, out sourceItem) )
             {
-                log.InfoFormat("not founded item: {0} of type: {1}".f(inventoryItemId, (InventoryObjectType)inventoryObjectType));
+               // log.InfoFormat("not founded item: {0} of type: {1}".f(inventoryItemId, (InventoryObjectType)inventoryObjectType));
                 return new Hashtable { { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL }, { ACTION_RESULT.MESSAGE, "EM0011" } };
             }
 
@@ -479,7 +519,7 @@ namespace Space.Game {
         public Hashtable RequestShipModel() {
             var ship = Player.GetComponent<PlayerShip>();
             if(ship.shipModel == null ) {
-                log.Info("RequestShipModel(): shipModel is null");
+              //  log.Info("RequestShipModel(): shipModel is null");
                 return new Hashtable { { (int)SPC.Info, new Hashtable() }};
             }
             return new Hashtable{
@@ -532,10 +572,10 @@ namespace Space.Game {
             if (Player.Station.StationInventory.TryGetItem(InventoryObjectType.Scheme, inventoryObjectId, out schemeInventoryItem)) {
                 Dictionary<string, int> craftMaterials = ((SchemeObject)schemeInventoryItem.Object).CraftMaterials;
                 Workshop schemeWorkshop = ((SchemeObject)schemeInventoryItem.Object).Workshop;
-                log.InfoFormat("scheme workshop: {0}", schemeWorkshop);
+               // log.InfoFormat("scheme workshop: {0}", schemeWorkshop);
 
                 if (craftMaterials == null) {
-                    log.Info("TransformObjectAndMoveToHold(): scheme craft materials is null");
+                   // log.Info("TransformObjectAndMoveToHold(): scheme craft materials is null");
                     craftMaterials = new Dictionary<string, int>();
                 }
 
@@ -553,22 +593,22 @@ namespace Space.Game {
                     if(result[ACTION_RESULT.RESULT].ToString() == ACTION_RESULT.SUCCESS) {
                         Player.EventOnInventoryUpdated();
                         Player.EventOnStationHoldUpdated();
-                        log.InfoFormat("result module workshop: {0}", result[(int)SPC.Workshop].ToString());
+                     //   log.InfoFormat("result module workshop: {0}", result[(int)SPC.Workshop].ToString());
                     }
 
                     Dictionary<InventoryObjectType, int> dict = new Dictionary<InventoryObjectType, int>();
                     foreach(var  entry in Player.Station.StationInventory.Items) {
                         dict.Add(entry.Key, entry.Value.Count);
                     }
-                    log.Info(dict.toHash().ToStringBuilder().ToString());
+                 //   log.Info(dict.toHash().ToStringBuilder().ToString());
 
                     return result;
                 } else {
-                    log.Info("don't has craft materials");
+                   // log.Info("don't has craft materials");
                     return GetErrorResponse("not needed crafting materials");
                 }
             } else {
-                log.Info("don't found scheme in station inventory");
+              //  log.Info("don't found scheme in station inventory");
                 return GetErrorResponse("not founded scheme in inventory");
             }
 
@@ -587,7 +627,7 @@ namespace Space.Game {
         }
 
         public Hashtable AddScheme() {
-            log.Info("AddScheme() called");
+           // log.Info("AddScheme() called");
             ShipModelSlotType slotType = CommonUtils.RandomSlotType();
             return AddSchemeAtSlot(slotType);
         }
@@ -641,7 +681,7 @@ namespace Space.Game {
                     counter++;
                 }
             }
-            log.InfoFormat("ores added to inventory: {0}, player inventory = {1}/{2}", counter, Player.Inventory.SlotsUsed, Player.Inventory.MaxSlots);
+           // log.InfoFormat("ores added to inventory: {0}, player inventory = {1}/{2}", counter, Player.Inventory.SlotsUsed, Player.Inventory.MaxSlots);
             this.Player.EventOnInventoryUpdated();
 
             return GetSuccessResponse("added {0} ores".f(counter));
@@ -668,7 +708,7 @@ namespace Space.Game {
                         }
                     }
                 }
-                log.InfoFormat("ores added to inventory = {0}, player inventory = {1}/{2}", counter, Player.Station.StationInventory.SlotsUsed, Player.Station.StationInventory.MaxSlots);
+             //   log.InfoFormat("ores added to inventory = {0}, player inventory = {1}/{2}", counter, Player.Station.StationInventory.SlotsUsed, Player.Station.StationInventory.MaxSlots);
 
 
                 DropManager dropMgr = DropManager.Get(Player.resource);
@@ -680,7 +720,7 @@ namespace Space.Game {
                     var moduleTemplate = Player.resource.ModuleTemplates.RandomModule(playerWorkshop, slotType);
 
                     if (moduleTemplate == null) {
-                        log.InfoFormat("not found module template for workshop = {0}, slot type = {1}", playerWorkshop, slotType);
+                    //    log.InfoFormat("not found module template for workshop = {0}, slot type = {1}", playerWorkshop, slotType);
                         continue;
                     }
 
@@ -691,13 +731,13 @@ namespace Space.Game {
                     if (Player.Station.StationInventory.HasFreeSpace()) {
                         Player.Station.StationInventory.Add(scheme, 1);
                     } else {
-                        log.InfoFormat("TestAddOreAndSchemesToStation(): Station inventory don't has enough space for scheme");
+                       // log.InfoFormat("TestAddOreAndSchemesToStation(): Station inventory don't has enough space for scheme");
                     }
                 }
 
                 Player.EventOnStationHoldUpdated();
 
-                log.Info("enqueued action completed for RPC TestAddOreAndSchemesToStation()");
+              //  log.Info("enqueued action completed for RPC TestAddOreAndSchemesToStation()");
 
             });
             return GetSuccessResponse("Ok");
@@ -745,7 +785,7 @@ namespace Space.Game {
         /// <returns></returns>
         public Hashtable DestroyModule( string moduleId )
         {
-            log.InfoFormat("destroy module: {0} called", moduleId);
+           // log.InfoFormat("destroy module: {0} called", moduleId);
 
             ServerInventoryItem holdObject = null;
             if(this._actor.Station.StationInventory.TryGetItem(InventoryObjectType.Module, moduleId, out holdObject))
@@ -1114,9 +1154,9 @@ namespace Space.Game {
                 if(Player) {
                     var damagable = Player.GetComponent<ShipBasedDamagableObject>();
                     damagable.SetGod(!damagable.god);
-                    log.InfoFormat("player set GOD MODE = {0}", damagable.god);
+               //     log.InfoFormat("player set GOD MODE = {0}", damagable.god);
                 } else {
-                    log.Info("TGM(): Player invalid");
+                  //  log.Info("TGM(): Player invalid");
                 }
             });
             return new Hashtable {
@@ -1138,14 +1178,14 @@ namespace Space.Game {
         [TestRPC]
         public Hashtable SetSkill(string hexStr, byte slotType) {
             int skillID = int.Parse(hexStr, System.Globalization.NumberStyles.HexNumber);
-            log.InfoFormat("try set skill = {0}", skillID);
+         //   log.InfoFormat("try set skill = {0}", skillID);
             var ship = Player.GetComponent<PlayerShip>();
             ship.shipModel.Slot((ShipModelSlotType)slotType).Module.SetSkill(skillID);
             Player.GetComponent<PlayerSkills>().UpdateSkills(ship.shipModel);
             Player.EventOnShipModelUpdated();
             Player.EventOnSkillsUpdated();
             foreach(var slot in ship.shipModel.Slots) {
-                log.InfoFormat("SLOT = {0}, SKILL = {1}", slot.Type, slot.Module.Skill.ToString("X8"));
+               // log.InfoFormat("SLOT = {0}, SKILL = {1}", slot.Type, slot.Module.Skill.ToString("X8"));
             }
             return GetSuccessResponse(string.Empty);
         }
@@ -1218,7 +1258,7 @@ namespace Space.Game {
         /// <returns></returns>
         public Hashtable sendrace() {
             GameApplication.Instance.updater.SendS2SWorldRaceChanged("H5", (byte)Race.Humans, (byte)Race.Criptizoids);
-            log.InfoFormat("change race sended to Master [red]");
+          //  log.InfoFormat("change race sended to Master [red]");
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
             };
@@ -1350,7 +1390,7 @@ namespace Space.Game {
 
             NebulaElementObject element = new NebulaElementObject(miningStationComponent.nebulaElementID, miningStationComponent.nebulaElementID);
             Player.Inventory.Add(element, miningStationComponent.currentCount);
-            log.InfoFormat("added to inventory = {0} nebula elements [red]", miningStationComponent.currentCount);
+          //  log.InfoFormat("added to inventory = {0} nebula elements [red]", miningStationComponent.currentCount);
 
             Player.EventOnInventoryUpdated();
             miningStationComponent.MakeEmpty();
@@ -1425,8 +1465,8 @@ namespace Space.Game {
                         1, Turret.SelectFraction(playerRace))}
             };
 
-            log.InfoFormat("creating mining station with max count = {0}, time for single element = {1}, total count = {2}, element = {3} [red]",
-                miningStationInventoryObject.capacity, timeForSingleElement, miningStationInventoryObject.capacity * 3, planetComponent.element);
+            //log.InfoFormat("creating mining station with max count = {0}, time for single element = {1}, total count = {2}, element = {3} [red]",
+               // miningStationInventoryObject.capacity, timeForSingleElement, miningStationInventoryObject.capacity * 3, planetComponent.element);
 
             NebulaObjectData data = new NebulaObjectData {
                 componentCollection = components,
@@ -2062,6 +2102,24 @@ namespace Space.Game {
             };
         }
 
+        public Hashtable AddRandomCraftElement() {
+            var data = Player.resource.craftObjects.random;
+            CraftResourceObject obj = new CraftResourceObject(data.id, data.color);
+            bool status = false;
+            if(Player.Inventory.HasSlotsForItems(new List<string> { obj.Id })) {
+                if(Player.Inventory.Add(obj, 1)) {
+                    status = true;
+                }
+            }
+            if(status) {
+                Player.EventOnInventoryUpdated();
+            }
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                { (int)SPC.Status, status }
+            };
+        }
+
         //====================================Pet Operations=====================================
         public Hashtable GetPets() {
             return m_PetOps.GetPets();
@@ -2098,6 +2156,39 @@ namespace Space.Game {
 
         public Hashtable SetPassiveSkill(string petId, int skillId ) {
             return m_PetOps.SetPassiveSkill(petId, skillId);
+        }
+
+        public Hashtable AddPetScheme() {
+            return m_PetOps.AddPetScheme();
+        }
+
+        public Hashtable AddPetSkin() {
+            return m_PetOps.AddPetSkin();
+        }
+
+        public Hashtable TransformPetSchemeToPet(string schemeId) {
+            return m_PetOps.TransformPetSchemeToPet(schemeId);
+        }
+
+        public Hashtable DestroyPet(string petId ) {
+            return m_PetOps.DestroyPet(petId);
+        }
+
+
+        public Hashtable ImprovePetColor(string petId) {
+            return m_PetOps.ImprovePetColor(petId);
+        }
+
+        public Hashtable AddAllCraftResources() {
+            return m_PetOps.AddAllCraftResources();
+        }
+
+        public Hashtable ImprovePetMastery(string petId) {
+            return m_PetOps.ImprovePetMastery(petId);
+        }
+
+        public Hashtable ChangePetSkin(string skinItemId, string petId) {
+            return m_PetOps.ChangePetSkin(skinItemId, petId);
         }
     }
 }

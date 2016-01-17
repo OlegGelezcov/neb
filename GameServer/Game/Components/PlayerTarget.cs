@@ -62,21 +62,20 @@ namespace Nebula.Game.Components {
         public NebulaObject anyEnemySubscriber {
             get {
                 var meCharacter = GetComponent<CharacterObject>();
-
                 foreach(var pSub in mSubscribers) {
                     var sub = pSub.Value;
-                    if(sub && sub.Character() && sub.Target()) {
+                    if(sub && sub.Character() ) {
                         FractionRelation relation = sub.Character().RelationTo(meCharacter);
                         if(relation == FractionRelation.Enemy || relation == FractionRelation.Neutral ) {
-                            if (sub.Target().inCombat) {
-                                return sub;
-                            }
+                            return sub;
                         }
                     }
                 }
                 return null;
             }
         }
+
+
 
         public int subscriberCount {
             get {
@@ -93,7 +92,7 @@ namespace Nebula.Game.Components {
         public void OnTargetUnsubscribeMe(NebulaObject subscriber) {
             NebulaObject oldSubscriber;
             mSubscribers.TryRemove(subscriber.Id, out oldSubscriber);
-            log.InfoFormat("target subscriber removed {0}:{1} yellow", (ItemType)subscriber.Type, subscriber.Id);
+            //log.InfoFormat("target subscriber removed {0}:{1} yellow", (ItemType)subscriber.Type, subscriber.Id);
         }
 
         public void OnTargetSubscribeMe(NebulaObject subscriber) {
@@ -103,7 +102,7 @@ namespace Nebula.Game.Components {
                 mSubscribers.TryRemove(subscriber.Id, out oldSubscriber);
             }
             mSubscribers.TryAdd(subscriber.Id, subscriber);
-            log.InfoFormat("target subscriber added {0}:{1} yellow", (ItemType)subscriber.Type, subscriber.Id);
+            //log.InfoFormat("target subscriber added {0}:{1} yellow", (ItemType)subscriber.Type, subscriber.Id);
         }
 
         public void OnHitMe(NebulaObject whoHit) {
@@ -202,7 +201,7 @@ namespace Nebula.Game.Components {
                 hasTarget = true;
 
                 if(mPlayer) {
-                    log.InfoFormat("player set target {0}, type = {1}, has = {2}", targetId, (ItemType)targetType, hasTarget);
+                    //log.InfoFormat("player set target {0}, type = {1}, has = {2}", targetId, (ItemType)targetType, hasTarget);
                 }
             }
 

@@ -191,6 +191,7 @@
     <Compile Include="Inventory\IColorInfo.cs" />
     <Compile Include="Inventory\IInventoryObjectInfo.cs" />
     <Compile Include="Inventory\InventoryObjectInfoFactory.cs" />
+    <Compile Include="Inventory\Objects\CraftResourceInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\DrillSchemeObjectInfo.cs" />
     <Compile Include="Inventory\Objects\ExpBoostObjectInfo.cs" />
     <Compile Include="Inventory\Objects\FortificationInventoryObjectInfo.cs" />
@@ -205,6 +206,8 @@
     <Compile Include="Inventory\Objects\OutpostUpgradeInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\PassInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\PersonalBeaconInventoryObjectInfo.cs" />
+    <Compile Include="Inventory\Objects\PetSchemeInventoryObjectInfo.cs" />
+    <Compile Include="Inventory\Objects\PetSkinInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\RepairKitInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\RepairPatchInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\SchemeInventoryObjectInfo.cs" />
@@ -212,6 +215,7 @@
     <Compile Include="Inventory\Objects\WeaponInventoryObjectInfo.cs" />
     <Compile Include="IServiceMessage.cs" />
     <Compile Include="IServiceMessageReceiver.cs" />
+    <Compile Include="KeyValueTable.cs" />
     <Compile Include="Mail\MailAttachment.cs" />
     <Compile Include="Mail\MailBox.cs" />
     <Compile Include="Mail\MailMessage.cs" />
@@ -225,9 +229,19 @@
     <Compile Include="Notifications\Notification.cs" />
     <Compile Include="PassiveBonuses\PassiveBonusInfo.cs" />
     <Compile Include="PassiveBonuses\PlayerPassiveBonuses.cs" />
+    <Compile Include="Pets\PetActiveSkill.cs" />
     <Compile Include="Pets\PetCollection.cs" />
     <Compile Include="Pets\PetInfo.cs" />
+    <Compile Include="Pets\PetMasteryUpgradeRequirement.cs" />
+    <Compile Include="Pets\PetMasteryUpgradeTable.cs" />
+    <Compile Include="Pets\PetParameters.cs" />
+    <Compile Include="Pets\PetPassiveBonus.cs" />
+    <Compile Include="Pets\PetPassiveBonusCollection.cs" />
+    <Compile Include="Pets\PetSkillCollection.cs" />
+    <Compile Include="Pets\PetSkillData.cs" />
     <Compile Include="Pets\PetSkillInfoFactory.cs" />
+    <Compile Include="Pets\PetUpgradeRequirement.cs" />
+    <Compile Include="Pets\PetUpgradeTable.cs" />
     <Compile Include="Pets\UseOwnedTargetedPetSkillInfo.cs" />
     <Compile Include="Pets\UsePetSkillInfo.cs" />
     <Compile Include="Planets\PlanetObjectInfo.cs" />
@@ -241,6 +255,8 @@
     <Compile Include="Races\RaceStat.cs" />
     <Compile Include="Races\RaceStats.cs" />
     <Compile Include="Res\AsteroidData.cs" />
+    <Compile Include="Res\CraftResourceCollection.cs" />
+    <Compile Include="Res\CraftResourceData.cs" />
     <Compile Include="Res\LevelSkillPair.cs" />
     <Compile Include="Res\Location.cs" />
     <Compile Include="Res\ModuleSkillLeveling.cs" />
@@ -297,6 +313,7 @@
     <Compile Include="Store\ItemPrice.cs" />
     <Compile Include="Store\ItemPriceCollection.cs" />
     <Compile Include="Store\NebulaElementItemPrice.cs" />
+    <Compile Include="Store\PetSchemeItemPrice.cs" />
     <Compile Include="Store\PlayerStore.cs" />
     <Compile Include="Store\StoreItem.cs" />
     <Compile Include="TextureNotFoundedException.cs" />

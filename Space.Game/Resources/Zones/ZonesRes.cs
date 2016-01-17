@@ -265,6 +265,11 @@ namespace Space.Game.Resources.Zones {
                                 componentCollection.Add(ComponentID.DatabaseObject, data);
                             }
                             break;
+                        case ComponentID.DropList: {
+                                DropListComponentData data = new DropListComponentData(ce);
+                                componentCollection.Add(ComponentID.DropList, data);
+                            }
+                            break;
                         case ComponentID.NebulaObject:
                             {
                                 NebulaObjectComponentData data = new NebulaObjectComponentData(ce);

@@ -150,9 +150,17 @@
             petPassiveBonuses = new PetPassiveBonusCollection();
             (petPassiveBonuses as PetPassiveBonusCollection).Load(Path.Combine(basePath, "Data/passive_pet_bonuses.xml"));
 
+            craftObjects = new CraftResourceObjectTable();
+            craftObjects.Load(Path.Combine(basePath, "Data/Materials/craft_resource.xml"));
+
         }
 
-        public KeyValueTable<int, PetPassiveBonusInfo> petPassiveBonuses {
+        public CraftResourceObjectTable craftObjects {
+            get;
+            private set;
+        }
+
+        public PetPassiveBonusCollection petPassiveBonuses {
             get;
             private set;
         }

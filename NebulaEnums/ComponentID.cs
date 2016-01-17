@@ -49,6 +49,7 @@ namespace Common {
         PvpStore,
         PlayerTimedEffects,
         PetObject,
-        PetManager
+        PetManager,
+        DropList
     }
 }

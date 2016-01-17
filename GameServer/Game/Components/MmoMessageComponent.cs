@@ -10,6 +10,7 @@ namespace Nebula.Game.Components {
     using GameMath;
     using global::Common;
     using Nebula.Engine;
+    using Pets;
     using Photon.SocketServer;
     using ServerClientCommon;
     using Space.Game;
@@ -125,6 +126,23 @@ namespace Nebula.Game.Components {
             ReceiveEvent(evtData, sendParameters);
         }
 
+        public void ReceivePetsUpdate() {
+            var petManager = GetComponent<PetManager>();
+            if(petManager != null ) {
+                var evtInstance = new ItemGeneric {
+                    ItemId = nebulaObject.Id,
+                    ItemType = nebulaObject.Type,
+                    CustomEventCode = (byte)CustomEventCode.PetsUpdate,
+                    EventData = petManager.GetInfo()
+                };
+                var eventData = new EventData((byte)EventCode.ItemGeneric, evtInstance);
+                SendParameters sendParameters = new SendParameters {
+                    Unreliable = false,
+                    ChannelId = Settings.ItemEventChannel
+                };
+                ReceiveEvent(eventData, sendParameters);
+            }
+        }
         public void ReceivePassiveBonusComplete(Hashtable info) {
             var evt = new ItemGeneric {
                 ItemId = nebulaObject.Id,

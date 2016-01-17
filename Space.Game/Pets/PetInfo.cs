@@ -5,16 +5,19 @@ using System.Collections.Generic;
 using System.Collections;
 using ServerClientCommon;
 using Space.Game;
+using System.Linq;
 
 namespace Nebula.Pets {
     public class PetInfo  {
+
+        private const int kMaxMastery = 6;
         //
         private string m_Id;
         private int m_Exp;
         private PetColor m_Color;
         private string m_Type;
         private int m_PassiveSkill;
-        private List<int> m_ActiveSkills;
+        private List<PetActiveSkill> m_ActiveSkills;
         private bool m_Active;
 
         private float m_AttackBaseAdd;
@@ -49,7 +52,7 @@ namespace Nebula.Pets {
         public void SetPassiveSkill(int passiveSkill) {
             m_PassiveSkill = passiveSkill;
         }
-        public void SetActiveSkills(List<int> activeSkills) {
+        public void SetActiveSkills(List<PetActiveSkill> activeSkills) {
             m_ActiveSkills = activeSkills;
         }
         public void SetActive(bool active) {
@@ -80,11 +83,29 @@ namespace Nebula.Pets {
             m_Mastery = mastery;
         }
 
-        public bool AddActiveSkill(int skill) {
-            if(m_ActiveSkills == null ) {
-                m_ActiveSkills = new List<int>();
+        private bool ContainsSkill(int skillId ) {
+            foreach(var s in m_ActiveSkills) {
+                if(s.id == skillId ) {
+                    return true;
+                }
             }
-            if(m_ActiveSkills.Contains(skill)) {
+            return false;
+        }
+
+        private bool ContainsSkill(PetActiveSkill skill) {
+            foreach(var s in m_ActiveSkills) {
+                if(s.id == skill.id) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool AddActiveSkill(PetActiveSkill skill) {
+            if(m_ActiveSkills == null ) {
+                m_ActiveSkills = new List<PetActiveSkill>();
+            }
+            if(ContainsSkill(skill)) {
                 return false;
             }
             m_ActiveSkills.Add(skill);
@@ -93,9 +114,14 @@ namespace Nebula.Pets {
 
         public bool RemoveActiveSkill(int skill) {
             if(m_ActiveSkills == null ) {
-                m_ActiveSkills = new List<int>();
+                m_ActiveSkills = new List<PetActiveSkill>();
             }
-            return m_ActiveSkills.Remove(skill);
+            int index = m_ActiveSkills.FindIndex((s) => s.id == skill);
+            if(index >= 0 ) {
+                m_ActiveSkills.RemoveAt(index);
+                return true;
+            }
+            return false;
         }
 
         public int GetActiveSkillCount() {
@@ -111,7 +137,7 @@ namespace Nebula.Pets {
             m_Color = PetColor.gray;
             m_Type = string.Empty;
             m_PassiveSkill = -1;
-            m_ActiveSkills = new List<int>();
+            m_ActiveSkills = new List<PetActiveSkill>();
             m_Active = false;
             m_DamageType = WeaponDamageType.damage;
             m_KilledTime = 0;
@@ -124,7 +150,7 @@ namespace Nebula.Pets {
             SetColor((PetColor)save.color);
             SetType(save.type);
             SetPassiveSkill(save.passiveSkill);
-            SetActiveSkills(save.activeSkills);
+            ParseActiveSkills(save.activeSkills);
             SetActive(save.active);
             SetAttackParameters(save.attackBaseAdd, save.attackColorAdd, save.attackLevelAdd);
             SetHpParameters(save.hpBaseAdd, save.hpColorAdd, save.hpLevelAdd);
@@ -132,6 +158,19 @@ namespace Nebula.Pets {
             SetDamageType((WeaponDamageType)(byte)save.damageType);
             SetKilledTime(save.killedTime);
             SetMastery(save.mastery);
+        }
+
+        private void ParseActiveSkills(List<Hashtable> listhash) {
+            List<PetActiveSkill> skills = new List<PetActiveSkill>();
+            if(listhash != null ) {
+                foreach(Hashtable hash in listhash) {
+                    PetActiveSkill pas = new PetActiveSkill();
+                    pas.ParseInfo(hash);
+                    skills.Add(pas);
+
+                }
+            }
+            SetActiveSkills(skills);
         }
 
         #region Properties
@@ -147,7 +186,7 @@ namespace Nebula.Pets {
             }
         }
 
-        public List<int> skills {
+        public List<PetActiveSkill> skills {
             get {
                 return m_ActiveSkills;
             }
@@ -290,10 +329,17 @@ namespace Nebula.Pets {
             m_Exp += addExp;
         }
 
+        private List<Hashtable> GetActiveSkillsSave() {
+            List<Hashtable> listHash = new List<Hashtable>();
+            foreach(var s in skills) {
+                listHash.Add(s.GetInfo());
+            }
+            return listHash;
+        }
         public PetSave GetSave() {
             return new PetSave {
                 active = active,
-                activeSkills = skills,
+                activeSkills = GetActiveSkillsSave(),
                 color = (int)color,
                 exp = exp,
                 id = id,
@@ -314,10 +360,15 @@ namespace Nebula.Pets {
             };
         }
 
+        private Hashtable[] GetSkillsInfo() {
+            List<Hashtable> list = m_ActiveSkills.Select(s => s.GetInfo()).ToList();
+            return list.ToArray();
+        }
+
         public Hashtable GetInfo(IRes res) {
             return new Hashtable {
                 {(int)SPC.Active, active  },
-                {(int)SPC.Skills, skills.ToArray() },
+                {(int)SPC.Skills, GetSkillsInfo() },
                 {(int)SPC.Color, (int)color },
                 {(int)SPC.Exp, exp },
                 {(int)SPC.Id, id },
@@ -332,6 +383,91 @@ namespace Nebula.Pets {
                 {(int)SPC.Mastery, mastery },
                 {(int)SPC.CurrentTime, CommonUtils.SecondsFrom1970() }
             };
+        }
+
+        public PetColor nextColor {
+            get {
+                switch(m_Color) {
+                    case PetColor.gray:
+                        return PetColor.white;
+                    case PetColor.white:
+                        return PetColor.blue;
+                    case PetColor.blue:
+                        return PetColor.yellow;
+                    case PetColor.yellow:
+                        return PetColor.green;
+                    case PetColor.green:
+                        return PetColor.orange;
+                    case PetColor.orange:
+                        return PetColor.orange;
+                    default:
+                        return PetColor.orange;
+                }
+            }
+        }
+
+        public bool hasMaxColor {
+            get {
+                return (nextColor == m_Color);
+            }
+        }
+
+        public int nextMastery {
+            get {
+                switch(mastery) {
+                    case 0:
+                        return 1;
+                    case 1:
+                        return 2;
+                    case 2:
+                        return 3;
+                    case 3:
+                        return 4;
+                    case 4:
+                        return 5;
+                    case 5:
+                        return 6;
+                    case 6:
+                        return 6;
+                    default:
+                        return 6;
+                }
+            }
+        }
+
+        public int maxAllowedMastery {
+            get {
+                switch (color) {
+                    case PetColor.gray:
+                        return 1;
+                    case PetColor.white:
+                        return 2;
+                    case PetColor.blue:
+                        return 3;
+                    case PetColor.yellow:
+                        return 4;
+                    case PetColor.green:
+                        return 5;
+                    case PetColor.orange:
+                        return 6;
+                    default:
+                        return 6;
+                }
+            }
+        }
+
+        public bool hasMaxMastery {
+            get {
+                return (mastery == nextMastery);
+            }
+        }
+
+        public bool ImproveMastery() {
+            if(false == hasMaxMastery) {
+                SetMastery(nextMastery);
+                return true;
+            }
+            return false;
         }
     }
 }

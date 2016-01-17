@@ -132,22 +132,24 @@ namespace Nebula.Game.Pets {
             m_Skills.Clear();
             if(m_Info.skills != null ) {
                 PetSkillFactory factory = new PetSkillFactory();
-                foreach(int skillId in m_Info.skills ) {
-                    var skill = factory.Create(skillId, nebulaObject.resource, nebulaObject);
-                    if(skill != null ) {
-                        m_Skills.Add(skill);
+                foreach(PetActiveSkill s in m_Info.skills ) {
+                    if (s.activated) {
+                        var skill = factory.Create(s.id, nebulaObject.resource, nebulaObject);
+                        if (skill != null) {
+                            m_Skills.Add(skill);
+                        }
                     }
                 }
             }
 
-            s_Log.InfoFormat("{0} skills created".Color(LogColor.orange), m_Skills.Count);
+            //s_Log.InfoFormat("{0} skills created".Color(LogColor.orange), m_Skills.Count);
         }
 
         private void CreatePassiveBonus() {
             PassiveBonusFactory factory = new PassiveBonusFactory();
             var bonus = resource.petPassiveBonuses[m_Info.passiveSkill];
             m_PassiveBonus = factory.Create(bonus, nebulaObject);
-            s_Log.InfoFormat("passive bonus {0} created".Color(LogColor.orange), m_PassiveBonus.id);
+            //s_Log.InfoFormat("passive bonus {0} created".Color(LogColor.orange), m_PassiveBonus.id);
         }
 
         private void UpdateSkills(float deltaTime) {
@@ -158,7 +160,7 @@ namespace Nebula.Game.Pets {
                 foreach(var skill in m_Skills ) {
                     if (skill.data.auto) {
                         if (skill.Use()) {
-                            s_Log.InfoFormat("pet skill = {0} used success".Color(LogColor.orange), skill.id);
+                            //s_Log.InfoFormat("pet skill = {0} used success".Color(LogColor.orange), skill.id);
                         }
                     }
                 }
@@ -171,7 +173,7 @@ namespace Nebula.Game.Pets {
                 m_PassiveBonusUpdateTimer = kPassiveBonusUpdateInterval;
                 if(m_PassiveBonus != null ) {
                     if(m_PassiveBonus.Check() ) {
-                        s_Log.InfoFormat("passive bonus = {0} successfully checked".Color(LogColor.orange), m_PassiveBonus.id);
+                        //s_Log.InfoFormat("passive bonus = {0} successfully checked".Color(LogColor.orange), m_PassiveBonus.id);
                     }
                 }
             }
@@ -206,7 +208,7 @@ namespace Nebula.Game.Pets {
         /// Called when pet is killed ( update killed time on info)
         /// </summary>
         public void OnWasKilled() {
-            s_Log.InfoFormat("update killed time on pet".Color(LogColor.orange));
+           // s_Log.InfoFormat("update killed time on pet".Color(LogColor.orange));
             owner.GetComponent<PetManager>().UpdateKilledTime(this);
         }
 
@@ -216,7 +218,7 @@ namespace Nebula.Game.Pets {
             if(info != null ) {
                 nebulaObject.properties.SetProperty((byte)PS.Info, new Hashtable {
                     {(int)SPC.Active, info.active },
-                    {(int)SPC.Skills, info.skills.ToArray() },
+                    {(int)SPC.Skills, info.skills.Select(s => s.id).ToArray() },
                     {(int)SPC.Color, (int)(byte)info.color },
                     {(int)SPC.Exp, info.exp },
                     {(int)SPC.PassiveSkill, info.passiveSkill },
@@ -238,7 +240,12 @@ namespace Nebula.Game.Pets {
         }
 
         public void CollectChest(NebulaObject chest) {
-            SetState(new CollectContainerState(this, chest));
+
+            if (m_State == null || (m_State.name != PetState.CollectContainer)) {
+                SetState(new CollectContainerState(this, chest));
+            } else {
+                (m_State as CollectContainerState).AddChest(chest);
+            }
         }
 
         public bool RollMastery() {
