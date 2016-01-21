@@ -58,6 +58,29 @@ namespace Nebula.Pets {
         public void SetActive(bool active) {
             m_Active = active;
         }
+
+        public bool HasActiveSkill(int skill) {
+            foreach(var s in m_ActiveSkills) {
+                if(s.id == skill ) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool ActivateSkill(int id, bool activated) {
+            var s = GetActiveSkill(id);
+            if(s == null ) {
+                return false;
+            }
+            s.SetActive(activated);
+            return true;
+        }
+
+        public PetActiveSkill GetActiveSkill(int id) {
+            return m_ActiveSkills.Where(s => s.id == id).FirstOrDefault();
+        }
+
         public void SetAttackParameters(float baseAdd, float colorAdd, float levelAdd ) {
             m_AttackBaseAdd = baseAdd;
             m_AttackColorAdd = colorAdd;

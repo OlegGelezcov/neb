@@ -77,11 +77,12 @@ namespace SelectCharacter {
             return (int)ReturnCode.Fatal;
         }
 
-        public object MiningStationUnderAttackNotification(string characterID, string worldID ) {
+        public object MiningStationUnderAttackNotification(string characterID, string worldID, byte race) {
 
             string id = "MS_" + worldID;
             Hashtable data = new Hashtable {
-                { (int)SPC.WorldId, worldID }
+                { (int)SPC.WorldId, worldID },
+                { (int)SPC.Race, (int)race }
             };
             var notification = mApplication.Notifications.Create(id, "mining_station_attack",
                 data, NotficationRespondAction.Delete, NotificationSourceServiceType.Server,

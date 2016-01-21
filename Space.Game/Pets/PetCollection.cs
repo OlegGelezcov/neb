@@ -32,6 +32,32 @@ namespace Nebula.Pets {
             return false;
         }
 
+        public bool ActivateSkill(string petId, int skill, bool activated ) {
+            if(false == HasPet(petId)) {
+                return false;
+            }
+
+            var pet = GetPet(petId);
+            if( pet == null ) {
+                return false;
+            }
+
+            if(false == pet.HasActiveSkill(skill)) {
+                return false;
+            }
+
+            var targetSkill = pet.GetActiveSkill(skill);
+            if(targetSkill == null ) {
+                return false;
+            }
+
+            if(targetSkill.activated == activated) {
+                return false;
+            }
+
+            return pet.ActivateSkill(skill, activated);
+        }
+
         public bool DeactivatePet(string id) {
             var pet = GetPet(id);
             if(pet != null ) {

@@ -140,11 +140,18 @@ namespace Nebula.Game.Components {
             }
         }
 
+        //public Difficulty weaponDifficulty {
+        //    get;
+        //    private set;
+        //}
+
 
 
         public void Init(ShipWeaponComponentData data) {
             nebulaObject.SetTag((byte)PS.Difficulty, (byte)data.difficulty);
             nebulaObject.SetTag((byte)PS.LightCooldown, data.cooldown);
+
+
             weaponDifficulty = data.difficulty;
             InitializeAsBot();
             CacheComponents();

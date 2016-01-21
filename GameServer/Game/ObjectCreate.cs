@@ -19,6 +19,7 @@ using Nebula.Engine;
 using Nebula.Game.Pets;
 using Nebula.Pets;
 using Nebula.Inventory.DropList;
+using Nebula.Game.Utils;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -529,7 +530,62 @@ namespace Nebula.Game {
 
                 }
             }
+            CreatePredefinedDropList(nebObject, world);
+
             return nebObject;
+        }
+
+
+        private static void CreatePredefinedDropList(NebulaObject obj, MmoWorld world) {
+            if(obj.Type == (byte)ItemType.Bot) {
+                var botComp = obj.GetComponent<BotObject>();
+                if(botComp != null ) {
+
+                    if(botComp.botSubType == (byte)BotItemSubType.StandardCombatNpc) {
+
+                        var weapon = obj.GetComponent<ShipWeapon>();
+                        if (weapon != null) {
+                            var dropListComp = obj.GetComponent<DropListComponent>();
+                            if (dropListComp == null) {
+                                dropListComp = obj.AddComponent<DropListComponent>();
+
+                                List<DropItem> dropItems = null;
+                                switch(weapon.weaponDifficulty) {
+                                    case Difficulty.starter:
+                                        
+                                        dropItems = world.Resource().predefinedDropLists.GetDropList("gray");
+                                        break;
+                                    case Difficulty.easy:
+                                    case Difficulty.easy2:
+                                        dropItems = world.Resource().predefinedDropLists.GetDropList("white");
+                                        break;
+                                    case Difficulty.medium:
+                                    case Difficulty.none:
+                                        dropItems = world.Resource().predefinedDropLists.GetDropList("blue");
+                                        break;
+                                    case Difficulty.hard:
+                                        dropItems = world.Resource().predefinedDropLists.GetDropList("yellow");
+                                        break;
+                                    case Difficulty.boss:
+                                        dropItems = world.Resource().predefinedDropLists.GetDropList("green");
+                                        break;
+                                    case Difficulty.boss2:
+                                        dropItems = world.Resource().predefinedDropLists.GetDropList("orange");
+                                        break;
+                                }
+
+                                if(dropItems != null ) {
+                                    //log.InfoFormat("create drop list in world = {0} with item count = {1}".Color(LogColor.orange),
+                                    //    (obj.world as MmoWorld).Zone.Id, dropItems.Count);
+                                    dropListComp.SetDropList(dropItems);
+                                } else {
+                                    //log.InfoFormat("drop list is null ".Color(LogColor.orange));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public static GameObject Asteroid(MmoWorld world, ZoneAsteroidInfo asteroidZoneInfo, AsteroidData asteroidData) {
@@ -574,12 +630,33 @@ namespace Nebula.Game {
         //    return activatorObject;
         //}
 
+        public static GameObject Chest(MmoWorld world, Vector3 position, float duration, ConcurrentDictionary<string, DamageInfo> inDamagers, List<ServerInventoryItem> itemsPerDamager) {
+            int subZone = world.ResolvePositionSubzone(position);
+            GameObject chestObject = new GameObject(
+                position.ToVector(),
+                new Hashtable(),
+                Guid.NewGuid().ToString(),
+                (byte)ItemType.Chest,
+                world,
+                new Dictionary<byte, object>(),
+                1f,
+                subZone,
+                new Type[] { typeof(ChestComponent) }
+            );
+            chestObject.name = "Container";
+            ChestComponent chest = chestObject.GetComponent<ChestComponent>();
+            chest.SetDuration(duration);
+            chest.Fill(inDamagers, itemsPerDamager);
+            return chestObject;
+        }
+           
         public static GameObject Chest(MmoWorld world, 
             Vector3 position, 
             float duration, 
             ConcurrentDictionary<string, DamageInfo> inDamagers, 
             ChestSourceInfo sourceInfo, 
             ItemDropList dropList) {
+
             int subZone = world.ResolvePositionSubzone(position);
 
             GameObject chestObject = new GameObject(
@@ -633,7 +710,7 @@ namespace Nebula.Game {
                 typeof(PetWeapon),
                 typeof(ModelComponent),
                 typeof(MmoMessageComponent),
-                typeof(CharacterObject),
+                typeof(PetCharacter),
                 typeof(PetDamagable),
                 typeof(PlayerBonuses),
                 typeof(PlayerTarget),
@@ -669,7 +746,7 @@ namespace Nebula.Game {
             var modelObject = resultObject.GetComponent<ModelComponent>();
             modelObject.Init(new ModelComponentData(petInfo.type));
 
-            var characterObject = resultObject.GetComponent<CharacterObject>();
+            var characterObject = resultObject.GetComponent<PetCharacter>();
             var ownerCharacter = owner.GetComponent<CharacterObject>();
             characterObject.Init(new BotCharacterComponentData((Workshop)ownerCharacter.workshop, ownerCharacter.level, (FractionType)ownerCharacter.fraction));
 

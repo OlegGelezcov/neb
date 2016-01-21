@@ -126,6 +126,15 @@ namespace Login {
                         ).GetInfo();
                     }
                     break;
+                case InapObjectType.pet_skin: {
+                        string skin = inapItem.data.GetValue<string>("model", string.Empty);
+                        if(string.IsNullOrEmpty(skin)) {
+                            code = ReturnCode.InvalidInapType;
+                            return false;
+                        }
+                        objInfo = new PetSkinObject(skin, skin).GetInfo();
+                    }
+                    break;
 
             }
 
@@ -141,12 +150,19 @@ namespace Login {
                 { (int)SPC.Body, "ginp_body" }
             };
 
+            string itemID = string.Empty;
+            if(inapItem.type == InapObjectType.pet_skin) {
+                itemID = objInfo.GetValue<string>((int)SPC.Id, string.Empty);
+            } else {
+                itemID = inapId + inapItem.tag.ToString();
+            }
+
             PUTInventoryItemTransactionStart startTransaction = new PUTInventoryItemTransactionStart {
                 characterID = character,
                 gameRefID = gameRef,
                 count = 1,
                 inventoryType = (int)InventoryType.ship,
-                itemID = inapId + inapItem.tag.ToString(),
+                itemID = itemID,
                 postTransactionAction = (byte)PostTransactionAction.RemoveNebulaCredits,
                 tag = tagHash,
                 targetObject = objInfo,

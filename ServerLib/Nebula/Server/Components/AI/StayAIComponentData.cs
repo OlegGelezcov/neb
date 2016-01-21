@@ -1,5 +1,7 @@
 ﻿using Common;
+using ServerClientCommon;
 using System;
+using System.Collections;
 using System.Xml.Linq;
 
 namespace Nebula.Server.Components {
@@ -16,11 +18,25 @@ namespace Nebula.Server.Components {
             this.battleMovingType = battleMovingType;
         }
 
+        public StayAIComponentData(Hashtable hash)
+            : base(hash) {
+            battleMovingType = (AttackMovingType)hash.GetValue<int>((int)SPC.AttackMovingType, (int)AttackMovingType.AttackStay);
+        }
 
         public override ComponentSubType subType {
             get {
                 return ComponentSubType.ai_stay;
             }
+        }
+
+        public Hashtable AsHash() {
+            return new Hashtable {
+                { (int)SPC.AlignWithForwardDirection, alignWithForwardDirection },
+                { (int)SPC.RotationSpeed, rotationSpeed },
+                { (int)SPC.AttackMovingType, (int)battleMovingType },
+                { (int)SPC.UseHitProbForAgro, useHitProbForAgro },
+                { (int)SPC.SubType, (int)subType }
+            };
         }
     }
 }

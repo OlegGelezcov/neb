@@ -3,6 +3,7 @@ using ExitGames.Logging;
 using MongoDB.Bson;
 using Nebula.Game;
 using Nebula.Server.Components;
+using ServerClientCommon;
 using Space.Game;
 using System;
 using System.Collections;
@@ -153,8 +154,21 @@ namespace Nebula.Database {
                     return new SimpleWeaponComponentData(hash);
                 case ComponentID.Movable:
                     return new SimpleMovableComponentData(hash);
-                case ComponentID.CombatAI:
-                    return new FreeFlyNearPointComponentData(hash);
+                case ComponentID.CombatAI: {
+                        if(hash.ContainsKey((int)SPC.SubType)) {
+                            switch ((ComponentSubType)hash[(int)SPC.SubType]) {
+                                case ComponentSubType.ai_wander_point:
+                                    return new FreeFlyNearPointComponentData(hash);
+                                case ComponentSubType.ai_stay:
+                                    return new StayAIComponentData(hash);
+                                default:
+                                    return new FreeFlyNearPointComponentData(hash);
+                            }
+                        } else {
+                            return new FreeFlyNearPointComponentData(hash);
+                        }
+                    }
+                    
                 case ComponentID.Teleport:
                     return new PersonalBeaconComponentData(hash);
                 default:
@@ -178,7 +192,7 @@ namespace Nebula.Database {
             foreach(object objID in go.componentIds) {
                 var componentBehaviour = go.GetComponent((int)objID);
                 if(componentBehaviour != null ) {
-                    if(componentBehaviour is IDatabaseObject) {
+                    if(componentBehaviour is IDatabaseObject ) {
                         if(!savedComponents.ContainsKey((int)objID)) {
                             savedComponents.Add((int)objID, (componentBehaviour as IDatabaseObject).GetDatabaseSave());
                         }

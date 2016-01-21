@@ -4,10 +4,10 @@ using Nebula.Game.Components;
 namespace Nebula.Game.Pets {
     public class PetIdleState : PetBaseState {
         private const float UPDATE_OFFSET_COOLDOWN = 30;
-        private const float MIN_DISTANCE = 1f;
+        private const float MIN_DISTANCE = 5f;
         private const float MAX_DISTANCE = 20f;
         private const float ROTATION_SPEED = 0.5f;
-        public const float OFFSET_RADIUS = 10;
+        public const float OFFSET_RADIUS = 17;
 
         private float m_OffsetChangeTimer = UPDATE_OFFSET_COOLDOWN;
         private Vector3 m_Offset;

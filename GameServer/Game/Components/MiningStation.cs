@@ -5,11 +5,19 @@ using Nebula.Engine;
 using Nebula.Server.Components;
 using ServerClientCommon;
 using Space.Game;
+using System.Collections.Generic;
+using System.Collections.Concurrent;
+using ExitGames.Logging;
+using Nebula.Game.Utils;
+using Nebula.Inventory.Objects;
+using Space.Game.Inventory;
 
 namespace Nebula.Game.Components {
 
 
     public class MiningStation : NebulaBehaviour, IInfoSource {
+
+        private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
         public const float FULL_TIME = 24 * 60 * 60;
         public const float RECEIVE_DAMAGE_NOTIFICATION_INTERVAL = 2 * 60;
@@ -44,6 +52,8 @@ namespace Nebula.Game.Components {
 
         private bool mDestroyed = false;
         private float mLastReceiveDamageNotificationSended = 0;
+
+        private ConcurrentDictionary<string, DamageInfo> m_damagers = new ConcurrentDictionary<string, DamageInfo>();
 
         public void MakeEmpty() {
             mCurrentCount = 0;
@@ -177,18 +187,44 @@ namespace Nebula.Game.Components {
         }
 
         public void Death() {
+            s_Log.InfoFormat("MiningStation.Death() called with = {0} damagers".Color(LogColor.orange), m_damagers.Count);
+
+
+
             DestroyStation();
+        }
+
+        public void OnWasKilled() {
+            s_Log.InfoFormat("MiningStation.OnWasKilled() call with = {0} damagers".Color(LogColor.orange), m_damagers.Count);
+            if (currentCount > 0 && m_damagers.Count > 0) {
+                NebulaElementObject nebObject = new NebulaElementObject(nebulaElementID, nebulaElementID);
+                ServerInventoryItem serverInventoryItem = new ServerInventoryItem(nebObject, currentCount);
+                List<ServerInventoryItem> itemsPerDamager = new List<ServerInventoryItem> { serverInventoryItem };
+
+                var chest = ObjectCreate.Chest(nebulaObject.world as MmoWorld, transform.position, 4 * 60,
+                    m_damagers, itemsPerDamager);
+                chest.AddToWorld();
+            }
         }
 
         //called when receive damage,
         //at new damage every interval send notification via notification service when my mining station were attacked
         public void OnNewDamage(DamageInfo damager) {
+
+            if(damager.DamagerType == ItemType.Avatar) {
+                if(false == m_damagers.ContainsKey(damager.DamagerId)) {
+                    m_damagers.TryAdd(damager.DamagerId, damager);
+                }
+            }
+
             if ((Time.curtime() - mLastReceiveDamageNotificationSended) >= RECEIVE_DAMAGE_NOTIFICATION_INTERVAL) {
                 mLastReceiveDamageNotificationSended = Time.curtime();
 
                 if (false == string.IsNullOrEmpty(mCharacterID)) {
-                    GameApplication.Instance.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "MiningStationUnderAttackNotification",
-                        new object[] { mCharacterID, nebulaObject.mmoWorld().Zone.Id });
+                    GameApplication.Instance.updater.CallS2SMethod(
+                        NebulaCommon.ServerType.SelectCharacter, 
+                        "MiningStationUnderAttackNotification",
+                        new object[] { mCharacterID, nebulaObject.mmoWorld().Zone.Id, damager.race});
                 }
             }
         }
@@ -216,6 +252,7 @@ namespace Nebula.Game.Components {
                 (nebulaObject as GameObject).Destroy();
             }
         }
+
 
     }
 }

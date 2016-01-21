@@ -8,8 +8,8 @@ namespace Nebula.Game.Pets {
 
         private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
-        public readonly float kSpeed = 25.0f;
-        private readonly float kConvergencePc = 0.7f;
+        public readonly float kSpeed = 15.0f;
+        private readonly float kConvergencePc = 1f;
 
         private PlayerTarget m_OwnerTarget;
         private DamagableObject m_OwnerDamagable;

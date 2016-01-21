@@ -1,7 +1,9 @@
 ﻿using Common;
 using Common.Space.Game.Resources;
+using Nebula.Inventory.DropList;
 using Nebula.Pets;
 using Nebula.Resources;
+using Nebula.Resources.PlayerConstructions;
 using Space.Game.Resources;
 using Space.Game.Resources.Zones;
 using Space.Game.Ship;
@@ -71,6 +73,8 @@ namespace Space.Game {
         PetSkillCollection petSkills { get; }
         PetPassiveBonusCollection petPassiveBonuses { get; }
         CraftResourceObjectTable craftObjects { get; }
+        ConstructionDataResource playerConstructions { get; }
+        PredefinedDropLists predefinedDropLists { get; }
     }
 
 }

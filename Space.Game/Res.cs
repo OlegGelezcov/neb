@@ -2,8 +2,10 @@
     using Common;
     using Common.Space.Game.Resources;
     using Nebula;
+    using Nebula.Inventory.DropList;
     using Nebula.Pets;
     using Nebula.Resources;
+    using Nebula.Resources.PlayerConstructions;
     using Space.Game.Resources;
     using Space.Game.Resources.Zones;
     using Space.Game.Ship;
@@ -153,8 +155,21 @@
             craftObjects = new CraftResourceObjectTable();
             craftObjects.Load(Path.Combine(basePath, "Data/Materials/craft_resource.xml"));
 
+            playerConstructions = new ConstructionDataResource();
+            playerConstructions.Load(Path.Combine(basePath, "Data/player_constructions.xml"));
+
+            predefinedDropLists = new PredefinedDropLists();
+            predefinedDropLists.Load(Path.Combine(basePath, "Data/Drop/predefined_dls.xml"));
         }
 
+        public PredefinedDropLists predefinedDropLists {
+            get;
+            private set;
+        }
+        public ConstructionDataResource playerConstructions {
+            get;
+            private set;
+        }
         public CraftResourceObjectTable craftObjects {
             get;
             private set;

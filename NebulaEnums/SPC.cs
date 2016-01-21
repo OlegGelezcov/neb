@@ -294,6 +294,7 @@ namespace ServerClientCommon {
         Skin,
         PetColor,
         Pet,
-        MovedCount
+        MovedCount,
+        OwnerGameRef
     }
 }

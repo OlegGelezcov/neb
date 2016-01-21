@@ -61,10 +61,17 @@ namespace Nebula.Client.Res {
 
         public int minPlayerLevelForUnlockPet {
             get {
-                PetPlayerCount min = m_PetPlayerCountList[0];
+                PetPlayerCount min = null;
                 foreach(var pc in m_PetPlayerCountList) {
-                    if(pc.count > 0 && pc.count < min.count ) {
-                        min = pc;
+                    if( pc.count > 0 ) {
+                        if(min == null ) {
+                            min = pc;
+                        } else {
+                            if(pc.count < min.count) {
+                                min = pc;
+                            }
+                        }
+                        
                     } 
                 }
                 return min.minLevel;

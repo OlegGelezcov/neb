@@ -501,6 +501,22 @@ namespace Nebula.Game.Pets {
             }
         }
 
+        public bool ActivateSkill(string petId, int skill, bool activated) {
+            bool success = pets.ActivateSkill(petId, skill, activated);
+            if(success) {
+                if(ownerAtSpace) {
+                    var pet = pets.GetPet(petId);
+                    if(pet != null ) {
+                        PetObject petObject = null;
+                        if(m_Pets.TryGetValue(petId, out petObject)) {
+                            petObject.Init(new PetObject.PetObjectInitData(nebulaObject, pet));
+                        }
+                    }
+                }
+                GetComponent<MmoMessageComponent>().ReceivePetsUpdate();
+            }
+            return success;
+        }
         /// <summary>
         /// Add exp to all live pets
         /// </summary>

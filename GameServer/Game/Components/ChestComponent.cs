@@ -1,23 +1,20 @@
 ﻿using Common;
+using ExitGames.Logging;
+using GameMath;
 using Nebula.Engine;
+using Nebula.Game.Pets;
+using Nebula.Inventory.DropList;
+using Nebula.Inventory.Objects;
+using ServerClientCommon;
 using Space.Game;
 using Space.Game.Drop;
 using Space.Game.Inventory;
 using Space.Game.Inventory.Objects;
 using Space.Game.Resources;
 using Space.Server;
-using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
-using ServerClientCommon;
-using GameMath;
-using ExitGames.Logging;
-using Nebula.Game.Pets;
-using Nebula.Inventory.DropList;
-using Nebula.Inventory.Objects;
 
 namespace Nebula.Game.Components {
 
@@ -36,6 +33,24 @@ namespace Nebula.Game.Components {
         public void SetDuration(float dur) {
             duration = dur;
             timer = duration;
+        }
+
+        public void Fill(ConcurrentDictionary<string, DamageInfo> inDamagers, List<ServerInventoryItem> itemsPerPlayer) {
+            if(content == null ) {
+                content = new ConcurrentDictionary<string, ConcurrentDictionary<string, ServerInventoryItem>>();
+            }
+            content.Clear();
+            foreach(var pDamager in inDamagers) {
+                content.TryAdd(pDamager.Key, CopyTransform(itemsPerPlayer));
+            }
+        }
+
+        private ConcurrentDictionary<string, ServerInventoryItem> CopyTransform(List<ServerInventoryItem> items ) {
+            var dict = new ConcurrentDictionary<string, ServerInventoryItem>();
+            foreach(var it in items ) {
+                dict.TryAdd(it.Object.Id, new ServerInventoryItem(it.Object, it.Count));
+            }
+            return dict;
         }
 
         public void Fill(ConcurrentDictionary<string, DamageInfo> inDamagers, ItemDropList dropList, ChestSourceInfo sourceInfo = null) {

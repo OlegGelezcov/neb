@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
-using Common;
+﻿using Common;
 using Nebula.Engine;
 using Nebula.Server.Components;
-using Space.Game;
+using System.Collections;
 
 namespace Nebula.Game.Components {
     public class CharacterObject : NebulaBehaviour, IDatabaseObject {
@@ -28,7 +26,7 @@ namespace Nebula.Game.Components {
             workshop = (byte)inWorkshop;
         }
 
-        public void SetLevel(int inLevel) {
+        public virtual void SetLevel(int inLevel) {
             level = inLevel;
         }
 

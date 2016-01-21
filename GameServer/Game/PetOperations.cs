@@ -1,5 +1,6 @@
 ﻿using Common;
 using ExitGames.Logging;
+using Nebula.Engine;
 using Nebula.Game.Components;
 using Nebula.Game.Pets;
 using Nebula.Game.Utils;
@@ -377,6 +378,34 @@ namespace Nebula.Game{
             message.ReceivePetsUpdate();
 
             return CreateResponse(RPCErrorCode.Ok);
+        }
+
+        public Hashtable ActivatePetSkill(string petId, int skillId, bool activate) {
+            bool success = player.GetComponent<PetManager>().ActivateSkill(petId, skillId, activate);
+            Hashtable hash = CreateResponse(RPCErrorCode.Ok);
+            hash.Add((int)SPC.Status, success);
+            return hash;
+        }
+
+        public Hashtable GetPetAtWorld(string itemId) {
+            var world = player.nebulaObject.mmoWorld();
+            NebulaObject petItem = null;
+            if(false == world.TryGetObject((byte)ItemType.Bot, itemId, out petItem)) {
+                return CreateResponse(RPCErrorCode.ItemNotFound);
+            }
+            var petComponent = petItem.GetComponent<PetObject>();
+            if(false == petComponent) {
+                return CreateResponse(RPCErrorCode.ComponentNotFound);
+            }
+
+            if(petComponent.info == null ) {
+                return CreateResponse(RPCErrorCode.UnknownError);
+            }
+
+            var info = petComponent.info.GetInfo(player.resource);
+            var result = CreateResponse(RPCErrorCode.Ok);
+            result.Add((int)SPC.Info, info);
+            return result;
         }
     }
 }

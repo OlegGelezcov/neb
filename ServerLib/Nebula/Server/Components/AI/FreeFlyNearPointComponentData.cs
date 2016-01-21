@@ -39,7 +39,8 @@ namespace Nebula.Server.Components {
                 {(int)SPC.RotationSpeed, rotationSpeed  },
                 {(int)SPC.Radius, radius },
                 {(int)SPC.AttackMovingType, (int)battleMovingType },
-                {(int)SPC.UseHitProbForAgro, useHitProbForAgro }
+                {(int)SPC.UseHitProbForAgro, useHitProbForAgro },
+                {(int)SPC.SubType, (int)subType }
             };
         }
     }

@@ -15,6 +15,8 @@ namespace Space.Database {
         //public Hashtable Hold { get; set; }
         public int StationInventoryMaxSlots { get; set; }
         public List<InventoryItemDocumentElement> StationInventoryItems { get; set; }
+        public bool petSchemeAdded { get; set; }
+
         //public int MaxHoldCount { get; set; }
 
         public void Set(WorkhouseStation station) {
@@ -31,6 +33,7 @@ namespace Space.Database {
                 }
             }
 
+            petSchemeAdded = station.petSchemeAdded;
         }
 
         public WorkhouseStation SourceObject(IRes resourcse) {
@@ -45,6 +48,7 @@ namespace Space.Database {
             ServerInventory serverInventory = new ServerInventory(this.StationInventoryMaxSlots);
             serverInventory.SetItems(DatabaseUtils.TransformForInventory(this.StationInventoryItems));
             station.SetInventory(serverInventory);
+            station.SetPetSchemeAdded(petSchemeAdded);
             return station;
         }
     }

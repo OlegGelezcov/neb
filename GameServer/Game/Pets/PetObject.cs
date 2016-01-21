@@ -37,6 +37,7 @@ namespace Nebula.Game.Pets {
         private float m_SkillUpdateTimer = kSkillUpdateInterval;
         private float m_PassiveBonusUpdateTimer = kPassiveBonusUpdateInterval;
         private PetBaseState m_State;
+        private CharacterObject m_Character;
 
 
 
@@ -74,6 +75,7 @@ namespace Nebula.Game.Pets {
             m_Movable = GetComponent<MovableObject>();
             m_Message = GetComponent<MmoMessageComponent>();
             m_State = new PetIdleState(this);
+            m_Character = GetComponent<CharacterObject>();
         }
 
 
@@ -111,6 +113,7 @@ namespace Nebula.Game.Pets {
 
             if(nebulaObject.subZone != m_Owner.subZone) {
                 nebulaObject.SetSubZone(m_Owner.subZone);
+                nebulaObject.MmoMessage().SendSubZoneUpdate(EventReceiver.ItemSubscriber, nebulaObject.subZone);
             }
 
             UpdateSkills(deltaTime);
@@ -136,6 +139,7 @@ namespace Nebula.Game.Pets {
                     if (s.activated) {
                         var skill = factory.Create(s.id, nebulaObject.resource, nebulaObject);
                         if (skill != null) {
+                            //s_Log.InfoFormat("create activated pet skill = {0}".Color(LogColor.orange), skill.id);
                             m_Skills.Add(skill);
                         }
                     }
@@ -216,16 +220,21 @@ namespace Nebula.Game.Pets {
             
             m_Info = info;
             if(info != null ) {
-                nebulaObject.properties.SetProperty((byte)PS.Info, new Hashtable {
-                    {(int)SPC.Active, info.active },
-                    {(int)SPC.Skills, info.skills.Select(s => s.id).ToArray() },
-                    {(int)SPC.Color, (int)(byte)info.color },
-                    {(int)SPC.Exp, info.exp },
-                    {(int)SPC.PassiveSkill, info.passiveSkill },
-                    {(int)SPC.DamageType, (int)(byte)info.damageType },
-                    {(int)SPC.KilledTime, info.killedTime }
-                });
+                if (owner != null) {
+                    nebulaObject.properties.SetProperty((byte)PS.Info, new Hashtable {
+                        {(int)SPC.Active, info.active },
+                        {(int)SPC.Skills, info.skills.Select(s => s.id).ToArray() },
+                        {(int)SPC.Color, (int)(byte)info.color },
+                        {(int)SPC.Exp, info.exp },
+                        {(int)SPC.PassiveSkill, info.passiveSkill },
+                        {(int)SPC.DamageType, (int)(byte)info.damageType },
+                        {(int)SPC.KilledTime, info.killedTime },
+                        {(int)SPC.Model, info.type },
+                        {(int)SPC.OwnerGameRef, owner.Id }
+                    });
+                }
             }
+
         }
 
         private void SetOwner(NebulaObject inOwner) {

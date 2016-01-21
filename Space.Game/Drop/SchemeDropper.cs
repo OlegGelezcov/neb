@@ -55,9 +55,12 @@ namespace Space.Game.Drop
 
                 foreach (var m in moduleList) {
                     foreach (var sm in m.allowedSets) {
+                        
                         var s = resource.Sets.Set(sm.Trim());
-                        if (s.UnlockLevel <= level && s.Workshop == workshop) {
-                            filteredSetModules.Add(m);
+                        if (s != null) {
+                            if (s.UnlockLevel <= level && s.Workshop == workshop) {
+                                filteredSetModules.Add(m);
+                            }
                         }
                     }
                 }

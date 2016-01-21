@@ -13,6 +13,7 @@ namespace Space.Game
     {
         //private ServerWorkhouseStationHold hold;
         private ServerInventory stationInventory;
+        public bool petSchemeAdded { get; private set; }
 
 
         public WorkhouseStation() : this(null) { }
@@ -74,6 +75,10 @@ namespace Space.Game
         public void SetInventory(ServerInventory sInventory)
         {
             this.stationInventory = sInventory;
+        }
+
+        public void SetPetSchemeAdded(bool added) {
+            petSchemeAdded = added;
         }
     }
 }

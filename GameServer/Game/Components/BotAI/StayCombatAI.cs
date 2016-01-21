@@ -1,13 +1,26 @@
 ﻿using Nebula.Server.Components;
 using Nebula.Server;
 using ExitGames.Logging;
+using System;
+using System.Collections;
 
 namespace Nebula.Game.Components.BotAI {
-    public class StayCombatAI : CombatBaseAI {
+    public class StayCombatAI : CombatBaseAI, IDatabaseObject {
 
         private static ILogger log = LogManager.GetCurrentClassLogger();
 
+        private StayAIComponentData m_Data;
+
+        public Hashtable GetDatabaseSave() {
+            if(m_Data != null ) {
+                return m_Data.AsHash();
+            }
+            return new Hashtable();
+        }
+
         public void Init(StayAIComponentData data) {
+            m_Data = data;
+
             base.Init(data);
 
             SetAIType(new NoneAIType { battleMovingType = data.battleMovingType });

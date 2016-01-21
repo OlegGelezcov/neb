@@ -15,6 +15,10 @@ namespace Nebula.Pets {
             };
         }
 
+        public void SetActive(bool active) {
+            activated = active;
+        }
+
 
         public void ParseInfo(Hashtable info) {
             id = info.GetValue<int>((int)SPC.Id, 0);

@@ -2,6 +2,7 @@
 using Nebula.Engine;
 using Nebula.Inventory.DropList;
 using Nebula.Server.Components;
+using System.Collections.Generic;
 
 namespace Nebula.Game.Components {
     public class DropListComponent : NebulaBehaviour {
@@ -20,6 +21,10 @@ namespace Nebula.Game.Components {
                 DropListFactory factory = new DropListFactory();
                 m_DropList = new ItemDropList(factory.Create(data.parentElement));
             }
+        }
+
+        public void SetDropList(List<DropItem> items ) {
+            m_DropList = new ItemDropList(items);
         }
 
         public ItemDropList dropList {

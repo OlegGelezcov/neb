@@ -9,6 +9,7 @@ namespace Space.Game {
     using Nebula.Game.Components;
     using Nebula.Game.OperationHandlers;
     using Nebula.Game.Pets;
+    using Nebula.Inventory.Objects;
     using NebulaCommon.SelectCharacter;
     using Photon.SocketServer;
     using Photon.SocketServer.Rpc;
@@ -207,14 +208,32 @@ namespace Space.Game {
                 Inventory.Replace(dbInventory);
                 Inventory.ChangeMaxSlots(mShip.holdCapacity);
 
-                var dbStation = StationDatabase.instance.LoadStation(mCharacter.characterId, resource as Res);
+                bool stationIsNew = false;
+                var dbStation = StationDatabase.instance.LoadStation(mCharacter.characterId, resource as Res, out stationIsNew);
                 Station.SetInventory(dbStation.StationInventory);
+                Station.SetPetSchemeAdded(dbStation.petSchemeAdded);
+
+                if (false == Station.petSchemeAdded) {
+                    AddPetSchemeToNewPlayer();
+                    Station.SetPetSchemeAdded(true);
+                }
                 UpdateCharacterOnMaster();
                 log.InfoFormat("player = {0} started at position = {1}", GetComponent<PlayerCharacterObject>().login, transform.position);
             } catch(Exception e) {
                 log.InfoFormat(e.Message);
                 log.ErrorFormat(e.StackTrace);
             }
+        }
+
+        private void AddPetSchemeToNewPlayer() {
+            if(mRace == null ) {
+                mRace = GetComponent<RaceableObject>();
+            }
+            Race race = (Race)mRace.race;
+            string petModel = resource.petParameters.defaultModels[race];
+            var petScheme = new PetSchemeObject(petModel, PetColor.gray);
+            Station.StationInventory.Add(petScheme, 1);
+            EventOnStationHoldUpdated();
         }
 
         public void UpdateCharacterOnMaster() {

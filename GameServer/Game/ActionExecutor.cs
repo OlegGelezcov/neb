@@ -1399,92 +1399,7 @@ namespace Space.Game {
             };
 
         }
-        public Hashtable CreateMiningStation(string planetID, string inventoryItemID, int slotNumber) {
 
-            MmoWorld world = Player.nebulaObject.mmoWorld();
-            Race playerRace = (Race)Player.nebulaObject.Raceable().race;
-
-            //find target planet 
-            NebulaObject planetObject;
-            if(false == world.TryGetObject((byte)ItemType.Bot, planetID, out planetObject)) {
-                return new Hashtable {
-                    { (int)SPC.ReturnCode, (int)RPCErrorCode.PlanetNotFounded }
-                };
-            }
-
-            PlanetObject planetComponent = planetObject.GetComponent<PlanetObject>();
-            if(!planetComponent) {
-                return new Hashtable {
-                    { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError }
-                };
-            }
-
-            if(false == planetComponent.IsFreeSlot(slotNumber)) {
-                return new Hashtable {
-                    { (int)SPC.ReturnCode, (int)RPCErrorCode.SlotNotFree }
-                };
-            }
-
-
-            int inventoryItemCount = Player.Inventory.ItemCount(InventoryObjectType.mining_station, inventoryItemID);
-            if(inventoryItemCount == 0 ) {
-                return new Hashtable {
-                    { (int)SPC.ReturnCode, (int)RPCErrorCode.ObjectNotFound }
-                };
-            }
-
-
-            ServerInventoryItem inventoryItem = null;
-            if(false == Player.Inventory.TryGetItem(InventoryObjectType.mining_station, inventoryItemID, out inventoryItem)) {
-                return new Hashtable {
-                    { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError }
-                };
-            }
-
-            MiningStationInventoryObject miningStationInventoryObject = inventoryItem.Object as MiningStationInventoryObject;
-
-            float timeForSingleElement = (60.0f * 60.0f) / miningStationInventoryObject.speed;
-
-            string characterID = Player.GetComponent<PlayerCharacterObject>().characterId;
-
-            Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
-                { ComponentID.Model, new ModelComponentData(GetDrillModel((Race)(byte)miningStationInventoryObject.race))},
-                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, 20, 0 ) },
-                { ComponentID.Raceable, new RaceableComponentData((Race)(byte)miningStationInventoryObject.race)},
-                { ComponentID.Damagable, new NotShipDamagableComponentData(world.Resource().ServerInputs.miningStationHP, false, 0, false) },
-                { ComponentID.Bonuses, new BonusesComponentData() },
-                { ComponentID.Bot, new BotComponentData(BotItemSubType.Drill) },
-                { ComponentID.MiningStation, new MiningStationComponentData(planetComponent.element, 
-                    miningStationInventoryObject.capacity, 
-                    timeForSingleElement,
-                    planetObject.Id,
-                    Player.nebulaObject.Id,
-                    miningStationInventoryObject.capacity * 3, 
-                    characterID)},
-                { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop((Race)(byte)miningStationInventoryObject.race),
-                        1, Turret.SelectFraction(playerRace))}
-            };
-
-            //log.InfoFormat("creating mining station with max count = {0}, time for single element = {1}, total count = {2}, element = {3} [red]",
-               // miningStationInventoryObject.capacity, timeForSingleElement, miningStationInventoryObject.capacity * 3, planetComponent.element);
-
-            NebulaObjectData data = new NebulaObjectData {
-                componentCollection = components,
-                ID = "DR_" + Guid.NewGuid().ToString(),
-                position = Player.transform.position,
-                rotation = Player.transform.rotation
-            };
-            var miningStationObject = ObjectCreate.NebObject(world, data);
-            miningStationObject.AddToWorld();
-            
-            planetComponent.SetStation(miningStationObject.GetComponent<MiningStation>(), slotNumber);
-
-            Player.Inventory.Remove(InventoryObjectType.mining_station, inventoryItemID, 1);
-            Player.EventOnInventoryUpdated();
-            return new Hashtable {
-                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
-            };
-        }
 
         public Hashtable CreatePersonalBeacon(string itemID) {
             MmoWorld world = Player.nebulaObject.mmoWorld();
@@ -1663,6 +1578,100 @@ namespace Space.Game {
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
+        public Hashtable CreateMiningStation(string planetID, string inventoryItemID, int slotNumber) {
+
+            MmoWorld world = Player.nebulaObject.mmoWorld();
+            Race playerRace = (Race)Player.nebulaObject.Raceable().race;
+
+            //find target planet 
+            NebulaObject planetObject;
+            if (false == world.TryGetObject((byte)ItemType.Bot, planetID, out planetObject)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.PlanetNotFounded }
+                };
+            }
+
+            PlanetObject planetComponent = planetObject.GetComponent<PlanetObject>();
+            if (!planetComponent) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError }
+                };
+            }
+
+            if (false == planetComponent.IsFreeSlot(slotNumber)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.SlotNotFree }
+                };
+            }
+
+
+            int inventoryItemCount = Player.Inventory.ItemCount(InventoryObjectType.mining_station, inventoryItemID);
+            if (inventoryItemCount == 0) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.ObjectNotFound }
+                };
+            }
+
+
+            ServerInventoryItem inventoryItem = null;
+            if (false == Player.Inventory.TryGetItem(InventoryObjectType.mining_station, inventoryItemID, out inventoryItem)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError }
+                };
+            }
+
+            MiningStationInventoryObject miningStationInventoryObject = inventoryItem.Object as MiningStationInventoryObject;
+
+            float timeForSingleElement = (60.0f * 60.0f) / miningStationInventoryObject.speed;
+
+            string characterID = Player.GetComponent<PlayerCharacterObject>().characterId;
+
+            var miningData = Player.resource.playerConstructions.miningStation;
+
+            Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
+                { ComponentID.Model, new ModelComponentData(GetDrillModel((Race)(byte)miningStationInventoryObject.race))},
+                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, miningData.size, 0 ) },
+                { ComponentID.Raceable, new RaceableComponentData((Race)(byte)miningStationInventoryObject.race)},
+                { ComponentID.Damagable, new NotShipDamagableComponentData(miningData.hp, miningData.ignoreDamageAtStart, miningData.ignoreDamageInterval, miningData.createContainer) },
+                { ComponentID.Bonuses, new BonusesComponentData() },
+                { ComponentID.Bot, new BotComponentData(BotItemSubType.Drill) },
+                { ComponentID.MiningStation, new MiningStationComponentData(planetComponent.element,
+                    miningStationInventoryObject.capacity,
+                    timeForSingleElement,
+                    planetObject.Id,
+                    Player.nebulaObject.Id,
+                    miningStationInventoryObject.capacity * 3,
+                    characterID)},
+                { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop((Race)(byte)miningStationInventoryObject.race),
+                        1, Turret.SelectFraction(playerRace))},
+                { ComponentID.CombatAI, new StayAIComponentData(false, 0, Nebula.Server.AttackMovingType.AttackStay, miningData.useHitProbForAgro) },
+                { ComponentID.Movable, new SimpleMovableComponentData(0) },
+                { ComponentID.Weapon, new SimpleWeaponComponentData(miningData.optimalDistance, 1, miningData.cooldown, true, miningData.damageInTargetHp) },
+                { ComponentID.Target, new TargetComponentData() }
+
+            };
+
+            //log.InfoFormat("creating mining station with max count = {0}, time for single element = {1}, total count = {2}, element = {3} [red]",
+            // miningStationInventoryObject.capacity, timeForSingleElement, miningStationInventoryObject.capacity * 3, planetComponent.element);
+
+            NebulaObjectData data = new NebulaObjectData {
+                componentCollection = components,
+                ID = "DR_" + Guid.NewGuid().ToString(),
+                position = Player.transform.position,
+                rotation = Player.transform.rotation
+            };
+            var miningStationObject = ObjectCreate.NebObject(world, data);
+            miningStationObject.AddToWorld();
+
+            planetComponent.SetStation(miningStationObject.GetComponent<MiningStation>(), slotNumber);
+
+            Player.Inventory.Remove(InventoryObjectType.mining_station, inventoryItemID, 1);
+            Player.EventOnInventoryUpdated();
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
+            };
+        }
+
         public Hashtable MakeTurretFromItem(string itemID) {
             var world = Player.nebulaObject.mmoWorld();
             Race race = (Race)Player.nebulaObject.Raceable().race;
@@ -1702,19 +1711,20 @@ namespace Space.Game {
                 return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.VeryCloseToSpawnPoint } };
             }
 
+            var turretData = Player.resource.playerConstructions.turret;
             Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
-                { ComponentID.Damagable, new OutpostDamagableComponentData(world.Resource().ServerInputs.standardTurretHp, true, 60, false, 10, 0) },
+                { ComponentID.Damagable, new OutpostDamagableComponentData(turretData.hp, turretData.ignoreDamageAtStart, turretData.ignoreDamageInterval, turretData.createContainer, turretData.fixedInputDamage, turretData.additionalHp) },
                 { ComponentID.Model, new ModelComponentData(GetTurretModel(race))},
-                { ComponentID.CombatAI, new FreeFlyNearPointComponentData(true, 0.5f, 150, Nebula.Server.AttackMovingType.AttackStay, true) },
+                { ComponentID.CombatAI, new FreeFlyNearPointComponentData(true, 0.5f, turretData.wanderRadius, Nebula.Server.AttackMovingType.AttackStay, turretData.useHitProbForAgro) },
                 { ComponentID.Movable, new SimpleMovableComponentData(10) },
-                { ComponentID.Weapon, new SimpleWeaponComponentData(200, 1, 4, true, 0.15f) },
+                { ComponentID.Weapon, new SimpleWeaponComponentData(turretData.optimalDistance, 1, turretData.cooldown, true, turretData.damageInTargetHpPc) },
                 { ComponentID.Target, new TargetComponentData() },
                 { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 1, Turret.SelectFraction(race)) },
                 { ComponentID.Raceable, new RaceableComponentData(race)  },
                 { ComponentID.Bonuses, new BonusesComponentData() },
                 { ComponentID.Bot, new BotComponentData(BotItemSubType.Turret) },
                 { ComponentID.Turret, new TurretComponentData() },
-                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), "",  world.Resource().ServerInputs.standardTurretSize, 0 ) }
+                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), "",  turretData.size, 0 ) }
             };
             NebulaObjectData data = new NebulaObjectData {
                 ID = "TUR_" + Guid.NewGuid().ToString(),
@@ -1784,15 +1794,20 @@ namespace Space.Game {
                 return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.VeryCloseToSpawnPoint } };
             }
 
+            var fortData = Player.resource.playerConstructions.fortification;
             Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
-                { ComponentID.Damagable, new OutpostDamagableComponentData(world.Resource().ServerInputs.standardFortificationHp, true, 60, false, 500, 200) },
+                { ComponentID.Damagable, new OutpostDamagableComponentData(fortData.hp, fortData.ignoreDamageAtStart, fortData.ignoreDamageInterval, fortData.createContainer, fortData.fixedInputDamage, fortData.additionalHp) },
                 { ComponentID.Model, new ModelComponentData(GetFortificationModel(race)) },
                 { ComponentID.Bot, new BotComponentData(BotItemSubType.Outpost) },
                 { ComponentID.Bonuses, new BonusesComponentData() },
                 { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 1, Turret.SelectFraction(race)) },
                 { ComponentID.Outpost, new OutpostComponentData() },
                 { ComponentID.Raceable, new RaceableComponentData(race) },
-                { ComponentID.NebulaObject, new NebulaObjectComponentData (ItemType.Bot, new Dictionary<byte, object>(), "",  world.Resource().ServerInputs.standardFortificationSize, 0) }
+                { ComponentID.NebulaObject, new NebulaObjectComponentData (ItemType.Bot, new Dictionary<byte, object>(), "",  fortData.size, 0) },
+                { ComponentID.CombatAI, new StayAIComponentData(false, 0.5f, Nebula.Server.AttackMovingType.AttackStay, true) },
+                { ComponentID.Movable, new SimpleMovableComponentData(0) },
+                { ComponentID.Weapon, new SimpleWeaponComponentData(fortData.optimalDistance, 1, fortData.cooldown, true, fortData.damageInTargetHpPc) },
+                { ComponentID.Target, new TargetComponentData() }
             };
             NebulaObjectData data = new NebulaObjectData {
                 ID = "FORT_" + Guid.NewGuid().ToString(),
@@ -1843,15 +1858,16 @@ namespace Space.Game {
                 return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.VeryCloseToSpawnPoint } };
             }
 
+            var outData = Player.resource.playerConstructions.outpost;
             Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
-                { ComponentID.Damagable, new OutpostDamagableComponentData(world.Resource().ServerInputs.standardOutpostHp, true, 60, false, 500, 500) },
+                { ComponentID.Damagable, new OutpostDamagableComponentData(outData.hp, outData.ignoreDamageAtStart, outData.ignoreDamageInterval, false, outData.fixedInputDamage, outData.additionalHp) },
                 { ComponentID.Model, new ModelComponentData(GetOutpostModel()) },
                 { ComponentID.MainOutpost, new MainOutpostComponentData() },
                 { ComponentID.Bot, new BotComponentData(BotItemSubType.MainOutpost) },
                 { ComponentID.Bonuses, new BonusesComponentData() },
                 { ComponentID.Raceable, new RaceableComponentData(race) },
                 { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 1, Turret.SelectFraction(race)) },
-                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), "", world.Resource().ServerInputs.standardOutpostSize, 0) }
+                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), "", outData.size, 0) }
             };
 
             NebulaObjectData data = new NebulaObjectData {
@@ -1891,7 +1907,7 @@ namespace Space.Game {
                 case Race.Criptizoids:
                     return "CRIPTIZID_OUTPOST";
                 case Race.Borguzands:
-                    return "HUMAN_OUTPOST";
+                    return "BORGUZAND_OUTPOST";
                 default:
                     return string.Empty;
             }
@@ -1902,7 +1918,7 @@ namespace Space.Game {
                 case Race.Humans:
                     return "HUMAN_FORTIFICATION";
                 case Race.Borguzands:
-                    return "HUMAN_FORTIFICATION";
+                    return "BORGUZAND_FORTIFICATION";
                 case Race.Criptizoids:
                     return "CRIPTIZID_FORTIFICATION";
                 default:
@@ -1915,7 +1931,7 @@ namespace Space.Game {
                 case Race.Humans:
                     return "HUMAN_TURRET";
                 case Race.Borguzands:
-                    return "HUMAN_TURRET";
+                    return "BORGUZAND_TURRET";
                 case Race.Criptizoids:
                     return "CRIPTIZID_TURRET";
                 default:
@@ -2189,6 +2205,14 @@ namespace Space.Game {
 
         public Hashtable ChangePetSkin(string skinItemId, string petId) {
             return m_PetOps.ChangePetSkin(skinItemId, petId);
+        }
+
+        public Hashtable ActivatePetSkill(string petId, int skill, bool activate) {
+            return m_PetOps.ActivatePetSkill(petId, skill, activate);
+        }
+
+        public Hashtable GetPetAtWorld(string itemId ) {
+            return m_PetOps.GetPetAtWorld(itemId);
         }
     }
 }
