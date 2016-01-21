@@ -31,16 +31,19 @@ namespace Nebula.Game.Pets {
         }
 
         public override void Update(float deltaTime) {
-            if((false == m_OwnerTarget.inCombat) && (m_OwnerTarget.subscriberCount == 0)) {
-              //  s_Log.InfoFormat("set idle state with not combat".Color(LogColor.orange));
-                pet.SetState(new PetIdleState(pet));
-            }
-            if(pet.info.damageType == Common.WeaponDamageType.heal) {
-           //     s_Log.InfoFormat("set idle state not damager".Color(LogColor.orange));
-                pet.SetState(new PetIdleState(pet));
-            }
 
-            if(!m_PetTarget.targetObject) {
+
+
+            if (!m_PetTarget.targetObject) {
+
+                if ((false == m_OwnerTarget.inCombat) && (m_OwnerTarget.subscriberCount == 0)) {
+                    //  s_Log.InfoFormat("set idle state with not combat".Color(LogColor.orange));
+                    pet.SetState(new PetIdleState(pet));
+                }
+                if (pet.info.damageType == Common.WeaponDamageType.heal) {
+                    //     s_Log.InfoFormat("set idle state not damager".Color(LogColor.orange));
+                    pet.SetState(new PetIdleState(pet));
+                }
 
                 var enemy = m_OwnerTarget.anyEnemySubscriber;
 

@@ -108,8 +108,11 @@
 
         private void SetEnergyDebuff(NebulaObject target, int skillID, float energyMOD) {
             string buffID = target.Id + skillID;
-            Buff buff = new Buff(buffID, target, BonusType.decrease_max_energy_on_cnt, -1, energyMOD, () => true, skillID);
-            target.GetComponent<PlayerBonuses>().SetBuff(buff);
+
+            if (target.Skills()) {
+                Buff buff = new Buff(buffID, target, BonusType.decrease_max_energy_on_cnt, -1, energyMOD, () => true, skillID);
+                target.GetComponent<PlayerBonuses>().SetBuff(buff);
+            }
         }
 
         private void RemoveEnergyBuff(NebulaObject target, int skillID) {

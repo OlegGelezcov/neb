@@ -5,6 +5,7 @@ using System.Text;
 using Common;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using ExitGames.Logging;
 
 namespace Nebula.Game.Bonuses
 {
@@ -13,6 +14,8 @@ namespace Nebula.Game.Bonuses
     /// </summary>
     public class Buff
     {
+        private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
+
         private float mValue;
         public string id { get; private set; }
         public Func<bool> customCheck { get; private set; }
@@ -69,7 +72,9 @@ namespace Nebula.Game.Bonuses
                 if (!(sourceSkillId == -1) && owner != null) {
                     cachedSkills = owner.GetComponent<PlayerSkills>();
                     if (cachedSkills == null) {
-                        throw new Exception("Owner of buff must have component PlayerSKills");
+                        //throw new Exception("Owner of buff must have component PlayerSKills");
+                        valid = false;
+                        s_Log.ErrorFormat("owner os this buff mus have component PlayerSkills: {0}", owner.ObjectString());
                     }
                 }
             }

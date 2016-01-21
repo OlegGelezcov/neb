@@ -23,11 +23,11 @@ namespace Space.Game.Drop
             {  Difficulty.starter, 0.2f },
             {  Difficulty.easy, 0.5f },
             {  Difficulty.easy2, 0.7f },
-            {  Difficulty.medium, 0.9f },
+            {  Difficulty.medium, 1f },
             {  Difficulty.none, 1f },
-            {  Difficulty.hard, 1.2f },
-            {  Difficulty.boss, 1.5f },
-            {  Difficulty.boss2, 2f }
+            {  Difficulty.hard, 2f },
+            {  Difficulty.boss, 3f },
+            {  Difficulty.boss2, 4f }
         };
 
         public class ModuleDropParams

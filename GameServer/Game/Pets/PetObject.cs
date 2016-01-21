@@ -8,6 +8,7 @@ using Nebula.Game.Pets.Skills;
 using Nebula.Game.Utils;
 using Nebula.Pets;
 using ServerClientCommon;
+using Space.Game;
 using Space.Server;
 using System.Collections;
 using System.Collections.Generic;
@@ -267,6 +268,20 @@ namespace Nebula.Game.Pets {
                 return true;
             }
             return false;
+        }
+
+        public void OnNewDamage(DamageInfo damager) {
+            if(m_State != null ) {
+                if(m_State.name == PetState.Idle ) {
+                    if(info.damageType == WeaponDamageType.damage ) {
+                        NebulaObject targObj;
+                        if(nebulaObject.mmoWorld().TryGetObject((byte)damager.DamagerType, damager.DamagerId, out targObj)) {
+                            GetComponent<PlayerTarget>().SetTarget(targObj);
+                            SetState(new PetCombatState(this));
+                        }
+                    }
+                }
+            }
         }
     }
 }

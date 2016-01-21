@@ -51,6 +51,8 @@ namespace Nebula.Game.Components.BotAI {
         private bool mUseHitProbForAgro = false;
         private BotObject mBotObject;
 
+        private float MIN_AGRO = 80;
+        private float MAX_AGRO = 350;
 
         public void Init(CombatBaseAIComponentData data) {
             base.Init(data);
@@ -249,7 +251,7 @@ namespace Nebula.Game.Components.BotAI {
             }
 
             float distance = (GetStartPosition() - transform.position).magnitude;
-            return (distance > 350);
+            return (distance > 500);
         }
 
         private void MoveToStartPosition(float deltaTime) {
@@ -380,17 +382,22 @@ namespace Nebula.Game.Components.BotAI {
 
                 var itemDamagable = item.GetComponent<DamagableObject>();
                 var itemCharacter = item.GetComponent<CharacterObject>();
+
+               
                 if (itemDamagable && itemCharacter) {
                     var itemFraction = (FractionType)itemCharacter.fraction;
                     if (nebulaObject.resource.fractionResolver.RelationFor(selfFraction).RelationTo(itemFraction) == FractionRelation.Enemy) {
+
+                        float distance = transform.DistanceTo(item.transform);
+
                         if (mUseHitProbForAgro) {
                             float hitProb = mWeapon.HitProbTo(item);
-                            if (hitProb >= 0.95f) {
+                            if (hitProb >= 0.5f && distance < MAX_AGRO ) {
                                 return true;
                             }
                         } else {
                             float d = transform.DistanceTo(item.transform);
-                            if (d < 0.5f * mWeapon.optimalDistance) {
+                            if (d < Mathf.Clamp(0.5f * mWeapon.optimalDistance, MIN_AGRO, MAX_AGRO)) {
                                 return true;
                             }
                         }

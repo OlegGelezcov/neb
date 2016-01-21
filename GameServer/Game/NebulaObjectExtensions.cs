@@ -73,5 +73,23 @@ namespace Nebula.Game {
         public static string Color(this string source, string color) {
             return source + " :" + color;
         }
+
+        public static string ObjectString(this NebulaObject obj) {
+            ItemType type = (ItemType)obj.Type;
+            switch (type) {
+                case ItemType.Avatar:
+                    return "[player]";
+                case ItemType.Bot: {
+                        var botObject = obj.GetComponent<BotObject>();
+                        if (botObject != null) {
+                            return string.Format("[{0}:{1}]", ItemType.Bot, (BotItemSubType)botObject.botSubType);
+                        } else {
+                            return string.Format("[unknow bot]");
+                        }
+                    }
+                default:
+                    return "[" + type.ToString() + "]";
+            }
+        }
     }
 }
