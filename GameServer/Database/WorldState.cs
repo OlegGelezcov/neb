@@ -171,6 +171,8 @@ namespace Nebula.Database {
                     
                 case ComponentID.Teleport:
                     return new PersonalBeaconComponentData(hash);
+                case ComponentID.FounderCube:
+                    return new FounderCubeComponentData(hash);
                 default:
                     {
                         log.InfoFormat("Component from Save not defined for = {0} [dy]", (ComponentID)componentID);

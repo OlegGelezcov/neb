@@ -150,6 +150,7 @@ namespace Nebula.Game{
         }*/
 
         public Hashtable ActivatePet(string deactivatePetId, string activatePetId ) {
+            
             var petManager = player.GetComponent<PetManager>();
             bool deactivateSuccess = true;
             if(!string.IsNullOrEmpty(deactivatePetId)) {
@@ -160,6 +161,12 @@ namespace Nebula.Game{
             if(!string.IsNullOrEmpty(activatePetId)) {
                 activateSuccess = petManager.ActivatePet(activatePetId);
             }
+
+            if(activateSuccess || deactivateSuccess ) {
+                player.GetComponent<MmoMessageComponent>().ReceivePetsUpdate();
+            }
+            s_Log.InfoFormat("deactivate {0} = {1}".Color(LogColor.orange), deactivateSuccess, deactivatePetId);
+            s_Log.InfoFormat("deactivate {0} = {1}".Color(LogColor.orange), activateSuccess, activatePetId);
 
             return new Hashtable {
                 {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },

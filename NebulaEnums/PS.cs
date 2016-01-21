@@ -106,6 +106,9 @@ namespace Common
         UnderConstruction = 84,
         ConstructionTimer = 85,
         CharacterName = 86,
-        GuildName = 87
+        GuildName = 87,
+        GuildId = 88,
+        OwnerId = 89,
+        Timer = 90
     }
 }

@@ -50,6 +50,7 @@ namespace Common {
         PlayerTimedEffects,
         PetObject,
         PetManager,
-        DropList
+        DropList,
+        FounderCube
     }
 }

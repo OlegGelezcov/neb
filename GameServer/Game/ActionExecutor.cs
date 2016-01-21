@@ -1767,6 +1767,7 @@ namespace Space.Game {
                 return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.NeedConstructOutpostBefore } };
             }
 
+
             var fortifications = world.GetItems((item) => item.GetComponent<Outpost>());
             if(fortifications.Count >= 3) {
                 return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.MaxCountOfFortificationsReached } };
@@ -1884,6 +1885,58 @@ namespace Space.Game {
             Player.Inventory.Remove(InventoryObjectType.outpost, itemID, 1);
             Player.EventOnInventoryUpdated();
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
+        }
+
+        public Hashtable CreateFounderCube() {
+
+            var beacons = Player.nebulaObject.mmoWorld().GetItems(item => {
+                if (item.GetComponent<Teleport>()) {
+                    if (item.transform.DistanceTo(Player.transform) < 300) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+
+            if(beacons.Count > 0 ) {
+                return CreateResponse(RPCErrorCode.VeryCloseToTeleports);
+            }
+
+            var playerCharacter = Player.GetComponent<PlayerCharacterObject>();
+
+            string characterId = playerCharacter.characterId;
+            string characterName = playerCharacter.characterName;
+            string guildId = playerCharacter.guildId;
+            string guildName = playerCharacter.guildName;
+            string gameRef = Player.nebulaObject.Id;
+
+            Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
+                { ComponentID.Model ,           new ModelComponentData("founder_cube") },
+                { ComponentID.Bot,              new BotComponentData(BotItemSubType.FounderCube) },
+                { ComponentID.NebulaObject,     new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, 1, 0) },
+                { ComponentID.FounderCube,      new FounderCubeComponentData(characterId, characterName, guildId, guildName, gameRef, 0) },
+                { ComponentID.Raceable,         new RaceableComponentData((Race)Player.GetComponent<RaceableObject>().race) }
+            };
+
+            NebulaObjectData data = new NebulaObjectData {
+                ID = "FC" + Guid.NewGuid().ToString(),
+                position = Player.transform.position,
+                rotation = Player.transform.rotation,
+                componentCollection = components
+            };
+
+            var founderCube = ObjectCreate.NebObject(Player.nebulaObject.mmoWorld(), data);
+            founderCube.SetDatabaseSaveable(true);
+            founderCube.AddToWorld();
+            return CreateResponse(RPCErrorCode.Ok);
+        }
+
+
+
+        private Hashtable CreateResponse(RPCErrorCode code) {
+            return new Hashtable {
+                {(int)SPC.ReturnCode, (int)code}
+            };
         }
 
         private string GetDrillModel(Race race) {
@@ -2214,5 +2267,7 @@ namespace Space.Game {
         public Hashtable GetPetAtWorld(string itemId ) {
             return m_PetOps.GetPetAtWorld(itemId);
         }
+
+ 
     }
 }

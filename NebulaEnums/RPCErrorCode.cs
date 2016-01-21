@@ -50,6 +50,7 @@ namespace Common {
         PetAlreadyHasMaxMastery = 1041,
         PetColorNotEnoughForImproving = 1042,
         PetAlreadySettedThisSkin = 1043,
+        VeryCloseToTeleports = 1044,
 
         UnknownError = 10002,
         

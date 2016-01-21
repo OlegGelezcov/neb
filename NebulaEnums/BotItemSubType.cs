@@ -13,7 +13,8 @@
         Turret,
         MainOutpost,
         PvpStore,
-        Pet
+        Pet,
+        FounderCube
     }
 }
 

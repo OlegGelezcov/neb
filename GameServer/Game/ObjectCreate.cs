@@ -111,6 +111,10 @@ namespace Nebula.Game {
                             components.Add(typeof(ShipEnergyBlock));
                         }
                         break;
+                    case ComponentID.FounderCube: {
+                            components.Add(typeof(FounderCube));
+                        }
+                        break;
                     case ComponentID.DatabaseObject:
                         {
                             components.Add(typeof(DatabaseObject));
@@ -382,6 +386,10 @@ namespace Nebula.Game {
                     case ComponentID.Energy:
                         {
                             nebObject.GetComponent<ShipEnergyBlock>().Init(comp.Value as EnergyComponentData);
+                        }
+                        break;
+                    case ComponentID.FounderCube: {
+                            nebObject.GetComponent<FounderCube>().Init(comp.Value as FounderCubeComponentData);
                         }
                         break;
                     case ComponentID.DatabaseObject:
