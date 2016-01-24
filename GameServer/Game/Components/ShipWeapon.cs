@@ -20,35 +20,54 @@ namespace Nebula.Game.Components {
     [REQUIRE_COMPONENT(typeof(RaceableObject))]
     public class ShipWeapon : BaseWeapon, IInfoSource
     {
-        private static readonly ILogger log = LogManager.GetCurrentClassLogger();
-        private float lightTimer = 0f;
-        private float heavyTimer = 0f;
-        private RaceableObject mRace;
-        private MmoActor mPlayer;
-        private BaseShip mShip;     
-        private ShipEnergyBlock mEnergy;
-        private bool mExistWeapon = false;
-        public Difficulty weaponDifficulty { get; private set; }
-        public WeaponObject weaponObject { get; private set; }
-        //private PassiveBonusesComponent mPassiveBonuses;
-        //private MmoMessageComponent mMessage;
-
-        private ConcurrentDictionary<string, AdditionalDamage> mAdditionalDamageReceivers = new ConcurrentDictionary<string, AdditionalDamage>();
-
         public class AdditionalDamage {
             public float damageMult { get; set; }
             public float expireTime { get; set; }
         }
 
-        
+        private static readonly ILogger log = LogManager.GetCurrentClassLogger();
+
+        #region Linked components
+        private RaceableObject mRace;
+        private MmoActor mPlayer;
+        private BaseShip mShip;
+        private ShipEnergyBlock mEnergy;
+        #endregion
 
 
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["optimal_distance"] = optimalDistance.ToString();
+            hash["critical_chance"] = criticalChance.ToString();
+            hash["crit_damage"] = critDamage.ToString();
+            hash["damage"] = damage.ToString();
+            hash["ready"] = ready.ToString();
+            hash["weapon"] = (Weapon != null) ? Weapon.GetInfo() : new Hashtable();
+            hash["has_weapon"] = hasWeapon.ToString();
+            hash["light_ready"] = lightReady.ToString();
+            hash["heavy_ready"] = heavyReady.ToString();
+            hash["light_timer"] = lightTimer.ToString();
+            hash["heavy_timer"] = heavyTimer.ToString();
+            hash["exists_weapon"] = mExistWeapon.ToString();
+            hash["is_initialized"] = mInitialized.ToString();
+            hash["weapon_difficulty"] = weaponDifficulty.ToString();
+            hash["additional_damage_targets_count"] = mAdditionalDamageReceivers.Count.ToString();
+            hash["Get_Damage(true)"] = GetDamage(true).ToString();
+            hash["Get_Damage(false)"] = GetDamage(false).ToString();
+            return hash;
+        }
+        private float lightTimer = 0f;
+        private float heavyTimer = 0f;
+        private bool mExistWeapon = false;
+        private bool mInitialized = false;
 
-      
+        private ConcurrentDictionary<string, AdditionalDamage> mAdditionalDamageReceivers = new ConcurrentDictionary<string, AdditionalDamage>();
+
+        #region Properties
         public override float optimalDistance {
             get {
-                if(weaponObject != null ) {
-                    float result =  weaponObject.OptimalDistance;
+                if (weaponObject != null) {
+                    float result = weaponObject.OptimalDistance;
                     result = Mathf.ClampLess(result * (1f + cachedBonuses.optimalDistancePcBonus) + cachedBonuses.optimalDistanceCntBonus, 0f);
                     result = ApplyOptimalDistancePassiveBonus(result);
                     return result;
@@ -57,50 +76,21 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private float ApplyOptimalDistancePassiveBonus(float inputOptimalDistance) {
-            if(nebulaObject.IsPlayer()) {
-                if(mPassiveBonuses != null && mPassiveBonuses.optimalDistanceTier > 0 ) {
-                    return inputOptimalDistance * (1.0f + mPassiveBonuses.optimalDistanceBonus);
-                }
-            }
-            return inputOptimalDistance;
-        }
-
         public override float criticalChance {
             get {
                 float result = 0;
                 var ship = GetComponent<BaseShip>();
-                if(ship) {
+                if (ship) {
                     float cr = ship.shipModel.critChance;
                     cr = cr * (1.0f + cachedBonuses.critChancePcBonus) + cachedBonuses.critChanceCntBonus;
                     cr = Mathf.ClampLess(cr, 0f);
                     result = cr;
-                    if(weaponObject != null) {
+                    if (weaponObject != null) {
                         result += weaponObject.baseCritChance;
                     }
                 }
                 result = ApplyCriticalChancePassiveBonus(result);
                 return result;
-            }
-        }
-
-        /// <summary>
-        /// Critical chance modified by passive bonuses
-        /// </summary>
-        /// <param name="criticalInput">Input critical chance from previous stages</param>
-        /// <returns>Modified critical chance</returns>
-        private float ApplyCriticalChancePassiveBonus(float criticalInput) {
-            if(nebulaObject.IsPlayer()) {
-                if(mPassiveBonuses != null && mPassiveBonuses.criticalChanceTier > 0 ) {
-                    return Mathf.Clamp01(criticalInput + mPassiveBonuses.critChanceBonus);
-                }
-            }
-            return criticalInput;
-        }
-
-        public override bool ready {
-            get {
-                return true;
             }
         }
 
@@ -117,6 +107,78 @@ namespace Nebula.Game.Components {
             }
         }
 
+        private float damage {
+            get {
+                float dmg = 0;
+                if (weaponObject != null) {
+                    dmg = weaponObject.damage;
+                }
+                if (mShip) {
+                    dmg *= mShip.shipModel.damageBonus;
+                }
+                dmg = ApplyDamagePassiveBonus(dmg);
+
+                return dmg;
+            }
+        }
+
+        public override bool ready {
+            get {
+                return true;
+            }
+        }
+
+        public WeaponObject Weapon {
+            get {
+                return this.weaponObject;
+            }
+        }
+
+        public bool hasWeapon {
+            get {
+                return (weaponObject != null);
+            }
+        }
+
+        public bool lightReady {
+            get {
+                return lightTimer <= 0f;
+            }
+        }
+
+        public bool heavyReady {
+            get {
+                return heavyTimer <= 0f;
+            }
+        }
+
+        public Difficulty weaponDifficulty { get; private set; }
+        public WeaponObject weaponObject { get; private set; } 
+        #endregion
+
+        private float ApplyOptimalDistancePassiveBonus(float inputOptimalDistance) {
+            if (nebulaObject.IsPlayer()) {
+                if (mPassiveBonuses != null && mPassiveBonuses.optimalDistanceTier > 0) {
+                    return inputOptimalDistance * (1.0f + mPassiveBonuses.optimalDistanceBonus);
+                }
+            }
+            return inputOptimalDistance;
+        }
+
+        /// <summary>
+        /// Critical chance modified by passive bonuses
+        /// </summary>
+        /// <param name="criticalInput">Input critical chance from previous stages</param>
+        /// <returns>Modified critical chance</returns>
+        private float ApplyCriticalChancePassiveBonus(float criticalInput) {
+            if(nebulaObject.IsPlayer()) {
+                if(mPassiveBonuses != null && mPassiveBonuses.criticalChanceTier > 0 ) {
+                    return Mathf.Clamp01(criticalInput + mPassiveBonuses.critChanceBonus);
+                }
+            }
+            return criticalInput;
+        }
+
         private float ApplyCriticalDamagePassiveBonus(float inputCriticalDamage) {
             if(nebulaObject.IsPlayer()) {
                 if(mPassiveBonuses != null && mPassiveBonuses.criticalDamageTier > 0 ) {
@@ -126,26 +188,11 @@ namespace Nebula.Game.Components {
             return inputCriticalDamage;
         }
 
-
-
         public override float GetDamage(bool isCritical) {
             float result = (isCritical) ? critDamage : damage;
             result = Mathf.ClampLess(result * (1.0f + cachedBonuses.damagePcBonus) + cachedBonuses.damageCntBonus, 0f);
             return result;
         }
-
-        public WeaponObject Weapon {
-            get {
-                return this.weaponObject;
-            }
-        }
-
-        //public Difficulty weaponDifficulty {
-        //    get;
-        //    private set;
-        //}
-
-
 
         public void Init(ShipWeaponComponentData data) {
             nebulaObject.SetTag((byte)PS.Difficulty, (byte)data.difficulty);
@@ -158,13 +205,9 @@ namespace Nebula.Game.Components {
             Startup();
         }
 
-        private bool mInitialized = false;
-
         public override void Start() {
             base.Start();
             Startup();
-            //mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
-            //mMessage = GetComponent<MmoMessageComponent>();
         }
 
         private void Startup() {
@@ -292,27 +335,6 @@ namespace Nebula.Game.Components {
             return result;
         }
 
-
-
-
-
-
-
-        private float damage {
-            get {
-                float dmg = 0;
-                if (weaponObject != null) {
-                    dmg = weaponObject.damage;
-                }
-                if (mShip) {
-                    dmg *= mShip.shipModel.damageBonus;
-                }
-                dmg = ApplyDamagePassiveBonus(dmg);
-
-                return dmg;
-            }
-        }
-
         private float ApplyDamagePassiveBonus(float inputDamage) {
             if(nebulaObject.IsPlayer()) {
                 if(mPassiveBonuses != null && mPassiveBonuses.damageBonusTier > 0 ) {
@@ -352,8 +374,6 @@ namespace Nebula.Game.Components {
             return result;
         }
 
-
-
         public void InitializeAsBot() {
 
             if (!mExistWeapon) {
@@ -385,24 +405,6 @@ namespace Nebula.Game.Components {
                     );
                 var dropper = DropManager.Get(resource).GetWeaponDropper(dropParameters);
                 SetWeapon(dropper.Drop() as WeaponObject);
-            }
-        }
-
-        public bool hasWeapon {
-            get {
-                return (weaponObject != null);
-            }
-        }
-
-        public bool lightReady {
-            get {
-                return lightTimer <= 0f;
-            }
-        }
-
-        public bool heavyReady {
-            get {
-                return heavyTimer <= 0f;
             }
         }
 

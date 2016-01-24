@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Server.Components;
@@ -19,6 +20,14 @@ namespace Nebula.Game.Components {
             mShip = GetComponent<BaseShip>();
             mBonuses = GetComponent<PlayerBonuses>();
             mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
+        }
+
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["normal_speed"] = normalSpeed.ToString();
+            hash["maximum_speed"] = maximumSpeed.ToString();
+            hash["speed"] = speed.ToString();
+            return hash;
         }
 
         public override float normalSpeed {

@@ -9,7 +9,7 @@ namespace Nebula.Game.Pets.Skills {
 
         private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
         private string m_BuffName;
-        private float m_HpPc;
+        private float m_Value;
 
         public AdditionalDamagePetSkill(PetSkillInfo skillInfo, NebulaObject source)
             : base(skillInfo, source) {
@@ -24,7 +24,7 @@ namespace Nebula.Game.Pets.Skills {
 
             object objHpPc;
             if(data.inputs.TryGetValue("value", out objHpPc)) {
-                m_HpPc = (float)objHpPc;
+                m_Value = (float)objHpPc;
             }
             m_BuffName = source.Id + "adps";
         }
@@ -32,12 +32,12 @@ namespace Nebula.Game.Pets.Skills {
         public override bool DoUse() {
             if(pet && pet.owner) {
                 var ownerDamagable = pet.owner.Damagable();
-                float dmg = m_HpPc * ownerDamagable.baseMaximumHealth;
+                float dmg = m_Value;
                 var ownerWeapon = pet.owner.Weapon();
                 int shotCounter = ownerWeapon.notResettableShotCounter;
                 var ownerBonuses = pet.owner.Bonuses();
 
-                if (false == ownerBonuses.Contains(m_BuffName)) {
+                if (false == ownerBonuses.Contains(Common.BonusType.increase_damage_on_cnt, m_BuffName)) {
                     Buff buff = new Buff(m_BuffName, null, Common.BonusType.increase_damage_on_cnt, -1, dmg, () => {
                         if (ownerWeapon) {
                             if (ownerWeapon.notResettableShotCounter < shotCounter + 3) {

@@ -1661,6 +1661,7 @@ namespace Space.Game {
                 rotation = Player.transform.rotation
             };
             var miningStationObject = ObjectCreate.NebObject(world, data);
+            miningStationObject.SetDatabaseSaveable(true);
             miningStationObject.AddToWorld();
 
             planetComponent.SetStation(miningStationObject.GetComponent<MiningStation>(), slotNumber);
@@ -1887,7 +1888,23 @@ namespace Space.Game {
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
-        public Hashtable CreateFounderCube() {
+        public Hashtable CreateFounderCube(string inventoryItemId) {
+
+            var inventory = Player.Inventory;
+            if(false == inventory.HasItem(InventoryObjectType.founder_cube, inventoryItemId)) {
+                return CreateResponse(RPCErrorCode.ItemNotFound);
+            }
+
+            ServerInventoryItem fitem;
+            if(false == inventory.TryGetItem(InventoryObjectType.founder_cube, inventoryItemId, out fitem)) {
+                return CreateResponse(RPCErrorCode.ItemNotFound);
+            }
+
+            FounderCubeInventoryObject founderCubeInventoryObject = fitem.Object as FounderCubeInventoryObject;
+
+            if(false == founderCubeInventoryObject.ReadyToUse() ) {
+                return CreateResponse(RPCErrorCode.NotReady);
+            }
 
             var beacons = Player.nebulaObject.mmoWorld().GetItems(item => {
                 if (item.GetComponent<Teleport>()) {
@@ -1928,6 +1945,9 @@ namespace Space.Game {
             var founderCube = ObjectCreate.NebObject(Player.nebulaObject.mmoWorld(), data);
             founderCube.SetDatabaseSaveable(true);
             founderCube.AddToWorld();
+            founderCubeInventoryObject.SetUseTimeNow();
+            Player.EventOnInventoryUpdated();
+
             return CreateResponse(RPCErrorCode.Ok);
         }
 
@@ -2268,6 +2288,29 @@ namespace Space.Game {
             return m_PetOps.GetPetAtWorld(itemId);
         }
 
- 
+        private Hashtable GetDump(NebulaObject obj) {
+            Hashtable hash = new Hashtable();
+            foreach (int cid in obj.componentIds) {
+                var comp = obj.GetComponent(cid);
+                if (comp != null) {
+                    hash.Add(((ComponentID)cid).ToString(), comp.DumpHash());
+                }
+            }
+            return hash;
+        }
+
+        public Hashtable DumpTarget() {
+            var targetComponent = Player.nebulaObject.Target();
+
+            Hashtable hash = null;
+            if (targetComponent.targetObject) {
+                hash = GetDump(targetComponent.targetObject);
+            } else {
+                hash = GetDump(Player.nebulaObject);
+            }
+            string str = hash.ToStringBuilder().ToString();
+            log.Info(str);
+            return hash;
+        }
     }
 }

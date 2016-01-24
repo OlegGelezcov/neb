@@ -142,7 +142,18 @@ namespace Nebula.Database {
                     return new MainOutpostComponentData(hash);
                 case ComponentID.Model:
                     return new ModelComponentData(hash);
-                case ComponentID.Damagable:
+                case ComponentID.Damagable: {
+                        if(hash.ContainsKey((int)SPC.SubType)) {
+                            switch((ComponentSubType)(int)hash[(int)SPC.SubType]) {
+                                case ComponentSubType.damagable_not_ship:
+                                    return new NotShipDamagableComponentData(hash);
+                                default:
+                                    return new OutpostDamagableComponentData(hash);
+                            }
+                        } else {
+                            return new OutpostDamagableComponentData(hash);
+                        }
+                    }
                     return new OutpostDamagableComponentData(hash);
                 case ComponentID.Outpost:
                     return new OutpostComponentData(hash);
@@ -173,6 +184,8 @@ namespace Nebula.Database {
                     return new PersonalBeaconComponentData(hash);
                 case ComponentID.FounderCube:
                     return new FounderCubeComponentData(hash);
+                case ComponentID.MiningStation:
+                    return new MiningStationComponentData(hash);
                 default:
                     {
                         log.InfoFormat("Component from Save not defined for = {0} [dy]", (ComponentID)componentID);

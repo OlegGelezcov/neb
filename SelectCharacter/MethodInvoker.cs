@@ -136,6 +136,40 @@ namespace SelectCharacter {
             return application.Guilds.RequestToGuild(login, characterID, guildID);
         }
 
+        private List<ChatLinkedObject> ExtractChatLinkedObjects(Hashtable linkHash) {
+            object[] links = (object[])linkHash[(int)SPC.Data];
+
+            List<ChatLinkedObject> linkedObjects = new List<ChatLinkedObject>();
+            if (links != null) {
+                foreach (object link in links) {
+                    ChatLinkedObject linkedObject = new ChatLinkedObject();
+                    linkedObject.ParseInfo(link as Hashtable);
+                    linkedObjects.Add(linkedObject);
+                }
+            }
+            return linkedObjects;
+        }
+
+        public object SendChatMessageToCharacterName(string msgId, string sourceLogin, string sourceCharId, string msg, string sourceCharacterName, string targCharacterName, Hashtable linkHash) {
+            List<ChatLinkedObject> linkedObjects = ExtractChatLinkedObjects(linkHash);
+            log.InfoFormat("set message {0}=>{1}: {2}", sourceCharacterName, targCharacterName, msg);
+            ChatMessage messageObj = new ChatMessage {
+                chatGroup = (int)ChatGroup.whisper,
+                links = linkedObjects,
+                message = msg,
+                messageID = msgId,
+                sourceCharacterID = sourceCharId,
+                sourceLogin = sourceLogin,
+                targetCharacterID = string.Empty,
+                targetLogin = string.Empty,
+                sourceCharacterName = sourceCharacterName,
+                targetCharacterName = targCharacterName,
+            };
+            application.Chat.SendMessage(messageObj);
+            return (int)ReturnCode.Ok;
+        }
+
+
         public object SendChatMessage( 
             string messageID, 
             string sourceLogin, 
@@ -147,16 +181,7 @@ namespace SelectCharacter {
             string sourceCharacterName,
             Hashtable linkHash ) {
 
-            object[] links = (object[])linkHash[(int)SPC.Data];
-
-            List<ChatLinkedObject> linkedObjects = new List<ChatLinkedObject>();
-            if(links != null) {
-                foreach(object link in links ) {
-                    ChatLinkedObject linkedObject = new ChatLinkedObject();
-                    linkedObject.ParseInfo(link as Hashtable);
-                    linkedObjects.Add(linkedObject);
-                }
-            }
+            List<ChatLinkedObject> linkedObjects = ExtractChatLinkedObjects(linkHash);
 
             log.InfoFormat("Called send chat message = {0}, {1}, {2}, {3}, {4}, {5}, {6}",
                 (ChatGroup)chatGroup, message, messageID, sourceCharacterID, sourceLogin, targetCharacterID, targetLogin);

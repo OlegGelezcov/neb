@@ -68,6 +68,8 @@ namespace Nebula.Client.Inventory {
                         return new PetSchemeInventoryObjectInfo(info);
                     case InventoryObjectType.pet_skin:
                         return new PetSkinInventoryObjectInfo(info);
+                    case InventoryObjectType.founder_cube:
+                        return new FounderCubeInventoryObjectInfo(info);
                     //case InventoryObjectType.pass:
                         //return new PassInventoryObjectInfo(info);
                     //case InventoryObjectType.credits:

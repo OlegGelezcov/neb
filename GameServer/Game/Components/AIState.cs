@@ -3,6 +3,7 @@ using Common;
 using Nebula.Engine;
 using Space.Game;
 using Nebula.Server.Components;
+using System.Collections;
 
 namespace Nebula.Game.Components {
     public class AIState : NebulaBehaviour
@@ -54,7 +55,13 @@ namespace Nebula.Game.Components {
             }
         }
 
-        
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["current_control_state"] = controlState.ToString();
+            hash["prev_control_state"] = prevControlState.ToString();
+            hash["is_accelerated_moving"] = shiftState.keyPressed.ToString();
+            return hash;
+        }
     }
 
 }

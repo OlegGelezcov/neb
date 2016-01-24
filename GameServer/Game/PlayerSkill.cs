@@ -19,6 +19,8 @@
 
         public SkillData data { get; private set; }
 
+
+
         public bool isOn {
             get {
                 if(data.IsEmpty || (data.Type != SkillType.Persistent)) {
@@ -109,15 +111,20 @@
         private void SetEnergyDebuff(NebulaObject target, int skillID, float energyMOD) {
             string buffID = target.Id + skillID;
 
-            if (target.Skills()) {
-                Buff buff = new Buff(buffID, target, BonusType.decrease_max_energy_on_cnt, -1, energyMOD, () => true, skillID);
-                target.GetComponent<PlayerBonuses>().SetBuff(buff);
+            if (target != null) {
+                if (target.Skills() && target.Bonuses()) {
+                    Buff buff = new Buff(buffID, target, BonusType.decrease_max_energy_on_cnt, -1, energyMOD, () => true, skillID);
+
+                    target.GetComponent<PlayerBonuses>().SetBuff(buff);
+                }
             }
         }
 
         private void RemoveEnergyBuff(NebulaObject target, int skillID) {
             string buffID = target.Id + skillID;
-            target.GetComponent<PlayerBonuses>().RemoveBuff(BonusType.decrease_max_energy_on_cnt, buffID);
+            if (target != null && target.Bonuses() != null) {
+                target.GetComponent<PlayerBonuses>().RemoveBuff(BonusType.decrease_max_energy_on_cnt, buffID);
+            }
         }
 
         private bool UsePersistent(NebulaObject target) {
@@ -296,6 +303,25 @@
             //skill type
             info.Add((int)SPC.SkillType, (this.data != null) ? (byte)this.data.Type : (byte)SkillType.OneUse);
             return info;
+        }
+
+        public Hashtable DumpInfo() {
+            var hash = new Hashtable();
+            if(data != null ) {
+                hash.Add("data", data.GetInfo());
+                if(data.Id >= 0) {
+                    hash.Add("ID", data.Id.ToString("X8"));
+                } else {
+                    hash.Add("ID", data.Id.ToString());
+                }
+            } else {
+                hash.Add("ID", data.Id.ToString());
+            }
+            hash.Add("is_on", isOn);
+            hash.Add("timer", mTimer);
+            hash.Add("cooldown", cooldown);
+
+            return hash;
         }
 
         public T GetDataInput<T>(string key, T defaultValue) {

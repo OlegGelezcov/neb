@@ -33,6 +33,7 @@ namespace SelectCharacter {
         public MongoCollection<PlayerFriends> friends { get; set; }
         public MongoCollection<CharacterInfo> characters { get; private set; }
         public MongoCollection<BankSave> banks { get; private set; }
+        public MongoCollection<DatabaseCharacterName> characterNames { get; private set; }
 
 
 
@@ -59,7 +60,34 @@ namespace SelectCharacter {
             friends = Database.GetCollection<PlayerFriends>("friends");
             characters = Database.GetCollection<CharacterInfo>("character_info");
             banks = Database.GetCollection<BankSave>("banks");
+            characterNames = Database.GetCollection<DatabaseCharacterName>("character_names");
         }
+
+        public bool ExistsCharacterName(string characterName ) {
+            var query = Query<DatabaseCharacterName>.EQ(ch => ch.characterName, characterName);
+            return characterNames.Count(query) > 0;
+        }
+
+        public DatabaseCharacterName GetCharacterName(string characterName ) {
+            var query = Query<DatabaseCharacterName>.EQ(ch => ch.characterName, characterName);
+            return characterNames.FindOne(query);
+        }
+
+        public DatabaseCharacterName GetCharacterNameByCharacterId(string characterId) {
+            var query = Query<DatabaseCharacterName>.EQ(ch => ch.characterId, characterId);
+            return characterNames.FindOne(query);
+        }
+
+        public void WriteCharacterName(string gameRef, string characterId, string characterName ) {
+            var existing = GetCharacterNameByCharacterId(characterId);
+            if(existing != null ) {
+                existing.characterName = characterName;
+                characterNames.Save(existing);
+            } else {
+                characterNames.Save(new DatabaseCharacterName { gameRef = gameRef, characterName = characterName, characterId = characterId });
+            }
+        }
+
 
         public bool ExistsPlayer(string gameRefId) {
             var query = Query<DbPlayerCharactersObject>.EQ(ch => ch.GameRefId, gameRefId);

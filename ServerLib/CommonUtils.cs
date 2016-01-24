@@ -11,6 +11,7 @@ namespace Common
     {
         public static readonly DateTime START_DATE = new DateTime(1970, 1, 1);
         private static readonly Dictionary<Race, List<Workshop>> raceWorkshops;
+        public static readonly float  ONE_MONTH = 2592000;
 
         static CommonUtils() {
             raceWorkshops = new Dictionary<Race, List<Workshop>>{

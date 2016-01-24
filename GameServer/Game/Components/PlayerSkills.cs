@@ -73,6 +73,18 @@ namespace Nebula.Game.Components {
         private int mSequenceSkillCounter = 0;
         private DamagableObject mDamagable;
 
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            foreach(var pSkill in skills) {
+                if(pSkill.Value != null ) {
+                    hash.AddOrReplace(pSkill.Key.ToString(), pSkill.Value.DumpInfo());
+                } else {
+                    hash.AddOrReplace(pSkill.Key.ToString(), new Hashtable());
+                }
+            }
+            return hash;
+        }
+
 
         public void Init(SkillsComponentData data) {
 

@@ -26,7 +26,11 @@ namespace SelectCharacter.Chat {
                         break;
                     }
                 case ChatGroup.whisper: {
-                        SendChatMessageToPlayer(message);
+                        if (string.IsNullOrEmpty(message.targetCharacterID) && !string.IsNullOrEmpty(message.targetCharacterName)) {
+                            SendChatMessageToCharacterName(message);
+                        } else if (!string.IsNullOrEmpty(message.targetCharacterID) && string.IsNullOrEmpty(message.targetCharacterName)) {
+                            SendChatMessageToPlayer(message);
+                        }
                         break;
                     }
                 case ChatGroup.group: {
@@ -148,6 +152,50 @@ namespace SelectCharacter.Chat {
             }
 
             mApplication.Clients.SendChatMessageToRace((Race)(byte)sourcePeer.selectedCharacter.Race, message);
+            mCache.AddMessage(message);
+        }
+
+        private void SendChatMessageToCharacterName(ChatMessage message) {
+            SelectCharacterClientPeer sourcePeer = null;
+            if (!mApplication.Clients.TryGetPeerForCharacterId(message.sourceCharacterID, out sourcePeer)) {
+                log.Info("source peer not founded");
+                return;
+            }
+
+            var sourcePlayer = mApplication.Players.GetExistingPlayerByLogin(message.sourceLogin);
+            if (sourcePlayer == null) {
+                log.Info("source player not founded");
+                return;
+            }
+
+            var sourceCharacter = sourcePlayer.Data.GetCharacter(sourcePlayer.Data.SelectedCharacterId);
+            if (sourceCharacter == null) {
+                log.Info("source character not founded");
+                return;
+            }
+
+            if(string.IsNullOrEmpty(message.targetCharacterName)) {
+                log.InfoFormat("target character name not setted");
+                return;
+            }
+
+            var targetPlayer = mApplication.Players.GetCachePlayerByCharacterName(message.targetCharacterName);
+            if(targetPlayer == null ) {
+                log.InfoFormat("player with such character name not cached");
+                return;
+            }
+
+            SelectCharacterClientPeer targetPeer;
+            if(false == mApplication.Clients.TryGetPeerForCharacterId(targetPlayer.Data.SelectedCharacterId, out targetPeer)) {
+                log.InfoFormat("target peer not found");
+                return;
+            }
+
+            message.targetCharacterID = targetPlayer.Data.SelectedCharacterId;
+            message.targetLogin = targetPlayer.Data.Login;
+
+            sourcePeer.SendChatMessage(message);
+            targetPeer.SendChatMessage(message);
             mCache.AddMessage(message);
         }
 

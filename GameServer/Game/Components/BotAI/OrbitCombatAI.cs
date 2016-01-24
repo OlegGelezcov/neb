@@ -3,6 +3,7 @@ using Nebula.Server.Components;
 using GameMath;
 using Nebula.Server;
 using ExitGames.Logging;
+using System.Collections;
 
 namespace Nebula.Game.Components.BotAI {
     public class OrbitCombatAI  : CombatBaseAI {
@@ -14,6 +15,15 @@ namespace Nebula.Game.Components.BotAI {
         private float mThetaSpeed;
 
         private SphericalCoord mSphericalCoord = new SphericalCoord(0, 0, 0);
+
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["orbit_center"] = mRotationCenter.ToString();
+            hash["orbit_radius"] = mOrbitRadius.ToString();
+            hash["phi_speed"] = mPhiSpeed.ToString();
+            hash["theta_speed"] = mThetaSpeed.ToString();
+            return hash;
+        }
 
         public void Init(OrbitAIComponentData data) {
             base.Init(data);

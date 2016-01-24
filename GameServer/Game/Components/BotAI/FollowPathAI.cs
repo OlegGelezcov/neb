@@ -1,4 +1,5 @@
-﻿using ExitGames.Logging;
+﻿using System.Collections;
+using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Server;
@@ -10,11 +11,19 @@ namespace Nebula.Game.Components.BotAI {
     public class FollowPathAI : BaseAI  {
         private static ILogger log = LogManager.GetCurrentClassLogger();
 
+        private MovableObject mMovable;
+
         private Vector3[] path;
         private int targetIndex;
         private float mDistanceEPS = 10f;
 
-        private MovableObject mMovable;
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["path_count"] = (path != null) ? path.Length.ToString() : "0";
+            hash["target_path_index"] = targetIndex.ToString();
+            hash["distance_epsilon"] = mDistanceEPS.ToString();
+            return hash;
+        }
 
         public void Init(FollowPathNonCombatAIComponentData data) {
             base.Init(data);

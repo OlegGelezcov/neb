@@ -42,5 +42,7 @@ namespace SelectCharacter.Chat {
         /// List of chat links
         /// </summary>
         public List<ChatLinkedObject> links { get; set; }
+
+        public string targetCharacterName { get; set; }
     }
 }

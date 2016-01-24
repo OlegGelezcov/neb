@@ -2,9 +2,10 @@
 using ServerClientCommon;
 using System.Collections;
 using System.Xml.Linq;
+using System;
 
 namespace Nebula.Server.Components {
-    public class NotShipDamagableComponentData : MultiComponentData {
+    public class NotShipDamagableComponentData : MultiComponentData, IDatabaseComponentData {
 
         public float maxHealth { get; private set; }
         public bool ignoreDamageAtStart { get; private set; }
@@ -48,6 +49,16 @@ namespace Nebula.Server.Components {
             get {
                 return ComponentSubType.damagable_not_ship;
             }
+        }
+
+        public Hashtable AsHash() {
+            return new Hashtable {
+                { (int)SPC.MaxHealth, maxHealth },
+                { (int)SPC.IgnoreDamagaeAtStart, ignoreDamageAtStart },
+                { (int)SPC.IgnoreDamageInterval, ignoreDamageInterval },
+                { (int)SPC.CreateChestOnKilling, createChestOnKilling },
+                { (int)SPC.SubType, (int)subType }
+            };
         }
     }
 }

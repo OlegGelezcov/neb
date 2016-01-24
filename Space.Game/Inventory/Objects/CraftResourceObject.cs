@@ -85,6 +85,7 @@ namespace Nebula.Inventory.Objects {
         }
 
         public void ParseInfo(Hashtable info) {
+            m_Raw = info;
             m_Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
             m_Color = (ObjectColor)(byte)info.GetValue<int>((int)SPC.Color, (int)(byte)ObjectColor.white);

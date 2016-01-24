@@ -7,6 +7,7 @@ using Space.Game;
 using Space.Server;
 using System;
 using System.Collections.Concurrent;
+using System.Collections;
 
 namespace Nebula.Game.Components {
     public abstract class DamagableObject  : NebulaBehaviour{
@@ -14,7 +15,28 @@ namespace Nebula.Game.Components {
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
         private readonly GodState mGodState = new GodState();
         private const float NO_ABSORB = -1f;
+        private PlayerBonuses mBonuses;
+        private PlayerSkills m_Skills;
 
+        public override Hashtable DumpHash() {
+            var hash =  base.DumpHash();
+            hash["health"] = health.ToString();
+            hash["god?"] = god.ToString();
+            hash["damagers_count"] = damagers.Count.ToString();
+            hash["ignore_damage_at_spawn?"] = mIgnoreDamageTimer.ToString();
+            hash["ignore_damage_at_spawn_interval"] = ignoreDamageInterval.ToString();
+            hash["ignore_damage_timer"] = mIgnoreDamageTimer.ToString();
+            hash["create_container_when_killed?"] = mCreateChestOnKilling.ToString();
+            hash["killed?"] = mWasKilled.ToString();
+            hash["reflect_damage%"] = mReflectDamageProb.ToString();
+            hash["reflect_damage_timer"] = mReflectDamageTimer.ToString();
+            hash["absorbed_damage"] = mAbsorbedDamage.ToString();
+            hash["timed_damage"] = (timedDamage != null) ? timedDamage.damagePerSecond.ToString() : "0";
+            hash["heal_blocked?"] = healBlocked.ToString();
+            hash["difficulty_mult"] = myDifficultyMult.ToString();
+            hash["level"] = myLevel.ToString();
+            return hash;
+        }
         private float mHealth = 1000;
 
         public bool god {
@@ -44,10 +66,6 @@ namespace Nebula.Game.Components {
 
         private TimedDamage timedDamage { get; set; }
 
-        private PlayerBonuses mBonuses;
-
-        private PlayerSkills m_Skills;
-
         public bool healBlocked {
             get {
                 if(!mBonuses) {
@@ -56,6 +74,76 @@ namespace Nebula.Game.Components {
                 return (!Mathf.Approximately(0f, mBonuses.Value(BonusType.block_heal)));
             }
         }
+
+        protected bool ignoreDamage {
+            get {
+                return god || ignoreDamageAtStart;
+            }
+        }
+
+        public float health {
+            get {
+                return mHealth;
+            }
+            private set {
+                mHealth = Mathf.Clamp(value, -100, maximumHealth);
+            }
+        }
+
+        public bool killed {
+            get {
+                return mWasKilled;
+            }
+        }
+
+        public float reflectDamageProb {
+            get {
+                return mReflectDamageProb;
+            }
+        }
+
+        public float reflectDamageTimer {
+            get {
+                return mReflectDamageTimer;
+            }
+        }
+
+        public bool createChestOnKilling {
+            get {
+                return mCreateChestOnKilling;
+            }
+        }
+
+        private float myDifficultyMult {
+            get {
+                float d = 1.0f;
+                BotShip botShip = GetComponent<BotShip>();
+
+                if (botShip != null) {
+                    if (nebulaObject.HasTag((byte)PS.Difficulty)) {
+                        d = nebulaObject.resource.GetDifficultyMult((Difficulty)(byte)nebulaObject.Tag((byte)PS.Difficulty));
+                    }
+                    //difficulty = nebulaObject.resource.GetDifficultyMult(GetComponent<BotShip>().difficulty);
+                }
+                return d;
+            }
+        }
+
+        private float myLevel {
+            get {
+                float level = 1.0f;
+                var character = GetComponent<CharacterObject>();
+                if (character != null) {
+                    level = character.level;
+                }
+                return level;
+            }
+        }
+
+        public abstract float maximumHealth { get; }
+
+        public abstract float baseMaximumHealth { get; }
+
 
         public void SetIgnoreDamageAtStart(bool ignore) {
 
@@ -150,12 +238,6 @@ namespace Nebula.Game.Components {
             m_Skills = GetComponent<PlayerSkills>();
         }
 
-        protected bool ignoreDamage {
-            get {
-                return god || ignoreDamageAtStart;
-            }
-        }
-
         public override void Update(float deltaTime) {
 
             if (nebulaObject.IAmBot()) {
@@ -237,35 +319,6 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public float health {
-            get {
-                return mHealth;
-            }
-            private set {
-                mHealth = Mathf.Clamp(value, -100, maximumHealth);
-            }
-        }
-
-
-
-
-
-        public abstract float maximumHealth { get; }
-
-        public abstract float baseMaximumHealth { get;  }
-
-        //public void SetHealth(float inHealth) {
-        //    //when increase health - only when non blocked
-        //    if(inHealth > health) {
-        //        if(!healBlocked) {
-        //            health = inHealth;
-        //        }
-        //    } else {
-        //        health = inHealth;
-        //    }
-        //}
-
-
         public void Heal(InputHeal heal) {
             if (!healBlocked) {
                 float mult = 1.0f;
@@ -284,8 +337,6 @@ namespace Nebula.Game.Components {
             health -= Mathf.Abs( hp );
         }
 
-
-
         //forcing set health to value, ignore block healing abilities
         public void ForceSetHealth(float inHealth) {
             health = inHealth;
@@ -293,30 +344,6 @@ namespace Nebula.Game.Components {
 
         public void SetGod(bool inGod) {
             god = inGod;
-        }
-
-        public bool killed {
-            get {
-                return mWasKilled;
-            }
-        }
-
-        public float reflectDamageProb {
-            get {
-                return mReflectDamageProb;
-            }
-        }
-
-        public float reflectDamageTimer {
-            get {
-                return mReflectDamageTimer;
-            }
-        }
-
-        public bool createChestOnKilling {
-            get {
-                return mCreateChestOnKilling;
-            }
         }
 
         public void OnReturnStateChanged(object ret) {
@@ -410,31 +437,7 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private float myDifficultyMult {
-            get {
-                float d = 1.0f;
-                BotShip botShip = GetComponent<BotShip>();
 
-                if (botShip != null) {
-                    if (nebulaObject.HasTag((byte)PS.Difficulty)) {
-                        d = nebulaObject.resource.GetDifficultyMult((Difficulty)(byte)nebulaObject.Tag((byte)PS.Difficulty));
-                    }
-                    //difficulty = nebulaObject.resource.GetDifficultyMult(GetComponent<BotShip>().difficulty);
-                }
-                return d;
-            }
-        }
-
-        private float myLevel {
-            get {
-                float level = 1.0f;
-                var character = GetComponent<CharacterObject>();
-                if(character != null ) {
-                    level = character.level;
-                }
-                return level;
-            }
-        }
 
         private float DamagerPlayerLevel(NebulaObject damager) {
             var playerCharacter = damager.GetComponent<PlayerCharacterObject>();

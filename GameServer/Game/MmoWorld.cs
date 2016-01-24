@@ -488,54 +488,62 @@
         }
 
         public void Tick(float deltaTime) {
-            //log.InfoFormat("world = {0} tick", zone.Id);
+            try {
+                //if (zone.Id == "H1") {
+                //    log.InfoFormat("world = {0} tick", zone.Id);
+                //}
 
-            playerCountOnStartFrame = playerCount;
-            ItemCache.Tick(deltaTime);
+                playerCountOnStartFrame = playerCount;
+                ItemCache.Tick(deltaTime);
 
-            asteroidManager.Update(deltaTime);
-            npcManager.Update(deltaTime);
-            nebulaObjectManager.Update(deltaTime);
+                asteroidManager.Update(deltaTime);
+                npcManager.Update(deltaTime);
+                nebulaObjectManager.Update(deltaTime);
 
-            if(mSaveWorldTimer.Update(deltaTime)) {
-                GameApplication.Instance.DatabaseManager.SetWorld(this);
-            }
-
-            //restore saved objects
-            if(!mStateRestored) {
-                if(mWorldState != null ) {
-                    mStateRestored = true;
-                    mWorldState.RestoreObjectsFromSave(this);
+                if (mSaveWorldTimer.Update(deltaTime)) {
+                    GameApplication.Instance.DatabaseManager.SetWorld(this);
                 }
-            }
 
-            if(underAttack) {
-                if(mUnderAttackTimer > 0f) {
-                    mUnderAttackTimer -= deltaTime;
-                    if(mUnderAttackTimer <=0f ) {
-                        SetUnderAttack(false);
+                //restore saved objects
+                if (!mStateRestored) {
+                    if (mWorldState != null) {
+                        mStateRestored = true;
+                        mWorldState.RestoreObjectsFromSave(this);
                     }
                 }
 
-                
-                mUnderAttackDuration += deltaTime;
-                if(mUnderAttackDuration >= MAX_UNDER_ATTACK_INTERVAL ) {
-                    if(!invulnerable) {
-                        invulnerable = true;
-                        mInvulnerableTimer = INVULENRABLE_INTERVAL;
+                if (underAttack) {
+                    if (mUnderAttackTimer > 0f) {
+                        mUnderAttackTimer -= deltaTime;
+                        if (mUnderAttackTimer <= 0f) {
+                            SetUnderAttack(false);
+                        }
+                    }
+
+
+                    mUnderAttackDuration += deltaTime;
+                    if (mUnderAttackDuration >= MAX_UNDER_ATTACK_INTERVAL) {
+                        if (!invulnerable) {
+                            invulnerable = true;
+                            mInvulnerableTimer = INVULENRABLE_INTERVAL;
+                            BroadcastMessage("OnInvulnerableChanged");
+                            return;
+                        }
+                        mUnderAttackDuration = 0f;
+                    }
+                }
+
+                if (invulnerable) {
+                    mInvulnerableTimer -= deltaTime;
+                    if (mInvulnerableTimer <= 0f) {
+                        invulnerable = false;
                         BroadcastMessage("OnInvulnerableChanged");
-                        return;
                     }
-                    mUnderAttackDuration = 0f;
                 }
-            }
-
-            if(invulnerable) {
-                mInvulnerableTimer -= deltaTime;
-                if(mInvulnerableTimer <= 0f ) {
-                    invulnerable = false;
-                    BroadcastMessage("OnInvulnerableChanged");
-                }
+            } catch(Exception exception) {
+                log.ErrorFormat("exception in world: {0}", zone.Id);
+                log.ErrorFormat(exception.Message);
+                log.ErrorFormat(exception.StackTrace);
             }
         }
 

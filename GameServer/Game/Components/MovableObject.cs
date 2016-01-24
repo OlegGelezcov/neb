@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace Nebula.Game.Components {
 
@@ -25,6 +26,13 @@ namespace Nebula.Game.Components {
             get {
                 return (int)ComponentID.Movable;
             }
+        }
+
+        public override Hashtable DumpHash() {
+            var hash =  base.DumpHash();
+            hash["stop_timer"] = mStopTimer.ToString();
+            hash["stopped"] = stopped.ToString();
+            return hash;
         }
 
         public override void Update(float deltaTime) {

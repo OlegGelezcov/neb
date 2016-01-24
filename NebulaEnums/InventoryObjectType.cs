@@ -28,7 +28,8 @@
         UNUSED_2 = 20,
 
         craft_resource = 21,
-        pet_skin = 22
+        pet_skin = 22,
+        founder_cube = 23
 
         //pass elenment
         //pass

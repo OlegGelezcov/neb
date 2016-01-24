@@ -51,6 +51,7 @@ namespace Common {
         PetColorNotEnoughForImproving = 1042,
         PetAlreadySettedThisSkin = 1043,
         VeryCloseToTeleports = 1044,
+        NotReady = 1045,
 
         UnknownError = 10002,
         

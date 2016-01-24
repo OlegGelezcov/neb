@@ -8,6 +8,7 @@ namespace Common {
 
     public static class CommonUtils {
         public static readonly DateTime START_DATE = new DateTime(1970, 1, 1);
+        public static readonly float ONE_MONTH = 30 * 24 * 60 * 60;
         private static readonly Dictionary<Race, List<Workshop>> raceWorkshops;
 
         static CommonUtils() {

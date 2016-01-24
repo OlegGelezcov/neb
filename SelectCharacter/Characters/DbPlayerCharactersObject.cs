@@ -78,7 +78,29 @@ namespace SelectCharacter.Characters {
             }
         }
 
+        public bool HasSelectedCharacterName(string name) {
+            if(false == string.IsNullOrEmpty(SelectedCharacterId)) {
+                var character = GetCharacter(SelectedCharacterId);
+                if(character != null ) {
+                    return (character.Name == name);
+                }
+            }
+            return false;
+        }
 
+        public DbPlayerCharacter GetSelectedCharacter() {
+            if(false == string.IsNullOrEmpty(SelectedCharacterId)) {
+                return GetCharacter(SelectedCharacterId);
+            }
+            return null;
+        }
+
+        //public DbPlayerCharacter GetCharacterByName(string name) {
+        //    if (false == string.IsNullOrEmpty(SelectedCharacterId)) {
+        //        var character = GetCharacter(SelectedCharacterId);
+        //        if(character)
+        //    }
+        //}
 
         /// <summary>
         /// Create new character, select it and return new character object

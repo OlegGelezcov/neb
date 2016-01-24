@@ -75,12 +75,13 @@ namespace Space.Game.Drop
             float distance = BalanceFormulas.ComputeWeaponOPTIMALDISTANCE(colorInfo.factor, setting.base_optimal_distance, setting.base_optimal_distance_factor,
                 dropParams.level, points[1], setting.optimal_distance_points_value, setting.optimal_distance_points_factor);
 
-            float critChance = 0; // colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10) * (((float)dropParams.level / 60.0f + 1));
+            //float critChance = 0; // 
+            float critChance = colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10) * (((float)dropParams.level / 60.0f + 1));
 
-            
-            if (colorInfo.isBetterThanWhite) {
-                critChance = colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10);
-            }
+
+            //if (colorInfo.isBetterThanWhite) {
+            //    critChance = colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10);
+            //}
 
             return new WeaponObject(Guid.NewGuid().ToString(),
                 data.Id, dropParams.level, damage, distance, colorInfo.color, dropParams.damageType, critChance, (int)(byte)dropParams.workshop);

@@ -9,6 +9,13 @@ namespace Nebula.Game.Components {
         public virtual int level { get; private set; }
         public int fraction { get; private set; }
 
+        public override Hashtable DumpHash() {
+            var hash =  base.DumpHash();
+            hash["workshop"] = ((Workshop)workshop).ToString();
+            hash["level"] = level.ToString();
+            hash["fraction"] = ((FractionType)fraction).ToString();
+            return hash;
+        }
         private BotCharacterComponentData mInitData;
 
         public void Init(BotCharacterComponentData data) {

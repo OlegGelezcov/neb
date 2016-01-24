@@ -109,6 +109,12 @@ namespace Nebula.Game{
                 return CreateResponse(RPCErrorCode.ErrorOfAddingPetToCollection);
             }
 
+            if(petManager.hasFreeSpace) {
+                bool success = petManager.ActivatePet(petInfo.id);
+                if(success) {
+                    player.GetComponent<MmoMessageComponent>().ReceivePetsUpdate();
+                }
+            }
             player.EventOnStationHoldUpdated();
 
             Hashtable hash = CreateResponse(RPCErrorCode.Ok);

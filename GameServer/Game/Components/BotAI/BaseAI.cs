@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace Nebula.Game.Components.BotAI {
 
@@ -16,9 +17,18 @@ namespace Nebula.Game.Components.BotAI {
 
 
         protected MmoMessageComponent mMessage;
+
         public AIType aiType { get; private set; }
         protected bool mAlignWithForwardDirection = true;
         protected float mRotationSpeed = 0.5f;
+
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["align_with_forward_direction"] = mAlignWithForwardDirection.ToString();
+            hash["rotation_speed"] = mRotationSpeed.ToString();
+            return hash;
+        }
+
 
         public void Init(BaseAIComponentData data) {
             mAlignWithForwardDirection = data.alignWithForwardDirection;

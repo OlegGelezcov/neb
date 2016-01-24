@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System.Collections;
+using Common;
 using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
@@ -9,24 +10,48 @@ using Space.Game;
 namespace Nebula.Game.Components {
 
     public class ShipBasedDamagableObject : DamagableObject {
-
-        
-
         private BaseShip mShip;
         private PlayerBonuses mBonuses;
-        private float mpcHPRegenNonCombatPerSec;
+        
         private MmoActor player;
         private PlayerTarget mTarget;
         private PlayerSkills mSkills;
         private PassiveBonusesComponent mPassiveBonuses;
         private MmoMessageComponent m_Message;
+        private EventedObject mEventedObject;
 
         private static ILogger log = LogManager.GetCurrentClassLogger();
 
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["increase_regen_speed_timer"] = mIncreaseRegenSpeedTimer.ToString();
+            hash["increase_regen_speed_mult"] = mIncreaseRegenSpeedMultiplier.ToString();
+            hash["regen_hp_in_non_battle %"] = mpcHPRegenNonCombatPerSec.ToString();
+            hash["maximum_hp"] = maximumHealth.ToString();
+            hash["base_maximum_hp"] = baseMaximumHealth.ToString();
+            return hash;
+        }
         private float mIncreaseRegenSpeedTimer;
         private float mIncreaseRegenSpeedMultiplier;
-        private EventedObject mEventedObject;
         
+        private float mpcHPRegenNonCombatPerSec;
+
+        public override float maximumHealth {
+            get {
+                float maxHp = baseMaximumHealth;
+                if (mBonuses != null) {
+                    maxHp = baseMaximumHealth * (1.0f + mBonuses.maxHpPcBonus) + mBonuses.maxHpCntBonus;
+                }
+                maxHp = ApplyMaximumHpPassiveBonus(maxHp);
+                return maxHp;
+            }
+        }
+        public override float baseMaximumHealth {
+            get {
+
+                return mShip.shipModel.hp;
+            }
+        }
 
         public void Init(ShipDamagableComponentData data) {
             SetCreateChestOnKilling(data.createChestOnKilling);
@@ -58,20 +83,6 @@ namespace Nebula.Game.Components {
             ForceSetHealth(baseMaximumHealth);
         }
         
-
-        
-
-        public override float maximumHealth {
-            get {
-                float maxHp = baseMaximumHealth;
-                if (mBonuses != null) {
-                    maxHp = baseMaximumHealth * (1.0f + mBonuses.maxHpPcBonus) + mBonuses.maxHpCntBonus;
-                }
-                maxHp = ApplyMaximumHpPassiveBonus(maxHp);
-                return maxHp;
-            }
-        }
-
         private float ApplyMaximumHpPassiveBonus(float inputMaxHp) {
             if(nebulaObject.IsPlayer()) {
                 if(mPassiveBonuses != null && mPassiveBonuses.maxHPTier > 0 ) {
@@ -79,13 +90,6 @@ namespace Nebula.Game.Components {
                 }
             }
             return inputMaxHp;
-        }
-
-        public override float baseMaximumHealth {
-            get {
-                
-                return mShip.shipModel.hp;
-            }
         }
 
         public override void Update(float deltaTime) {
@@ -209,8 +213,6 @@ namespace Nebula.Game.Components {
             return inputDamage;
         }
 
-
-        
         private bool NotRespawnBySkill() {
             if(mSkills) {
                 bool notRespawned =  (false == mSkills.RespawnBySkill());

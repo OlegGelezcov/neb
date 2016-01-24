@@ -5,6 +5,7 @@ using Nebula.Server.Components;
 using Space.Game.Drop;
 using Space.Game.Ship;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace Nebula.Game.Components {
 
@@ -15,12 +16,23 @@ namespace Nebula.Game.Components {
 
         private BaseWeapon mWeapon;
         private CharacterObject mCharacter;
+        private PlayerBonuses mBonuses;
+
+
         private Difficulty mDifficulty = Difficulty.none;
 
         private bool modelExist = false;
         private bool initialized = false;
 
-        private PlayerBonuses mBonuses;
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["exists_model?"] = modelExist.ToString();
+            hash["initialized?"] = initialized.ToString();
+            hash["difficulty"] = mDifficulty.ToString();
+            hash["damage_resistance"] = damageResistance.ToString();
+            hash["capacity"] = holdCapacity.ToString();
+            return hash;
+        }
 
 
 

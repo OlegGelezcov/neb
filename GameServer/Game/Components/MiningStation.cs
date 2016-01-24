@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections;
-using Common;
+﻿using Common;
+using ExitGames.Logging;
 using Nebula.Engine;
+using Nebula.Game.Utils;
+using Nebula.Inventory.Objects;
 using Nebula.Server.Components;
 using ServerClientCommon;
 using Space.Game;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using ExitGames.Logging;
-using Nebula.Game.Utils;
-using Nebula.Inventory.Objects;
 using Space.Game.Inventory;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 
 namespace Nebula.Game.Components {
 
 
-    public class MiningStation : NebulaBehaviour, IInfoSource {
+    public class MiningStation : NebulaBehaviour, IInfoSource, IDatabaseObject {
 
         private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
@@ -54,6 +53,10 @@ namespace Nebula.Game.Components {
         private float mLastReceiveDamageNotificationSended = 0;
 
         private ConcurrentDictionary<string, DamageInfo> m_damagers = new ConcurrentDictionary<string, DamageInfo>();
+
+        private MiningStationComponentData m_InitData;
+
+        private bool m_SettedOnPlanet = false;
 
         public void MakeEmpty() {
             mCurrentCount = 0;
@@ -121,17 +124,35 @@ namespace Nebula.Game.Components {
         }
 
         public void Init(MiningStationComponentData data) {
+            m_InitData = data;
             mNebulaElementID = data.nebulaElementID;
             mMaxCount = data.maxCount;
             mTimeToGetSingleElement = data.timeToGetSingleElement;
             mPlanetID = data.sourceID;
             ownerPlayerID = data.ownedPlayerID;
-            mCurrentCount = 0;
+            mCurrentCount = data.currentCount;
             mTimer = mTimeToGetSingleElement;
             mTotalCount = data.totalCount;
-            mCurrentTotalCount = 0;
-            props.SetProperty((byte)PS.DataId, ownerPlayerID);
+            mCurrentTotalCount = data.currentTotatlCount;            
             mCharacterID = data.characterID;
+
+            props.SetProperty((byte)PS.DataId, ownerPlayerID);
+
+        }
+
+        private void SetSelfToPlanet() {
+            if(false == m_SettedOnPlanet) {
+                m_SettedOnPlanet = true;
+                NebulaObject planetObject;
+                if (nebulaObject.mmoWorld() != null) {
+                    if (nebulaObject.mmoWorld().TryGetObject((byte)ItemType.Bot, mPlanetID, out planetObject)) {
+                        if (planetObject) {
+                            planetObject.SendMessage("OnMiningStationSpawned", this);
+                            s_Log.InfoFormat("Mining Station: setted self on planet successfully".Color(LogColor.orange));
+                        }
+                    }
+                }
+            }
         }
 
         public override void Start() {
@@ -139,6 +160,8 @@ namespace Nebula.Game.Components {
         }
 
         public override void Update(float deltaTime) {
+
+            SetSelfToPlanet();
 
             if (hasSpace && (!isWornOut)) {
                 mTimer -= deltaTime;
@@ -253,6 +276,13 @@ namespace Nebula.Game.Components {
             }
         }
 
-
+        public Hashtable GetDatabaseSave() {
+            if(m_InitData != null ) {
+                m_InitData.SetCurrentCount(currentCount);
+                m_InitData.SetCurrentTotalCount(mCurrentTotalCount);
+                return m_InitData.AsHash();
+            }
+            return new Hashtable();
+        }
     }
 }

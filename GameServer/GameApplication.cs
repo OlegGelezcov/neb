@@ -275,7 +275,7 @@ public class GameApplication : ApplicationBase
 
     protected override void OnStopRequested() {
 
-        MmoWorldCache.Instance.Clear();
+        MmoWorldCache.Instance.SaveState();
 
         log.InfoFormat("OnStopRequested: serverId={0}", ServerId);
         if (this.masterConnectRetryTimer != null) {

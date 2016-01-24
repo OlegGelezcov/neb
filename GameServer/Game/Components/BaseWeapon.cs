@@ -4,11 +4,7 @@ using GameMath;
 using Nebula.Engine;
 using ServerClientCommon;
 using Space.Game;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nebula.Game.Components {
 
@@ -22,46 +18,40 @@ namespace Nebula.Game.Components {
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
         protected PassiveBonusesComponent mPassiveBonuses;
         private MmoMessageComponent mMessage;
-
         protected PlayerTarget cachedTarget { get; private set; }
         protected CharacterObject cachedCharacter { get; private set; }
-
         protected PlayerBonuses cachedBonuses { get; private set; }
-
         protected PlayerSkills cachedSkills { get; private set; }
-
         protected DamagableObject cachedDamagable { get; private set; }
 
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["shot_counter"] = shotCounter.ToString();
+            hash["overheated?"] = overheated.ToString();
+            hash["single_shot_blocked?"] = singleShotBlocked.ToString();
+            hash["not_resettable_shot_counter"] = m_NotResettableShotCounter.ToString();
+            hash["blocked?"] = blocked.ToString();
+            hash["hit %"] = hitProb.ToString();
+            return hash;
+        }
+
         protected int shotCounter { get; private set; }
-
         protected bool overheated { get; private set; }
-
         protected bool singleShotBlocked { get; private set; }
-
         private int m_NotResettableShotCounter = 0;
 
         public abstract float optimalDistance { get; }
         public abstract float criticalChance { get; }       
         public abstract bool ready { get; }
 
-        public abstract float GetDamage(bool isCrit);
-
-        public override int behaviourId {
-            get {
-                return (int)ComponentID.Weapon;
-            }
-        }
-
         protected bool blocked {
             get {
                 return (!Mathf.Approximately(0f, cachedBonuses.Value(BonusType.block_weapon))) || singleShotBlocked;
             }
         }
-        
-
         protected float hitProb {
             get {
-                if(!(cachedTarget.hasTarget && cachedTarget.targetObject)) {
+                if (!(cachedTarget.hasTarget && cachedTarget.targetObject)) {
                     return 0.0f;
                 }
                 return HitProbTo(cachedTarget.targetObject);
@@ -71,6 +61,14 @@ namespace Nebula.Game.Components {
         public int notResettableShotCounter {
             get {
                 return m_NotResettableShotCounter;
+            }
+        }
+
+        public abstract float GetDamage(bool isCrit);
+
+        public override int behaviourId {
+            get {
+                return (int)ComponentID.Weapon;
             }
         }
 

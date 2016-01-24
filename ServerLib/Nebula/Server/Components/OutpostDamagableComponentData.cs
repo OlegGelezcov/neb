@@ -36,7 +36,8 @@ namespace Nebula.Server.Components {
                 { (int)SPC.IgnoreDamageInterval, ignoreDamageInterval },
                 { (int)SPC.CreateChestOnKilling, createChestOnKilling },
                 { (int)SPC.FixedInputDamage, fixedInputDamage },
-                { (int)SPC.AdditionalHp, additionalHP }
+                { (int)SPC.AdditionalHp, additionalHP },
+                { (int)SPC.SubType, (int)subType }
             };
         }
     }

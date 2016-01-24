@@ -4,6 +4,8 @@
 // Created by Oleg Zheleztsov on Sunday, September 20, 2015 6:57:32 PM
 // Copyright (c) 2015 KomarGames. All rights reserved.
 //
+using System;
+using System.Collections;
 using Common;
 using ExitGames.Logging;
 using Nebula.Engine;
@@ -11,7 +13,7 @@ using Nebula.Server.Components;
 using Space.Game;
 
 namespace Nebula.Game.Components {
-    public class NotShipDamagableObject : DamagableObject {
+    public class NotShipDamagableObject : DamagableObject, IDatabaseObject {
 
         private static ILogger log = LogManager.GetCurrentClassLogger();
 
@@ -20,7 +22,10 @@ namespace Nebula.Game.Components {
         private BotObject mBot;
         private EventedObject mEventedObject;
 
+        private NotShipDamagableComponentData m_InitData;
+
         public void Init(NotShipDamagableComponentData data) {
+            m_InitData = data;
             SetMaximumHealth(data.maxHealth);
             ForceSetHealth(maximumHealth);
             SetIgnoreDamageAtStart(data.ignoreDamageAtStart);
@@ -118,6 +123,13 @@ namespace Nebula.Game.Components {
         public override void Death() {
             base.Death();
             (nebulaObject as GameObject).Destroy();
+        }
+
+        public Hashtable GetDatabaseSave() {
+            if(m_InitData != null ) {
+                return m_InitData.AsHash();
+            }
+            return new Hashtable();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Common;
 using ExitGames.Logging;
 using Nebula.Game.Components;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
@@ -20,6 +21,15 @@ namespace Nebula.Game.Bonuses {
             this.buffs = new ConcurrentDictionary<string, Buff>();
         }
 
+        public Hashtable DumpHash() {
+            Hashtable hash = new Hashtable();
+            if(buffs != null ) {
+                foreach(var pBuff in buffs) {
+                    hash.Add(pBuff.Key, pBuff.Value.value);
+                }
+            }
+            return hash;
+        }
         public int count {
             get {
                 return buffs.Count;

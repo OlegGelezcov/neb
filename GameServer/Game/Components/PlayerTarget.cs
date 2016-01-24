@@ -17,6 +17,8 @@ namespace Nebula.Game.Components {
         public byte targetType { get; private set; }
         public NebulaObject targetObject { get; private set; }
 
+
+
         private readonly ConcurrentDictionary<string, NebulaObject> mSubscribers = new ConcurrentDictionary<string, NebulaObject>();
 
         public bool inCombat { get; private set; } = false;
@@ -49,6 +51,21 @@ namespace Nebula.Game.Components {
                 }
                 return false;
             }
+        }
+
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["has_target?"] = hasTarget.ToString();
+            hash["target_id"] = (targetId != null) ? targetId : "";
+            hash["target_type"] = ((ItemType)targetType).ToString();
+            hash["in_combat?"] = inCombat.ToString();
+            hash["combat_timer"] = inCombatTimer.ToString();
+            hash["no_target?"] = noTarget.ToString();
+            hash["subscribers_count"] = mSubscribers.Count.ToString();
+            hash["is_target_subscribed_to_me??"] = targetIsEnemySubscriber.ToString();
+            hash["exists_enemy_subscriber?"] = ((bool)anyEnemySubscriber).ToString();
+            hash["no_subscribers?"] = noSubscribers.ToString();
+            return hash;
         }
 
         public override void Start() {

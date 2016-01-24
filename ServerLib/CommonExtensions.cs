@@ -727,6 +727,10 @@ namespace Common
             }
             return 0;
         }
+
+        public static void AddOrReplace(this Hashtable hash, string key, object val) {
+            hash[key] = val;
+        }
     }
 
 

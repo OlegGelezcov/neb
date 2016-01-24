@@ -49,6 +49,27 @@ namespace Nebula.Game.Components {
             }
         }
 
+        /// <summary>
+        /// Its message sended by mining station when min. station first created....
+        /// </summary>
+        /// <param name="station"></param>
+        public void OnMiningStationSpawned(MiningStation station) {
+            bool founded = false;
+            foreach(var pSlot in mSlots) {
+                if(pSlot.Value.IsThisStation(station)) {
+                    founded = true;
+                    break;
+                }
+            }
+
+            if(false == founded) {
+                var freeSlot = GetAnyFreeSlot();
+                if(freeSlot != null ) {
+                    SetStation(station, freeSlot.slotNumber);
+                }
+            }
+        }
+
         public void SetStation(MiningStation station, int slotNumber) {
             foreach(var pSlot in mSlots ) {
                 if(pSlot.Value.slotNumber == slotNumber ) {
@@ -56,6 +77,15 @@ namespace Nebula.Game.Components {
                     break;
                 }
             }
+        }
+
+        private PlanetSlot GetAnyFreeSlot() {
+            foreach(var pSlot in mSlots) {
+                if(pSlot.Value.free) {
+                    return pSlot.Value;
+                }
+            }
+            return null;
         }
 
         public bool IsFreeSlot(int slotNumber) {
@@ -120,6 +150,16 @@ namespace Nebula.Game.Components {
             miningStationObjectType = 0;
             miningStationRace = 0;
             miningStationOwnedPlayerID = string.Empty;
+        }
+
+        public bool IsThisStation(MiningStation station) {
+            if(free) {
+                return false;
+            }
+            if(station.nebulaObject.Id == minigStationID ) {
+                return true;
+            }
+            return false;
         }
 
         public void FreeSlot() {

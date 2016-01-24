@@ -94,6 +94,14 @@ namespace SelectCharacter.Characters {
             mApplication.SendEventToClient(player.Data.GameRefId, eventData);
         }
 
+        public DbObjectWrapper<DbPlayerCharactersObject> GetCachePlayerByCharacterName(string characterName) {
+            DbObjectWrapper<DbPlayerCharactersObject> player = null;
+            if(mCache.TryGetPlayerBySelectedCharacterName(characterName, out player)) {
+                return player;
+            }
+            return null;
+        }
+
         public DbObjectWrapper<DbPlayerCharactersObject> GetExistingPlayerByLogin(string login) {
             DbObjectWrapper<DbPlayerCharactersObject> player = null;
             if(mCache.TryGetPlayerByLogin(login, out player)) {

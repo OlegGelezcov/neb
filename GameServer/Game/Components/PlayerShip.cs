@@ -79,6 +79,13 @@ namespace Nebula.Game.Components {
             StartModel = inStartModel;
         }
 
+        public override Hashtable DumpHash() {
+            var hash =  base.DumpHash();
+            hash["damage_resistance"] = damageResistance.ToString();
+            hash["capacity"] = holdCapacity.ToString();
+            return hash;
+        }
+
         public override float damageResistance {
             get {
                 //check if resist blocked

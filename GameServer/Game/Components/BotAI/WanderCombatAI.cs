@@ -1,4 +1,5 @@
-﻿using ExitGames.Logging;
+﻿using System.Collections;
+using ExitGames.Logging;
 using GameMath;
 using Nebula.Server;
 using Nebula.Server.Components;
@@ -12,6 +13,14 @@ namespace Nebula.Game.Components.BotAI {
         private Vector3 mAreaMax;
         //private float mReachRadius;
         private Vector3 mTargetPoint;
+
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["area_min"] = mAreaMin.ToString();
+            hash["area_max"] = mAreaMax.ToString();
+            hash["target_point"] = mTargetPoint.ToString();
+            return hash;
+        }
 
         public void Init(WanderAIComponentData data) {
             base.Init(data);

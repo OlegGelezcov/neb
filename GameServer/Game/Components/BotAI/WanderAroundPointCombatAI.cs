@@ -16,6 +16,14 @@ namespace Nebula.Game.Components.BotAI {
         private Vector3 mIdlePoint;
         private IDatabaseComponentData mInitData;
 
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["spawn_position"] = mSpawnPosition.ToString();
+            hash["radius"] = mRadius.ToString();
+            hash["idle_point"] = mIdlePoint.ToString();
+            return hash;
+        }
+
         public void Init(FreeFlyNearPointComponentData data) {
             mInitData = data;
             base.Init(data);

@@ -3,17 +3,14 @@ using Common;
 using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
-using Nebula.Game.Skills;
 using Nebula.Inventory.DropList;
 using Nebula.Server;
 using Nebula.Server.Components;
-using ServerClientCommon;
 using Space.Game;
 using Space.Game.Objects;
 using Space.Server;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace Nebula.Game.Components.BotAI {
 
@@ -23,6 +20,8 @@ namespace Nebula.Game.Components.BotAI {
     [REQUIRE_COMPONENT(typeof(MovableObject))]
     [REQUIRE_COMPONENT(typeof(BaseWeapon))]
     public class CombatBaseAI  : BaseAI {
+        private const float MIN_AGRO = 80;
+        private const float MAX_AGRO = 350;
 
         public const float RESET_TARGET_INTERVAL = 20;
         private static ILogger log = LogManager.GetCurrentClassLogger();
@@ -31,28 +30,38 @@ namespace Nebula.Game.Components.BotAI {
         protected CharacterObject mCharacter;
         protected MovableObject mMovable;
         protected PlayerTarget mTarget;
-        protected float mChestLiveDuration;
         private ShipWeapon mShipWeapon;
-           
+        private BotObject mBotObject;
+        public enum MovingNearTarget { Circle, LIne }
 
-        
+        protected float mChestLiveDuration;
         protected bool mDead = false;
         private float mShotCooldown = 3.0f;
         private float mShotTimer;
         private float mWaitTimer = 5;
         private float mResetTargetTimer = RESET_TARGET_INTERVAL;
-
-        public enum MovingNearTarget { Circle, LIne}
         private MovingNearTarget mMovNearTargetType;
-
         private CombatAIType combatAIType;
         private Vector3 mStartPosition;
         private bool mReturningToStartPosition = false;
         private bool mUseHitProbForAgro = false;
-        private BotObject mBotObject;
+        
 
-        private float MIN_AGRO = 80;
-        private float MAX_AGRO = 350;
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["chest_life_interval"] = mChestLiveDuration.ToString();
+            hash["is_dead"] = mDead.ToString();
+            hash["try_shot_cooldown"] = mShotCooldown.ToString();
+            hash["shot_timer"] = mShotTimer.ToString();
+            hash["wait_timer"] = mWaitTimer.ToString();
+            hash["reset_target_timer"] = mResetTargetTimer.ToString();
+            hash["moving_in_battle_type"] = mMovNearTargetType.ToString();
+            hash["combat_ai_type"] = combatAIType.ToString();
+            hash["start_position"] = mStartPosition.ToString();
+            hash["is_in_returning_to_start_position"] = mReturningToStartPosition.ToString();
+            hash["use_hit_prob_for_agro"] = mUseHitProbForAgro.ToString();
+            return hash;
+        }
 
         public void Init(CombatBaseAIComponentData data) {
             base.Init(data);

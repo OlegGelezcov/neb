@@ -22,6 +22,11 @@ namespace SelectCharacter.OperationHandlers {
                 };
             }
 
+            var ch = playerObject.GetCharacter(operation.CharacterId);
+            if(ch != null ) {
+                application.DB.WriteCharacterName(operation.GameRefId, operation.CharacterId, ch.Name);
+            }
+
             SelectCharacterOperationResponse responseObject = new SelectCharacterOperationResponse {
                 CharacterId = playerObject.SelectedCharacterId,
                 Characters = playerObject.GetInfo()

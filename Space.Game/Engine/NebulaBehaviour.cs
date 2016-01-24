@@ -6,6 +6,7 @@ using System.Threading;
 using System.Reflection;
 using Space.Game;
 using Common;
+using System.Collections;
 
 namespace Nebula.Engine {
     /// <summary>
@@ -139,5 +140,9 @@ namespace Nebula.Engine {
         }
 
         public abstract int behaviourId { get; }
+
+        public virtual Hashtable DumpHash() {
+            return new Hashtable();
+        }
     }
 }

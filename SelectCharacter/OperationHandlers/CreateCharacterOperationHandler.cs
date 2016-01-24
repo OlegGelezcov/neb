@@ -14,6 +14,14 @@ namespace SelectCharacter.OperationHandlers {
                 return InvalidParametersOperationResponse((SelectCharacterOperationCode)request.OperationCode);
             }
 
+            var characterName = application.DB.GetCharacterName(operation.DisplayName);
+            if(characterName != null ) {
+                return new OperationResponse(request.OperationCode) {
+                    ReturnCode = (short)ReturnCode.CharacterWithSameNameAlreadyExists,
+                    DebugMessage = operation.DisplayName
+                };
+            }
+
             DbPlayerCharactersObject player = null;
             var response = this.application.Players.CreateCharacter(
                 request, sendParameters, operation.GameRefId,
@@ -21,7 +29,10 @@ namespace SelectCharacter.OperationHandlers {
                 (Workshop)operation.Workshop, operation.icon, out player);
             if (player != null) {
                 peer.SetCharacterId(player.SelectedCharacterId);
+                application.DB.WriteCharacterName(operation.GameRefId, response.Parameters[(byte)ParameterCode.CharacterId].ToString(), operation.DisplayName);
             }
+
+            
 
             return response;
         }

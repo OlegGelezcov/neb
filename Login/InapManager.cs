@@ -135,6 +135,10 @@ namespace Login {
                         objInfo = new PetSkinObject(skin, skin).GetInfo();
                     }
                     break;
+                case InapObjectType.founder_cube: {
+                        objInfo = new FounderCubeInventoryObject().GetInfo();
+                    }
+                    break;
 
             }
 
@@ -153,7 +157,10 @@ namespace Login {
             string itemID = string.Empty;
             if(inapItem.type == InapObjectType.pet_skin) {
                 itemID = objInfo.GetValue<string>((int)SPC.Id, string.Empty);
-            } else {
+            } else if(inapItem.type == InapObjectType.founder_cube) {
+                itemID = objInfo.GetValue<string>((int)SPC.Id, string.Empty);
+            }
+            else {
                 itemID = inapId + inapItem.tag.ToString();
             }
 

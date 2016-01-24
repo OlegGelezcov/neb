@@ -3,6 +3,7 @@
         exp_boost,
         loot_box,
         pet_scheme,
-        pet_skin
+        pet_skin,
+        founder_cube
     }
 }

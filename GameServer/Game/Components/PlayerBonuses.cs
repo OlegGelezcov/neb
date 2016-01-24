@@ -21,6 +21,14 @@ namespace Nebula.Game.Components {
         private List<BonusType> mSpeedDebuffs;
         private BonusesComponentData mInitData;
 
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            foreach(var pBonus in mBonuses ) {
+                hash[pBonus.Key.ToString()] = pBonus.Value.DumpHash();
+            }
+            return hash;
+        }
+
         private void InitVariables() {
             if(mSpeedDebuffs == null ) {
                 mSpeedDebuffs = BuffUtils.GetDebuffsForParameter(BuffParameter.speed).ToList();

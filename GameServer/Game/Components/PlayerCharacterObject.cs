@@ -19,23 +19,68 @@ namespace Nebula.Game.Components {
     public class PlayerCharacterObject : CharacterObject {
 
         private const float RACE_STATUS_BONUS_UPDATE_INTERVAL = 60;
+        private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
         private MmoActor mPlayer;
         private PlayerShip mShip;
-
-        public Group group { get; private set; }
-
-        private static readonly ILogger log = LogManager.GetCurrentClassLogger();
-
-        private bool mRaceStatusRequested = false;
-        private bool mGuildRequested = false;
-
         private PlayerLoaderObject mLoader;
         private MmoMessageComponent mMessage;
-        private float mUpdateRaceStatusBonusTimer = 0;
         private PlayerBonuses mBonuses;
         private RaceableObject mRace;
         private PetManager m_PetManager;
+
+        public override Hashtable DumpHash() {
+            var hash =  base.DumpHash();
+            hash["group"] = (group != null) ? group.GetInfo() : new Hashtable();
+            hash["race_status_requested?"] = mRaceStatusRequested.ToString();
+            hash["coalition_requested?"] = mGuildRequested.ToString();
+            hash["update_race_bonus_timer"] = mUpdateRaceStatusBonusTimer.ToString();
+            hash["character_id"] = (characterId != null ) ? characterId.ToString() : "";
+            hash["exp"] = exp.ToString();
+            hash["login"] = (login != null) ? login : "";
+            hash["race_status"] = ((RaceStatus)raceStatus).ToString();
+            hash["character_name"] = (characterName != null) ? characterName : "";
+            hash["coalition_id"] = (guildId != null) ? guildId : "";
+            hash["coalition_name"] = (guildName != null) ? guildName : "";
+            hash["me_commander_or_admiral?"] = isCommanderOrAdmiral().ToString();
+            hash["has_group?"] = hasGroup.ToString();
+            return hash;
+        }
+
+        public Group group { get; private set; }
+        private bool mRaceStatusRequested = false;
+        private bool mGuildRequested = false;
+        private float mUpdateRaceStatusBonusTimer = 0;
+
+        public string characterId { get; private set; }
+
+        public int exp { get; private set; }
+
+        public string login { get; private set; }
+
+        public int raceStatus { get; private set; }
+
+        public string characterName { get; private set; }
+
+        public string guildId { get; private set; } = string.Empty;
+
+        public string guildName { get; private set; } = string.Empty;
+
+        private bool isCommanderOrAdmiral() {
+            return ((RaceStatus)raceStatus == RaceStatus.Commander || (RaceStatus)raceStatus == RaceStatus.Admiral);
+        }
+
+        public override int level {
+            get {
+                return resource.Leveling.LevelForExp(exp);
+            }
+        }
+
+        public bool hasGroup {
+            get {
+                return (group != null) && (false == string.IsNullOrEmpty(group.groupID));
+            }
+        }
 
 
         public void Init(PlayerCharacterComponentData data) {
@@ -54,19 +99,7 @@ namespace Nebula.Game.Components {
             m_PetManager = GetComponent<PetManager>();
         }
 
-        public string characterId { get; private set; }
 
-        public int exp { get; private set; }
-
-        public string login { get; private set; }
-
-        public int raceStatus { get; private set; }
-
-        public string characterName { get; private set; }
-
-        public string guildId { get; private set; } = string.Empty;
-
-        public string guildName { get; private set; } = string.Empty;
 
         public void SetGuildInfo(Hashtable hash) {
             guildId = hash.GetValue<string>((int)SPC.Guild, string.Empty);
@@ -152,25 +185,12 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private bool isCommanderOrAdmiral() {
-            return ((RaceStatus)raceStatus == RaceStatus.Commander || (RaceStatus)raceStatus == RaceStatus.Admiral);
-        }
-
-        public override int level {
-            get {
-                return resource.Leveling.LevelForExp(exp);
-            }
-        }
 
         public void SetGroup(Group grp) {
             group = grp;
         }
 
-        public bool hasGroup {
-            get {
-                return (group != null) && (false == string.IsNullOrEmpty(group.groupID));
-            }
-        }
+
 
         public List<NebulaObject> GroupMemberPlayers(float radius) {
             List<NebulaObject> result = new List<NebulaObject>();

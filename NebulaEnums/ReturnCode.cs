@@ -104,6 +104,7 @@ namespace Common
         ResourceNotFound,
         NotEnoughCredits,
         InvalidInapType, 
+        CharacterWithSameNameAlreadyExists,
 
         OperationDenied = -3,
         OperationInvalid = -2,

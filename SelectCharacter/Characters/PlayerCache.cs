@@ -11,6 +11,19 @@ namespace SelectCharacter.Characters {
         private readonly object syncObject = new object();
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
+        public bool TryGetPlayerBySelectedCharacterName(string characterName, out DbObjectWrapper<DbPlayerCharactersObject> result ) {
+            result = null;
+            lock(syncObject ) {
+                foreach(var pair in this ) {
+                    if(pair.Value.Data.HasSelectedCharacterName(characterName)) {
+                        result = pair.Value;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
 
         public bool TryGetPlayerByLogin(string inlogin, out DbObjectWrapper<DbPlayerCharactersObject> result) {
             string login = inlogin.ToLower();

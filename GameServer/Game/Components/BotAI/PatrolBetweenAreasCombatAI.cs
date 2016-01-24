@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using System.Collections;
+using Common;
 using ExitGames.Logging;
 using GameMath;
 using Nebula.Server;
@@ -15,6 +16,15 @@ namespace Nebula.Game.Components.BotAI {
         //private float mReachRadius;
         private int mDirection;
         private Vector3 mTargetPoint;
+
+        public override Hashtable DumpHash() {
+            var hash = base.DumpHash();
+            hash["first_center"] = mFirstCenter.ToString();
+            hash["second_center"] = mSecondCenter.ToString();
+            hash["direction"] = mDirection.ToString();
+            hash["target_point"] = mTargetPoint.ToString();
+            return hash;
+        }
 
         public void Init(PatrolAIComponentData data) {
             base.Init(data);
