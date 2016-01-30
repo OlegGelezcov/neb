@@ -593,8 +593,6 @@ namespace Space.Server
 
                 destroyedByLogic = true;
                 
-
-
                 SendMessage(ComponentMessages.Death);
             }
         }

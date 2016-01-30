@@ -501,6 +501,12 @@ namespace Nebula.Game.Pets {
             }
         }
 
+        public int countOfActivePets {
+            get {
+                return pets.countOfActivePets;
+            }
+        }
+
         public bool ActivateSkill(string petId, int skill, bool activated) {
             bool success = pets.ActivateSkill(petId, skill, activated);
             if(success) {

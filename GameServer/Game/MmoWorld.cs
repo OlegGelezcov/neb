@@ -7,6 +7,7 @@
     using Nebula.Engine;
     using Nebula.Game;
     using Nebula.Game.Components;
+    using Nebula.Game.Events;
     using ServerClientCommon;
     using Space.Game.Resources;
     using Space.Game.Resources.Zones;
@@ -52,6 +53,7 @@
         private bool mStateRestored = false;
 
         private readonly SaveWorldTimer mSaveWorldTimer = new SaveWorldTimer();
+        private readonly EventManager m_EventManager = new EventManager();
 
         public MmoWorld(string name, Vector minCorner, Vector maxCorner, Vector tileDimensions, Res resource)
             : base(minCorner, maxCorner, tileDimensions, new MmoItemCache() )
@@ -200,11 +202,11 @@
 
         public void Initialize()
         {
-            foreach(var eventData in Zone.Events) {
-                var eventObject = ObjectCreate.Event(this, eventData);
-                eventObject.AddToWorld();
-                log.InfoFormat("event {0} added to world", eventObject.Id);
-            }
+            //foreach(var eventData in Zone.Events) {
+            //    var eventObject = ObjectCreate.Event(this, eventData);
+            //    eventObject.AddToWorld();
+            //    log.InfoFormat("event {0} added to world", eventObject.Id);
+            //}
         }
 
         private void CreatePlanets()
@@ -540,6 +542,10 @@
                         BroadcastMessage("OnInvulnerableChanged");
                     }
                 }
+
+                //update event manager
+                m_EventManager.Update(deltaTime);
+
             } catch(Exception exception) {
                 log.ErrorFormat("exception in world: {0}", zone.Id);
                 log.ErrorFormat(exception.Message);
@@ -584,6 +590,17 @@
                 log.InfoFormat("send world race changed event to player at = {0} [red]", Zone.Id);
                 pPlayer.Value.MmoMessage().ReceiveWorldRaceChanged(info);
             }
+        }
+
+        //================================================================
+        public bool AddEventSubscriber(EventSubscriber subscriber) {
+            return m_EventManager.Subscribe(subscriber);
+        }
+        public bool RemoveEventSubscriber(EventSubscriber subscriber) {
+            return m_EventManager.Unsubscribe(subscriber);
+        }
+        public void OnEvent(BaseEvent evt) {
+            m_EventManager.OnEvent(evt);
         }
     }
          

@@ -2,6 +2,8 @@
     using Common;
     using ExitGames.Logging;
     using Nebula.Game.Components;
+    using Nebula.Game.Contracts;
+    using Nebula.Game.Events;
     using Nebula.Game.OperationHandlers;
     using Nebula.Game.Pets;
     using NebulaCommon.SelectCharacter;
@@ -188,7 +190,9 @@
                     typeof(PlayerShipMovable),
                     typeof(PassiveBonusesComponent),
                     typeof(PlayerTimedEffects),
-                    typeof(PetManager)
+                    typeof(PetManager),
+                    typeof(PlayerEventSubscriber),
+                    typeof(ContractManager)
                 };
 
                 Dictionary<byte, object> tags = new Dictionary<byte, object> {

@@ -3,6 +3,7 @@ using Common;
 using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
+using Nebula.Game.Utils;
 using Nebula.Inventory.DropList;
 using Nebula.Server;
 using Nebula.Server.Components;
@@ -11,6 +12,8 @@ using Space.Game.Objects;
 using Space.Server;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nebula.Game.Components.BotAI {
 
@@ -32,6 +35,8 @@ namespace Nebula.Game.Components.BotAI {
         protected PlayerTarget mTarget;
         private ShipWeapon mShipWeapon;
         private BotObject mBotObject;
+        private PlayerSkills m_Skills;
+
         public enum MovingNearTarget { Circle, LIne }
 
         protected float mChestLiveDuration;
@@ -45,7 +50,7 @@ namespace Nebula.Game.Components.BotAI {
         private Vector3 mStartPosition;
         private bool mReturningToStartPosition = false;
         private bool mUseHitProbForAgro = false;
-        
+        private List<int> m_SlotsWithSkills;
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -79,6 +84,7 @@ namespace Nebula.Game.Components.BotAI {
             mCharacter = RequireComponent<CharacterObject>();
             mTarget = RequireComponent<PlayerTarget>();
             mMovable = GetComponent<MovableObject>();
+            m_Skills = GetComponent<PlayerSkills>();
             mChestLiveDuration = nebulaObject.world.Resource().ServerInputs.GetValue<float>("chest_life");
             //log.InfoFormat("chest life = {0}", mChestLiveDuration);
             mShotTimer = mShotCooldown;
@@ -110,6 +116,79 @@ namespace Nebula.Game.Components.BotAI {
 #endif
 
             mBotObject = GetComponent<BotObject>();
+            SetupSkills();
+        }
+
+
+        private void SetupSkills() {
+            var ship = GetComponent<BaseShip>();
+            if(ship) {
+                var classMap = resource.npcSkills.GetClassSkillMap(mCharacter.myClass);
+                if(classMap == null ) {
+                    return;
+                }
+
+                ShipWeapon shipWeapon = mWeapon as ShipWeapon;
+                if(shipWeapon == null ) {
+                    return;
+                }
+                var colorMap = classMap.GetColorSkillList(NebulaEnumUtils.GetColorForDifficulty(shipWeapon.weaponDifficulty));
+
+                if(colorMap == null ) {
+                    return;
+                }
+
+                int level = mCharacter.level;
+                int maxSkillsCount = 1;
+                if(level < 2) {
+                    maxSkillsCount = 1;
+                } else if(level < 6 ) {
+                    maxSkillsCount = 2;
+                } else {
+                    maxSkillsCount = 3;
+                }
+
+                if(maxSkillsCount >= colorMap.skills.Count) {
+                    maxSkillsCount = colorMap.skills.Count;
+                }
+                List<int> filtered = colorMap.skills.Take(maxSkillsCount).ToList();
+
+                for(int i = 0; i < filtered.Count; i++) {
+                    int skill = colorMap.skills[i];
+                    switch(i) {
+                        case 0: {
+                                var module = ship.shipModel.Slot(ShipModelSlotType.CB).Module;
+                                if(module != null) {
+                                    module.SetSkill(skill);
+                                }
+                            }
+                            break;
+                        case 1: {
+                                var module = ship.shipModel.Slot(ShipModelSlotType.CM).Module;
+                                if(module != null ) {
+                                    module.SetSkill(skill);
+                                }
+                            }
+                            break;
+                        case 2: {
+                                var module = ship.shipModel.Slot(ShipModelSlotType.DF).Module;
+                                if(module != null ) {
+                                    module.SetSkill(skill);
+                                }
+                            }
+                            break;
+                    }
+                }
+
+                if(m_Skills ) {
+                    m_Skills.UpdateSkills(ship.shipModel);
+                    m_SlotsWithSkills = m_Skills.slotsWithSkill;
+                }
+            }
+
+            if (m_SlotsWithSkills == null) {
+                m_SlotsWithSkills = new List<int>();
+            }
         }
 
         private bool isTurret {
@@ -214,10 +293,15 @@ namespace Nebula.Game.Components.BotAI {
                                 Move(transform.position, transform.rotation, newPos, newRot.eulerAngles, mMovable.speed);
                             }
 
-                            mShotTimer -= deltaTime;
-                            if(mShotTimer <= 0f ) {
-                                mShotTimer = mShotCooldown;
-                                if (mWaitTimer <= 0f) {
+                            if(skillCD >=0 ) {
+                                skillCD -= deltaTime;
+                            }
+                            if (false == UpdateSkillUsing()) {
+
+                                mShotTimer -= deltaTime;
+                                if (mShotTimer <= 0f) {
+                                    mShotTimer = mShotCooldown;
+                                    if (mWaitTimer <= 0f) {
 #if USE_SKILLS
                                     if (mSkills) {
                                         if (mSkills.GetSkillByPosition(0).ready) {
@@ -229,8 +313,10 @@ namespace Nebula.Game.Components.BotAI {
                                         var shotInfo = mWeapon.Fire(out hit);
                                         mMessage.SendShot(EventReceiver.ItemSubscriber, shotInfo);
 #endif
+                                    }
                                 }
                             }
+
                         }
                     }
                 } else {
@@ -245,6 +331,28 @@ namespace Nebula.Game.Components.BotAI {
                 log.Error(exception);
                 log.Error(exception.StackTrace);
             }
+        }
+
+        private float skillCD = -1;
+
+        private bool UpdateSkillUsing() {
+            if(skillCD > 0 ) {
+                return false;
+            }
+            if(m_Skills && m_SlotsWithSkills.Count > 0) {
+                int slot = m_SlotsWithSkills.AnyElement();
+                var skillObj = m_Skills.GetSkillByPosition(slot);
+                if (skillObj != null) {
+                    if (skillObj.ready && skillObj.energyOk) {
+                        if (m_Skills.UseSkill(slot, mTarget.targetObject)) {
+                            skillCD = skillObj.data.Cooldown;
+                            //log.InfoFormat("npc successfully used skill  at slot = {0}, energy = {1}".Color(LogColor.orange), slot, GetComponent<ShipEnergyBlock>().currentEnergy);
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         private void StartReturn() {

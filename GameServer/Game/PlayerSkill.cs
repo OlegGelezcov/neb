@@ -133,8 +133,8 @@
                 var energy = target.GetComponent<ShipEnergyBlock>();
                 RemoveEnergyBuff(target, data.Id);
 
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed( EventReceiver.OwnerAndSubscriber, target, this, true, "off", new Hashtable());
+                if (skills.message) {
+                    skills.message.PublishSkillUsed( EventReceiver.OwnerAndSubscriber, target, this, true, "off", new Hashtable());
                 }
                 return true;
             } else {
@@ -148,28 +148,28 @@
                         if (GetExecutor().TryCast(skills.nebulaObject, this, out result)) {
                             SetEnergyDebuff(target, data.Id, data.RequiredEnergy);
                             mTimer = cooldown;
-                            if (skills.GetComponent<MmoMessageComponent>()) {
-                                skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.OwnerAndSubscriber, target, this, true, "on", result);
+                            if (skills.message) {
+                                skills.message.PublishSkillUsed(EventReceiver.OwnerAndSubscriber, target, this, true, "on", result);
                             }
                             skills.SetLastSkill(data.Id);
                             return true;
                         } else {
                             isOn = false;
-                            if (skills.GetComponent<MmoMessageComponent>()) {
-                                skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.OwnerAndSubscriber, target, this, false, "fail", result);
+                            if (skills.message) {
+                                skills.message.PublishSkillUsed(EventReceiver.OwnerAndSubscriber, target, this, false, "fail", result);
                             }
                             return false;
                         }
 
                     } else {
-                        if(skills.GetComponent<MmoMessageComponent>()) {
-                            skills.GetComponent<MmoMessageComponent>().PublishSkillUsed( EventReceiver.ItemOwner, target, this, false, "energy", new Hashtable());
+                        if(skills.message) {
+                            skills.message.PublishSkillUsed( EventReceiver.ItemOwner, target, this, false, "energy", new Hashtable());
                         }
                         return false;
                     }
                 } else {
-                    if (skills.GetComponent<MmoMessageComponent>()) {
-                        skills.GetComponent<MmoMessageComponent>().PublishSkillUsed( EventReceiver.ItemOwner, target, this, false, "not ready", new Hashtable());
+                    if (skills.message) {
+                        skills.message.PublishSkillUsed( EventReceiver.ItemOwner, target, this, false, "not ready", new Hashtable());
                     }
                     return false;
                 }
@@ -178,16 +178,16 @@
 
         private bool UseDurable(NebulaObject target ) {
             if(!ready) {
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "not ready", new Hashtable());
+                if (skills.message) {
+                    skills.message.PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "not ready", new Hashtable());
                 }
                 return false;
             }
 
             var energyComponent = skills.GetComponent<ShipEnergyBlock>();
             if(energyComponent.currentEnergy < data.RequiredEnergy) {
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "energy", new Hashtable());
+                if (skills.message) {
+                    skills.message.PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "energy", new Hashtable());
                 }
                 return false;
             }
@@ -196,31 +196,39 @@
             if (GetExecutor().TryCast(skills.nebulaObject, this, out result)) {
                 energyComponent.RemoveEnergy(data.RequiredEnergy);
                 mTimer = cooldown;
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.OwnerAndSubscriber, target, this, true, "durable ok", result);
+                if (skills.message) {
+                    skills.message.PublishSkillUsed(EventReceiver.OwnerAndSubscriber, target, this, true, "durable ok", result);
                 }
                 skills.SetLastSkill(data.Id);
                 return true;
             } else {
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "fail", result);
+                if (skills.message) {
+                    skills.message.PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "fail", result);
                 }
                 return false;
             }
         }
 
+        public bool energyOk {
+            get {
+                if(skills.energy) {
+                    return skills.energy.currentEnergy > data.RequiredEnergy;
+                }
+                return false;
+            }
+        }
         private bool UseInstant(NebulaObject target) {
             if (!ready) {
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "not ready", new Hashtable());
+                if (skills.message) {
+                    skills.message.PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "not ready", new Hashtable());
                 }
                 return false;
             }
 
             var energyComponent = skills.GetComponent<ShipEnergyBlock>();
             if (energyComponent.currentEnergy < data.RequiredEnergy) {
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "energy", new Hashtable());
+                if (skills.message) {
+                    skills.message.PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "energy", new Hashtable());
                 }
                 return false;
             }
@@ -229,14 +237,14 @@
             if (GetExecutor().TryCast(skills.nebulaObject, this, out result)) {
                 energyComponent.RemoveEnergy(data.RequiredEnergy);
                 mTimer = cooldown;
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.OwnerAndSubscriber, target, this, true, "instant ok", result);
+                if (skills.message) {
+                    skills.message.PublishSkillUsed(EventReceiver.OwnerAndSubscriber, target, this, true, "instant ok", result);
                 }
                 skills.SetLastSkill(data.Id);
                 return true;
             } else {
-                if (skills.GetComponent<MmoMessageComponent>()) {
-                    skills.GetComponent<MmoMessageComponent>().PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "fail", result);
+                if (skills.message) {
+                    skills.message.PublishSkillUsed(EventReceiver.ItemOwner, target, this, false, "fail", result);
                 }
                 return false;
             }

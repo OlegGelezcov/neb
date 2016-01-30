@@ -20,7 +20,7 @@ namespace Nebula.Game.Components {
         private float mMaximumHealth;
         private PlayerBonuses mBonuses;
         private BotObject mBot;
-        private EventedObject mEventedObject;
+        //private EventedObject mEventedObject;
 
         private NotShipDamagableComponentData m_InitData;
 
@@ -38,7 +38,7 @@ namespace Nebula.Game.Components {
             mBonuses = GetComponent<PlayerBonuses>();
             ForceSetHealth(maximumHealth);
             mBot = GetComponent<BotObject>();
-            mEventedObject = GetComponent<EventedObject>();
+            //mEventedObject = GetComponent<EventedObject>();
         }
 
         private bool isFortification {
@@ -108,9 +108,9 @@ namespace Nebula.Game.Components {
                 AddDamager(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.damage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race);
             }
 
-            if (mEventedObject != null) {
-                mEventedObject.ReceiveDamage(new DamageInfo(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.damage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race));
-            }
+            //if (mEventedObject != null) {
+            //    mEventedObject.ReceiveDamage(new DamageInfo(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.damage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race));
+            //}
 
             if(health <= 0f ) {
                 SetWasKilled(true);

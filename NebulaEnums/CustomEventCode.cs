@@ -41,7 +41,14 @@ namespace Common
         PetSkillUsed,
         ResurrectByKillEffect,
         CollectChest,
-        PetsUpdate
+        PetsUpdate,
+
+        ContractAccepted = 43,
+        ContractStageChanged = 44,
+        ContractReady = 45,
+        ContractCompleted = 46,
+        ContractsUpdate = 47,
+
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

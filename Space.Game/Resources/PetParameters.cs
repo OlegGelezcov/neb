@@ -1,5 +1,6 @@
 ﻿using Common;
 using Nebula.Pets;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
@@ -22,6 +23,17 @@ namespace Nebula.Resources {
         public PetMasteryUpgradeTable masteryUpgrades { get; private set; }
         public PetDefaultModelTable defaultModels { get; private set; }
 
+        private List<PlayerPetCount> m_PlayerPetCount = new List<PlayerPetCount>();
+
+        public int GetPlayerPetCount(int level) {
+            foreach(var ppc in m_PlayerPetCount) {
+                if(ppc.minLevel <= level && level <= ppc.maxLevel) {
+                    return ppc.count;
+                }
+            }
+            return 0;
+        }
+
         public void Load(string file) {
 
             XDocument document = XDocument.Load(file);
@@ -38,6 +50,10 @@ namespace Nebula.Resources {
             masteryUpgrades = new PetMasteryUpgradeTable(document.Element("pets").Element("mastery_upgrades"));
             defaultModels = new PetDefaultModelTable(document.Element("pets").Element("default_model"));
 
+            m_PlayerPetCount.Clear();
+            m_PlayerPetCount = document.Element("pets").Element("player").Elements("level").Select(le => {
+                return new PlayerPetCount(le);
+            }).ToList();
             /*
             XDocument document = XDocument.Load(file);
             hpParameters = new PetFFParameterCollection();
@@ -72,6 +88,18 @@ namespace Nebula.Resources {
             }).ToList();*/
 
 
+        }
+    }
+
+    public class PlayerPetCount {
+        public int minLevel { get; private set; }
+        public int maxLevel { get; private set; }
+        public int count { get; private set; }
+
+        public PlayerPetCount(XElement element) {
+            minLevel = element.GetInt("min");
+            maxLevel = element.GetInt("max");
+            count = element.GetInt("count");
         }
     }
 }

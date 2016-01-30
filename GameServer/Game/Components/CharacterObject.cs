@@ -41,6 +41,12 @@ namespace Nebula.Game.Components {
             fraction = (int)inFraction;
         } 
 
+        public NpcClass myClass {
+            get {
+                return NebulaEnumUtils.GetNpcClassForWorkshop((Workshop)workshop);
+            }
+        }
+
         public override void Update(float deltaTime) {
             if(nebulaObject.IAmBotAndNoPlayers()) {
                 return;

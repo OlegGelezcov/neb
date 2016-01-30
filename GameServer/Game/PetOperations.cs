@@ -17,7 +17,7 @@ using System.Text;
 
 namespace Nebula.Game{
 
-    public class PetOperations {
+    public class PetOperations : BaseRPCOperations {
         private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
         private MmoActor player { get; set; }
@@ -109,7 +109,8 @@ namespace Nebula.Game{
                 return CreateResponse(RPCErrorCode.ErrorOfAddingPetToCollection);
             }
 
-            if(petManager.hasFreeSpace) {
+            var allowedCount = player.resource.petParameters.GetPlayerPetCount(player.GetComponent<PlayerCharacterObject>().level);
+            if(petManager.countOfActivePets < allowedCount) {
                 bool success = petManager.ActivatePet(petInfo.id);
                 if(success) {
                     player.GetComponent<MmoMessageComponent>().ReceivePetsUpdate();
@@ -131,11 +132,7 @@ namespace Nebula.Game{
             return response;
         }
 
-        private Hashtable CreateResponse(RPCErrorCode code) {
-            return new Hashtable {
-                { (int)SPC.ReturnCode, (int)code }
-            };
-        }
+
 
         /*
         public Hashtable ActivatePet(string id) {
@@ -165,7 +162,12 @@ namespace Nebula.Game{
 
             bool activateSuccess = true;
             if(!string.IsNullOrEmpty(activatePetId)) {
-                activateSuccess = petManager.ActivatePet(activatePetId);
+                var allowedCount = player.resource.petParameters.GetPlayerPetCount(player.GetComponent<PlayerCharacterObject>().level);
+                if (petManager.countOfActivePets < allowedCount) {
+                    activateSuccess = petManager.ActivatePet(activatePetId);
+                } else {
+                    activateSuccess = false;
+                }
             }
 
             if(activateSuccess || deactivateSuccess ) {

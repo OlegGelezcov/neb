@@ -3,6 +3,7 @@ using Common.Space.Game.Resources;
 using Nebula.Inventory.DropList;
 using Nebula.Pets;
 using Nebula.Resources;
+using Nebula.Resources.NpcSkills;
 using Nebula.Resources.PlayerConstructions;
 using Space.Game.Resources;
 using Space.Game.Resources.Zones;
@@ -75,6 +76,7 @@ namespace Space.Game {
         CraftResourceObjectTable craftObjects { get; }
         ConstructionDataResource playerConstructions { get; }
         PredefinedDropLists predefinedDropLists { get; }
+        NpcClassSkillsResource npcSkills { get;  }
     }
 
 }

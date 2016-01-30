@@ -66,6 +66,7 @@
     <Compile Include="ConsoleLogContext.cs" />
     <Compile Include="DatabaseUsers.cs" />
     <Compile Include="Database\CharacterDatabase.cs" />
+    <Compile Include="Database\ContractDatabase.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Database\DatabaseUtils.cs" />
     <Compile Include="Database\InventoryDatabase.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Database\PassiveBonusesDocument.cs" />
     <Compile Include="Database\PetDatabase.cs" />
     <Compile Include="Database\PetDocument.cs" />
+    <Compile Include="Database\ContractDocument.cs" />
     <Compile Include="Database\ShipModelDatabase.cs" />
     <Compile Include="Database\ShipModelDocument.cs" />
     <Compile Include="Database\ShipModuleDocumentElement.cs" />
@@ -93,6 +95,7 @@
     <Compile Include="GameUpdater.cs" />
     <Compile Include="Game\AsteroidInterestArea.cs" />
     <Compile Include="Game\AsteroidItem.cs" />
+    <Compile Include="Game\BaseRPCOperations.cs" />
     <Compile Include="Game\Bonuses\Buff.cs" />
     <Compile Include="Game\Bonuses\PlayerBonus.cs" />
     <Compile Include="Game\Components\Activators\ActivatorObject.cs" />
@@ -159,12 +162,22 @@
     <Compile Include="Game\Components\TimedEffect.cs" />
     <Compile Include="Game\Components\TimedEffectType.cs" />
     <Compile Include="Game\Components\Turret.cs" />
+    <Compile Include="Game\ContractOperations.cs" />
+    <Compile Include="Game\Contracts\BaseContract.cs" />
+    <Compile Include="Game\Contracts\ContractFactory.cs" />
+    <Compile Include="Game\Contracts\ContractManager.cs" />
+    <Compile Include="Game\Contracts\ContractObject.cs" />
+    <Compile Include="Game\Contracts\KillNPCContract.cs" />
     <Compile Include="Game\DamageInfo.cs" />
     <Compile Include="Game\DebugActionExecutor.cs" />
     <Compile Include="Game\EventConnectionManager.cs" />
     <Compile Include="Game\Events\BaseEvent.cs" />
+    <Compile Include="Game\Events\ContractEvent.cs" />
     <Compile Include="Game\Events\DestroyPirateStationEvent.cs" />
+    <Compile Include="Game\Events\EventManager.cs" />
+    <Compile Include="Game\Events\EventSubscriber.cs" />
     <Compile Include="Game\Events\KillBossEvent.cs" />
+    <Compile Include="Game\Events\PlayerEventSubscriber.cs" />
     <Compile Include="Game\ExitWorkshopSavedInfo.cs" />
     <Compile Include="Game\Extensions.cs" />
     <Compile Include="Game\ConsoleLogging.cs" />

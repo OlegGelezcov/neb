@@ -1,5 +1,39 @@
 ﻿using Common;
 using Nebula.Engine;
+
+namespace Nebula.Game.Events {
+
+    public abstract class BaseEvent {
+
+        private EventType m_EventType;
+        private NebulaObject m_Source;
+
+        public BaseEvent(EventType eventType, NebulaObject source) {
+            m_EventType = eventType;
+            m_Source = source;
+        }
+
+        public EventType eventType {
+            get {
+                return m_EventType;
+            }
+        }
+
+        public NebulaObject source {
+            get {
+                return m_Source;
+            }
+        }
+
+        public override string ToString() {
+            return string.Format("type: {0},  source: {1}", eventType, (source) ? source.Id : "(null)");
+        }
+    }
+}
+
+/*
+using Common;
+using Nebula.Engine;
 using Nebula.Game.Components;
 using ServerClientCommon;
 using Space.Game;
@@ -117,3 +151,4 @@ namespace Nebula.Game.Events {
         public object Data;
     }
 }
+*/

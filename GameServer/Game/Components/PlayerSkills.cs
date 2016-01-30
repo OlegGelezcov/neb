@@ -66,6 +66,9 @@ namespace Nebula.Game.Components {
         private BaseShip mPlayerShip;
         public PlayerBonuses bonuses { get; private set; }
 
+        public MmoMessageComponent message { get; private set; }
+        public ShipEnergyBlock energy { get; private set; }
+
         //last skill was successfully used
         private int mLastSkill = -1;
 
@@ -107,6 +110,9 @@ namespace Nebula.Game.Components {
             mPlayerShip = GetComponent<BaseShip>();
             bonuses = GetComponent<PlayerBonuses>();
             mDamagable = GetComponent<DamagableObject>();
+            message = GetComponent<MmoMessageComponent>();
+            energy = GetComponent<ShipEnergyBlock>();
+
             m439ID = SkillExecutor.SkilIDFromHexString("00000439");
             m43AID = SkillExecutor.SkilIDFromHexString("0000043A");
             m451ID = SkillExecutor.SkilIDFromHexString("00000451");
@@ -252,6 +258,18 @@ namespace Nebula.Game.Components {
                 skills[5].SetData(nebulaObject.resource.Skills.Skill(model.Sets.Skill));
             } else if(model.Sets.Skill == -1 && (!skills[5].IsEmpty)) {
                 skills[5].SetData(SkillData.Empty);
+            }
+        }
+
+        public List<int> slotsWithSkill {
+            get {
+                List<int> slots = new List<int>();
+                foreach(var ps in Skills) {
+                    if( (false ==ps.Value.IsEmpty)) {
+                        slots.Add(ps.Key);
+                    }
+                }
+                return slots;
             }
         }
 

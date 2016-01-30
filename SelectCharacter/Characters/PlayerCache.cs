@@ -24,6 +24,19 @@ namespace SelectCharacter.Characters {
             return false;
         }
 
+        public bool TryGetPlayerByCharacterId(string characterId, out DbObjectWrapper<DbPlayerCharactersObject> result ) {
+            result = null;
+            lock(syncObject) {
+                foreach(var pair in this) {
+                    if(pair.Value.Data.HasCharacter(characterId)) {
+                        result = pair.Value;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
 
         public bool TryGetPlayerByLogin(string inlogin, out DbObjectWrapper<DbPlayerCharactersObject> result) {
             string login = inlogin.ToLower();

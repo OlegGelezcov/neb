@@ -226,9 +226,11 @@ namespace SelectCharacter.Guilds {
                 return false;
             }
 
-            player.Data.SetGuild(sourceCharacterID, string.Empty);
-            SendGuildUpdateEvent(sourceCharacterID, new Hashtable());
 
+            //player.Data.SetGuild(sourceCharacterID, string.Empty);
+            mApplication.Players.SetGuild(sourceCharacterID, string.Empty);
+            SendGuildUpdateEvent(sourceCharacterID, new Hashtable());
+           
             bool success =  mCache.TryRemoveGuild(guild.Data.ownerCharacterId, mApplication.DB.Guilds);
             return success;
         }
@@ -440,31 +442,36 @@ namespace SelectCharacter.Guilds {
             return true;
         }
 
-        public bool RequestToGuild(string login, string characterID, string guildID) {
+        public bool RequestToGuild(string login, string characterID, string guildID, out RPCErrorCode code) {
             var player = mApplication.Players.GetExistingPlayerByLogin(login);
             if(player == null ) {
                 log.InfoFormat("RequestToGuild: player with login = {0} not exists [green]", login);
+                code = RPCErrorCode.PlayerNotFound;
                 return false;
             }
             var character = player.Data.GetCharacter(characterID);
             if(character == null) {
                 log.InfoFormat("RequestToGuild: player with character = {0} not exists [green]", characterID);
+                code = RPCErrorCode.CharacterNotFound;
                 return false;
             }
 
             if(character.HasGuild()) {
                 log.InfoFormat("RequestToGuild: character already in guild [green]");
+                code = RPCErrorCode.CharacterAlreadyInGuild;
                 return false;
             }
 
             Guild guild = GetGuild(guildID);
             if(guild == null ) {
                 log.InfoFormat("RequestToGuild: guild = {0} don't exists [green]");
+                code = RPCErrorCode.CoalitionNotFound;
                 return false;
             }
 
             if(guild.closed) {
                 log.InfoFormat("RequestToGuild: guild is closed");
+                code = RPCErrorCode.CoalitionInClosedState;
                 return false;
             }
 
@@ -483,6 +490,7 @@ namespace SelectCharacter.Guilds {
                 mApplication.Notifications.SetNotificationToCharacter(member.characterId, notification);
                 log.InfoFormat("Guild request sended to = {0} [green]", member.login);
             }
+            code = RPCErrorCode.Ok;
             return true;
         }
 

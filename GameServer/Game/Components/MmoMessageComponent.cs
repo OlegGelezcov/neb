@@ -6,9 +6,10 @@
 //
 namespace Nebula.Game.Components {
     using Common;
+    using Contracts;
     using ExitGames.Logging;
     using GameMath;
-    using global::Common;
+    //using global::Common;
     using Nebula.Engine;
     using Pets;
     using Photon.SocketServer;
@@ -37,6 +38,14 @@ namespace Nebula.Game.Components {
             }
             if(!(nebulaObject)) {
                 return;
+            }
+
+            if(false == nebulaObject.IsPlayer() ) {
+                if(receiver == EventReceiver.OwnerAndSubscriber) {
+                    receiver = EventReceiver.ItemSubscriber;
+                } else if(receiver == EventReceiver.ItemOwner) {
+                    return;
+                }
             }
 
             skillUseIndex++;
@@ -636,10 +645,64 @@ namespace Nebula.Game.Components {
             SendInvisibilityChanged(receiver, invisibleValue);
         }
 
+        //=================Contract Events===================================
+
+        public void ContractsUpdate(Hashtable contractsHash) {
+            if (false == nebulaObject) {
+                return;
+            }
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.ContractsUpdate,
+                EventData = contractsHash
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+        public void ContractAccepted(BaseContract contract) {
+            ContractEvent(contract, CustomEventCode.ContractAccepted);
+        }
+
+        public void ContractCompleted(BaseContract contract) {
+            ContractEvent(contract, CustomEventCode.ContractCompleted);
+        }
+
+        public void ContractReady(BaseContract contract) {
+            ContractEvent(contract, CustomEventCode.ContractReady);
+        }
+
+        public void ContractStageChanged(BaseContract contract) {
+            ContractEvent(contract, CustomEventCode.ContractStageChanged);
+        }
+        private void ContractEvent(BaseContract contract, CustomEventCode code) {
+            if(false == nebulaObject) {
+                return;
+            }
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)code,
+                EventData = contract.GetInfo()
+            };
+            SendParameters sendParameters = new SendParameters {
+                 ChannelId = Settings.ItemEventChannel,
+                  Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+        //===================================================================
         public override int behaviourId {
             get {
                 return (int)ComponentID.MmoMessager;
             }
         }
+
+
     }
 }

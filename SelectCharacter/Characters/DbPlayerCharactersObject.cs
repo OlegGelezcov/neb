@@ -54,6 +54,17 @@ namespace SelectCharacter.Characters {
             return null;
         }
 
+        public bool HasCharacter(string characterId ) {
+            if(Characters != null ) {
+                foreach(var ch in Characters) {
+                    if(ch.CharacterId == characterId) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         /// <summary>
         /// Update only modules for character
         /// </summary>

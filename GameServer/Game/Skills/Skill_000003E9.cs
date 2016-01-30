@@ -14,7 +14,7 @@ namespace Nebula.Game.Skills {
 
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
 
-            log.Info("USE 3E9");
+            //log.Info("USE 3E9");
             info = new Hashtable();
             float decreaseSpeedPercent = skill.data.Inputs.Value<float>("decrease_speed_pc");
             float dmgMult = skill.data.Inputs.Value<float>("dmg_mult");
@@ -67,7 +67,7 @@ namespace Nebula.Game.Skills {
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
             if (hit.hitAllowed) {
-                log.Info("HIT ALLOWED");
+                //log.Info("HIT ALLOWED");
                 float speedCount = source.GetComponent<MovableObject>().normalSpeed * decreaseSpeedPercent;
                 Buff speedDebuff = new Buff(id, null, BonusType.decrease_speed_on_cnt, skill.data.Durability, speedCount);
                 targetBonuses.SetBuff(speedDebuff);

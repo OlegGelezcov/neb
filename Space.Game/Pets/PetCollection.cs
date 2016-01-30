@@ -163,6 +163,12 @@ namespace Nebula.Pets {
             }
         }
 
+        public int countOfActivePets {
+            get {
+                return pets.Count(p => p.active);
+            }
+        }
+
         public bool SetModel( string petID, string model) {
             var pet = GetPet(petID);
             if(pet == null ) {

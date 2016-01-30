@@ -2,6 +2,7 @@
 using ExitGames.Logging;
 using Nebula.Database;
 using Nebula.Engine;
+using Nebula.Game.Contracts;
 using Nebula.Game.Pets;
 using Nebula.Game.Utils;
 using Space.Game;
@@ -42,6 +43,7 @@ namespace Nebula.Game.Components {
                 GetComponent<PassiveBonusesComponent>().Load();
                 GetComponent<PlayerTimedEffects>().Load();
                 GetComponent<PetManager>().Load();
+                GetComponent<ContractManager>().Load();
             }
         }
 
@@ -63,6 +65,7 @@ namespace Nebula.Game.Components {
                 PassiveBonusesDatabase.instance.SavePassiveBonuses(character.characterId, player.GetComponent<PassiveBonusesComponent>().GetSave());
                 TimedEffectsDatabase.instance.SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
                 PetDatabase.instance.SavePets(character.characterId, player.GetComponent<PetManager>().pets);
+                ContractDatabase.instance.SaveContracts(character.characterId, player.GetComponent<ContractManager>().GetSave());
             }
         }
 

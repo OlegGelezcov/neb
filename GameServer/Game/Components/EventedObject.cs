@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using Common;
 using ExitGames.Logging;
 using Nebula.Engine;
@@ -47,3 +48,4 @@ namespace Nebula.Game.Components {
         }
     }
 }
+*/

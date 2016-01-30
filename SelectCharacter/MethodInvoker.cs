@@ -133,7 +133,9 @@ namespace SelectCharacter {
         }
 
         public bool RequestToGuild(string login, string characterID, string guildID ) {
-            return application.Guilds.RequestToGuild(login, characterID, guildID);
+            RPCErrorCode code = RPCErrorCode.Ok;
+            bool success =  application.Guilds.RequestToGuild(login, characterID, guildID, out code );
+            return success;
         }
 
         private List<ChatLinkedObject> ExtractChatLinkedObjects(Hashtable linkHash) {

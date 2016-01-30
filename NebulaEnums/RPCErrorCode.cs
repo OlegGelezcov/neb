@@ -53,6 +53,12 @@ namespace Common {
         VeryCloseToTeleports = 1044,
         NotReady = 1045,
 
+        PlayerNotFound = 1046,
+        CharacterNotFound = 1047,
+        CharacterAlreadyInGuild = 1048,
+        CoalitionNotFound = 1049,
+        CoalitionInClosedState = 1050,
+
         UnknownError = 10002,
         
     }

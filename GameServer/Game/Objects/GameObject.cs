@@ -17,7 +17,7 @@ namespace Space.Game {
     public class GameObject : Item, IDatabaseObject
     {
         public InterestArea interestArea { get; private set; }
-        protected EventedObject mEvent;
+        //protected EventedObject mEvent;
         protected RaceableObject mRace;
         protected BotObject mBot;
         protected MmoMessageComponent mMessage;

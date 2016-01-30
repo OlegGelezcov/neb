@@ -298,6 +298,10 @@ namespace ServerClientCommon {
         OwnerGameRef,
         Total,
         CurrentCount,
-        CurrentTotal
+        CurrentTotal,
+        ContractState = 289 ,
+        ContractStage = 290,
+        ContractCategory = 291,
+        SourceWorld = 292
     }
 }

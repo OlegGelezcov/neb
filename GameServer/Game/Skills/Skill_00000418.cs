@@ -16,9 +16,16 @@ namespace Nebula.Game.Skills {
             float cooldownTime = skill.data.Inputs.Value<float>("cooldown_time");
             float radius = skill.data.Inputs.Value<float>("radius");
 
-            var sourceChar = source.GetComponent<PlayerCharacterObject>();
+            var sourceChar = source.GetComponent<CharacterObject>();
 
             var items = (source.world as MmoWorld).GetItems((it) => {
+                if(!source) {
+                    return false;
+                }
+                if(!it) {
+                    return false;
+                }
+
                 if (it.GetComponent<PlayerBonuses>() && it.GetComponent<CharacterObject>()) {
                     if (source.transform.DistanceTo(it.transform) <= radius) {
                         if (sourceChar.RelationTo(it.GetComponent<CharacterObject>()) == FractionRelation.Enemy) {

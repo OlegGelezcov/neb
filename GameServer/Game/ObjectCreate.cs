@@ -2,7 +2,7 @@
 using GameMath;
 using Nebula.Game.Components;
 using Nebula.Game.Components.BotAI;
-using Nebula.Game.Events;
+//using Nebula.Game.Events;
 using Space.Game;
 using Space.Game.Resources;
 using Space.Game.Resources.Zones;
@@ -20,6 +20,7 @@ using Nebula.Game.Pets;
 using Nebula.Pets;
 using Nebula.Inventory.DropList;
 using Nebula.Game.Utils;
+using Nebula.Game.Contracts;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -122,6 +123,10 @@ namespace Nebula.Game {
                         break;
                     case ComponentID.DropList: {
                             components.Add(typeof(DropListComponent));
+                        }
+                        break;
+                    case ComponentID.ContractObject: {
+                            components.Add(typeof(ContractObject));
                         }
                         break;
                     case ComponentID.Bot:
@@ -390,6 +395,10 @@ namespace Nebula.Game {
                         break;
                     case ComponentID.FounderCube: {
                             nebObject.GetComponent<FounderCube>().Init(comp.Value as FounderCubeComponentData);
+                        }
+                        break;
+                    case ComponentID.ContractObject: {
+                            nebObject.GetComponent<ContractObject>().Init(comp.Value as ContractObjectComponentData);
                         }
                         break;
                     case ComponentID.DatabaseObject:
@@ -820,77 +829,77 @@ namespace Nebula.Game {
             return obj;
         }
 
-        public static GameObject EventNpc(MmoWorld world, BaseEvent evt, string npcTypeName) {
-            switch(evt.data.Id) {
-                case "E001":
-                case "E002":
-                case "E003":
-                case "E004":
-                    {
-                        //NpcTypeData npcData;
-                        //world.Resource().NpcTypes.TryGetNpcType(npcTypeName, out npcData);
-                        //if(npcData == null ) { throw new Exception(string.Format("not founded npc data: {0}", npcTypeName)); }
+        //public static GameObject EventNpc(MmoWorld world, BaseEvent evt, string npcTypeName) {
+        //    switch(evt.data.Id) {
+        //        case "E001":
+        //        case "E002":
+        //        case "E003":
+        //        case "E004":
+        //            {
+        //                //NpcTypeData npcData;
+        //                //world.Resource().NpcTypes.TryGetNpcType(npcTypeName, out npcData);
+        //                //if(npcData == null ) { throw new Exception(string.Format("not founded npc data: {0}", npcTypeName)); }
 
-                        //FractionType fraction = (FractionType)Enum.Parse(typeof(FractionType), npcData.Settings.Value<string>("fraction"));
+        //                //FractionType fraction = (FractionType)Enum.Parse(typeof(FractionType), npcData.Settings.Value<string>("fraction"));
 
-                        ZoneNpcInfo npcInfo = new ZoneNpcInfo {
-                            Difficulty = Difficulty.hard,
-                            fraction = FractionType.EventBot,
-                            Id = Guid.NewGuid().ToString(),
-                            Position = evt.transform.position.ToArray(),
-                            Race = world.Zone.InitiallyOwnedRace,
-                            RespawnInterval = -1,
-                            Rotation = new float[] { 0, 0, 0 },
-                            Workshop = CommonUtils.RandomWorkshop(world.Zone.InitiallyOwnedRace),
-                            level = world.Zone.Level,
-                            name = "Raider",
-                            aiType = new NoneAIType {  battleMovingType = AttackMovingType.AttackStay }
-                        };
+        //                ZoneNpcInfo npcInfo = new ZoneNpcInfo {
+        //                    Difficulty = Difficulty.hard,
+        //                    fraction = FractionType.EventBot,
+        //                    Id = Guid.NewGuid().ToString(),
+        //                    Position = evt.transform.position.ToArray(),
+        //                    Race = world.Zone.InitiallyOwnedRace,
+        //                    RespawnInterval = -1,
+        //                    Rotation = new float[] { 0, 0, 0 },
+        //                    Workshop = CommonUtils.RandomWorkshop(world.Zone.InitiallyOwnedRace),
+        //                    level = world.Zone.Level,
+        //                    name = "Raider",
+        //                    aiType = new NoneAIType {  battleMovingType = AttackMovingType.AttackStay }
+        //                };
 
-                        GameObject obj = CombatNpc(world, npcInfo);
-                        obj.AddComponent<EventedObject>().SetOwnedEvent(evt);
-                        return obj;
-                    }
-                default:
-                    return null;
-            }
+        //                GameObject obj = CombatNpc(world, npcInfo);
+        //                obj.AddComponent<EventedObject>().SetOwnedEvent(evt);
+        //                return obj;
+        //            }
+        //        default:
+        //            return null;
+        //    }
             
-        }
+        //}
         
-       public static GameObject Event(MmoWorld world, WorldEventData eventData) {
-            Type[] components = null;
-            switch(eventData.Id) {
-                case "E001":
-                case "E002":
-                case "E003":
-                case "E004":             
-                    components = new Type[] { typeof(KillBossEvent) };
-                    break;
-                case "E005":
-                    components = new Type[] { typeof(DestroyPirateStationEvent) };
-                    break;
+       //public static GameObject Event(MmoWorld world, WorldEventData eventData) {
+       //     Type[] components = null;
+       //     switch(eventData.Id) {
+       //         case "E001":
+       //         case "E002":
+       //         case "E003":
+       //         case "E004":             
+       //             components = new Type[] { typeof(KillBossEvent) };
+       //             break;
+       //         case "E005":
+       //             components = new Type[] { typeof(DestroyPirateStationEvent) };
+       //             break;
             
-            }
-            if(components == null) {
-                throw new Exception(string.Format("event {0} don't has components", eventData.Id));
-            }
+       //     }
+       //     if(components == null) {
+       //         throw new Exception(string.Format("event {0} don't has components", eventData.Id));
+       //     }
 
-            int subZone = world.ResolvePositionSubzone(eventData.Position);
+       //     int subZone = world.ResolvePositionSubzone(eventData.Position);
 
-            GameObject eventGameObject = new GameObject(
-                eventData.Position.ToVector(),
-                new Hashtable(),
-                eventData.Id,
-                (byte)ItemType.Event,
-                world,
-                new Dictionary<byte, object>(),
-                1f,
-                subZone,
-                components);
-            eventGameObject.GetComponent<BaseEvent>().SetEventData(eventData);
+       //     GameObject eventGameObject = new GameObject(
+       //         eventData.Position.ToVector(),
+       //         new Hashtable(),
+       //         eventData.Id,
+       //         (byte)ItemType.Event,
+       //         world,
+       //         new Dictionary<byte, object>(),
+       //         1f,
+       //         subZone,
+       //         components);
+       //     eventGameObject.GetComponent<BaseEvent>().SetEventData(eventData);
 
-            return eventGameObject;
-        }
+       //     return eventGameObject;
+       // }
 
 
     }

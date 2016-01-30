@@ -276,6 +276,11 @@ namespace Space.Game.Resources.Zones {
                                 componentCollection.Add(ComponentID.NebulaObject, data);
                             }
                             break;
+                        case ComponentID.ContractObject: {
+                                ContractObjectComponentData data = new ContractObjectComponentData(ce);
+                                componentCollection.Add(ComponentID.ContractObject, data);
+                            }
+                            break;
                         case ComponentID.Turret:
                             {
                                 TurretComponentData data = new TurretComponentData(ce);

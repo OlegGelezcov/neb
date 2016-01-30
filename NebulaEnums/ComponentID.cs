@@ -51,6 +51,9 @@ namespace Common {
         PetObject,
         PetManager,
         DropList,
-        FounderCube
+        FounderCube,
+        EventSubscriber,
+        ContractManager,
+        ContractObject = 49,
     }
 }

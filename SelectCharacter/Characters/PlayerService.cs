@@ -289,5 +289,22 @@ namespace SelectCharacter.Characters {
                 }
             }
         }
+
+        public void SetGuild(string characterId, string guildId ) {
+            DbObjectWrapper<DbPlayerCharactersObject> player = null;
+            if(mCache.TryGetPlayerByCharacterId(characterId, out player)) {
+                player.Data.SetGuild(characterId, guildId);
+                player.Changed = true;
+
+                SelectCharacterClientPeer peer = null;
+                if (mApplication.Clients.TryGetPeerForGameRefId(player.Data.GameRefId, out peer)) {
+                    if (peer != null) {
+                        CharacterUpdateEvent evt = new CharacterUpdateEvent { Characters = player.Data.GetInfo() };
+                        EventData eventData = new EventData((byte)SelectCharacterEventCode.CharactersUpdate, evt);
+                        peer.SendEvent(eventData, new SendParameters());
+                    }
+                }
+            }
+        }
     }
 }

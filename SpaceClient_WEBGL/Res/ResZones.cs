@@ -27,7 +27,7 @@ using System.Xml.Linq;
                 {
                     string id = e.Attribute("id").Value;
                     string scene = e.Attribute("scene").Value;
-                    string displayName = e.Attribute("display_name").Value;
+                    string displayName = e.Attribute("display_name").Value; 
                     return new ResZoneInfo(id, scene, displayName);
                 }).ToDictionary(z => z.Id(), z => z);
             

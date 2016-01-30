@@ -18,7 +18,7 @@ namespace Nebula.Game.Components {
         private PlayerSkills mSkills;
         private PassiveBonusesComponent mPassiveBonuses;
         private MmoMessageComponent m_Message;
-        private EventedObject mEventedObject;
+        //private EventedObject mEventedObject;
 
         private static ILogger log = LogManager.GetCurrentClassLogger();
 
@@ -75,7 +75,7 @@ namespace Nebula.Game.Components {
             mTarget = GetComponent<PlayerTarget>();
             mSkills = GetComponent<PlayerSkills>();
             mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
-            mEventedObject = GetComponent<EventedObject>();
+            //mEventedObject = GetComponent<EventedObject>();
             m_Message = GetComponent<MmoMessageComponent>();
         }
 
@@ -195,9 +195,9 @@ namespace Nebula.Game.Components {
                 AddDamager(inputDamage.sourceId, inputDamage.sourceType, inputDamage.damage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race);
             }
 
-            if(mEventedObject != null && inputDamage.hasDamager) {
-                mEventedObject.ReceiveDamage(new DamageInfo(inputDamage.sourceId, inputDamage.sourceType, inputDamage.damage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race));
-            }
+            //if(mEventedObject != null && inputDamage.hasDamager) {
+            //    mEventedObject.ReceiveDamage(new DamageInfo(inputDamage.sourceId, inputDamage.sourceType, inputDamage.damage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race));
+            //}
 
             if(health <= 0f) {
                 if (NotRespawnBySkill()) {

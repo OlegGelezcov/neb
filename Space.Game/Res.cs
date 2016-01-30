@@ -5,6 +5,7 @@
     using Nebula.Inventory.DropList;
     using Nebula.Pets;
     using Nebula.Resources;
+    using Nebula.Resources.NpcSkills;
     using Nebula.Resources.PlayerConstructions;
     using Space.Game.Resources;
     using Space.Game.Resources.Zones;
@@ -160,6 +161,14 @@
 
             predefinedDropLists = new PredefinedDropLists();
             predefinedDropLists.Load(Path.Combine(basePath, "Data/Drop/predefined_dls.xml"));
+
+            npcSkills = new NpcClassSkillsResource();
+            npcSkills.Load(Path.Combine(basePath, "Data/npc_skill_table.xml"));
+        }
+
+        public NpcClassSkillsResource npcSkills {
+            get;
+            private set;
         }
 
         public PredefinedDropLists predefinedDropLists {

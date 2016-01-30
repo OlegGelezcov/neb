@@ -30,11 +30,13 @@ namespace Space.Game {
         private MmoActor _actor;
         private object syncObject = new object();
         private PetOperations m_PetOps;
+        private ContractOperations m_ContractOps;
 
         public ActionExecutor(MmoActor actor) 
         {
             _actor = actor;
             m_PetOps = new PetOperations(_actor);
+            m_ContractOps = new ContractOperations(_actor);
         }
 
         public Hashtable ChangeControlState(byte state)
@@ -1456,11 +1458,11 @@ namespace Space.Game {
                 case Race.Humans:
                     return "TELEPORT";
                 case Race.Borguzands:
-                    return "TELEPORT";
+                    return "BORGUZAND_TELEPORT";
                 case Race.Criptizoids:
                     return "KRIPTIZID_TELEPORT";
                 default:
-                    return string.Empty;
+                    return "NEUTRAL_TELEPORT";
             }
         }
 
@@ -1498,6 +1500,7 @@ namespace Space.Game {
             
             Player.Inventory.Remove(InventoryObjectType.fort_upgrade, inventoryItemID, 1);
             Player.EventOnInventoryUpdated();
+            Player.nebulaObject.mmoWorld().SaveWorldState();
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1538,6 +1541,7 @@ namespace Space.Game {
             outpostObject.GetComponent<MainOutpost>().SetConstruct(10);
             Player.Inventory.Remove(InventoryObjectType.out_upgrade, inventoryItemID, 1);
             Player.EventOnInventoryUpdated();
+            Player.nebulaObject.mmoWorld().SaveWorldState();
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1556,6 +1560,7 @@ namespace Space.Game {
             shipDamagable.SetIncreaseRegenMultiplier(repairPatchObject.value, 30);
             Player.Inventory.Remove(InventoryObjectType.repair_patch, itemID, 1);
             Player.EventOnInventoryUpdated();
+
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1668,6 +1673,7 @@ namespace Space.Game {
 
             Player.Inventory.Remove(InventoryObjectType.mining_station, inventoryItemID, 1);
             Player.EventOnInventoryUpdated();
+            Player.nebulaObject.mmoWorld().SaveWorldState();
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
             };
@@ -1739,6 +1745,7 @@ namespace Space.Game {
 
             Player.Inventory.Remove(InventoryObjectType.turret, itemID, 1);
             Player.EventOnInventoryUpdated();
+            Player.nebulaObject.mmoWorld().SaveWorldState();
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1823,6 +1830,7 @@ namespace Space.Game {
 
             Player.Inventory.Remove(InventoryObjectType.fortification, itemID, 1);
             Player.EventOnInventoryUpdated();
+            Player.nebulaObject.mmoWorld().SaveWorldState();
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1885,6 +1893,7 @@ namespace Space.Game {
 
             Player.Inventory.Remove(InventoryObjectType.outpost, itemID, 1);
             Player.EventOnInventoryUpdated();
+            Player.nebulaObject.mmoWorld().SaveWorldState();
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1947,6 +1956,7 @@ namespace Space.Game {
             founderCube.AddToWorld();
             founderCubeInventoryObject.SetUseTimeNow();
             Player.EventOnInventoryUpdated();
+            Player.nebulaObject.mmoWorld().SaveWorldState();
 
             return CreateResponse(RPCErrorCode.Ok);
         }
@@ -2311,6 +2321,11 @@ namespace Space.Game {
             string str = hash.ToStringBuilder().ToString();
             log.Info(str);
             return hash;
+        }
+
+        //=================================Contract Operations===================
+        public Hashtable AcceptTestContract() {
+            return m_ContractOps.AcceptTestContract();
         }
     }
 }

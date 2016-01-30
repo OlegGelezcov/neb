@@ -86,7 +86,7 @@ namespace Nebula.Game.Components {
                 return mHealth;
             }
             private set {
-                mHealth = Mathf.Clamp(value, -100, maximumHealth);
+                mHealth = Mathf.Clamp(value, -100000, maximumHealth);
             }
         }
 
@@ -320,7 +320,7 @@ namespace Nebula.Game.Components {
         }
 
         public void Heal(InputHeal heal) {
-            if (!healBlocked) {
+            if (!healBlocked && (!killed)) {
                 float mult = 1.0f;
                 if(mBonuses) {
                     mult = (1.0f + mBonuses.healingSpeedPcBonus);
@@ -339,7 +339,9 @@ namespace Nebula.Game.Components {
 
         //forcing set health to value, ignore block healing abilities
         public void ForceSetHealth(float inHealth) {
-            health = inHealth;
+            if (!killed) {
+                health = inHealth;
+            }
         }
 
         public void SetGod(bool inGod) {
