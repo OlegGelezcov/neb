@@ -80,7 +80,7 @@ namespace SelectCharacter.Resources {
                             return true;
                         }
                     }
-                } else if(itemType == InventoryObjectType.Material) {
+                } else if(itemType == InventoryObjectType.Material || itemType == InventoryObjectType.craft_resource) {
                     string id = objectInfo.Value<string>((int)SPC.Id);
                     foreach (var pr in mPrices) {
                         if ( ((pr.itemType == "ore") || (pr.itemType == "craft_resource")) && ((IDItemPrice)pr).id == id) {

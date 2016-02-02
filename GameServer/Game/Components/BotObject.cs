@@ -43,6 +43,10 @@ namespace Nebula.Game.Components {
             if(mBotSubType == byte.MaxValue) {
                 throw new Exception("botSubType not setted");
             }
+            //set at properties group of bot
+            if(mInitData != null ) {
+                props.SetProperty((int)PS.BotGroup, (mInitData.botGroup != null) ? mInitData.botGroup : string.Empty);
+            }
         }
 
         public Hashtable GetDatabaseSave() {
@@ -62,6 +66,25 @@ namespace Nebula.Game.Components {
             get {
                 return (mBotSubType == (byte)BotItemSubType.Turret);
             }
+        }
+
+        public string botGroup {
+            get {
+                if(mInitData!= null ) {
+                    if(mInitData.botGroup != null ) {
+                        return mInitData.botGroup;
+                    }
+                }
+                return string.Empty;
+            }
+        }
+
+        public bool HasDamager(string id) {
+            var damagable = GetComponent<DamagableObject>();
+            if(damagable == null ) {
+                return false;
+            }
+            return damagable.HasDamager(id);
         }
     }
 }

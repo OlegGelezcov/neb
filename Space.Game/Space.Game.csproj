@@ -37,6 +37,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Balance\BalanceFormulas.cs" />
+    <Compile Include="Contracts\ContractCreditsDataReward.cs" />
+    <Compile Include="Contracts\ContractData.cs" />
+    <Compile Include="Contracts\ContractDataCollection.cs" />
+    <Compile Include="Contracts\ContractDataReward.cs" />
+    <Compile Include="Contracts\ContractDataRewardCollection.cs" />
+    <Compile Include="Contracts\ContractExpDataReward.cs" />
+    <Compile Include="Contracts\ContractOreDataReward.cs" />
+    <Compile Include="Contracts\ContractResource.cs" />
+    <Compile Include="Contracts\ContractWeaponDataReward.cs" />
+    <Compile Include="Contracts\IContractResource.cs" />
+    <Compile Include="Contracts\KillNPCGroupContractData.cs" />
+    <Compile Include="Contracts\NPCGroupData.cs" />
+    <Compile Include="Contracts\NPCGroupDataCollection.cs" />
     <Compile Include="Drop\AsteroidDropper.cs" />
     <Compile Include="Drop\DropList.cs" />
     <Compile Include="Drop\DropListItem.cs" />
@@ -260,6 +273,7 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

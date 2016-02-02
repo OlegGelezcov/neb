@@ -2,6 +2,7 @@
     using Common;
     using Common.Space.Game.Resources;
     using Nebula;
+    using Nebula.Contracts;
     using Nebula.Inventory.DropList;
     using Nebula.Pets;
     using Nebula.Resources;
@@ -19,6 +20,7 @@
     public class Res : IRes {
 
         private ConcurrentDictionary<Difficulty, float> mDifficultMult;
+        private readonly ContractResource m_ContractResource = new ContractResource();
 
         //private static Res instance;
         private string basePath;
@@ -164,6 +166,16 @@
 
             npcSkills = new NpcClassSkillsResource();
             npcSkills.Load(Path.Combine(basePath, "Data/npc_skill_table.xml"));
+
+            m_ContractResource.Load(Path.Combine(basePath, "Data/contracts.xml"));
+
+        }
+
+
+        public ContractDataCollection contracts {
+            get {
+                return m_ContractResource.contracts;
+            }
         }
 
         public NpcClassSkillsResource npcSkills {

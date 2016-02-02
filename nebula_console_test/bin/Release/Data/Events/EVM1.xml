@@ -1,0 +1,73 @@
+﻿<events>
+  <event id="EVM1" name="EVM1_NAME" description="EVM1_DESCRIPTION" cooldown="60" reward_exp="100" reward_coins="100" position="1241,-11,316">
+    <stages>
+      <stage id="0" start_text="S0_EVM1_START" task_text="" is_final="false" is_success="false" timeout="1">
+        <transitions>
+          <transition to="10">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="10" />
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      <stage id="10" start_text="S10_EVM1_START" task_text="S10_EVM1_TASK" is_final="false" is_success="false" timeout="1">
+        <transitions>
+          <transition to="20">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="300" />
+            </conditions>
+          </transition>
+          <transition to="30">
+            <conditions>
+              <condition type="GEQ" var_name="kill_counter_1" var_type="int" value="5" /> 
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      
+      <stage id="20" start_text="S20_EVM1_START" task_text="S20_EVM1_TASK" is_final="false" is_success="false" timeout="1">
+        <transitions>
+          <transition to="40">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="300" />
+            </conditions>
+          </transition>
+          <transition to="50">
+            <conditions>
+              <condition type="GEQ" var_name="kill_counter_2" var_type="int" value="12" />
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      <stage id="30" start_text="S30_EVM1_START" task_text="" is_final="true" is_success="true" timeout="-1">
+        <transitions>
+        </transitions>
+      </stage>
+
+      <stage id="40" start_text="S40_EVM1_START" task_text="S40_EVM1_TASK" is_final="false" is_success="false" timeout="1">
+        <transitions>
+          <transition to="60">
+            <conditions>
+              <condition type="GEQ" var_name="stage_timer" var_type="float" value="300" />
+            </conditions>
+          </transition>
+          <transition to="70">
+            <conditions>
+              <condition type="EQ" var_name="boss_killed" var_type="bool" value="true" />
+            </conditions>
+          </transition>
+        </transitions>
+      </stage>
+      <stage id="50" start_text="S50_EVM1_START" task_text="" is_final="true" is_success="true" timeout="-1">
+        <transitions/>
+      </stage>
+
+      <stage id="60" start_text="S60_EVM1_START" task_text="" is_final="true" is_success="false" timeout="-1">
+        <transitions />
+      </stage>
+      <stage id="70" start_text="S70_EVM1_START" task_text="" is_final="true" is_success="true" timeout="-1">
+        <transitions/>
+      </stage>
+    </stages>
+  </event> 
+</events>

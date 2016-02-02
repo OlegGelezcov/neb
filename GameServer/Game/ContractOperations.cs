@@ -16,8 +16,21 @@ namespace Nebula.Game {
 
         public Hashtable AcceptTestContract() {
             ContractManager contractManager = player.GetComponent<ContractManager>();
-            KillNPCContract contract = new KillNPCContract("ct1", Common.ContractState.accepted, 0, player.nebulaObject.mmoWorld().Name);
+            KillNPCContract contract = new KillNPCContract("ct1", Common.ContractState.accepted, 0, player.nebulaObject.mmoWorld().Name, contractManager);
             bool success = contractManager.AcceptContract(contract);
+            Hashtable hash = CreateResponse(Common.RPCErrorCode.Ok);
+            hash.Add(SPCKEY(SPC.Status), success);
+            return hash;
+        }
+
+        public Hashtable GetContracts() {
+            ContractManager contractManager = player.GetComponent<ContractManager>();
+            return contractManager.GetInfo();
+        }
+
+        public Hashtable CompleteContract(string id) {
+            ContractManager contractManager = player.GetComponent<ContractManager>();
+            bool success = contractManager.CompleteContract(id);
             Hashtable hash = CreateResponse(Common.RPCErrorCode.Ok);
             hash.Add(SPCKEY(SPC.Status), success);
             return hash;

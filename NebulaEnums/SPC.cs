@@ -302,6 +302,8 @@ namespace ServerClientCommon {
         ContractState = 289 ,
         ContractStage = 290,
         ContractCategory = 291,
-        SourceWorld = 292
+        SourceWorld = 292,
+        Counter = 293,
+        TargetWorld = 294
     }
 }

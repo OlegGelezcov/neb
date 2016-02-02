@@ -228,6 +228,15 @@ namespace Nebula.Game.Components {
             mCreateChestOnKilling = create;
         }
 
+        public bool HasDamager(string id ) {
+            if(damagers != null ) {
+                if(damagers.ContainsKey(id)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public override void Start() {
             //damagers = new Dictionary<string, DamageInfo>();
             props.SetProperty((byte)PS.IgnoreDamage, ignoreDamage);

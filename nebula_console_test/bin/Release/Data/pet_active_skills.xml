@@ -1,0 +1,86 @@
+﻿<skills>
+  <!--Increase speed of owner-->
+  <skill id="1" prob="0.05" cooldown="90" auto="true" name="ps1_nm" desc="ps1_desc" icon="Skills/ps1">
+    <inputs>
+      <input key="value" value="1" type="float" />
+      <input key="time" value="5" type="float" />
+    </inputs>
+  </skill>
+  
+    <!--Decrease input damage on 70%-->
+  <skill id="2" prob="0.3" cooldown="30" auto="true" name="ps2_nm" desc="ps2_desc" icon="Skills/ps2">
+    <inputs>
+      <input key="value" value="0.9" type="float" />
+      <input key="time" value="2" type="float" />
+    </inputs>
+  </skill>
+  
+  <skill id="3" prob="0.3" cooldown="60" auto="true" name="ps3_nm" desc="ps3_desc" icon="Skills/ps3">
+    <inputs>
+      <input key="value" value="0.5" type="float" />
+      <input key="time" value="5" type="float" />
+    </inputs>
+  </skill>
+  
+  <!--Reflection skill-->
+  <skill id="4" prob="0.5" cooldown="60" auto="true" name="ps4_nm" desc="ps4_desc" icon="Skills/ps4">
+    <inputs>
+      <input key="value" value="1.5" type="float" />
+      <input key="time" value="2" type="float" />
+    </inputs>
+  </skill>
+  
+  <skill id="5" prob="0.5" cooldown="90" auto="true" name="ps5_nm" desc="ps5_desc" icon="Skills/ps5">
+    <inputs>
+      <input key="value" value="0.20" type="float" />
+      <input key="time" value="10" type="float" />
+    </inputs>
+  </skill>
+  
+  <!--increase max hp and restore hp by sec-->
+  <skill id="6" prob="0.3" cooldown="120" auto="true" name="ps6_nm" desc="ps6_desc" icon="Skills/ps6">
+    <inputs>
+      <input key="max_hp_pc" value="0.2" type="float" />
+      <input key="hp_at_sec_pc" value="0.05" type="float" />
+      <input key="time" value="10" type="float" />
+    </inputs>
+  </skill>
+  
+  <!--Additional Damage-->
+  <skill id="7" prob="0.3" cooldown="90" auto="true" name="ps7_nm" desc="ps7_desc" icon="Skills/ps7">
+    <inputs>
+      <input key="value" value="200" type="float" />
+    </inputs>
+  </skill>
+  
+  <!--Absorb damage and convert to hp-->
+  <skill id="8" prob="0.3" cooldown="45" auto="true" name="ps8_nm" desc="ps8_desc" icon="Skills/ps8">
+    <inputs>
+      <input key="absorb_dmg_pc" value="0.3" type="float" />
+      <input key="convert_dmg_pc" value="0.5" type="float" />
+      <input key="time" value="5" type="float" />
+    </inputs>
+  </skill>
+
+  <!--Increase energy cost of skills on enemy-->
+  <skill id="9" prob="0.75" cooldown="60" auto="true" name="ps9_nm" desc="ps9_desc" icon="Skills/ps9">
+    <inputs>
+      <input key="energy_pc" value="0.5" type="float" />
+      <input key="time" value="10" type="float" />
+    </inputs>
+  </skill>
+
+  <!--vamp skill-->
+  <skill id="10" prob="0.30" cooldown="90" auto="true" name="ps10_nm" desc="ps10_desc" icon="Skills/ps10">
+    <inputs>
+      <input key="dmg_pc" value="0.2" type="float" />
+      <input key="vamp_pc" value="0.1" type="float" />
+      <input key="time" value="5" type="float" />
+    </inputs>
+  </skill>
+
+  <skill id="11" prob="1" cooldown="300" auto="false" name="ps11_nm" desc="ps11_desc" icon="Skills/ps11">
+    <inputs></inputs>
+  </skill>
+  
+</skills>

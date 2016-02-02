@@ -1,4 +1,5 @@
 ﻿using Common;
+using Nebula.Engine;
 using Nebula.Game.Events;
 using ServerClientCommon;
 using System.Collections;
@@ -12,16 +13,25 @@ namespace Nebula.Game.Contracts {
         private string m_SourceWorld;
         private ContractCategory m_Category;
 
-        public BaseContract(Hashtable hash) {
+        private ContractManager m_ContractOwner;
+
+        public BaseContract(Hashtable hash, ContractManager contractOwner ) {
+            m_ContractOwner = contractOwner;
             ParseInfo(hash);
         }
 
-        public BaseContract(string id, ContractState state, int stage, string sourceWorld, ContractCategory category) {
+        public BaseContract(string id, ContractState state, int stage, string sourceWorld, ContractCategory category, ContractManager contractOwner) {
             m_Id = id;
             m_State = state;
             m_Stage = stage;
             m_SourceWorld = sourceWorld;
             m_Category = category;
+            m_ContractOwner = contractOwner;
+        }
+
+        public override string ToString() {
+            return string.Format("id: {0}, state: {1}, stage: {2}, source zone: {3}, category: {4}",
+                id, state, stage, sourceWorld, category);
         }
 
 
@@ -52,6 +62,12 @@ namespace Nebula.Game.Contracts {
         public ContractCategory category {
             get {
                 return m_Category;
+            }
+        }
+
+        protected ContractManager contractOwner {
+            get {
+                return m_ContractOwner;
             }
         }
 

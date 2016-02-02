@@ -39,7 +39,7 @@ namespace Nebula.Game.Contracts {
 
                 if(contractsSave.completedContracts != null ) {
                     foreach(var cc in contractsSave.completedContracts) {
-                        var contract = factory.Create(cc);
+                        var contract = factory.Create(cc, this);
                         if(contract != null ) {
                             if(false == AddOrReplaceCompletedContract(contract)) {
                                 s_Log.InfoFormat("fail to add completed contract: {0}".Color(LogColor.dy), contract.id);
@@ -50,7 +50,7 @@ namespace Nebula.Game.Contracts {
 
                 if(contractsSave.activeContracts != null ) {
                     foreach(var ac in contractsSave.activeContracts) {
-                        var contract = factory.Create(ac);
+                        var contract = factory.Create(ac, this);
                         if(contract != null ) {
                             if(false == AddOrReplaceActiveContract(contract)) {
                                 s_Log.InfoFormat("fail to add active contract: {0}".Color(LogColor.dy), contract.id);
@@ -99,6 +99,21 @@ namespace Nebula.Game.Contracts {
         }
 
         private bool AddOrReplaceCompletedContract(BaseContract contract ) {
+
+            //first remove all completed contracts this category
+            ConcurrentBag<string> categoryContracts = new ConcurrentBag<string>();
+            foreach(var pcc in m_CompletedContracts) {
+                if(pcc.Value.category == contract.category) {
+                    categoryContracts.Add(pcc.Value.id);
+                }
+            }
+
+            foreach(var cid in categoryContracts) {
+                BaseContract oldContract;
+                m_CompletedContracts.TryRemove(cid, out oldContract);
+            }
+
+            //then add completed contract  -we have only single completed contract of category in completed contracts
             bool removedSuccessfully = true;
             if(m_CompletedContracts.ContainsKey(contract.id)) {
                 BaseContract oldContract;
@@ -128,12 +143,12 @@ namespace Nebula.Game.Contracts {
                 var status = pac.Value.CheckEvent(evt);
                 switch(status) {
                     case ContractCheckStatus.ready: {
-                            s_Log.InfoFormat("contract: {0} is ready");
+                            s_Log.InfoFormat("contract: {0} is ready", pac.Value.id);
                             m_MmoMessage.ContractReady(pac.Value);
                             return true;
                         }
                     case ContractCheckStatus.stage_changed: {
-                            s_Log.InfoFormat("contract: {0} is stage changed");
+                            s_Log.InfoFormat("contract: {0} is stage changed", pac.Value.id);
                             m_MmoMessage.ContractStageChanged(pac.Value);
                             return true;
                         }
@@ -142,6 +157,7 @@ namespace Nebula.Game.Contracts {
             return false;
         }
 
+        //================Public API=================================
         public Hashtable GetInfo() {
             Hashtable completedHash = new Hashtable();
             foreach (var pcc in m_CompletedContracts) {
@@ -159,7 +175,7 @@ namespace Nebula.Game.Contracts {
             };
         }
 
-        //================Public API=================================
+        
         public bool AcceptContract(BaseContract contract ) {
             if(contract.state == ContractState.accepted) {
                 bool success =  AddOrReplaceActiveContract(contract);

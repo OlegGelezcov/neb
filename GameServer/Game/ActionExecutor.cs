@@ -2327,5 +2327,13 @@ namespace Space.Game {
         public Hashtable AcceptTestContract() {
             return m_ContractOps.AcceptTestContract();
         }
+
+        public Hashtable GetContracts() {
+            return m_ContractOps.GetContracts();
+        }
+
+        public Hashtable CompleteContract(string id) {
+            return m_ContractOps.CompleteContract(id);
+        }
     }
 }

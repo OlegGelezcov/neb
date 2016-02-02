@@ -1,0 +1,2051 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<zones>
+  <zone id="B3" name="B3_NAME" level="3" owned_race="1" world_type="source" h_sp="750,300,450" b_sp="-750,300,450" c_sp="0,-300,-750">
+    <planets />
+    <npc_groups />
+    <npcs />
+    <asteroids />
+    <nebula_objects>
+      <nebula_object id="STATION" position="-600,100,-400" rotation="0,280,0" script="">
+        <component id="NebulaObject" item_type="Station" badge="" size="300.00" subzone_id="0" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Model" sub_type="raceable_model" model="borguzand_station" h="human_station" b="borguzand_station" c="kriptizid_station" />
+        <component id="Station" />
+      </nebula_object>
+      <nebula_object id="OUTP_e0468a54-cfec-4944-ad0a-51b12d0cea66" position="0,0,0" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="main_outpost" size="80.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="MainOutpost" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="60000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="1" fraction="BotBorguzands" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="MainOutpost" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_OUTPOST" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="FORT_07986918-d99d-4dd7-9a6f-03ebcc2e635c" position="-800,-500,-400" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="40.00" subzone_id="0" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="1" fraction="BotBorguzands" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="36000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
+        <component id="Bonuses" />
+        <component id="Outpost" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_FORTIFICATION" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="FORT_c3b40c38-84b8-4a57-9e9b-021705dd0e42" position="0,500,800" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="40.00" subzone_id="0" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="1" fraction="BotBorguzands" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="3600.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
+        <component id="Bonuses" />
+        <component id="Outpost" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_FORTIFICATION" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="FORT_0c3eec0c-d051-4a60-993c-1d9068bd6ed3" position="800,-500,-400" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="40.00" subzone_id="0" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="1" fraction="BotBorguzands" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="36000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
+        <component id="Bonuses" />
+        <component id="Outpost" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_FORTIFICATION" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_a9ac087c-3288-4209-8512-b9d4c1ce6106" position="725,-500,-530" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="725.0,-500.0,-529.9;815.7,-500.0,-549.2;900.4,-500.0,-511.5;946.7,-500.0,-431.2;937.0,-500.0,-339.0;875.0,-500.0,-270.1;784.3,-500.0,-250.8;699.6,-500.0,-288.5;653.3,-500.0,-368.8;663.0,-500.0,-461.0" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_8f9c0ded-5ea1-4409-a13a-20f1f8f5bc5a" position="950,-400,-400" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="950.0,-400.0,-400.0;921.4,-400.0,-311.8;846.4,-400.0,-257.3;753.6,-400.0,-257.3;678.6,-400.0,-311.8;650.0,-400.0,-400.0;678.6,-400.0,-488.2;753.6,-400.0,-542.7;846.4,-400.0,-542.7;921.4,-400.0,-488.2" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_202e525e-73ee-4285-a1ea-d9dee9b8df93" position="726,-600,-273" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="724.3,-600.0,-269.1;662.3,-600.0,-338.0;652.6,-600.0,-430.2;698.9,-600.0,-510.5;783.6,-600.0,-548.2;874.3,-600.0,-529.0;936.4,-600.0,-460.1;946.0,-600.0,-367.9;899.7,-600.0,-287.6;815.0,-600.0,-249.9" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_c0be0a02-84b0-4df3-9aee-6c0aadf77c7c" position="-875,-500,-530" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-875.0,-500.0,-529.9;-784.3,-500.0,-549.2;-699.6,-500.0,-511.5;-653.3,-500.0,-431.2;-663.0,-500.0,-339.0;-725.0,-500.0,-270.1;-815.7,-500.0,-250.8;-900.4,-500.0,-288.5;-946.7,-500.0,-368.8;-937.0,-500.0,-461.0" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_3ed5c0f7-ce68-45c3-bb02-6e1dffbfb76e" position="-650,-400,-400" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-650.0,-400.0,-400.0;-678.6,-400.0,-311.8;-753.6,-400.0,-257.3;-846.4,-400.0,-257.3;-921.4,-400.0,-311.8;-950.0,-400.0,-400.0;-921.4,-400.0,-488.2;-846.4,-400.0,-542.7;-753.6,-400.0,-542.7;-678.6,-400.0,-488.2" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_5c3aba0b-7079-4928-922a-8c1e6279d566" position="-873,-600,-273" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-875.7,-600.0,-269.1;-937.7,-600.0,-338.0;-947.4,-600.0,-430.2;-901.1,-600.0,-510.5;-816.4,-600.0,-548.2;-725.7,-600.0,-529.0;-663.6,-600.0,-460.1;-654.0,-600.0,-367.9;-700.3,-600.0,-287.6;-785.0,-600.0,-249.9" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_65601520-b719-4e34-9fed-706be23e494e" position="-75,500,669" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-75.0,500.0,670.1;15.7,500.0,650.8;100.4,500.0,688.5;146.7,500.0,768.8;137.0,500.0,861.0;75.0,500.0,929.9;-15.7,500.0,949.2;-100.4,500.0,911.5;-146.7,500.0,831.2;-137.0,500.0,739.0" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_4991aadb-f532-452e-8455-ed3f87397157" position="150,600,800" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="150.0,600.0,800.0;121.4,600.0,888.2;46.4,600.0,942.7;-46.4,600.0,942.7;-121.4,600.0,888.2;-150.0,600.0,800.0;-121.4,600.0,711.8;-46.4,600.0,657.3;46.4,600.0,657.3;121.4,600.0,711.8" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="TURR_ac611cd4-2384-467d-a7a4-b6abde57def5" position="-73,400,927" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-75.7,400.0,930.9;-137.7,400.0,862.0;-147.4,400.0,769.8;-101.1,400.0,689.5;-16.4,400.0,651.8;74.3,400.0,671.0;136.4,400.0,739.9;146.0,400.0,832.1;99.7,400.0,912.4;15.0,400.0,950.1" />
+        <component id="Respawnable" interval="10.00" />
+      </nebula_object>
+      <nebula_object id="SUB_ZONE_1" position="-3000,-1000,-2800" rotation="0,0,0" script="">
+        <component id="Teleport" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="NebulaObject" item_type="Teleport" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TELEPORT" />
+        <component id="SubZone" subzone_id="1" inner_radius="600.00" outer_radius="700.00" />
+      </nebula_object>
+      <nebula_object id="A_aff13d12-d913-453b-a4d9-ab72d63dfad9" position="-2951,-843,-3051" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_d203d43a-6c19-4e76-8ee9-99905bc9042d" position="-2927,-858,-3050" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_23efa333-0f91-4dad-b2cc-9db202aeccb7" position="-2945,-855,-3070" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_b645ca13-e416-405f-87c2-aba074b4f32b" position="-2940,-850,-3056" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_e61b90fb-4d56-42b4-b3de-4ce7b2c3bfa6" position="-2806,-864,-2998" rotation="0,315,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_cbec59fa-2f56-492d-9e92-91fdd60bb4a3" position="-2781,-874,-2983" rotation="0,315,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_81f7771d-cf80-45e6-93fb-9bc72f07d59c" position="-2821,-878,-3003" rotation="0,315,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_7ca585b4-3ba2-434c-95b5-ff3126a9317e" position="-2779,-862,-2961" rotation="0,315,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_3aeb0734-b3ba-482b-b7ef-83ba222a22d6" position="-2811,-870,-2993" rotation="0,315,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_356ecc7a-4866-42b4-81e7-7012ae7f1c15" position="-2787,-870,-2969" rotation="0,315,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_5f02cd0b-73e7-4870-b1fc-448af4047a21" position="-3114,-760,-2642" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_2ffcd00a-9846-41ee-ab9a-00327f92ee23" position="-3109,-775,-2689" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_3e5bd948-84c3-42a7-8f88-311fe38b681b" position="-3102,-771,-2664" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_50fa4cbe-ee99-42e6-abad-f8b8972133ba" position="-3130,-761,-2656" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_4de4493c-fef8-4cbd-8f53-93d0569ac850" position="-3115,-767,-2669" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="4" fraction="BotNeutral" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_6982897d-bd38-4fa9-a62b-693bde3af35b" position="-3097,-767,-2650" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_1d566885-70d3-484d-b8e6-227f82be42b3" position="-3121,-767,-2650" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_53c71005-1329-42b0-93c1-2f95a8aa5b20" position="-3195,-1098,-2632" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_08a5b991-f24e-40c9-9589-9e2271c7d702" position="-3208,-1108,-2633" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_b42b8f14-8f82-4b31-96e7-29c49a6306b9" position="-3203,-1104,-2626" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_907f092e-a363-402a-a14c-8c94d43c393d" position="-2788,-1040,-2602" rotation="329,216,35" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_5363552b-3ec6-44e2-9799-6f2172319c54" position="-2805,-1036,-2577" rotation="329,216,35" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_c8459315-9742-4465-85f9-ed7d1adb535b" position="-2794,-1053,-2617" rotation="329,216,35" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_c8ffd6e7-2486-4995-af7d-fb63eb46ec3f" position="-2812,-1012,-2574" rotation="329,216,35" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_9ba15a8d-9ec0-401c-842b-3254f3b40bbe" position="-2795,-1040,-2606" rotation="329,216,35" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_7398f1e6-d049-411c-8489-cbf70fd546ce" position="-2811,-1023,-2583" rotation="329,216,35" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_c0b9772f-918f-4b76-b890-54452ae807b0" position="-3267,-897,-3041" rotation="314,271,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_1f6f27fd-caae-4487-9069-e9980c326985" position="-3274,-905,-3054" rotation="314,271,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_43d9ab34-5cad-4ac9-a482-dd4064701ab8" position="-3275,-896,-3048" rotation="314,271,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_152692f8-4959-4d1e-a476-f4415f42860a" position="-3048,-734,-2826" rotation="314,271,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_34883f87-4435-4606-a320-439d8733c871" position="-3027,-778,-2822" rotation="314,271,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_8b9e3760-dc99-4cd8-bcf9-d41f3e6bb9a7" position="-3042,-758,-2815" rotation="314,271,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_7c4a42bc-30db-47ce-a7cc-ef31ae334e95" position="-3040,-745,-2843" rotation="314,271,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_9cbeb3b0-4a83-4875-9b8e-4db1327c6778" position="-3035,-758,-2828" rotation="314,271,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="4" fraction="BotNeutral" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_28d87803-1d81-4517-bbe6-26a3dc3d2f4f" position="-3048,-745,-2810" rotation="314,271,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_cb6f407a-1374-4ec1-9f60-87aa08d1984e" position="-3049,-745,-2833" rotation="314,271,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_143e1864-55af-4f1f-b1b0-f76bd122406f" position="-2785,-1018,-2810" rotation="314,271,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_2023c341-fed0-4b6b-a901-312d98811f49" position="-2796,-1028,-2785" rotation="314,271,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_d606a063-a976-4b40-80b2-1ed0b3a66d88" position="-2780,-1040,-2803" rotation="314,271,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_32b898f2-b8db-450a-b938-1b99b34d91b4" position="-2786,-1027,-2798" rotation="314,271,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="4" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="SUB_ZONE_2" position="3000,1000,0" rotation="0,0,0" script="">
+        <component id="Teleport" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="NebulaObject" item_type="Teleport" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TELEPORT" />
+        <component id="SubZone" subzone_id="2" inner_radius="600.00" outer_radius="700.00" />
+      </nebula_object>
+      <nebula_object id="A_ed4b9405-d545-491b-b487-abb4af86f696" position="3246,1166,49" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_70993a6c-9d85-4ce4-9bd8-b0e3993c9e79" position="3236,1159,16" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_81f6a81f-5e8c-4b97-ad73-57b3c65a9585" position="3223,1178,45" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_0f2eb7aa-b472-46c6-a035-02024c3f5851" position="3251,1170,31" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_8faa3aef-af5d-4784-92b5-0053198a4727" position="3218,1170,31" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_e1d0a5a5-5612-43b8-be7d-6cad48705daf" position="3218,834,-34" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_b3dd6695-1c71-424d-9ed6-ebce2070d195" position="3225,815,-54" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_302ad5e4-01db-4511-b997-3377d3fa3d0a" position="3243,823,-31" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_1dea962b-8809-44f1-91d6-aa00ac5afb39" position="3242,826,-57" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="BotNeutral" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_cd9df331-decb-4485-9de2-c4c5ae6b32c2" position="3227,826,-35" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_8c092e09-6705-45d1-b866-3dc2a06a4783" position="3260,826,-35" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_de5b154b-2222-46f3-84b1-4a1ca154fa93" position="3161,1180,209" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_8c301d86-ff8d-416c-8db8-06a036688170" position="3126,1164,209" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_0c3d44b5-4eb5-44e6-8740-2ed89d6c34f2" position="3172,1168,172" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_e71f3168-ce31-4f23-855c-707a9882af79" position="3136,1178,171" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_c4624e21-71e1-47e2-8145-b160847e778b" position="3137,1173,182" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_c88f379f-fbfb-4521-8b3b-96ea0cecd6ff" position="3168,1173,188" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_a7197b97-5c34-4eee-ba4e-7a2ebab40317" position="3147,1173,209" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_754cef24-4838-4ed1-a4b5-6c8cbd348e7f" position="2726,915,-76" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_9d4eda84-f3df-4fe5-b690-7c1c196ca230" position="2719,925,-69" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_c5f9717b-c803-489a-a000-4617ac537511" position="2715,915,-75" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_1409be0f-c9fc-4abf-9c00-60d2431c7f72" position="2711,912,-61" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_3a0799ee-9c6c-4bdf-9eea-8af34ca0593c" position="2717,920,-82" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_01928e1d-4f3c-43c9-ada7-d9528e478fc3" position="2721,920,-54" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_f7b66223-485f-46b5-96b2-4c28e89d5dc4" position="2706,920,-66" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_28793f3e-69b8-471f-8edc-a4dc9578d50e" position="2812,970,230" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_fbfecc9b-e938-4357-b7aa-66c40ad71196" position="2797,955,207" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_e50b7ca7-7c65-4d06-bd5c-8daaf0b0d33c" position="2797,963,225" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_cee3c792-cbaf-4a87-82f0-c84207602ed1" position="2814,963,208" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_f59c11c3-35b8-422d-b0b6-87bb3f41e03a" position="2812,1242,132" rotation="46,233,93" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_46e7f6b1-e32e-401c-84e6-658de649b8e1" position="2806,1263,151" rotation="46,233,93" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_83a6255d-ab22-4078-9335-b03b87991b40" position="2789,1258,128" rotation="46,233,93" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_21aeefd4-f65d-4dcf-8ef2-eef38a812dd3" position="2806,1277,136" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="BotNeutral" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_abf90dbf-2cfa-418a-8328-da744f445c30" position="2802,1249,134" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_2882d92f-11c2-403f-88e7-10dcb7e390b2" position="2784,1272,118" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_a5d6c537-0454-45b5-9f3e-c877ab99c989" position="2923,1013,-210" rotation="46,233,93" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_c937fad4-ba8e-49d1-b702-e85b0f228065" position="2932,990,-181" rotation="46,233,93" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_f52daac8-e8e6-4705-be94-16ad9817844c" position="2929,1047,-191" rotation="46,233,93" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_708c2500-aa8a-4a79-a81f-6a0da6bafb33" position="2956,1024,-181" rotation="46,233,93" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_67fa2432-6059-4502-8213-6eca8d54e241" position="2946,1017,-182" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_2619e353-6008-47eb-8fef-1679b580be6e" position="2926,1034,-199" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_a15dcccd-9d8b-46e9-88ff-670ae4facf66" position="2926,1003,-198" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_1b261770-f848-4e29-b0f4-3b363a0fcb1f" position="2973,766,110" rotation="46,233,93" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_0ea011ce-28d9-4848-85c9-55b8b0d6eab0" position="2984,773,138" rotation="46,233,93" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_858e30b3-dc8c-4909-b2eb-c7b51688b471" position="2979,759,124" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_6af4946f-ed5f-4ff8-af5e-bfc733a12777" position="2979,783,123" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_cd630f88-3e39-48ec-9bea-9476192b0134" position="3157,932,318" rotation="46,233,93" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_6ebb4232-9264-45cf-8fc6-7a77cc88a3f1" position="3163,922,311" rotation="46,233,93" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_48ee7364-5444-436c-88ee-c17c328f7f10" position="3162,924,323" rotation="46,233,93" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_7e52ed7a-c872-4c47-94c4-824aeef8edc2" position="3154,911,322" rotation="46,233,93" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_f20f5b5c-b70b-468b-a99f-6b57d948fe2d" position="3168,929,321" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_997b3326-55ab-47eb-b632-afe0ebec3f52" position="3150,912,308" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_c0064b14-6e4b-4b9d-a0c4-77918e12d0a7" position="3164,910,319" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_83239539-fcc9-4b77-93ea-45c5e577722d" position="2956,1188,-174" rotation="46,233,93" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_a6b60f9a-ee0c-41b6-bbf9-a29e865de733" position="2975,1206,-151" rotation="46,233,93" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_9342bf98-90ec-4a5e-9c63-6e14ed38a3f8" position="2979,1175,-171" rotation="46,233,93" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_201299eb-3ddc-4922-af48-ddf6da5a9701" position="2965,1204,-172" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_a11d949e-d1e8-41c2-b4b4-e70be7c2444c" position="2984,1181,-157" rotation="46,233,93" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="SUB_ZONE_3" position="-3000,-1000,2800" rotation="0,0,0" script="">
+        <component id="Teleport" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="NebulaObject" item_type="Teleport" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TELEPORT" />
+        <component id="SubZone" subzone_id="3" inner_radius="600.00" outer_radius="700.00" />
+      </nebula_object>
+      <nebula_object id="A_d9bfcaad-ded0-427b-9dc6-0d538628dc93" position="-3076,-1030,3044" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_0e8e7351-8ada-4b96-a305-72960614a5ec" position="-3059,-1034,3058" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_5921ccb4-f92b-4d1d-b629-e8ce5263fa1f" position="-3069,-1023,3056" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_bda875df-3957-4849-9c10-d9227010014f" position="-3065,-1031,3048" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_097ddfe6-7e9d-41bb-8ee4-ec4d1bf4d85e" position="-3075,-1019,3053" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_0f0867c1-c51f-4b62-989a-5ac7bf7960aa" position="-2847,-1206,2953" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_06d32076-2300-4b68-9b7d-d374af8f7220" position="-2841,-1217,2958" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_6a3ab968-bc0a-4b81-a516-262b8b98bb56" position="-2843,-1213,2947" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_67a720fa-e003-4c15-a80c-3410d6196bd1" position="-2836,-1210,2956" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_21cc104a-a458-4c83-ad39-d233f34ed62f" position="-2846,-1214,2951" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_0d5348f3-efc8-4313-9a58-6a1b6b068f8a" position="-3048,-767,2614" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_e002c8a0-ba86-4b3c-b12f-bc1b476396a6" position="-3030,-752,2624" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_f5473448-5521-4cb2-92c2-6a08c53e53ad" position="-3045,-765,2622" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_d4a52d9b-0a7b-426e-a02d-154eddc55e86" position="-3241,-1127,2912" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_791a9e45-f825-4714-9928-357ca2485ecb" position="-3253,-1141,2911" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_9f3716fe-1a83-4fa0-856b-c11269107c89" position="-3249,-1137,2903" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_802b0439-9339-49fc-8fd6-5442f13e82f6" position="-3253,-1133,2910" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="BotNeutral" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_cba802f5-b2ee-4e9f-a83b-54afb8574c06" position="-3248,-1146,2903" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_22ef8ac0-7c49-4f21-9785-1d308fb83bb8" position="-3243,-1129,2904" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_c011c6ce-ceef-4653-8ece-c62e9b0bc0a9" position="-2848,-826,2606" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_6c2df001-2300-4453-8784-1dc6f60a00e5" position="-2813,-835,2623" rotation="0,0,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_f0c62c48-ccb7-4b90-850e-95a1b37a3d2c" position="-2858,-831,2619" rotation="0,0,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_e65c6eb5-5d23-4c48-ba83-48b1ba19d945" position="-2825,-829,2620" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_d502b39b-ef30-4ccc-8b07-3e2283345ec1" position="-2843,-819,2606" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_922c6498-8567-44dd-8ad4-ead45ecea54a" position="-3247,-826,2800" rotation="0,140,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_b063b007-8a8f-4a80-9589-31ceb9975a8d" position="-3263,-835,2764" rotation="0,140,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_e90be442-783f-4337-b48a-c20d5d29cd50" position="-3231,-831,2796" rotation="0,140,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="NPC_8d4a8ff9-d0ff-4130-a9fc-1a30379d8821" position="-3256,-829,2775" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_afb5c6ce-5fc5-4944-a524-973b553e0dc7" position="-3251,-819,2797" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_c5aa3846-ccf7-48c1-af5c-dadc4cade4f4" position="-2800,-799,2843" rotation="0,140,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_a7ba6c83-b9a2-416e-a932-8183f24bcece" position="-2804,-803,2821" rotation="0,140,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_12bb5498-4526-4b71-8e99-c8562bb90c41" position="-2797,-792,2829" rotation="0,140,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_6560c7d2-42d2-4506-9e04-23f4ce4ec16d" position="-2806,-800,2832" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_18122f13-0b7d-4270-9c53-0ead615ed405" position="-2795,-788,2835" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_8a5c40f2-7376-47bf-829c-24cb5e1579c7" position="-3220,-972,2614" rotation="0,140,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_d176bbff-a53b-4496-8eb4-a23e43bb5f0a" position="-3221,-983,2605" rotation="0,140,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_f9bacce3-ac84-4cd4-ab52-631e9145aa40" position="-3227,-979,2615" rotation="0,140,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_c4688e14-c3d3-4659-a863-36e49f76aebd" position="-3226,-976,2604" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_606480d9-6e18-4cad-b581-53308fa2b89d" position="-3222,-979,2614" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_dfd86ca3-ccc3-4415-b8fc-b776e3c322d2" position="-3088,-767,2922" rotation="0,140,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_72dd5f17-bb66-4c87-8dcb-3b98b6d8f779" position="-3096,-752,2903" rotation="0,140,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_d6fd9e9f-56e3-4844-9b4a-3a5109ec0b56" position="-3085,-765,2914" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Zoards" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="A_26927538-2972-401b-8c5d-265145267e9d" position="-2749,-1127,2816" rotation="0,140,0" script="">
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="A_5e854770-0c28-449e-b899-4880294edf57" position="-2740,-1141,2825" rotation="0,140,0" script="">
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+      </nebula_object>
+      <nebula_object id="A_9b99647e-c693-4d20-9a76-86939599e4ef" position="-2749,-1137,2829" rotation="0,140,0" script="">
+        <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
+        <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
+        <component id="Asteroid" data_id="CraftAsteroid0001" />
+        <component id="Respawnable" interval="240.00" />
+      </nebula_object>
+      <nebula_object id="NPC_f4a6a682-72ae-4648-845d-83065951266b" position="-2741,-1133,2826" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="3" fraction="BotNeutral" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_5896d129-be07-42f6-b9aa-9b17821e5b70" position="-2750,-1146,2828" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Lerjees" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_ea2ec0f6-8fd4-496c-b480-1658c2fd2b09" position="-2753,-1129,2824" rotation="0,140,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="easy" cooldown="2.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="3" fraction="Pirate" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="SUB_ZONE_999" position="-597,255,-155" rotation="0,0,0" script="">
+        <component id="Teleport" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="NebulaObject" item_type="Teleport" badge="" size="1.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TELEPORT" />
+        <component id="SubZone" subzone_id="999" inner_radius="300.00" outer_radius="400.00" />
+      </nebula_object>
+      <nebula_object id="SUB_ZONE_3008" position="-4500,1400,-200" rotation="0,0,0" script="">
+        <component id="SubZone" subzone_id="3008" inner_radius="100.00" outer_radius="200.00" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TELEPORT" />
+        <component id="NebulaObject" item_type="Teleport" badge="" size="1.00" subzone_id="0" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Teleport" />
+      </nebula_object>
+      <nebula_object id="SUB_ZONE_3009" position="2200,-1200,-3000" rotation="0,0,0" script="">
+        <component id="SubZone" subzone_id="3009" inner_radius="100.00" outer_radius="200.00" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TELEPORT" />
+        <component id="NebulaObject" item_type="Teleport" badge="" size="1.00" subzone_id="0" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Teleport" />
+      </nebula_object>
+      <nebula_object id="TURR_d87a6212-e059-4225-b70c-7a746ea6b1a5" position="171,-128,-750" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="171.4,-128.5,-748.4;137.6,-162.3,-601.5;49.2,-250.7,-510.6;-60.0,-359.9,-510.6;-148.4,-448.3,-601.5;-182.2,-482.1,-748.4;-148.4,-448.3,-895.3;-60.0,-359.9,-986.2;49.2,-250.7,-986.2;137.6,-162.3,-895.3" />
+        <component id="DatabaseObject" database_id="4f1062c5-049a-4e9e-8e2d-e4ecb619e4a0" />
+      </nebula_object>
+      <nebula_object id="TURR_122373f5-ed2a-4398-b59c-aea6db5c6742" position="-75,-300,-619" rotation="0,240,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-75.9,-300.0,-619.4;-137.9,-300.0,-688.2;-147.6,-300.0,-780.4;-101.2,-300.0,-860.7;-16.5,-300.0,-898.4;74.1,-300.0,-879.2;136.2,-300.0,-810.3;145.9,-300.0,-718.1;99.5,-300.0,-637.8;14.8,-300.0,-600.1" />
+        <component id="DatabaseObject" database_id="ec8b68b0-f47d-4d88-a015-008da3ad3808" />
+      </nebula_object>
+      <nebula_object id="TURR_4f38531e-1fdc-4401-aa0d-26f555907281" position="-63,-429,-860" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-64.3,-429.9,-861.5;51.0,-402.9,-896.9;149.3,-332.2,-872.0;193.0,-244.8,-796.3;165.4,-174.1,-698.7;77.1,-147.1,-616.5;-38.2,-174.1,-581.1;-136.5,-244.8,-606.1;-180.2,-332.2,-681.8;-152.6,-402.9,-779.3" />
+        <component id="DatabaseObject" database_id="30739d95-8f0f-4257-95f4-3e840de24798" />
+      </nebula_object>
+      <nebula_object id="NPC_43bc1b46-65aa-435c-a457-770355384987" position="-22,-328,-856" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="30.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss2" cooldown="1.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="boss2" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="30" fraction="PlayerBorguzands" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_67d8d151-6d77-4a7e-92bf-ce06afa0b8df" position="60,-280,-652" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="30.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss2" cooldown="1.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="boss2" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="30" fraction="PlayerBorguzands" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_41473af9-c473-4342-b1a8-9ed84c756527" position="99,-360,-756" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="30.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss2" cooldown="1.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="boss2" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_fa1330a9-9c86-430f-8b47-8a1641dd8393" position="-79,-227,-756" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="30.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss2" cooldown="1.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="boss2" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="TURR_bbd913b1-569b-43fc-ac43-d39a6a712927" position="921,471,450" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="921.4,471.5,451.6;887.6,437.7,598.5;799.2,349.3,689.4;690.0,240.1,689.4;601.6,151.7,598.5;567.8,117.9,451.6;601.6,151.7,304.7;690.0,240.1,213.8;799.2,349.3,213.8;887.6,437.7,304.7" />
+        <component id="DatabaseObject" database_id="701e949f-c617-497b-a82b-fc4fc3a153ce" />
+      </nebula_object>
+      <nebula_object id="TURR_34fb033f-19ad-4513-a679-fde51b94c849" position="674,300,580" rotation="0,240,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="674.1,300.0,580.6;612.1,300.0,511.8;602.4,300.0,419.6;648.8,300.0,339.3;733.5,300.0,301.6;824.1,300.0,320.8;886.2,300.0,389.7;895.9,300.0,481.9;849.5,300.0,562.2;764.8,300.0,599.9" />
+        <component id="DatabaseObject" database_id="c89877a2-e208-4196-976c-3d2f6461e947" />
+      </nebula_object>
+      <nebula_object id="TURR_d8f635f4-14d2-49c8-bdf6-1309c74ca7d3" position="686,170,339" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="685.7,170.1,338.5;801.0,197.1,303.1;899.3,267.8,328.0;943.0,355.2,403.7;915.4,425.9,501.3;827.1,452.9,583.5;711.8,425.9,618.9;613.5,355.2,593.9;569.8,267.8,518.2;597.4,197.1,420.7" />
+        <component id="DatabaseObject" database_id="8561d080-0d68-413b-b413-909d979b4f0f" />
+      </nebula_object>
+      <nebula_object id="NPC_5f2e8ba7-4d95-463c-8775-2953aeb2122f" position="656,374,450" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="30.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss2" cooldown="1.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="boss2" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_a216c7d9-66b3-4e30-8df2-310f145d93c0" position="835,240,450" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="30.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss2" cooldown="1.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="boss2" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_cd0150ec-e61d-4875-a31a-7556f88b49e3" position="797,320,554" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="30.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss2" cooldown="1.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="boss2" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="30" fraction="PlayerBorguzands" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="NPC_a850d841-beee-435c-b1e5-f89218d274b6" position="714,273,350" rotation="0,0,0" script="">
+        <component id="Skills" />
+        <component id="Energy" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="PlayerAI" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="Respawnable" interval="30.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss2" cooldown="1.00" />
+        <component id="Ship" sub_type="ship_bot" difficulty="boss2" />
+        <component id="Character" sub_type="character_bot" workshop="Phelpars" level="30" fraction="PlayerBorguzands" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Bonuses" />
+        <component id="Target" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      </nebula_object>
+      <nebula_object id="TURR_0942f28b-81c7-40a1-8b6d-a49473ebcf96" position="-578,471,450" rotation="0,0,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-578.6,471.5,451.6;-612.4,437.7,598.5;-700.8,349.3,689.4;-810.0,240.1,689.4;-898.4,151.7,598.5;-932.2,117.9,451.6;-898.4,151.7,304.7;-810.0,240.1,213.8;-700.8,349.3,213.8;-612.4,437.7,304.7" />
+        <component id="DatabaseObject" database_id="029d91ee-9a0d-43d4-97d5-863c5e38787a" />
+      </nebula_object>
+      <nebula_object id="TURR_1a596246-157e-4b50-b46b-87ed0f6fa183" position="-825,300,580" rotation="0,240,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-825.9,300.0,580.6;-887.9,300.0,511.8;-897.6,300.0,419.6;-851.2,300.0,339.3;-766.5,300.0,301.6;-675.9,300.0,320.8;-613.8,300.0,389.7;-604.1,300.0,481.9;-650.5,300.0,562.2;-735.2,300.0,599.9" />
+        <component id="DatabaseObject" database_id="1b7bee3f-6fd4-4763-a1c3-ea93eb3bd518" />
+      </nebula_object>
+      <nebula_object id="TURR_45b97673-5048-4f47-a343-2bc43757b19d" position="-813,170,339" rotation="0,120,0" script="turret">
+        <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
+        <component id="Model" sub_type="simple_model" model="BORGUZAND_TURRET" />
+        <component id="Turret" />
+        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
+        <component id="Raceable" race="Borguzands" />
+        <component id="Character" sub_type="character_bot" workshop="Rakhgals" level="30" fraction="PlayerBorguzands" />
+        <component id="Target" />
+        <component id="Weapon" sub_type="weapon_simple" optimal_distance="1000.00" damage="1000.00" cooldown="1.00" use_target_hp="True" target_hp_percent="1.0000" />
+        <component id="Movable" sub_type="simple_movable" speed="10.00" />
+        <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-814.3,170.1,338.5;-699.0,197.1,303.1;-600.7,267.8,328.0;-557.0,355.2,403.7;-584.6,425.9,501.3;-672.9,452.9,583.5;-788.2,425.9,618.9;-886.5,355.2,593.9;-930.2,267.8,518.2;-902.6,197.1,420.7" />
+        <component id="DatabaseObject" database_id="2596e45f-1c51-4724-814c-7a80a7e9b2b1" />
+      </nebula_object>
+    </nebula_objects>
+    <events />
+    <inputs>
+      <input key="zone_min" value="-200,-200,-200" type="vector" />
+      <input key="zone_max" value="200,200,200" type="vector" />
+      <input key="reach_radius" value="5" type="float" />
+    </inputs>
+  </zone>
+</zones>

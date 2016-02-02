@@ -1,0 +1,210 @@
+﻿<game_inaps>
+
+  <!--Describe inap products on server
+    id - id of product
+    name - name of product 
+    description - description of product
+    price - price of product in nebula elements
+    consumable - after using destroed ?
+    interval - interval in seconds ( duration of effect )
+    value - value of effect in percent
+    mail_title - title of mail with inap
+    mail_body - text of mail with inap
+  -->
+  
+  <!--Its exp boost -->
+  <!--
+  <game_inap id="ginp01" name="ginp001nm" description="ginp001dsc" price="0" type="exp_boost" consumable="true" tag="1" icon="inaps/ginp001"
+             mail_title="ginp_title" mail_body="ginp_body" available="false" detail="" visible="false">
+    <inputs>
+      <inputs key="interval" value="3600" type="int"    />
+      <inputs key="value"   value="0.5"   type="float"  />
+    </inputs>
+  </game_inap>-->
+
+
+  
+  <game_inap id="ginp02" name="ginp002nm" description="ginp002dsc" price="280" type="exp_boost" consumable="true" tag="2" icon="inaps/ginp002"
+             mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="interval" value="86400" type="int"    />
+      <input key="value"   value="1.0"   type="float"  />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp03" name="ginp003nm" description="ginp003dsc" price="510" type="exp_boost" consumable="true" tag="3" icon="inaps/ginp003"
+             mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="interval" value="259200" type="int"    />
+      <input key="value"   value="1.0"   type="float"  />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp04" name="ginp004nm" description="ginp004dsc" price="1010" type="exp_boost" consumable="true" tag="4" icon="inaps/ginp004"
+             mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="interval" value="604800" type="int"    />
+      <input key="value"   value="1.0"   type="float"  />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp05" name="ginp005nm" description="ginp005dsc" price="1840" type="exp_boost" consumable="true" tag="5" icon="inaps/ginp005"
+             mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="interval" value="1209600" type="int"    />
+      <input key="value"   value="1.0"   type="float"  />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp06" name="ginp006nm" description="ginp006dsc" price="3480" type="exp_boost" consumable="true" tag="6" icon="inaps/ginp006"
+             mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="interval" value="2592000" type="int"    />
+      <input key="value"   value="1.0"   type="float"  />
+    </inputs>
+  </game_inap>
+  
+  <!--Its boxes-->
+  <game_inap id="ginp07" name="ginp007nm" description="ginp007dsc" price="490" type="loot_box" consumable="true" tag="0" icon="inaps/ginp007"
+           mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="drop_list" value="ginp07" type="string"    />
+    </inputs>
+  </game_inap>
+  
+  <game_inap id="ginp08" name="ginp008nm" description="ginp008dsc" price="490" type="loot_box" consumable="true" tag="0" icon="inaps/ginp008"
+          mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="drop_list" value="ginp08" type="string"    />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp09" name="ginp009nm" description="ginp009dsc" price="490" type="loot_box" consumable="true" tag="0" icon="inaps/ginp009"
+        mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="drop_list" value="ginp09" type="string"    />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp10" name="ginp010nm" description="ginp010dsc" price="490" type="loot_box" consumable="true" tag="0" icon="inaps/ginp010"
+      mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="drop_list" value="ginp10" type="string"    />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp11" name="ginp011nm" description="ginp011dsc" price="490" type="loot_box" consumable="true" tag="0" icon="inaps/ginp011"
+    mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="drop_list" value="ginp11" type="string"    />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp12" name="ginp012nm" description="ginp012dsc" price="840" type="loot_box" consumable="true" tag="0" icon="inaps/ginp012"
+    mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="drop_list" value="ginp12" type="string"    />
+    </inputs>
+  </game_inap>
+
+  <!--Its pet skin objects-->
+
+  <game_inap id="ginp13" name="ginp013nm" description="ginp013dsc" price="600" type="pet_skin" consumable="true" tag="0" icon="Pets/hp_2"
+             mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="hp_2"  type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp14" name="ginp014nm" description="ginp014dsc" price="975" type="pet_skin" consumable="true" tag="0" icon="Pets/hp_3"
+             mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="hp_3"  type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp15" name="ginp015nm" description="ginp015dsc" price="750" type="pet_skin" consumable="true" tag="0" icon="Pets/hp_4"
+           mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="hp_4" type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp16" name="ginp016nm" description="ginp016dsc" price="1350" type="pet_skin" consumable="true" tag="0" icon="Pets/hp_5"
+         mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="hp_5" type="string"/>
+    </inputs>
+  </game_inap>
+  
+  <game_inap id="ginp17" name="ginp017nm" description="ginp017dsc" price="600" type="pet_skin" consumable="true" tag="0" icon="Pets/bp_2"
+         mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="bp_2" type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp18" name="ginp018nm" description="ginp018dsc" price="975" type="pet_skin" consumable="true" tag="0" icon="Pets/bp_3"
+       mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="bp_3" type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp19" name="ginp019nm" description="ginp019dsc" price="750" type="pet_skin" consumable="true" tag="0" icon="Pets/bp_4"
+     mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="bp_4" type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp20" name="ginp020nm" description="ginp020dsc" price="1350" type="pet_skin" consumable="true" tag="0" icon="Pets/bp_5"
+    mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="bp_5" type="string"/>
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp21" name="ginp021nm" description="ginp021dsc" price="600" type="pet_skin" consumable="true" tag="0" icon="Pets/cp_2"
+    mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="cp_2" type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp22" name="ginp022nm" description="ginp022dsc" price="975" type="pet_skin" consumable="true" tag="0" icon="Pets/cp_3"
+    mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="cp_3" type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp23" name="ginp023nm" description="ginp023dsc" price="750" type="pet_skin" consumable="true" tag="0" icon="Pets/cp_4"
+    mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="cp_4" type="string"/>
+    </inputs>
+  </game_inap>
+  <game_inap id="ginp24" name="ginp024nm" description="ginp024dsc" price="1350" type="pet_skin" consumable="true" tag="0" icon="Pets/cp_5"
+    mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+      <input key="model" value="cp_5" type="string"/>
+    </inputs>
+  </game_inap>
+
+  <!--It founder cube object-->
+  <game_inap id="ginp25" name="ginp025nm" description="ginp025dsc" price="650" type="founder_cube" consumable="true" tag="0" icon="founder_cube"
+   mail_title="ginp_title" mail_body="ginp_body" available="true" detail="" visible="true">
+    <inputs>
+    </inputs>
+  </game_inap>
+  
+  <!--
+  <game_inap id="ginp13" name="ginp013nm" description="ginp013dsc" price="888" type="loot_box" consumable="true" tag="0" icon="inaps/ginp013"
+    mail_title="ginp_title" mail_body="ginp_body" available="false" detail="ginp13_dtl">
+    <inputs>
+      <input key="drop_list" value="ginp13" type="string"    />
+    </inputs>
+  </game_inap>
+
+  <game_inap id="ginp14" name="ginp014nm" description="ginp014dsc" price="188" type="loot_box" consumable="true" tag="0" icon="inaps/ginp014"
+    mail_title="ginp_title" mail_body="ginp_body" available="true" detail="ginp14_dtl">
+    <inputs>
+      <input key="drop_list" value="ginp14" type="string"    />
+    </inputs>
+  </game_inap>
+  -->
+  
+</game_inaps>

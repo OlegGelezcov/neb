@@ -13,11 +13,11 @@ namespace Nebula.Game.Contracts {
             base.ParseInfo(info);
         }
 
-        public KillNPCContract(Hashtable hash) 
-            : base(hash) { }
+        public KillNPCContract(Hashtable hash, ContractManager owner) 
+            : base(hash, owner) { }
 
-        public KillNPCContract(string id, ContractState state, int stage, string sourceWorld)
-            : base(id, state, stage, sourceWorld, ContractCategory.killNPC) { }
+        public KillNPCContract(string id, ContractState state, int stage, string sourceWorld, ContractManager owner)
+            : base(id, state, stage, sourceWorld, ContractCategory.killNPC, owner ) { }
 
         public override ContractCheckStatus CheckEvent(BaseEvent evt) {
             if ((evt.eventType == EventType.GameObjectDeath) && (state == ContractState.accepted)) {

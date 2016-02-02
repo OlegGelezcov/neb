@@ -1,0 +1,184 @@
+﻿<pets>
+
+  <mastery_upgrades>
+    <upgrade mastery="0">
+      <element id="res_014" count="2" />
+    </upgrade>
+    <upgrade mastery="1">
+      <element id="res_019" count="2" />
+    </upgrade>
+    <upgrade mastery="2">
+      <element id="res_020" count="2" />
+    </upgrade>
+    <upgrade mastery="3">
+      <element id="res_026" count="2" />
+    </upgrade>
+    <upgrade mastery="4">
+      <element id="res_032" count="2" />
+    </upgrade>
+    <upgrade mastery="5">
+      <element id="res_034" count="2" />
+    </upgrade>
+  </mastery_upgrades>
+  
+  <upgrades>
+    <upgrade color="gray">
+      <element id="res_001" count="1" />
+      <element id="res_002" count="1" />
+      <element id="res_003" count="1" />
+      <element id="res_004" count="1" />
+      <element id="res_008" count="1" />
+    </upgrade>
+    <upgrade color="white">
+      <element id="res_005" count="1" />
+      <element id="res_006" count="1" />
+      <element id="res_009" count="1" />
+      <element id="res_010" count="1" />
+      <element id="res_015" count="1" />
+    </upgrade>
+    <upgrade color="blue">
+      <element id="res_007" count="1" />
+      <element id="res_011" count="1" />
+      <element id="res_016" count="1" />
+      <element id="res_017" count="1" />
+      <element id="res_021" count="1" />
+    </upgrade>
+    <upgrade color="yellow">
+      <element id="res_018" count="1" />
+      <element id="res_019" count="1" />
+      <element id="res_022" count="1" />
+      <element id="res_023" count="1" />
+      <element id="res_027" count="1" />
+    </upgrade>
+    <upgrade color="green">
+      <element id="res_024" count="1" />
+      <element id="res_025" count="1" />
+      <element id="res_028" count="1" />
+      <element id="res_029" count="1" />
+      <element id="res_034" count="1" />
+    </upgrade>
+  </upgrades>
+  
+  
+  <player>
+    <level min="0" max="9" count="1" />
+    <level min="10" max="29" count="2" />
+    <level min="30" max="60" count="3" />
+  </player>
+
+  <default_model>
+    <entry race="Borguzands"  model="bp_1" />
+    <entry race="Humans"      model="hp_1"  />
+    <entry race="Criptizoids"  model="cp_1" />
+  </default_model>
+  
+  <types>
+    <type id="bp_1" race="Borguzands" name="bp_1_nm" icon="Pets/bp_1"/>
+    <type id="bp_2" race="Borguzands" name="bp_2_nm" icon="Pets/bp_2"/>
+    <type id="bp_3" race="Borguzands" name="bp_3_nm" icon="Pets/bp_3"/>
+    <type id="bp_4" race="Borguzands" name="bp_4_nm" icon="Pets/bp_4"/>
+    <type id="bp_5" race="Borguzands" name="bp_5_nm" icon="Pets/bp_5"/>
+    
+    <type id="hp_1" race="Humans"     name="hp_1_nm" icon="Pets/hp_1"/>
+    <type id="hp_2" race="Humans"     name="hp_2_nm" icon="Pets/hp_2"/>
+    <type id="hp_3" race="Humans"     name="hp_3_nm" icon="Pets/hp_3"/>
+    <type id="hp_4" race="Humans"     name="hp_4_nm" icon="Pets/hp_4"/>
+    <type id="hp_5" race="Humans"     name="hp_5_nm" icon="Pets/hp_5"/>
+    
+    <type id="cp_1" race="Criptizoids"     name="cp_1_nm" icon="Pets/cp_1"/>
+    <type id="cp_2" race="Criptizoids"     name="cp_2_nm" icon="Pets/cp_2"/>
+    <type id="cp_3" race="Criptizoids"     name="cp_3_nm" icon="Pets/cp_3"/>
+    <type id="cp_4" race="Criptizoids"     name="cp_4_nm" icon="Pets/cp_4"/>
+    <type id="cp_5" race="Criptizoids"     name="cp_5_nm" icon="Pets/cp_5"/>
+  </types>
+  
+  <mastery>
+    <tier id="0" prob="0.00" />
+    <tier id="1" prob="0.015" />
+    <tier id="2" prob="0.03" />
+    <tier id="3" prob="0.045" />
+    <tier id="4" prob="0.06" />
+    <tier id="5" prob="0.075" />
+    <tier id="6" prob="0.09" />
+  </mastery>
+  
+  <passive_skills>
+    <color name="gray"    count="1"  />
+    <color name="white"   count="1"  />
+    <color name="blue"    count="1"  />
+    <color name="yellow"  count="1"  />
+    <color name="green"   count="1"  />
+    <color name="orange"  count="1"  />
+  </passive_skills>
+  
+  <active_skills>
+    <color name="gray"    count="1"  />
+    <color name="white"   count="1"  />
+    <color name="blue"    count="1"  />
+    <color name="yellow"  count="1"  />
+    <color name="green"   count="1"  />
+    <color name="orange"  count="2"  />
+  </active_skills>
+  
+  <colors>
+    <color name="gray"    prob="1"       mult="0"  />
+    <color name="white"   prob="0.7"    mult="0"  />
+    <color name="blue"    prob="0.3"     mult="0"  />
+    <color name="yellow"  prob="0.1"   mult="0"  />
+    <color name="green"   prob="0.007"  mult="0"  />
+    <color name="orange"  prob="0.002" mult="0"  />
+  </colors>
+  
+  <attack rnd_min="0.9" rnd_max="1.1" >
+    <base value="20" rnd_min="0" rnd_max="20"     />
+    <color value="20" rnd_min="0" rnd_max="20"    />
+    <level value="2" rnd_min="0" rnd_max="1"      />
+      <colors>
+        <color name="gray"        mult="0.8"  />
+        <color name="white"       mult="1.0"  />
+        <color name="blue"        mult="1.2"  />
+        <color name="yellow"      mult="1.4"  />
+        <color name="green"       mult="1.6"  />
+        <color name="orange"      mult="1.8"  />
+    </colors>
+  </attack>
+  <hp rnd_min="0.9" rnd_max="1.1">
+    <base value="300" rnd_min="0" rnd_max="300"   />
+    <color value="150" rnd_min="0" rnd_max="150"  />
+    <level value="10" rnd_min="0" rnd_max="5"     /> 
+    <colors>
+        <color name="gray"        mult="0.8"  />
+        <color name="white"       mult="1.0"  />
+        <color name="blue"        mult="1.2"  />
+        <color name="yellow"      mult="1.4"  />
+        <color name="green"       mult="1.6"  />
+        <color name="orange"      mult="1.8"  />
+    </colors>
+  </hp>
+  <od rnd_min="0.9" rnd_max="1.1">
+    <base value="40" rnd_min="0" rnd_max="20"   />
+    <color value="15" rnd_min="0" rnd_max="15"  />
+    <level value="1" rnd_min="0" rnd_max="1"    />   
+      <colors>
+        <color name="gray"        mult="0.8"  />
+        <color name="white"       mult="1.0"  />
+        <color name="blue"        mult="1.2"  />
+        <color name="yellow"      mult="1.4"  />
+        <color name="green"       mult="1.6"  />
+        <color name="orange"      mult="1.8"  />
+    </colors>
+  </od>
+  <cd rnd_min="1" rnd_max="1">
+    <base value="4" rnd_min="0" rnd_max="0"   />
+    <color value="0" rnd_min="0" rnd_max="0"  />
+    <level value="0" rnd_min="0" rnd_max="0"  />  
+      <colors>
+        <color name="gray"        mult="0.8"  />
+        <color name="white"       mult="1.0"  />
+        <color name="blue"        mult="1.2"  />
+        <color name="yellow"      mult="1.4"  />
+        <color name="green"       mult="1.6"  />
+        <color name="orange"      mult="1.8"  />
+    </colors>
+  </cd>
+</pets>

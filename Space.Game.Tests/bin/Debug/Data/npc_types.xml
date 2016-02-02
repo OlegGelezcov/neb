@@ -1,0 +1,80 @@
+﻿<npc_types>
+  <npc_type type="resource_guard" idle_type="Wander">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="area_min" value="-1000,-1000,-1000" type="vector" />
+    <input key="area_max" value="1000,1000,1000" type="vector" />
+    <input key="reach_radius" value="100" type="float" />
+  </npc_type>
+
+  <npc_type type="resource_guard_evt" idle_type="WanderAroundPoint">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="area_min" value="-1000,-1000,-1000" type="vector" />
+    <input key="area_max" value="1000,1000,1000" type="vector" />
+    <input key="wander_radius" value="300" type="float" />
+    <input key="reach_distance" value="10" type="float" />
+  </npc_type>
+
+  <npc_type type="pirate_evt" idle_type="OrbitAroundPoint">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="orbit_radius" value="30" type="float" />
+    <input key="phi_speed" value="0.05" type="float" />
+    <input key="theta_speed" value="0.05" type="float" />
+  </npc_type>
+  
+  <npc_type type="resource_guard_orbit"  idle_type="OrbitAroundPoint">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="orbit_radius" value="200" type="float" />
+    <input key="phi_speed" value="0.01" type="float" />
+    <input key="theta_speed" value="0.01" type="float" />
+  </npc_type>
+  
+  <npc_type type="point_guard_aggressive" idle_type="WanderAroundPoint">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="wander_radius" value="500" type="float" />
+    <input key="reach_distance" value="10" type="float" />
+  </npc_type>
+
+  <npc_type type="test_mob"  idle_type="WanderAroundPoint">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="wander_radius" value="500" type="float" />
+    <input key="reach_distance" value="10" type="float" />
+  </npc_type>
+
+  <npc_type type="friend"  idle_type="WanderAroundPoint">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="wander_radius" value="50" type="float" />
+    <input key="reach_distance" value="3" type="float" />
+  </npc_type>
+  
+  <npc_type type="humans_race_bot_fighter"  idle_type="PatrolBetweenTwoAreas">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="wander_radius" value="100" type="float" />
+    <input key="race" value="Humans" type="race" />
+    <input key="first_area_center" value="-250,-250,-250" type="vector" />
+    <input key="second_area_center" value="250,250,250" type="vector" />
+    <input key="patrol_area_reach_radius" value="500" type="float" />
+  </npc_type>
+  <npc_type type="borguzands_race_bot_fighter" idle_type="PatrolBetweenTwoAreas">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="wander_radius" value="100" type="float" />
+    <input key="race" value="Borguzands" type="race" />
+    <input key="first_area_center" value="250,250,250" type="vector" />
+    <input key="second_area_center" value="-250,-250,-250" type="vector" />
+    <input key="patrol_area_reach_radius" value="500" type="float" />
+  </npc_type>
+  <npc_type type="other_race_attacker"  idle_type="WanderAroundPoint">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="wander_radius" value="500" type="float" />
+    <input key="reach_distance" value="10" type="float" />
+  </npc_type>
+  <npc_type type="event_combat" idle_type="Stay">
+    <input key="rotation_speed" value="0.5" type="float"  />
+    <input key="fraction" value="EventBot"  type="string" />
+  </npc_type>
+  <npc_type type="station_security"  idle_type="WanderAroundPoint">
+    <input key="rotation_speed" value="0.5" type="float" />
+    <input key="wander_radius" value="30" type="float" />
+    <input key="reach_distance" value="5" type="float" />
+    <input key="fraction" value="EventBot"  type="string" />
+  </npc_type>
+</npc_types>
