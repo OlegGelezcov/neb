@@ -81,6 +81,12 @@ namespace Space.Game {
         private float printPropertiesInterval = 25;
         private float printPropertiesTimer = 0f;
 
+        private GameApplication m_Application;
+
+        public void SetApplication(GameApplication app) {
+            m_Application = app;
+        }
+
         public override void Awake() {
             log.Info("player Awake()");
             operationHandlers = new Dictionary<OperationCode, BasePlayerOperationHandler>();
@@ -108,6 +114,7 @@ namespace Space.Game {
             operationHandlers.Add(OperationCode.SpawnItem, new SpawnItemOperationHandler());
             operationHandlers.Add(OperationCode.SubscribeItem, new SubscribeItemOperationHandler());
             operationHandlers.Add(OperationCode.UnsubscribeItem, new UnsubscribeItemOperationHandler());
+            operationHandlers.Add(OperationCode.InvokeRPC, new RPCInvokeOperationHandler());
 
             execActionHandler = new ExecActionOperationHandler();
             operationHandlers.Add(OperationCode.ExecAction, execActionHandler);
@@ -139,13 +146,13 @@ namespace Space.Game {
             mCharacter.SetCharacterName((string)nebulaObject.Tag((byte)PlayerTags.Name));
             printPropertiesTimer = printPropertiesInterval;
 
-            if(GameApplication.Instance.serverActors.ContainsKey(nebulaObject.Id)) {
+            if(application.serverActors.ContainsKey(nebulaObject.Id)) {
                 MmoActor old;
-                if( GameApplication.Instance.serverActors.TryRemove(nebulaObject.Id, out old)) {
+                if( application.serverActors.TryRemove(nebulaObject.Id, out old)) {
                     log.Info("successfully remove actor before replacing with new [red]");
                 }
             }
-            if( GameApplication.Instance.serverActors.TryAdd(nebulaObject.Id, this) ) {
+            if( application.serverActors.TryAdd(nebulaObject.Id, this) ) {
                 log.Info("successfully added actor to server actors [red]");
             }
 
@@ -159,7 +166,7 @@ namespace Space.Game {
             log.InfoFormat("MmoActor Load() [dy]");
 
             bool isNew = false;
-            PlayerCharacter dbCharacter = CharacterDatabase.instance.LoadCharacter(mCharacter.characterId, resource as Res, out isNew);
+            PlayerCharacter dbCharacter = CharacterDatabase.instance(application).LoadCharacter(mCharacter.characterId, resource as Res, out isNew);
             if (!isNew) {
                 SetPlayerCharacter(dbCharacter);
             } else {
@@ -170,7 +177,7 @@ namespace Space.Game {
                 GetComponent<RaceableObject>().SetRace((byte)(int)nebulaObject.Tag((byte)PlayerTags.Race));
                 GetComponent<PlayerCharacterObject>().SetLogin((string)nebulaObject.Tag((byte)PlayerTags.Login));
 
-                CharacterDatabase.instance.SaveCharacter(mCharacter.characterId, GetPlayerCharacter());
+                CharacterDatabase.instance(application).SaveCharacter(mCharacter.characterId, GetPlayerCharacter());
             }
 
             switch ((Race)(byte)(int)nebulaObject.Tag((byte)PlayerTags.Race)) {
@@ -204,12 +211,12 @@ namespace Space.Game {
 
             try {
                 log.InfoFormat("mmoActor LoadOther() [dy]");
-                var dbInventory = InventoryDatabase.instance.LoadInventory(mCharacter.characterId, resource as Res);
+                var dbInventory = InventoryDatabase.instance(application).LoadInventory(mCharacter.characterId, resource as Res);
                 Inventory.Replace(dbInventory);
                 Inventory.ChangeMaxSlots(mShip.holdCapacity);
 
                 bool stationIsNew = false;
-                var dbStation = StationDatabase.instance.LoadStation(mCharacter.characterId, resource as Res, out stationIsNew);
+                var dbStation = StationDatabase.instance(application).LoadStation(mCharacter.characterId, resource as Res, out stationIsNew);
                 Station.SetInventory(dbStation.StationInventory);
                 Station.SetPetSchemeAdded(dbStation.petSchemeAdded);
 
@@ -237,16 +244,11 @@ namespace Space.Game {
         }
 
         public void UpdateCharacterOnMaster() {
-            GameApplication.Instance.MasterUpdateCharacter(nebulaObject.Id,
+            application.MasterUpdateCharacter(nebulaObject.Id,
                 mCharacter.characterId, GetPlayerCharacter(),
                 mShip.shipModel.ModelHash(),
                 (nebulaObject.world as MmoWorld).Name,
                 mCharacter.exp);
-        }
-
-
-        public void SetApplication(GameApplication app) {
-            //application = app;
         }
 
 
@@ -291,13 +293,13 @@ namespace Space.Game {
         [Obsolete("Use instead application")]
         public GameApplication Application {
             get {
-                return GameApplication.Instance;
+                return application;
             }
         }
 
         public GameApplication application {
             get {
-                return GameApplication.Instance;
+                return m_Application;
             }
         }
 
@@ -401,7 +403,7 @@ namespace Space.Game {
             //this.Dispose();
 
             MmoActor old;
-            if (GameApplication.Instance.serverActors.TryRemove(nebulaObject.Id, out old)) {
+            if (application.serverActors.TryRemove(nebulaObject.Id, out old)) {
                 log.InfoFormat("successfully removed actor from server actors");
             }
 

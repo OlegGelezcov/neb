@@ -31,5 +31,28 @@ namespace nebula_console_test.Contracts {
             }
             Console.WriteLine("=========");
         }
+
+        public void TestKillNPCGroupContractServerClientCompativility() {
+
+            ContractResource resource = new ContractResource();
+            resource.Load("Data/contracts.xml");
+
+            var generator = ContractGenerator.Create(Common.ContractCategory.killNPCGroup);
+            var contract = generator.Generate(Common.Race.Humans, 1, "H1", null, resource);
+            var info = contract.GetInfo();
+            Console.WriteLine("Server:");
+            Console.WriteLine(contract.ToString());
+            Console.WriteLine("=====================");
+
+            ExitGames.Client.Photon.Hashtable photonHash = new ExitGames.Client.Photon.Hashtable();
+            foreach(System.Collections.DictionaryEntry entry in info ) {
+                photonHash.Add(entry.Key, entry.Value);
+            }
+
+            Nebula.Client.Contracts.ContractFactory clientFactory = new Nebula.Client.Contracts.ContractFactory();
+            var clientContract = clientFactory.Create(photonHash);
+            Console.WriteLine("Client:");
+            Console.WriteLine(clientContract.ToString());
+        }
     }
 }

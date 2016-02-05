@@ -6,7 +6,7 @@ using System.Text;
 using System.Xml.Linq;
 
 namespace Nebula.Contracts {
-    class ContractCreditsDataReward : ContractDataReward {
+    public class ContractCreditsDataReward : ContractDataReward {
 
         public int count { get; private set; }
 

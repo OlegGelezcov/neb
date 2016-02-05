@@ -304,6 +304,9 @@ namespace ServerClientCommon {
         ContractCategory = 291,
         SourceWorld = 292,
         Counter = 293,
-        TargetWorld = 294
+        TargetWorld = 294,
+        Contract = 295,
+        DeclineStart = 296,
+        DeclineEnd = 297
     }
 }

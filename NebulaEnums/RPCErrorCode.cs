@@ -59,6 +59,13 @@ namespace Common {
         CoalitionNotFound = 1049,
         CoalitionInClosedState = 1050,
 
+        AlreadyHasAcceptedContractWithSuchCategory = 1051,
+        ContractGeneratorNotFound = 1052,
+        NoValidContract = 1053,
+        UnableProposeContract = 1054,
+        ProposedContractNotFound = 1055,
+        ErrorOfAcceptContract = 1056,
+
         UnknownError = 10002,
         
     }

@@ -120,7 +120,9 @@ namespace Nebula.Client.Inventory {
                 if (h != null) {
                     int count = h.GetValueInt((int)SPC.Count);
                     Hashtable info = h.GetValueHash((int)SPC.Info);
-                    res.Add(new ClientInventoryItem(Get(info), count));
+                    if (info != null) {
+                        res.Add(new ClientInventoryItem(Get(info), count));
+                    }
                 }
             }
             return res;

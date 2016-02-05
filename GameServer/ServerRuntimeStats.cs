@@ -12,16 +12,18 @@ namespace Space
     {
         private static ServerRuntimeStats stats;
 
-        public static ServerRuntimeStats Default
+        public static ServerRuntimeStats Default(GameApplication app)
         {
-            get
-            {
-                if (stats == null)
-                    stats = new ServerRuntimeStats();
-                return stats;
-            }
+            if (stats == null)
+                stats = new ServerRuntimeStats(app);
+            return stats;
         }
 
+        private GameApplication m_App;
+
+        private ServerRuntimeStats(GameApplication app) {
+            m_App = app;
+        }
 
         private Dictionary<ItemType, int> createdItems = new Dictionary<ItemType, int>();
         private object createdSync = new object();
@@ -71,7 +73,7 @@ namespace Space
             {
                 {"Created Items", createdItemsHash},
                 {"Disposed Items", disposedItemsHash },
-                {"Worlds", MmoWorldCache.Instance.GetStats() }
+                {"Worlds", MmoWorldCache.Instance(m_App).GetStats() }
             };
 
             var builder = resultInfo.ToStringBuilder();

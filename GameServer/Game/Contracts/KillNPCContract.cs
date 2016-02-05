@@ -24,7 +24,7 @@ namespace Nebula.Game.Contracts {
                 if (evt is ContractEvent) {
                     ContractEvent contractEvent = evt as ContractEvent;
                     if(contractEvent.contractId == id ) {
-                        if (SetState(ContractState.ready)) {
+                        if (Ready()) {
                             return ContractCheckStatus.ready;
                         }
                     }

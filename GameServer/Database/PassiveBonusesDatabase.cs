@@ -14,23 +14,24 @@ namespace Nebula.Database {
         //private MongoServer DbServer { get; set; }
         //private MongoDatabase Database { get; set; }
 
+        private GameApplication m_App;
+
         private MongoCollection<PassiveBonusesDocument> collection { get; set; }
 
         private static PassiveBonusesDatabase s_Instance = null;
-        public static PassiveBonusesDatabase instance {
-            get {
-                if(s_Instance == null ) {
-                    s_Instance = new PassiveBonusesDatabase();
-                }
-                return s_Instance;
+        public static PassiveBonusesDatabase instance(GameApplication app) {
+            if (s_Instance == null) {
+                s_Instance = new PassiveBonusesDatabase(app);
             }
+            return s_Instance;
         }
 
-        public PassiveBonusesDatabase() {
+        public PassiveBonusesDatabase(GameApplication app) {
+            m_App = app;
             //DbClient = new MongoClient(connectionString);
             //DbServer = DbClient.GetServer();
             //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            collection = GameApplication.Instance.defaultDatabase.GetCollection<PassiveBonusesDocument>(GameServerSettings.Default.PassiveBonusesCollectionName);
+            collection = m_App.defaultDatabase.GetCollection<PassiveBonusesDocument>(GameServerSettings.Default.PassiveBonusesCollectionName);
         }
 
 

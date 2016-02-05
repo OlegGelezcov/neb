@@ -15,17 +15,18 @@ namespace Nebula.Database {
 
         private static PetDatabase s_Instance = null;
 
-        public static PetDatabase instance {
-            get {
-                if(s_Instance == null  ) {
-                    s_Instance = new PetDatabase();
-                }
-                return s_Instance;
+        private GameApplication m_App;
+
+        public static PetDatabase instance(GameApplication app) {
+            if (s_Instance == null) {
+                s_Instance = new PetDatabase(app);
             }
+            return s_Instance;
         }
 
-        private PetDatabase() {
-            m_PetDocuments = GameApplication.Instance.defaultDatabase.GetCollection<PetDocument>(GameServerSettings.Default.PetCollectionName);
+        private PetDatabase(GameApplication app) {
+            m_App = app;
+            m_PetDocuments = m_App.defaultDatabase.GetCollection<PetDocument>(GameServerSettings.Default.PetCollectionName);
         }
 
         public void SavePets(string characterID, PetCollection pets) {

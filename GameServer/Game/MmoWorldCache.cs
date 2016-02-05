@@ -13,10 +13,19 @@
     {
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
-        public static readonly MmoWorldCache Instance = new MmoWorldCache();
+        private static MmoWorldCache s_Instance = null;
+
+        public static  MmoWorldCache Instance(GameApplication app) {
+            if(s_Instance == null ) {
+                s_Instance = new MmoWorldCache(app);
+            }
+            return s_Instance;
+        }
 
         private readonly Dictionary<string, MmoWorld> dict;
         private readonly ReaderWriterLockSlim readWriteLock;
+        private readonly GameApplication m_App;
+
 
         public Hashtable GetStats()
         {
@@ -37,8 +46,9 @@
             }
         }
 
-        private MmoWorldCache()
+        private MmoWorldCache(GameApplication app)
         {
+            m_App = app;
             this.dict = new Dictionary<string, MmoWorld>();
             this.readWriteLock = new ReaderWriterLockSlim();
         }
@@ -87,7 +97,7 @@
                 {
                     return false;
                 }
-                world = new MmoWorld(name, minCorner, maxCorner, tileDimensions, resource);
+                world = new MmoWorld(name, minCorner, maxCorner, tileDimensions, resource, m_App);
                 //world.LoadXml();
                 this.dict.Add(name, world);
                 return true;

@@ -28,6 +28,7 @@ namespace Common
         GetNebulaCredits = 5,
         RequestServerId = 6,
         GetShipModel = 7,
+        InvokeRPC = 8,
         /// <summary>
         /// Create world operation code
         /// </summary>

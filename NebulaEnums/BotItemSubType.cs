@@ -14,7 +14,8 @@
         MainOutpost,
         PvpStore,
         Pet,
-        FounderCube
+        FounderCube,
+        ContractMark
     }
 }
 

@@ -696,7 +696,8 @@ namespace Space.Game {
         /// <param name="schemeCount"></param>
         public Hashtable TestAddOreAndSchemesToStation(int oreCount, int schemeCount) {
 
-            GameApplication.Instance.updater.EnqueueAtUpdateLoop(() => {
+
+            Player.application.updater.EnqueueAtUpdateLoop(() => {
                 Workshop playerWorkshop = (Workshop)Player.GetComponent<PlayerCharacterObject>().workshop;
                 MmoWorld pworld = Player.World as MmoWorld;
                 int level = Player.GetComponent<PlayerCharacterObject>().level;
@@ -1135,7 +1136,7 @@ namespace Space.Game {
 
         public Hashtable PrintServerStats()
         {
-            ServerRuntimeStats.Default.OutStats(ConsoleLogContext.Instance);
+            ServerRuntimeStats.Default(Player.application).OutStats(ConsoleLogContext.Instance);
             return GetSuccessResponse("ok");
         }
 
@@ -1152,7 +1153,7 @@ namespace Space.Game {
         /// </summary>
         /// <returns></returns>
         public Hashtable TGM() {
-            GameApplication.Instance.updater.EnqueueAtUpdateLoop(() => {
+            Player.application.updater.EnqueueAtUpdateLoop(() => {
                 if(Player) {
                     var damagable = Player.GetComponent<ShipBasedDamagableObject>();
                     damagable.SetGod(!damagable.god);
@@ -1171,7 +1172,7 @@ namespace Space.Game {
             var character = Player.GetComponent<PlayerCharacterObject>();
             var characterInfo = Player.GetPlayerCharacter();
 
-            GameApplication.Instance.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "AddCredits", new object[] {
+            Player.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "AddCredits", new object[] {
                 character.login, Player.nebulaObject.Id, characterInfo.CharacterId, credits
             });
             return GetSuccessResponse("ok");
@@ -1259,7 +1260,7 @@ namespace Space.Game {
         /// </summary>
         /// <returns></returns>
         public Hashtable sendrace() {
-            GameApplication.Instance.updater.SendS2SWorldRaceChanged("H5", (byte)Race.Humans, (byte)Race.Criptizoids);
+            Player.application.updater.SendS2SWorldRaceChanged("H5", (byte)Race.Humans, (byte)Race.Criptizoids);
           //  log.InfoFormat("change race sended to Master [red]");
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
@@ -2324,9 +2325,9 @@ namespace Space.Game {
         }
 
         //=================================Contract Operations===================
-        public Hashtable AcceptTestContract() {
-            return m_ContractOps.AcceptTestContract();
-        }
+        //public Hashtable AcceptTestContract() {
+        //    return m_ContractOps.AcceptTestContract();
+        //}
 
         public Hashtable GetContracts() {
             return m_ContractOps.GetContracts();
@@ -2334,6 +2335,27 @@ namespace Space.Game {
 
         public Hashtable CompleteContract(string id) {
             return m_ContractOps.CompleteContract(id);
+        }
+
+        //public Hashtable AcceptContract(int icategory) {
+        //    return m_ContractOps.AcceptContract(icategory);
+        //}
+
+        public Hashtable ProposeContract(int category) {
+            return m_ContractOps.ProposeContract(category);
+        }
+
+        public Hashtable AcceptContract(string contractId ) {
+            return m_ContractOps.AcceptContract(contractId);
+        }
+
+        public Hashtable DeclineContract(string contractId ) {
+            return m_ContractOps.DeclineContract(contractId);
+        }
+
+        public int RestartLoop() {
+            Player.application.updater.Restart();
+            return (int)RPCErrorCode.Ok;
         }
     }
 }

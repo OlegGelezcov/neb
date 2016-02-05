@@ -183,7 +183,7 @@ namespace Space.Server
                 this.fiberStarted = true;
             }
 
-            ServerRuntimeStats.Default.CreateItem(type);
+            //ServerRuntimeStats.Default.CreateItem(type);
         }
 
         public Item(Vector position, Hashtable props, string id, byte type, IWorld world, IFiber fiber, bool innerFiber, Dictionary<byte, object> inTags, float size, 
@@ -197,7 +197,7 @@ namespace Space.Server
                 this.fiberStarted = true;
             }
 
-            ServerRuntimeStats.Default.CreateItem(type);
+            //ServerRuntimeStats.Default.CreateItem(type);
         }
 
         private Item(Vector position, Hashtable props, string id, byte type, IWorld world, Dictionary<byte, object> inTags, float size, int subZone, params Type[] components)
@@ -457,7 +457,7 @@ namespace Space.Server
 
                 
                 this.disposed = true;
-                ServerRuntimeStats.Default.DisposeItem(this.Type);
+                //ServerRuntimeStats.Default.DisposeItem(this.Type);
             }
         }
 

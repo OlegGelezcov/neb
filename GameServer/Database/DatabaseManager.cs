@@ -16,6 +16,11 @@ namespace Space.Database {
         //public MongoClient DbClient { get; private set; }
         //public MongoServer DbServer { get; private set; }
         //public MongoDatabase Database { get; private set; }
+
+        private GameApplication m_App;
+        public DatabaseManager(GameApplication app) {
+            m_App = app;
+        }
  
         public MongoCollection<WorldDocument> Worlds { get; private set; }
 
@@ -35,8 +40,8 @@ namespace Space.Database {
 
             //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             
-            Worlds                  = GameApplication.Instance.defaultDatabase.GetCollection<WorldDocument>(GameServerSettings.Default.WorldCollection);
-            worldStates             = GameApplication.Instance.defaultDatabase.GetCollection<WorldState>(GameServerSettings.Default.WorldStateCollectionName);
+            Worlds                  = m_App.defaultDatabase.GetCollection<WorldDocument>(GameServerSettings.Default.WorldCollection);
+            worldStates             = m_App.defaultDatabase.GetCollection<WorldState>(GameServerSettings.Default.WorldStateCollectionName);
             log.InfoFormat("world count = {0} [red]", Worlds.Count());
             //log.InfoFormat("world count: {0} [red]", )
         }

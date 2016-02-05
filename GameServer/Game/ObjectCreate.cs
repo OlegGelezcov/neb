@@ -21,6 +21,7 @@ using Nebula.Pets;
 using Nebula.Inventory.DropList;
 using Nebula.Game.Utils;
 using Nebula.Game.Contracts;
+using Nebula.Game.Contracts.Marks;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -55,6 +56,15 @@ namespace Nebula.Game {
                             case ComponentSubType.player_ship_movable:
                                 components.Add(typeof(PlayerShipMovable));
                                 break;
+                        }
+                        break;
+                    case ComponentID.ContractMark: {
+                            switch((comp.Value as MultiComponentData).subType) {
+                                case ComponentSubType.kill_npc_group_contract_mark: {
+                                        components.Add(typeof(KillNPCGroupContractMark));
+                                    }
+                                    break;
+                            }
                         }
                         break;
                     case ComponentID.Activator:
@@ -334,6 +344,15 @@ namespace Nebula.Game {
                                     break;
                                 case ComponentSubType.player_ship_movable:
                                     nebObject.GetComponent<PlayerShipMovable>().Init(comp.Value as PlayerShipMovableComponentData);
+                                    break;
+                            }
+                        }
+                        break;
+                    case ComponentID.ContractMark: {
+                            switch((comp.Value as MultiComponentData).subType) {
+                                case ComponentSubType.kill_npc_group_contract_mark: {
+                                        nebObject.GetComponent<KillNPCGroupContractMark>().Init(comp.Value as KillNPCGroupContractMarkData);
+                                    }
                                     break;
                             }
                         }

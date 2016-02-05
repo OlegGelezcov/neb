@@ -138,7 +138,8 @@ namespace Nebula.Game.Components {
         public void Load() {
             var characterID = GetComponent<PlayerCharacterObject>().characterId;
             log.InfoFormat("load passive bonuses = {0} [red]", characterID);
-            var savedBonuses = PassiveBonusesDatabase.instance.LoadPassiveBonuses(characterID);
+            var app = nebulaObject.mmoWorld().application;
+            var savedBonuses = PassiveBonusesDatabase.instance(app).LoadPassiveBonuses(characterID);
 
             foreach(var savedBonusPair in savedBonuses ) {
 

@@ -5,6 +5,7 @@ using Nebula.Engine;
 using Nebula.Game.Components;
 using Nebula.Game.Events;
 using Nebula.Game.Utils;
+using Space.Game;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -17,11 +18,19 @@ namespace Nebula.Game.Contracts {
 
         private const int kCompletedContractsKey = 1;
         private const int kActiveContractsKey = 2;
+        private const int kProposedContractsKey = 3;
+
+        private const float kUpdateInterval = 15;
 
         private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
         private ConcurrentDictionary<string, BaseContract> m_CompletedContracts = new ConcurrentDictionary<string, BaseContract>();
         private ConcurrentDictionary<string, BaseContract> m_ActiveContracts = new ConcurrentDictionary<string, BaseContract>();
+
+        private readonly ConcurrentDictionary<ContractCategory, BaseContract> m_ProposedContracts = new ConcurrentDictionary<ContractCategory, BaseContract>();
+
+        private float m_UpdateTiemer = kUpdateInterval;
+        private readonly List<string> m_TrashedContracts = new List<string>();
 
         private MmoMessageComponent m_MmoMessage;
 
@@ -33,8 +42,10 @@ namespace Nebula.Game.Contracts {
 
             var factory = new ContractFactory();
             var character = GetComponent<PlayerCharacterObject>();
+            var app = nebulaObject.mmoWorld().application;
+
             bool isNew = false;
-            var contractsSave = ContractDatabase.instance.LoadContracts(character.characterId, resource, out isNew);
+            var contractsSave = ContractDatabase.instance(app).LoadContracts(character.characterId, resource, out isNew);
             if(contractsSave != null ) {
 
                 if(contractsSave.completedContracts != null ) {
@@ -59,6 +70,28 @@ namespace Nebula.Game.Contracts {
                     }
                 }
             }
+        }
+
+        public bool HasActiveContract(ContractCategory category) {
+            foreach(var pac in m_ActiveContracts) {
+                if(pac.Value.category == category ) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool HasActiveContract(string contractId ) {
+            return m_ActiveContracts.ContainsKey(contractId);
+        }
+
+        public bool HasProposedContract(string id) {
+            foreach(var pac in m_ProposedContracts) {
+                if(pac.Value.id == id ) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public ContractSave GetSave() {
@@ -95,6 +128,34 @@ namespace Nebula.Game.Contracts {
         }
 
         public override void Update(float deltaTime) {
+
+            m_UpdateTiemer -= deltaTime;
+            if(m_UpdateTiemer <= 0.0f ) {
+                m_UpdateTiemer = kUpdateInterval;
+                if(m_TrashedContracts.Count > 0 ) {
+                    m_TrashedContracts.Clear();
+                }
+
+                float time = CommonUtils.SecondsFrom1970();
+                foreach(var pac in m_ActiveContracts) {
+                    if(pac.Value.Update(time) == ContractUpdateStatus.remove_to_trash) {
+                        m_TrashedContracts.Add(pac.Key);
+                    }
+                }
+
+                if(m_TrashedContracts.Count > 0 ) {
+                    foreach(string cid in m_TrashedContracts ) {
+                        BaseContract removedContract;
+                        if(m_ActiveContracts.TryRemove(cid, out removedContract )) {
+                            if(AddOrReplaceCompletedContract(removedContract)) {
+                                m_MmoMessage.ContractCompleted(removedContract);
+                            }
+                        }
+                    }
+                }
+
+            }
+
             base.Update(deltaTime);
         }
 
@@ -169,36 +230,147 @@ namespace Nebula.Game.Contracts {
                 activeHash.Add(pac.Key, pac.Value.GetInfo());
             }
 
+            Hashtable proposedHash = new Hashtable();
+            foreach(var pc in m_ProposedContracts ) {
+                proposedHash.Add((int)pc.Key, pc.Value.GetInfo());
+            }
+
             return new Hashtable {
                 {kCompletedContractsKey, completedHash },
-                {kActiveContractsKey,  activeHash}
+                {kActiveContractsKey,  activeHash},
+                {kProposedContractsKey, proposedHash }
             };
         }
 
-        
-        public bool AcceptContract(BaseContract contract ) {
-            if(contract.state == ContractState.accepted) {
-                bool success =  AddOrReplaceActiveContract(contract);
-                if(success) {
-                    m_MmoMessage.ContractAccepted(contract);
+
+        public bool ProposeContract(BaseContract contract) {
+            bool removedOld = true;
+            if(m_ProposedContracts.ContainsKey(contract.category)) {
+                BaseContract removedContract;
+                if(false == m_ProposedContracts.TryRemove(contract.category, out removedContract)) {
+                    removedOld = false;
                 }
-                return success;
+            }
+
+            if(removedOld) {
+                contract.Propose();
+                if(m_ProposedContracts.TryAdd(contract.category, contract)) {
+                    m_MmoMessage.ContractsUpdate(GetInfo());
+                    return true;
+                }
             }
             return false;
         }
 
-        public bool CompleteContract(string contractId) {
-            var contract = GetActiveContract(contractId);
-            if(contract != null ) {
-                BaseContract removedActiveContract;
-                if(m_ActiveContracts.TryRemove(contractId, out removedActiveContract)) {
-                    contract.Complete();
-                    if(AddOrReplaceCompletedContract(contract)) {
-                        m_MmoMessage.ContractCompleted(contract);
+        public bool AcceptProposedContract(string id, out BaseContract foundedContract) {
+            foundedContract = null;
+            foreach(var pc in m_ProposedContracts) {
+                if(pc.Value.id == id ) {
+                    foundedContract = pc.Value;
+                    break;
+                }
+            }
+
+            if(foundedContract != null ) {
+                if(false == HasActiveContract(foundedContract.category)) {
+                    BaseContract rc;
+                    if(m_ProposedContracts.TryRemove(foundedContract.category, out rc)) {
+                        foundedContract.Accept();
+                        if(AddOrReplaceActiveContract(foundedContract)) {
+                            m_MmoMessage.ContractsUpdate(GetInfo());
+                            m_MmoMessage.ContractAccepted(foundedContract);
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool DeclineContract(string id, out BaseContract declinedContract) {
+
+            BaseContract foundedContract = null;
+            foreach (var pc in m_ProposedContracts) {
+                if (pc.Value.id == id) {
+                    foundedContract = pc.Value;
+                    break;
+                }
+            }
+
+            if(foundedContract != null ) {
+                foundedContract.Decline();
+
+                if(HasActiveContract(foundedContract.category)) {
+                    MoveActiveContractToTrash(foundedContract.category);
+                }
+                BaseContract rc;
+                if (m_ProposedContracts.TryRemove(foundedContract.category, out rc)) {
+                    if (AddOrReplaceActiveContract(foundedContract)) {
+                        m_MmoMessage.ContractDeclined(foundedContract);
+                        m_MmoMessage.ContractsUpdate(GetInfo());
+                        declinedContract = foundedContract;
+                        return true;
+                    }
+                }
+
+            } else {
+                foreach(var pac in m_ActiveContracts) {
+                    if(pac.Key == id ) {
+                        pac.Value.Decline();
+                        m_MmoMessage.ContractDeclined(pac.Value);
+                        m_MmoMessage.ContractsUpdate(GetInfo());
+                        declinedContract = pac.Value;
                         return true;
                     }
                 }
             }
+            declinedContract = null;
+            return false;
+        }
+
+        private void MoveActiveContractToTrash(ContractCategory category) {
+            List<string> ids = new List<string>();
+            foreach(var pac in m_ActiveContracts) {
+                if(pac.Value.category == category ) {
+                    ids.Add(pac.Key);
+                }
+            }
+            foreach(string id in ids ) {
+                BaseContract old;
+                if(m_ActiveContracts.TryRemove(id, out old)) {
+                    AddOrReplaceCompletedContract(old);
+                }
+            }
+        }
+        
+        //private bool AcceptContract(BaseContract contract ) {
+        //    if(contract.state == ContractState.accepted) {
+        //        bool success =  AddOrReplaceActiveContract(contract);
+        //        if(success) {
+        //            m_MmoMessage.ContractAccepted(contract);
+        //        }
+        //        return success;
+        //    }
+        //    return false;
+        //}
+
+        public bool CompleteContract(string contractId, out BaseContract completedContract) {
+            var contract = GetActiveContract(contractId);
+            if(contract != null ) {
+                if (contract.state == ContractState.ready) {
+                    BaseContract removedActiveContract;
+                    if (m_ActiveContracts.TryRemove(contractId, out removedActiveContract)) {
+                        contract.Complete();
+                        if (AddOrReplaceCompletedContract(contract)) {
+                            m_MmoMessage.ContractCompleted(contract);
+                            completedContract = contract;
+                            return true;
+                        }
+                    }
+                }
+
+            }
+            completedContract = null;
             return false;
         }
 
@@ -209,6 +381,8 @@ namespace Nebula.Game.Contracts {
             }
             return null;
         }
+
+       
     }
 
     public class ContractSave {

@@ -55,11 +55,14 @@
         private readonly SaveWorldTimer mSaveWorldTimer = new SaveWorldTimer();
         private readonly EventManager m_EventManager = new EventManager();
 
-        public MmoWorld(string name, Vector minCorner, Vector maxCorner, Vector tileDimensions, Res resource)
+        private GameApplication m_App;
+
+        public MmoWorld(string name, Vector minCorner, Vector maxCorner, Vector tileDimensions, Res resource, GameApplication app)
             : base(minCorner, maxCorner, tileDimensions, new MmoItemCache() )
         {
             try
             {
+                m_App = app;
                 log.InfoFormat("world = {0} cons()", name);
 
                 this.resource = resource;
@@ -88,19 +91,25 @@
             }
         }
 
+        public GameApplication application {
+            get {
+                return m_App;
+            }
+        }
+
         //load world data from database
         private void LoadWorldInfo() {
             //get document
-            var worldDocument = GameApplication.Instance.DatabaseManager.GetWorld(Zone.Id);
+            var worldDocument = application.DatabaseManager.GetWorld(Zone.Id);
             
             if(worldDocument == null ) {
 
                 //if save not found 
-                GameApplication.Instance.DatabaseManager.SetWorld(this);
+                application.DatabaseManager.SetWorld(this);
             }  else {
                 if(worldDocument.info == null ) {
                     log.ErrorFormat("database world = {0} document info is null", Zone.Id);
-                    GameApplication.Instance.DatabaseManager.SetWorld(this);
+                    application.DatabaseManager.SetWorld(this);
                     return;
                 }
                 ownedRace = (Race)(byte)worldDocument.info.currentRace;
@@ -112,7 +121,7 @@
         }
 
         private void LoadWorldState() {
-            mWorldState = GameApplication.Instance.DatabaseManager.GetWorldState(Zone.Id);
+            mWorldState = application.DatabaseManager.GetWorldState(Zone.Id);
             if(mWorldState == null ) {
                 log.InfoFormat("world state (null) for world = {0} create new [dy]", Zone.Id);
                 mWorldState = new WorldState();
@@ -142,7 +151,7 @@
                 mWorldState.FillSaves(this);
                 log.InfoFormat("saving world state = {0} [dy]", Zone.Id);
                 try {
-                    GameApplication.Instance.DatabaseManager.worldStates.Save(mWorldState);
+                    application.DatabaseManager.worldStates.Save(mWorldState);
                 } catch (System.Exception exception ) {
                     log.InfoFormat(exception.Message);
                     log.InfoFormat(exception.StackTrace);
@@ -277,10 +286,10 @@
             Race previousRace = ownedRace;
             ownedRace = race;
             //save changes to database
-            GameApplication.Instance.DatabaseManager.SetWorld(this);
+            application.DatabaseManager.SetWorld(this);
 
             log.InfoFormat("world = {0} set race owned to = {1} [red]", Zone.Id, ownedRace);
-            GameApplication.Instance.updater.SendS2SWorldRaceChanged(Zone.Id, (byte)previousRace, (byte)ownedRace);
+            application.updater.SendS2SWorldRaceChanged(Zone.Id, (byte)previousRace, (byte)ownedRace);
 
             if(race != Race.None) {
                 GivePvpPointsForSystemCapture(race);
@@ -300,7 +309,7 @@
 
         public void SetAttackRace(Race race) {
             mAttackedRace = (byte)race;
-            GameApplication.Instance.DatabaseManager.SetWorld(this);
+            application.DatabaseManager.SetWorld(this);
             log.InfoFormat("world = {0} set attacked race = {1} [purple]", Zone.Id, ownedRace);
         }
 
@@ -329,7 +338,7 @@
 
             underAttack = inUnderAttack;
             //save changes to database
-            GameApplication.Instance.DatabaseManager.SetWorld(this);
+            application.DatabaseManager.SetWorld(this);
 
             if(underAttack) {
                 mUnderAttackTimer = UNDER_ATTACK_INTERVAL;
@@ -503,7 +512,7 @@
                 nebulaObjectManager.Update(deltaTime);
 
                 if (mSaveWorldTimer.Update(deltaTime)) {
-                    GameApplication.Instance.DatabaseManager.SetWorld(this);
+                    application.DatabaseManager.SetWorld(this);
                 }
 
                 //restore saved objects

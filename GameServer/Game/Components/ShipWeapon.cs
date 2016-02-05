@@ -241,14 +241,15 @@ namespace Nebula.Game.Components {
             var dropManager = DropManager.Get(nebulaObject.world.Resource());
             var player = GetComponent<MmoActor>();
 
+            var app = nebulaObject.mmoWorld().application;
             bool isNew = false;
-            var dbWeapon = WeaponDatabase.instance.LoadWeapon(player.GetComponent<PlayerCharacterObject>().characterId, resource as Res, out isNew);
+            var dbWeapon = WeaponDatabase.instance(app).LoadWeapon(player.GetComponent<PlayerCharacterObject>().characterId, resource as Res, out isNew);
 
 
             if (isNew) {
                 GenerateNewWeapon(dropManager);
                 string characterID = GetComponent<PlayerCharacterObject>().characterId;
-                WeaponDatabase.instance.SaveWeapon(characterID, new ShipWeaponSave { characterID = characterID, weaponObject = weaponObject.GetInfo() });
+                WeaponDatabase.instance(app).SaveWeapon(characterID, new ShipWeaponSave { characterID = characterID, weaponObject = weaponObject.GetInfo() });
             } else {
                 weaponObject = new WeaponObject(dbWeapon.weaponObject);
             }

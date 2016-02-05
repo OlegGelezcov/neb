@@ -18,6 +18,13 @@ namespace Nebula.Client.Contracts {
             targetWorld = hash.GetValueString((int)SPC.TargetWorld);
         }
 
+        public override string ToString() {
+            string baseString =  base.ToString();
+            string newString = string.Format("count: {0}, group: {1}, counter: {2}, target zone: {3}",
+                count, groupName, counter, targetWorld);
+            return baseString + System.Environment.NewLine + newString;
+        }
+
         public override Hashtable Dump() {
             Hashtable hash = base.Dump();
             hash.Add("count", count);

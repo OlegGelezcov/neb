@@ -55,5 +55,6 @@ namespace Common {
         EventSubscriber,
         ContractManager,
         ContractObject = 49,
+        ContractMark = 50,
     }
 }

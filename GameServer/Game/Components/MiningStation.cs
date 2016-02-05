@@ -244,7 +244,7 @@ namespace Nebula.Game.Components {
                 mLastReceiveDamageNotificationSended = Time.curtime();
 
                 if (false == string.IsNullOrEmpty(mCharacterID)) {
-                    GameApplication.Instance.updater.CallS2SMethod(
+                    nebulaObject.mmoWorld().application.updater.CallS2SMethod(
                         NebulaCommon.ServerType.SelectCharacter, 
                         "MiningStationUnderAttackNotification",
                         new object[] { mCharacterID, nebulaObject.mmoWorld().Zone.Id, damager.race});

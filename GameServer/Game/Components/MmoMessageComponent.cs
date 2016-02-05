@@ -664,6 +664,10 @@ namespace Nebula.Game.Components {
             var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
             ReceiveEvent(eventData, sendParameters);
         }
+
+        public void ContractDeclined(BaseContract contract) {
+            ContractEvent(contract, CustomEventCode.ContractDeclined);
+        }
         public void ContractAccepted(BaseContract contract) {
             ContractEvent(contract, CustomEventCode.ContractAccepted);
         }

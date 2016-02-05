@@ -32,9 +32,11 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
 
     private bool redirected = false;
     private IDisposable updateLoop;
+    private GameApplication m_App;
 
     public OutgoingMasterServerPeer(IRpcProtocol protocol, IPhotonPeer nativePeer, GameApplication application)
         : base(protocol, nativePeer) {
+        m_App = application;
         //this.application = application;
         log.InfoFormat("connection to master at {0}:{1} established (id={2}), serverId={3}", this.RemoteIP, this.RemotePort, this.ConnectionId, GameApplication.ServerId);
         this.RequestFiber.Enqueue(this.Register);
@@ -42,10 +44,10 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
 
     private void Register() {
         var contract = new RegisterGameServer {
-            GameServerAddress = GameApplication.Instance.PublicIpAddress.ToString(),
-            UdpPort = GameApplication.Instance.GamingUdpPort,
-            TcpPort = GameApplication.Instance.GamingTcpPort,
-            WebSocketPort = GameApplication.Instance.GamingWebSocketPort,
+            GameServerAddress = m_App.PublicIpAddress.ToString(),
+            UdpPort = m_App.GamingUdpPort,
+            TcpPort = m_App.GamingTcpPort,
+            WebSocketPort = m_App.GamingWebSocketPort,
             ServerId = GameApplication.ServerId.ToString(),
             ServerState = (int)ServerState.Normal,
             ServerType = (byte)NebulaCommon.ServerType.Game
@@ -70,12 +72,12 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
     protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail) {
         this.IsRegistered = false;
         this.StopUpdateLoop();
-        MmoWorldCache.Instance.Clear();
+        MmoWorldCache.Instance(m_App).Clear();
 
         if (!this.redirected) {
             log.InfoFormat("connection to master closed (id={0}, reason={1}, detail={2}), serverId={3}",
                 this.ConnectionId, reasonCode, reasonDetail, GameApplication.ServerId);
-            GameApplication.Instance.ReconnectToMaster();
+            m_App.ReconnectToMaster();
         } else {
             if (log.IsDebugEnabled) {
                 log.DebugFormat("{0} disconnected from master server: reason={1}, detail={2}, serverId={3}",
@@ -124,9 +126,9 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
         string characterID = (string)eventData[(byte)ServerToServerParameterCode.CharacterId];
         int raceStatus = (int)eventData[(byte)ServerToServerParameterCode.RaceStatus];
 
-        foreach (string locationID in GameApplication.Instance.CurrentRole().Locations) {
+        foreach (string locationID in m_App.CurrentRole().Locations) {
             MmoWorld world;
-            if (MmoWorldCache.Instance.TryGet(locationID, out world)) {
+            if (MmoWorldCache.Instance(m_App).TryGet(locationID, out world)) {
                 NebulaObject playerObj;
                 if (world.TryGetObject((byte)ItemType.Avatar, gameRefID, out playerObj)) {
                     if (playerObj.GetComponent<PlayerCharacterObject>()) {
@@ -170,7 +172,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
             string gameRef = guildInfo.GetValue<string>((int)SPC.GameRefId, string.Empty);
             if(!string.IsNullOrEmpty(gameRef)) {
                 MmoActor player;
-                if(GameApplication.Instance.serverActors.TryGetValue(gameRef, out player)) {
+                if(m_App.serverActors.TryGetValue(gameRef, out player)) {
                     var character = player.GetComponent<PlayerCharacterObject>();
                     if(character != null ) {
                         character.SetGuildInfo(guildInfo);
@@ -186,7 +188,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
 
         try {
             MmoActor player;
-            if (!GameApplication.Instance.serverActors.TryGetValue(start.gameRefID, out player)) {
+            if (!m_App.serverActors.TryGetValue(start.gameRefID, out player)) {
                 log.InfoFormat("HandlePUTInventoryItemStart: player = {0} not founded on server", start.gameRefID);
                 return;
             }
@@ -240,7 +242,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
             GETInventoryItemsTransactionStart start = new GETInventoryItemsTransactionStart(eventData);
 
             MmoActor player;
-            if (GameApplication.Instance.serverActors.TryGetValue(start.gameRefID, out player)) {
+            if (m_App.serverActors.TryGetValue(start.gameRefID, out player)) {
 
                 GETInventoryItemsTransactionEnd end = new GETInventoryItemsTransactionEnd {
                     characterID = start.characterID,
@@ -323,7 +325,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
             GETInventoryItemTransactionStart start = new GETInventoryItemTransactionStart(eventData);
 
             MmoActor player;
-            if (GameApplication.Instance.serverActors.TryGetValue(start.gameRefID, out player)) {
+            if (m_App.serverActors.TryGetValue(start.gameRefID, out player)) {
 
                 GETInventoryItemTransactionEnd end = new GETInventoryItemTransactionEnd {
                     characterID = start.characterID,
@@ -379,7 +381,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
     private void HandleGroupUpdateEvent(IEventData eventData) {
         try {
             log.InfoFormat("OutgoinfMasterServerPeer.HandleGroupUpdateEvent()");
-            GameApplication.Instance.updater.fiber.Enqueue(() => {
+            m_App.updater.EnqueueFiberAction(() => {
                 try {
                     Hashtable groupHash = (Hashtable)eventData.Parameters[(byte)ServerToServerParameterCode.Group];
                     Group group = new Group();
@@ -387,7 +389,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                     foreach (var member in group.members) {
                         if (string.IsNullOrEmpty(member.Value.worldID)) { continue; }
                         MmoWorld world;
-                        if (MmoWorldCache.Instance.TryGet(member.Value.worldID, out world)) {
+                        if (MmoWorldCache.Instance(m_App).TryGet(member.Value.worldID, out world)) {
                             Item item;
                             if (world.ItemCache.TryGetItem((byte)ItemType.Avatar, member.Value.gameRefID, out item)) {
                                 log.InfoFormat("set group at player = {0}", item.Id);
@@ -413,9 +415,9 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
         log.InfoFormat("OutgoinfMasterServerPeer.HandleGroupRemovedEvent()");
         try {
             string groupID = (string)eventData.Parameters[(byte)ServerToServerParameterCode.Group];
-            foreach (var location in GameApplication.Instance.CurrentRole().Locations) {
+            foreach (var location in m_App.CurrentRole().Locations) {
                 MmoWorld world;
-                if (MmoWorldCache.Instance.TryGet(location, out world)) {
+                if (MmoWorldCache.Instance(m_App).TryGet(location, out world)) {
                     var items = world.GetItems((it) => it.Type == (byte)ItemType.Avatar);
                     foreach (var item in items) {
                         item.Value.SendMessage(ComponentMessages.OnGroupRemoved, groupID);
@@ -432,7 +434,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
     private void HandleWorldRaceChanged(IEventData eventData, SendParameters sendParameters) {
         log.InfoFormat("MasterPeer: received world race changed event... [red]");
 
-        GameApplication.Instance.updater.fiber.Enqueue(() => {
+        m_App.updater.EnqueueFiberAction(() => {
             try {
 
                 string worldID = (string)eventData.Parameters[(byte)ServerToServerParameterCode.WorldId];
@@ -445,7 +447,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                     { (int)SPC.CurrentRace, currentRace }
                 };
 
-                MmoWorldCache.Instance.SendWorldRaceChanged(info);
+                MmoWorldCache.Instance(m_App).SendWorldRaceChanged(info);
 
             }catch(Exception exception) {
                 log.InfoFormat(exception.Message + " [red]");
@@ -497,7 +499,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                     log.InfoFormat("Successfully registered at master server: serverId={0}", GameApplication.ServerId);
                     this.IsRegistered = true;
                     this.StartUpdateLoop();
-                    GameApplication.Instance.updater.Start();
+                    m_App.updater.Start();
                     break;
                 }
             case (short)ReturnCode.RedirectRepeat:
@@ -546,7 +548,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
     protected void Reconnect(IPAddress address) {
         this.redirected = true;
         log.InfoFormat("Reconnecting to master: serverId={0}", GameApplication.ServerId);
-        GameApplication.Instance.ConnectToMaster(new IPEndPoint(address, this.RemotePort));
+        m_App.ConnectToMaster(new IPEndPoint(address, this.RemotePort));
         this.Disconnect();
         this.Dispose();
     }

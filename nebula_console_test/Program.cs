@@ -9,7 +9,8 @@ namespace nebula_console_test {
     class Program {
         static void Main(string[] args) {
             ContractTests tests = new ContractTests();
-            tests.TestContractGeneration();
+            //tests.TestContractGeneration();
+            tests.TestKillNPCGroupContractServerClientCompativility();
         }
     }
 }

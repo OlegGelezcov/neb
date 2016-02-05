@@ -18,24 +18,26 @@ namespace Nebula.Database {
         //private MongoServer DbServer { get; set; }
         //private MongoDatabase Database { get; set; }
 
+        private GameApplication m_App;
+
+
         private MongoCollection<InventoryDocument> InventoryDocuments { get; set; }
 
         private static InventoryDatabase s_Instance = null;
 
-        public static InventoryDatabase instance {
-            get {
-                if(s_Instance == null) {
-                    s_Instance = new InventoryDatabase(GameApplication.Instance.databaseConnectionString);
-                }
-                return s_Instance;
+        public static InventoryDatabase instance(GameApplication app) {
+            if (s_Instance == null) {
+                s_Instance = new InventoryDatabase(app);
             }
+            return s_Instance;
         }
 
-        private InventoryDatabase(string connectionString) {
+        private InventoryDatabase(GameApplication app) {
+            m_App = app;
             //DbClient = new MongoClient(connectionString);
             //DbServer = DbClient.GetServer();
             //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            InventoryDocuments = GameApplication.Instance.defaultDatabase.GetCollection<InventoryDocument>(GameServerSettings.Default.DatabaseInventoryCollectionName);
+            InventoryDocuments = m_App.defaultDatabase.GetCollection<InventoryDocument>(GameServerSettings.Default.DatabaseInventoryCollectionName);
         }
 
         public void SaveInventory(string characterID, ServerInventory serverInventory) {

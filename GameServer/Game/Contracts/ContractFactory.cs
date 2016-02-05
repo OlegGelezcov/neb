@@ -16,6 +16,8 @@ namespace Nebula.Game.Contracts {
             switch(category) {
                 case ContractCategory.killNPC:
                     return new KillNPCContract(hash, owner );
+                case ContractCategory.killNPCGroup:
+                    return new KillNPCGroupContract(hash, owner);
                 default: {
                         s_Log.ErrorFormat("not exist contract catgeory: {0}", category);
                         return null;

@@ -38,7 +38,12 @@ namespace Nebula.Game.Contracts {
         }
 
         public KillNPCGroupContract(Hashtable hash, ContractManager manager)
-            : base(hash, manager) { }
+            : base(hash, manager) {
+            m_Count = hash.GetValue<int>((int)SPC.Count, 0);
+            m_BotGroupName = hash.GetValue<string>((int)SPC.Group, string.Empty);
+            m_Counter = hash.GetValue<int>((int)SPC.Counter, 0);
+            m_TargetWorld = hash.GetValue<string>((int)SPC.TargetWorld, string.Empty);
+        }
 
         public KillNPCGroupContract(string id, ContractState state, int stage, string sourceWorld, ContractManager owner, int cnt, string grpName, string targetWorld)
             : base(id, state, stage, sourceWorld, ContractCategory.killNPCGroup, owner) {
@@ -112,7 +117,7 @@ namespace Nebula.Game.Contracts {
 
                     IncrementCounter();
                     if(counter >= count) {
-                        if(SetState(ContractState.ready)) {
+                        if(Ready()) {
                             return ContractCheckStatus.ready;
                         }
                     } else {

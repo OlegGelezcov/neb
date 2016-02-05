@@ -56,16 +56,18 @@ namespace Nebula.Game.Components {
                 if(character == null) {
                     return;
                 }
-                InventoryDatabase.instance.SaveInventory(character.characterId, player.Inventory);
-                StationDatabase.instance.SaveStation(character.characterId, player.Station);
-                CharacterDatabase.instance.SaveCharacter(character.characterId, player.GetPlayerCharacter());
-                ShipModelDatabase.instance.SaveShipModel(character.characterId, GetComponent<PlayerShip>().shipModel);
-                SkillDatabase.instance.SaveSkills(character.characterId, GetComponent<PlayerSkills>().GetSave());
-                WeaponDatabase.instance.SaveWeapon(character.characterId, player.GetComponent<ShipWeapon>().GetSave());
-                PassiveBonusesDatabase.instance.SavePassiveBonuses(character.characterId, player.GetComponent<PassiveBonusesComponent>().GetSave());
-                TimedEffectsDatabase.instance.SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
-                PetDatabase.instance.SavePets(character.characterId, player.GetComponent<PetManager>().pets);
-                ContractDatabase.instance.SaveContracts(character.characterId, player.GetComponent<ContractManager>().GetSave());
+
+                var app = nebulaObject.mmoWorld().application;
+                InventoryDatabase.instance(app).SaveInventory(character.characterId, player.Inventory);
+                StationDatabase.instance(app).SaveStation(character.characterId, player.Station);
+                CharacterDatabase.instance(app).SaveCharacter(character.characterId, player.GetPlayerCharacter());
+                ShipModelDatabase.instance(app).SaveShipModel(character.characterId, GetComponent<PlayerShip>().shipModel);
+                SkillDatabase.instance(app).SaveSkills(character.characterId, GetComponent<PlayerSkills>().GetSave());
+                WeaponDatabase.instance(app).SaveWeapon(character.characterId, player.GetComponent<ShipWeapon>().GetSave());
+                PassiveBonusesDatabase.instance(app).SavePassiveBonuses(character.characterId, player.GetComponent<PassiveBonusesComponent>().GetSave());
+                TimedEffectsDatabase.instance(app).SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
+                PetDatabase.instance(app).SavePets(character.characterId, player.GetComponent<PetManager>().pets);
+                ContractDatabase.instance(app).SaveContracts(character.characterId, player.GetComponent<ContractManager>().GetSave());
             }
         }
 
@@ -75,7 +77,8 @@ namespace Nebula.Game.Components {
             if (character == null) {
                 return;
             }
-            TimedEffectsDatabase.instance.SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
+            var app = nebulaObject.mmoWorld().application;
+            TimedEffectsDatabase.instance(app).SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
         }
 
         public void SaveInventory() {
@@ -83,7 +86,8 @@ namespace Nebula.Game.Components {
             if (character == null) {
                 return;
             }
-            InventoryDatabase.instance.SaveInventory(character.characterId, player.Inventory);
+            var app = nebulaObject.mmoWorld().application;
+            InventoryDatabase.instance(app).SaveInventory(character.characterId, player.Inventory);
         }
 
         public override int behaviourId {

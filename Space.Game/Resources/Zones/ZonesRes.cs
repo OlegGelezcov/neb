@@ -199,6 +199,17 @@ namespace Space.Game.Resources.Zones {
                                 }
                             }
                             break;
+                        case ComponentID.ContractMark: {
+                                ComponentSubType subType = (ComponentSubType)Enum.Parse(typeof(ComponentSubType), ce.GetString("sub_type"));
+                                switch(subType) {
+                                    case ComponentSubType.kill_npc_group_contract_mark: {
+                                            KillNPCGroupContractMarkData killNPCGroupContractData = new KillNPCGroupContractMarkData(ce);
+                                            componentCollection.Add(ComponentID.ContractMark, killNPCGroupContractData);
+                                        }
+                                        break;
+                                }
+                            }
+                            break;
                         case ComponentID.Activator:
                             {
                                 ComponentSubType subType = (ComponentSubType)Enum.Parse(typeof(ComponentSubType), ce.GetString("sub_type"));

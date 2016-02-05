@@ -48,6 +48,7 @@ namespace Common
         ContractReady = 45,
         ContractCompleted = 46,
         ContractsUpdate = 47,
+        ContractDeclined = 48,
 
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19

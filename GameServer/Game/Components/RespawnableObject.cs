@@ -28,10 +28,10 @@ namespace Nebula.Game.Components {
         public void Death() {
             if(interval > 0 ) {
                 if(nebulaObject.Type == (byte)ItemType.Asteroid) {
-                    log.InfoFormat("set respawn data for asteroid = {0} at world = {1} yellow", nebulaObject.Id, nebulaObject.mmoWorld().Name);
+                    //log.InfoFormat("set respawn data for asteroid = {0} at world = {1} yellow", nebulaObject.Id, nebulaObject.mmoWorld().Name);
                 }
                 (nebulaObject.world as MmoWorld).nebulaObjectManager.SetRespawnData(new RespawnData { handled = false, ID = nebulaObject.Id, time = Time.curtime() + interval, Type = nebulaObject.Type });
-                log.InfoFormat("set respwan data for object = {0}", nebulaObject.Id);
+                //log.InfoFormat("set respwan data for object = {0}", nebulaObject.Id);
             }
         }
     }

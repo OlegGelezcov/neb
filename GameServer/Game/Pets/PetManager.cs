@@ -44,7 +44,7 @@ namespace Nebula.Game.Pets {
                 m_Character = GetComponent<PlayerCharacterObject>();
             }
             bool isNew = false;
-            m_PetInfoCollection = PetDatabase.instance.LoadPets(m_Character.characterId, nebulaObject.resource as Res, out isNew);
+            m_PetInfoCollection = PetDatabase.instance(nebulaObject.mmoWorld().application).LoadPets(m_Character.characterId, nebulaObject.resource as Res, out isNew);
             Reinitialize();
         }
 

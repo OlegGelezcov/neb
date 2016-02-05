@@ -105,6 +105,7 @@ namespace Common
         NotEnoughCredits,
         InvalidInapType, 
         CharacterWithSameNameAlreadyExists,
+        InvalidRPCID,
 
         OperationDenied = -3,
         OperationInvalid = -2,

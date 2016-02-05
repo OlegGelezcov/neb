@@ -4,11 +4,7 @@ using MongoDB.Driver.Builders;
 using Nebula.Game;
 using Nebula.Game.Utils;
 using Space.Game;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nebula.Database {
     public class TimedEffectsDatabase {
@@ -16,17 +12,18 @@ namespace Nebula.Database {
         private MongoCollection<TimedEffectsDocument> m_Collection;
 
         private static TimedEffectsDatabase s_Instance = null;
-        public static TimedEffectsDatabase instance {
-            get {
-                if(s_Instance == null ) {
-                    s_Instance = new TimedEffectsDatabase();
-                }
-                return s_Instance;
+        private GameApplication m_App;
+
+        public static TimedEffectsDatabase instance(GameApplication app) {
+            if (s_Instance == null) {
+                s_Instance = new TimedEffectsDatabase(app);
             }
+            return s_Instance;
         }
 
-        private TimedEffectsDatabase() {
-            m_Collection = GameApplication.Instance.defaultDatabase.GetCollection<TimedEffectsDocument>(GameServerSettings.Default.TimedEffectsCollectionName);
+        private TimedEffectsDatabase(GameApplication app) {
+            m_App = app;
+            m_Collection = m_App.defaultDatabase.GetCollection<TimedEffectsDocument>(GameServerSettings.Default.TimedEffectsCollectionName);
         }
 
         public void SaveTimedEffects(string characterId, Hashtable save) {

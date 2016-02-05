@@ -13,21 +13,22 @@ namespace Nebula.Database {
         private MongoCollection<WeaponDocument> WeaponDocuments { get; set; }
 
         private static WeaponDatabase s_Instance = null;
+        private GameApplication m_App;
 
-        public static WeaponDatabase instance {
-            get {
-                if(s_Instance == null ) {
-                    s_Instance = new WeaponDatabase();
-                }
-                return s_Instance;
+
+        public static WeaponDatabase instance(GameApplication app) {
+            if (s_Instance == null) {
+                s_Instance = new WeaponDatabase(app);
             }
+            return s_Instance;
         }
 
-        private WeaponDatabase() {
+        private WeaponDatabase(GameApplication app) {
             //DbClient = new MongoClient(connectionString);
             //DbServer = DbClient.GetServer();
             //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            WeaponDocuments = GameApplication.Instance.defaultDatabase.GetCollection<WeaponDocument>(GameServerSettings.Default.DatabaseWeaponCollectionName);
+            m_App = app;
+            WeaponDocuments = m_App.defaultDatabase.GetCollection<WeaponDocument>(GameServerSettings.Default.DatabaseWeaponCollectionName);
         }
 
         public void SaveWeapon(string characterID, ShipWeaponSave weaponSave) {

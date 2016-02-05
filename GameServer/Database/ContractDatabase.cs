@@ -10,19 +10,19 @@ namespace Nebula.Database {
     public class ContractDatabase {
         private static ILogger s_Log = LogManager.GetCurrentClassLogger();
         private MongoCollection<ContractDocument> m_ContractDocuments;
+        private GameApplication m_App;
 
         private static ContractDatabase s_Instance = null;
-        public static ContractDatabase instance {
-            get {
-                if(s_Instance == null ) {
-                    s_Instance = new ContractDatabase();
-                }
-                return s_Instance;
+        public static ContractDatabase instance(GameApplication app) {
+            if (s_Instance == null) {
+                s_Instance = new ContractDatabase(app);
             }
+            return s_Instance;
         }
 
-        private ContractDatabase() {
-            m_ContractDocuments = GameApplication.Instance.defaultDatabase.GetCollection<ContractDocument>(GameServerSettings.Default.ContractCollectionName);
+        private ContractDatabase(GameApplication app) {
+            m_App = app;
+            m_ContractDocuments = m_App.defaultDatabase.GetCollection<ContractDocument>(GameServerSettings.Default.ContractCollectionName);
         }
 
         public void SaveContracts(string characterId, ContractSave save) {

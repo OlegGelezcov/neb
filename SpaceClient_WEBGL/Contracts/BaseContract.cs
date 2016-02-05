@@ -14,6 +14,8 @@ namespace Nebula.Client.Contracts {
         public int stage { get; private set; }
         public string sourceWorld { get; private set; }
         public ContractCategory category { get; private set; }
+        public float declineStart { get; private set; }
+        public float declineEnd { get; private set; }
 
         public virtual void ParseInfo(Hashtable info) {
             id = info.GetValueString((int)SPC.Id);
@@ -21,6 +23,13 @@ namespace Nebula.Client.Contracts {
             stage = info.GetValueInt((int)SPC.ContractStage);
             sourceWorld = info.GetValueString((int)SPC.SourceWorld);
             category = (ContractCategory)info.GetValueInt((int)SPC.ContractCategory);
+            declineStart = info.GetValueFloat((int)SPC.DeclineStart);
+            declineEnd = info.GetValueFloat((int)SPC.DeclineEnd);
+        }
+
+        public override string ToString() {
+            return string.Format("id: {0}, state: {1}, stage: {2}, source zone: {3}, category: {4} decline start: {5}, decline end: {6}",
+                id, state, stage, sourceWorld, category, declineStart, declineEnd );
         }
 
         public BaseContract(Hashtable hash) {
@@ -33,7 +42,9 @@ namespace Nebula.Client.Contracts {
                 { "state", state.ToString() },
                 { "stage", stage.ToString() },
                 { "sourceWorld", sourceWorld },
-                { "category", category.ToString() }
+                { "category", category.ToString() },
+                { "decline_start", declineStart },
+                { "decline_end", declineEnd }
             };
             return dumpHash;
         }

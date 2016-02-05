@@ -110,6 +110,7 @@ namespace Common
         GuildId = 88,
         OwnerId = 89,
         Timer = 90,
-        BotGroup = 91
+        BotGroup = 91,
+        ContractId = 92,
     }
 }

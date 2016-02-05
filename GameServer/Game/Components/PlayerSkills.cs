@@ -127,8 +127,9 @@ namespace Nebula.Game.Components {
             if (GetComponent<MmoActor>()) {
                 string characterID = (string)nebulaObject.Tag((byte)PlayerTags.CharacterId);
 
+                var app = nebulaObject.mmoWorld().application;
                 bool isNew = false;
-                var dbSkills = SkillDatabase.instance.LoadSkills(characterID, resource as Res, out isNew);
+                var dbSkills = SkillDatabase.instance(app).LoadSkills(characterID, resource as Res, out isNew);
                 if(!isNew) {
                     if(dbSkills.skills != null ) {
                         Parse(dbSkills.skills);

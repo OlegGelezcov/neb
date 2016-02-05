@@ -60,12 +60,13 @@ namespace Nebula.Game.Components {
 
             //ShipModelDocument document = GameApplication.Instance.Load(player.nebulaObject.Id, mCharacter.characterId, DatabaseDocumentType.ShipModel) as ShipModelDocument;
 
+            var app = nebulaObject.mmoWorld().application;
             bool isNew = false;
-            var dbModel = ShipModelDatabase.instance.LoadShipModel(mCharacter.characterId, resource as Res, out isNew);
+            var dbModel = ShipModelDatabase.instance(app).LoadShipModel(mCharacter.characterId, resource as Res, out isNew);
 
             if (isNew) {
                 GenerateNewShipModel(dropMgr);
-                ShipModelDatabase.instance.SaveShipModel(mCharacter.characterId, shipModel);
+                ShipModelDatabase.instance(app).SaveShipModel(mCharacter.characterId, shipModel);
             } else {
                 shipModel.Replace(dbModel);
             }

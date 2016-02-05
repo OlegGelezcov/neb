@@ -28,8 +28,9 @@ namespace Nebula.Game.Components {
 
         public void Load() {
             s_Log.InfoFormat("Load: timed effects".Color(LogColor.orange));
+            var app = nebulaObject.mmoWorld().application;
             bool isNew = false;
-            Hashtable save = TimedEffectsDatabase.instance.LoadTimedEffects(GetComponent<PlayerCharacterObject>().characterId, nebulaObject.resource as Res, out isNew);
+            Hashtable save = TimedEffectsDatabase.instance(app).LoadTimedEffects(GetComponent<PlayerCharacterObject>().characterId, nebulaObject.resource as Res, out isNew);
             if(save != null ) {
                 foreach(DictionaryEntry entry in save ) {
                     switch((TimedEffectType)(int)entry.Key) {

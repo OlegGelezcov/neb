@@ -121,7 +121,7 @@
 
                 Res resource = GameApplication.ResourcePool().Resource(operation.WorldName);
 
-                if (MmoWorldCache.Instance.TryCreate(operation.WorldName,
+                if (MmoWorldCache.Instance(application).TryCreate(operation.WorldName,
                     Settings.CornerMin,
                     Settings.CornerMax,
                     Settings.TileDimensions, out world, resource))
@@ -157,7 +157,7 @@
                 }
 
                 MmoWorld world;
-                if (MmoWorldCache.Instance.TryGet(operation.WorldName, out world) == false) {
+                if (MmoWorldCache.Instance(application).TryGet(operation.WorldName, out world) == false) {
                     return operation.GetOperationResponse((int)ReturnCode.WorldNotFound, "WorldNotFound", new System.Collections.Hashtable());
                 }
                 var interestArea = new MmoClientInterestArea(peer, operation.InterestAreaId, world) {
@@ -207,6 +207,7 @@
                 //var actor = new MmoActor(peer, world, interestArea, operation.GameRefId, character, application);
                 log.InfoFormat("before creating player item = {0}", operation.GameRefId);
                 var avatar = new MmoItem(peer, interestArea, world, application, operation.Position, operation.Rotation, operation.Properties, operation.GameRefId, tags, 1f, 0,  components);
+                avatar.GetComponent<MmoActor>().SetApplication(application);
                 log.InfoFormat("init player item at position = {0}", operation.Position.ToVector3());
                 log.InfoFormat("Before Start() player");
                 avatar.GetComponent<DamagableObject>().SetIgnoreDamageAtStart(true);

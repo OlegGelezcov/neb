@@ -4,10 +4,6 @@ using MongoDB.Driver.Builders;
 using Space.Database;
 using Space.Game;
 using Space.Game.Ship;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nebula.Database {
     public class ShipModelDatabase {
@@ -15,24 +11,24 @@ namespace Nebula.Database {
         //private MongoClient DbClient { get; set; }
         //private MongoServer DbServer { get; set; }
         //private MongoDatabase Database { get; set; }
+        private GameApplication m_App;
 
         private MongoCollection<ShipModelDocument> ShipModelDocuments { get; set; }
 
         private static ShipModelDatabase s_Instance = null;
-        public static ShipModelDatabase instance {
-            get {
-                if(s_Instance == null ) {
-                    s_Instance = new ShipModelDatabase();
-                }
-                return s_Instance;
+        public static ShipModelDatabase instance(GameApplication app) {
+            if (s_Instance == null) {
+                s_Instance = new ShipModelDatabase(app);
             }
+            return s_Instance;
         }
 
-        private ShipModelDatabase() {
+        private ShipModelDatabase(GameApplication app) {
+            m_App = app;
             //DbClient = new MongoClient(connectionString);
             //DbServer = DbClient.GetServer();
             //Database = DbServer.GetDatabase(GameServerSettings.Default.DatabaseName);
-            ShipModelDocuments = GameApplication.Instance.defaultDatabase.GetCollection<ShipModelDocument>(GameServerSettings.Default.DatabaseShipModelCollectionName);
+            ShipModelDocuments = m_App.defaultDatabase.GetCollection<ShipModelDocument>(GameServerSettings.Default.DatabaseShipModelCollectionName);
         }
 
         public void SaveShipModel(string characterID, ShipModel shipModel) {

@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Photon3Unity3D">
+      <HintPath>..\..\..\Users\Dev\Documents\Nebula_Android\Assets\Plugins\Photon3Unity3D.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -74,6 +77,10 @@
     <ProjectReference Include="..\Space.Game\Space.Game.csproj">
       <Project>{258e2bbb-a667-4bbe-97bb-fab72a5e552c}</Project>
       <Name>Space.Game</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SpaceClient_WEBGL\NebulaClient.csproj">
+      <Project>{4f969892-3f1c-4110-bf11-85fd077bca60}</Project>
+      <Name>NebulaClient</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -32,7 +32,7 @@ public class GameApplication : ApplicationBase
     public static readonly Guid ServerId = Guid.NewGuid();
     public static readonly CounterSamplePublisher CounterPublisher;
     private static readonly ILogger log = LogManager.GetCurrentClassLogger();
-    private static GameApplication instance;
+    //private static GameApplication instance;
     private static OutgoingMasterServerPeer masterPeer;
     
     private byte isReconnecting;
@@ -54,7 +54,7 @@ public class GameApplication : ApplicationBase
     //private DatabaseUsers mDatabaseUsers;
 
 
-    private readonly DatabaseManager databaseManager = new DatabaseManager();
+    private DatabaseManager databaseManager;
 
 
     private string roleName = "";
@@ -71,12 +71,22 @@ public class GameApplication : ApplicationBase
     private MongoServer m_MongoServer;
     private MongoDatabase m_DefaultDatabase;
 
+    public string RoleName {
+        get {
+            if(currentRole != null ) {
+                return currentRole.RoleName;
+            }
+            return string.Empty;
+        }
+    }
+
     public MongoDatabase defaultDatabase {
         get {
             return m_DefaultDatabase;
         }
     }
 
+    /*
     public static new GameApplication Instance {
         get {
             return instance;
@@ -84,7 +94,7 @@ public class GameApplication : ApplicationBase
         set {
             Interlocked.Exchange(ref instance, value);
         }
-    }
+    }*/
 
     public OutgoingMasterServerPeer MasterPeer {
         get {
@@ -170,7 +180,9 @@ public class GameApplication : ApplicationBase
     protected override void Setup() {
         try {
             
+            /*
             Instance = this;
+            */
 
             AppDomain.CurrentDomain.UnhandledException += AppDomain_OnUnhandledException;
 
@@ -195,6 +207,8 @@ public class GameApplication : ApplicationBase
                 currentRole.RoleName, currentRole.PublicIPAddress, currentRole.GamingTcpPort, currentRole.GamingUdpPort, currentRole.Locations.Count);
             log.InfoFormat("connect to master = {0}", currentRole.RoleName);
 
+            databaseManager = new DatabaseManager(this);
+
 #if LOCAL
             string databaseConnectionFile = System.IO.Path.Combine(BinaryPath, "assets/database_connection_local.txt");
 #else
@@ -214,6 +228,10 @@ public class GameApplication : ApplicationBase
 
             DatabaseManager.Setup();
 
+            if(updater != null ) {
+                updater.TearDown();
+                updater = null;
+            }
             updater = new GameUpdater(this);
 
             this.ConnectToMaster();
@@ -266,16 +284,21 @@ public class GameApplication : ApplicationBase
         //}
         log.InfoFormat("TearDown: serverId={0}", ServerId);
         if (this.MasterPeer != null) {
-            updater.Stop();
+            if (updater != null) {
+                updater.Stop();
+            }
             this.MasterPeer.Disconnect();
         }
 
-        
+        if(updater != null ) {
+            updater.TearDown();
+            updater = null;
+        }
     }
 
     protected override void OnStopRequested() {
 
-        MmoWorldCache.Instance.SaveState();
+        MmoWorldCache.Instance(this).SaveState();
 
         log.InfoFormat("OnStopRequested: serverId={0}", ServerId);
         if (this.masterConnectRetryTimer != null) {
@@ -283,6 +306,10 @@ public class GameApplication : ApplicationBase
         }
         if (this.MasterPeer != null) {
             this.MasterPeer.Disconnect();
+        }
+        if(updater != null ) {
+            updater.TearDown();
+            updater = null;
         }
         base.OnStopRequested();
     }

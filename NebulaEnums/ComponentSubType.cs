@@ -23,6 +23,7 @@
         simple_model,
         raceable_model,
         SimpleTeleport,
-        PersonalTeleport
+        PersonalTeleport,
+        kill_npc_group_contract_mark
     }
 }

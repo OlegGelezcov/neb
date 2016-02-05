@@ -167,10 +167,13 @@
     <Compile Include="Game\Contracts\ContractFactory.cs" />
     <Compile Include="Game\Contracts\ContractManager.cs" />
     <Compile Include="Game\Contracts\ContractObject.cs" />
+    <Compile Include="Game\Contracts\ContractRewardExecutor.cs" />
     <Compile Include="Game\Contracts\Generators\ContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\KillNPCGroupContractGenerator.cs" />
     <Compile Include="Game\Contracts\KillNPCContract.cs" />
     <Compile Include="Game\Contracts\KillNPCGroupContract.cs" />
+    <Compile Include="Game\Contracts\Marks\ContractMark.cs" />
+    <Compile Include="Game\Contracts\Marks\KillNPCGroupContractMark.cs" />
     <Compile Include="Game\DamageInfo.cs" />
     <Compile Include="Game\DebugActionExecutor.cs" />
     <Compile Include="Game\EventConnectionManager.cs" />
@@ -233,6 +236,7 @@
     <Compile Include="Game\OperationHandlers\RaiseGenericEventOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\RemoveInterestAreaOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\RequestServerIDOperationHandler.cs" />
+    <Compile Include="Game\OperationHandlers\RPCInvokeOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\SetPropertiesOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\SetViewDistanceOperationHandler.cs" />
     <Compile Include="Game\OperationHandlers\SpawnItemOperationHandler.cs" />
@@ -502,6 +506,7 @@
     <Compile Include="Server\Operations\RemoveInterestAreaResponse.cs" />
     <Compile Include="Server\Operations\RequestServerID.cs" />
     <Compile Include="Server\Operations\RequestServerIDResponse.cs" />
+    <Compile Include="Server\Operations\RPCInvokeOperation.cs" />
     <Compile Include="Server\Operations\SelectCharacter.cs" />
     <Compile Include="Server\Operations\SelectCharacterResponse.cs" />
     <Compile Include="Server\Operations\SetProperties.cs" />

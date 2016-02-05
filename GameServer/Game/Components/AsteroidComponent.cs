@@ -188,7 +188,7 @@ namespace Nebula.Game.Components {
 
 
         public void Death() {
-            log.InfoFormat("Death on asteroid {0} called", nebulaObject.Id);
+            //log.InfoFormat("Death on asteroid {0} called", nebulaObject.Id);
 
             if (zoneAsteroidInfo != null) {
                 (nebulaObject.world as MmoWorld).asteroidManager.SetDestructionTime(zoneAsteroidInfo.Index, Time.curtime());
