@@ -18,6 +18,17 @@ namespace Nebula.Game.Components {
         public void Init(BotComponentData data) {
             mInitData = data;
             SetSubType(data.subType);
+            UpdateBotGroupProperty();
+        }
+
+        private void UpdateBotGroupProperty() {
+            if (props != null && mInitData != null) {
+                if (mInitData.botGroup != null) {
+                    props.SetProperty((byte)PS.BotGroup, mInitData.botGroup);
+                } else {
+                    props.SetProperty((byte)PS.BotGroup, string.Empty);
+                }
+            }
         }
 
         public byte botSubType { get {
@@ -44,9 +55,10 @@ namespace Nebula.Game.Components {
                 throw new Exception("botSubType not setted");
             }
             //set at properties group of bot
-            if(mInitData != null ) {
-                props.SetProperty((int)PS.BotGroup, (mInitData.botGroup != null) ? mInitData.botGroup : string.Empty);
-            }
+            //if(mInitData != null ) {
+            //    props.SetProperty((int)PS.BotGroup, (mInitData.botGroup != null) ? mInitData.botGroup : string.Empty);
+            //}
+            UpdateBotGroupProperty();
         }
 
         public Hashtable GetDatabaseSave() {

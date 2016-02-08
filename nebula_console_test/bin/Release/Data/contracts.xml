@@ -32,12 +32,14 @@ min_level - Minimum player level at which a contract is created
             min_level="1"
             >
     <groups>
-      <group name="ct001_1" zones="H1" count="3" min_level="1" race="" />
+      <group name="ct001_1" zones="H1"    count="5" min_level="1" race="Humans" />
+      
+      <!--
       <group name="ct001_2" zones="H1" count="3" min_level="2" race="Humans" />
       <group name="ct001_3" zones="H1" count="3" min_level="3" race="Borguzands" />
       <group name="ct001_4" zones="H1" count="3" min_level="4" race="Criptizoids" />
       <group name="ct001_5" zones="H1" count="3" min_level="5" race="Criptizoids,Humans" />
-      <group name="ct001_6" zones="H1" count="3" min_level="6" race="Criptizoids,Humans, Borguzands" />
+      <group name="ct001_6" zones="H1" count="3" min_level="6" race="Criptizoids,Humans, Borguzands" />-->
     </groups>
     <rewards>
       <reward type="credits"  count="200" />
@@ -46,16 +48,17 @@ min_level - Minimum player level at which a contract is created
     </rewards>
   </contract>
 
+
   <contract id="ct002" 
             category="killNPCGroup" 
             name="ct002_name" 
             accept_text="ct002_accept" 
             hint="ct002_hint" 
             complete_text="ct002_complete"
-            min_level="2"
+            min_level="1"
             >
     <groups>
-      <group name="ct002_1" zones="" count="5" min_level="1" race="" />
+      <group name="ct002_1" zones="H2" count="5" min_level="1" race="Humans" />
     </groups>
   
     <rewards>
@@ -65,16 +68,17 @@ min_level - Minimum player level at which a contract is created
     </rewards>
   </contract>
 
+    
   <contract id="ct003" 
             category="killNPCGroup" 
             name="ct003_name" 
             accept_text="ct003_accept" 
             hint="ct003_hint" 
             complete_text="ct003_complete"
-            min_level="3"
+            min_level="1"
             >
     <groups>
-      <group name="ct003_1" zones="" count="5" min_level="1" race=""/>
+      <group name="ct003_1" zones="H3" count="5" min_level="1" race="Humans"/>
     </groups>
   
     <rewards>
@@ -84,16 +88,17 @@ min_level - Minimum player level at which a contract is created
     </rewards>
   </contract>
   
+  
   <contract id="ct004" 
             category="killNPCGroup" 
             name="ct004_name" 
             accept_text="ct004_accept" 
             hint="ct004_hint" 
             complete_text="ct004_complete"
-            min_level="4"
+            min_level="1"
             >
     <groups>
-      <group name="ct004_1" zones="" count="5" min_level="1" race=""/>
+      <group name="ct001_1" zones="H4" count="5" min_level="1" race="Humans"/>
     </groups>
   
     <rewards>
@@ -102,16 +107,17 @@ min_level - Minimum player level at which a contract is created
     </rewards>
   </contract>
 
+  
   <contract id="ct005" 
             category="killNPCGroup" 
             name="ct005_name" 
             accept_text="ct005_accept" 
             hint="ct005_hint" 
             complete_text="ct005_complete"
-            min_level="5"
+            min_level="1"
             >
     <groups>
-      <group name="ct005_1" zones="" count="5" min_level="1" race=""/>
+      <group name="ct002_1" zones="H5" count="5" min_level="1" race="Humans"/>
     </groups>
   
     <rewards>
@@ -121,16 +127,17 @@ min_level - Minimum player level at which a contract is created
     </rewards>
   </contract>
   
+  
   <contract id="ct006" 
             category="killNPCGroup" 
             name="ct006_name" 
             accept_text="ct006_accept" 
             hint="ct006_hint" 
             complete_text="ct006_complete"
-            min_level="6"
+            min_level="1"
             >
     <groups>
-      <group name="ct006_1" zones="" count="5" min_level="1" race=""/>
+      <group name="ct003_1" zones="H6" count="5" min_level="1" race="Humans"/>
     </groups>
   
     <rewards>
@@ -138,5 +145,193 @@ min_level - Minimum player level at which a contract is created
       <reward type="exp"      count="100" />
     </rewards>
   </contract>
+  
+  <!--Explore locations*************************-->
+    <contract id="ct013"
+            category="exploreLocation"
+            name="ct013_name"
+            accept_text="ct013_accept"
+            hint="ct013_hint"
+            complete_text="ct013_complete"
+            min_level="1"
+            >
+    <locations>
+      <location name="ct013_1" zones="H1" min_level="1" race="Humans" /> 
+    </locations>
 
+    <rewards>
+      <reward type="credits"  count="100" />
+      <reward type="exp"      count="50" />
+      <reward type="ore"      min_count="2" max_count="4"/>
+    </rewards>
+  </contract>
+  
+  <contract id="ct014"
+            category="exploreLocation"
+            name="ct014_name"
+            accept_text="ct014_accept"
+            hint="ct014_hint"
+            complete_text="ct014_complete"
+            min_level="1"
+            >
+    <locations>
+      <location name="ct014_1" zones="H2" min_level="1" race="Humans" /> 
+    </locations>
+
+    <rewards>
+      <reward type="credits"  count="100" />
+      <reward type="exp"      count="50" />
+    </rewards>
+  </contract>
+  
+  <contract id="ct015"
+            category="exploreLocation"
+            name="ct015_name"
+            accept_text="ct015_accept"
+            hint="ct015_hint"
+            complete_text="ct015_complete"
+            min_level="1"
+            >
+    <locations>
+      <location name="ct015_1" zones="H3" min_level="1" race="Humans" /> 
+    </locations>
+
+    <rewards>
+      <reward type="credits"  count="100" />
+      <reward type="exp"      count="50" />
+    </rewards>
+  </contract>
+  
+  <contract id="ct016"
+            category="exploreLocation"
+            name="ct016_name"
+            accept_text="ct016_accept"
+            hint="ct016_hint"
+            complete_text="ct016_complete"
+            min_level="1"
+            >
+    <locations>
+      <location name="ct016_1" zones="H4" min_level="1" race="Humans" /> 
+    </locations>
+
+    <rewards>
+      <reward type="credits"  count="100" />
+      <reward type="exp"      count="50" />
+    </rewards>
+  </contract>
+  
+  <contract id="ct017"
+            category="exploreLocation"
+            name="ct017_name"
+            accept_text="ct017_accept"
+            hint="ct017_hint"
+            complete_text="ct017_complete"
+            min_level="1"
+            >
+    <locations>
+      <location name="ct017_1" zones="H5" min_level="1" race="Humans" /> 
+    </locations>
+
+    <rewards>
+      <reward type="credits"  count="100" />
+      <reward type="exp"      count="50" />
+    </rewards>
+  </contract>  
+  
+  <contract id="ct018"
+            category="exploreLocation"
+            name="ct018_name"
+            accept_text="ct018_accept"
+            hint="ct018_hint"
+            complete_text="ct018_complete"
+            min_level="1"
+            >
+    <locations>
+      <location name="ct018_1" zones="H6" min_level="1" race="Humans" /> 
+    </locations>
+
+    <rewards>
+      <reward type="credits"  count="100" />
+      <reward type="exp"      count="50" />
+    </rewards>
+  </contract>  
+              
+  <!--Kill Special NPC contracts-->
+  <contract id="ct043"
+            category="killNPC"
+            name="ct043_name"
+            accept_text="ct043_accept"
+            hint="ct043_hint"
+            complete_text="ct043_complete"
+            min_level="1"
+            >
+    <npcs>
+      <npc name="ct043_1" zones="H1" min_level="1" race="Humans" />
+    </npcs>
+
+    <rewards>
+      <reward type="credits"  count="1000" />
+      <reward type="exp"      count="500" />
+    </rewards>
+    
+  </contract>
+  
+  <contract id="ct044"
+            category="killNPC"
+            name="ct044_name"
+            accept_text="ct044_accept"
+            hint="ct044_hint"
+            complete_text="ct044_complete"
+            min_level="1"
+            >
+    <npcs>
+      <npc name="ct044_1" zones="H2" min_level="1" race="Humans" />
+    </npcs>
+
+    <rewards>
+      <reward type="credits"  count="1000" />
+      <reward type="exp"      count="500" />
+    </rewards>
+    
+  </contract>
+  
+  <contract id="ct045"
+            category="killNPC"
+            name="ct045_name"
+            accept_text="ct045_accept"
+            hint="ct045_hint"
+            complete_text="ct045_complete"
+            min_level="1"
+            >
+    <npcs>
+      <npc name="ct045_1" zones="H3" min_level="1" race="Humans" />
+    </npcs>
+
+    <rewards>
+      <reward type="credits"  count="1000" />
+      <reward type="exp"      count="500" />
+    </rewards>
+    
+  </contract>
+  
+  <contract id="ct046"
+            category="killNPC"
+            name="ct046_name"
+            accept_text="ct046_accept"
+            hint="ct046_hint"
+            complete_text="ct046_complete"
+            min_level="1"
+            >
+    <npcs>
+      <npc name="ct046_1" zones="H4" min_level="1" race="Humans" />
+    </npcs>
+
+    <rewards>
+      <reward type="credits"  count="1000" />
+      <reward type="exp"      count="500" />
+    </rewards>
+    
+  </contract>
+  
+  
 </contracts>

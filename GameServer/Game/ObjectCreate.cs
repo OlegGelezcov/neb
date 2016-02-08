@@ -22,6 +22,7 @@ using Nebula.Inventory.DropList;
 using Nebula.Game.Utils;
 using Nebula.Game.Contracts;
 using Nebula.Game.Contracts.Marks;
+using Nebula.Game.Events;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -62,6 +63,14 @@ namespace Nebula.Game {
                             switch((comp.Value as MultiComponentData).subType) {
                                 case ComponentSubType.kill_npc_group_contract_mark: {
                                         components.Add(typeof(KillNPCGroupContractMark));
+                                    }
+                                    break;
+                                case ComponentSubType.kill_special_npc_contract_mark: {
+                                        components.Add(typeof(KillNPCContractMark));
+                                    }
+                                    break;
+                                case ComponentSubType.explore_location_contract: {
+                                        components.Add(typeof(ExploreLocationContractMark));
                                     }
                                     break;
                             }
@@ -192,6 +201,10 @@ namespace Nebula.Game {
                     case ComponentID.PlayerAI:
                         {
                             components.Add(typeof(AIState));
+                        }
+                        break;
+                    case ComponentID.Trigger: {
+                            components.Add(typeof(LocationTrigger));
                         }
                         break;
                     case ComponentID.Weapon:
@@ -352,6 +365,14 @@ namespace Nebula.Game {
                             switch((comp.Value as MultiComponentData).subType) {
                                 case ComponentSubType.kill_npc_group_contract_mark: {
                                         nebObject.GetComponent<KillNPCGroupContractMark>().Init(comp.Value as KillNPCGroupContractMarkData);
+                                    }
+                                    break;
+                                case ComponentSubType.kill_special_npc_contract_mark: {
+                                        nebObject.GetComponent<KillNPCContractMark>().Init(comp.Value as KillNPCContractMarkData);
+                                    }
+                                    break;
+                                case ComponentSubType.explore_location_contract: {
+                                        nebObject.GetComponent<ExploreLocationContractMark>().Init(comp.Value as ExploreLocationContractMarkData);
                                     }
                                     break;
                             }
@@ -561,6 +582,10 @@ namespace Nebula.Game {
                     case ComponentID.Station:
                         {
                             nebObject.GetComponent<StationComponent>().Init(comp.Value as StationComponentData);
+                        }
+                        break;
+                    case ComponentID.Trigger: {
+                            nebObject.GetComponent<LocationTrigger>().Init(comp.Value as LocationTriggerComponentData);
                         }
                         break;
 

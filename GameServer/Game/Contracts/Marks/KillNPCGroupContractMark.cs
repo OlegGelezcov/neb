@@ -6,9 +6,9 @@ namespace Nebula.Game.Contracts.Marks {
 
         private KillNPCGroupContractMarkData m_Data;
 
-        public void Init(KillNPCGroupContractMarkData data ) {
+        public override  void Init(ContractMarkData data ) {
             base.Init(data);
-            m_Data = data;
+            m_Data = data as KillNPCGroupContractMarkData; ;
             if(props != null ) {
                 UpdateProperty();
             }
@@ -21,9 +21,9 @@ namespace Nebula.Game.Contracts.Marks {
 
         private void UpdateProperty() {
             if (m_Data != null) {
-                props.SetProperty((byte)PS.BotGroup, m_Data.group);
+                props.SetProperty((byte)PS.Mark, m_Data.group);
             } else {
-                props.SetProperty((byte)PS.BotGroup, string.Empty);
+                props.SetProperty((byte)PS.Mark, string.Empty);
             }
         }
     }

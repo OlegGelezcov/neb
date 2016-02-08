@@ -12,21 +12,21 @@
         <component id="NebulaObject" item_type="Station" badge="" size="300.00" subzone_id="0" />
         <component id="Model" sub_type="raceable_model" model="human_station" h="human_station" b="borguzand_station" c="kriptizid_station" />
       </nebula_object>
-      <nebula_object id="OUTP_18e1c9c7-e758-4970-ac56-ea45b801fa88" position="0,0,0" rotation="0,0,0" script="turret">
+      <nebula_object id="OUTP_e9e08a57-4f0b-49db-a130-65a5630ab360" position="0,0,0" rotation="0,0,0" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="main_outpost" size="80.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_OUTPOST" />
         <component id="MainOutpost" />
-        <component id="Bot" bot_sub_type="MainOutpost" />
+        <component id="Bot" bot_sub_type="MainOutpost" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="60000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="True" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
         <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="1" fraction="BotHumans" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="FORT_fe1d0bcb-7995-476f-b125-9af4c10b0af3" position="0,500,800" rotation="0,0,0" script="turret">
+      <nebula_object id="FORT_71d68dad-1a47-49e2-a084-d4c682c06f96" position="0,500,800" rotation="0,0,0" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="40.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_FORTIFICATION" />
-        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Bot" bot_sub_type="Outpost" group="" />
         <component id="Bonuses" />
         <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="1" fraction="BotHumans" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="36000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
@@ -34,11 +34,11 @@
         <component id="Raceable" race="Humans" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_5fd60458-5fab-47b9-acc7-ed4b2be39482" position="100,500,775" rotation="0,180,0" script="turret">
+      <nebula_object id="TURR_87d202a5-3e75-4308-9328-85c1545dc5d2" position="100,500,775" rotation="0,180,0" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -49,11 +49,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="100.1,500.0,775.0;81.0,441.2,775.0;31.0,404.9,775.0;-30.8,404.9,775.0;-80.8,441.2,775.0;-99.9,500.0,775.0;-80.8,558.8,775.0;-30.8,595.1,775.0;31.0,595.1,775.0;81.0,558.8,775.0" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_c588b666-8a1c-4663-adb7-a7f118c25df2" position="-50,586,850" rotation="0,179,240" script="turret">
+      <nebula_object id="TURR_abd2f6b7-e6b8-4720-b2db-ed7b1439693c" position="-50,586,850" rotation="0,179,240" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -64,11 +64,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-50.0,586.5,850.0;10.5,599.3,850.0;66.9,574.2,850.0;97.8,520.7,850.0;91.4,459.2,850.0;50.0,413.3,850.0;-10.5,400.4,850.0;-66.9,425.6,850.0;-97.8,479.1,850.0;-91.4,540.6,850.0" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_45fb1686-f84c-4212-afb1-35a558159a0d" position="-50,413,925" rotation="0,179,120" script="turret">
+      <nebula_object id="TURR_1f98685b-9d9d-4719-af0b-e4f198586c5a" position="-50,413,925" rotation="0,179,120" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -79,10 +79,10 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-50.0,413.5,925.0;-91.4,459.4,925.0;-97.8,520.9,925.0;-66.9,574.4,925.0;-10.5,599.6,925.0;50.0,586.7,925.0;91.4,540.8,925.0;97.8,479.3,925.0;66.9,425.8,925.0;10.5,400.7,925.0" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="FORT_da7cf7b6-8c8d-452e-88e9-83530a8ff7c7" position="-800,-500,-400" rotation="0,0,0" script="turret">
+      <nebula_object id="FORT_5261afcc-e5b4-4915-8679-c9c0e616ba34" position="-800,-500,-400" rotation="0,0,0" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="40.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_FORTIFICATION" />
-        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Bot" bot_sub_type="Outpost" group="" />
         <component id="Bonuses" />
         <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="1" fraction="BotHumans" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="36000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
@@ -90,11 +90,11 @@
         <component id="Raceable" race="Humans" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_fcced440-f8f6-4ee0-9834-1aca79740c53" position="-700,-500,-425" rotation="0,180,0" script="turret">
+      <nebula_object id="TURR_8b9a51ab-9752-4f0b-90d2-416b771cc95e" position="-700,-500,-425" rotation="0,180,0" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -105,11 +105,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-700.0,-500.0,-425.0;-719.1,-558.8,-425.0;-769.1,-595.1,-425.0;-830.9,-595.1,-425.0;-880.9,-558.8,-425.0;-900.0,-500.0,-425.0;-880.9,-441.2,-425.0;-830.9,-404.9,-425.0;-769.1,-404.9,-425.0;-719.1,-441.2,-425.0" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_6de7223e-0e90-4f83-bbf2-9d9352bcb38e" position="-850,-413,-350" rotation="0,179,240" script="turret">
+      <nebula_object id="TURR_7ca78676-adb0-436b-b610-250af61937a0" position="-850,-413,-350" rotation="0,179,240" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -120,11 +120,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-850.0,-413.5,-350.0;-789.5,-400.7,-350.0;-733.1,-425.8,-350.0;-702.2,-479.3,-350.0;-708.6,-540.8,-350.0;-750.0,-586.7,-350.0;-810.5,-599.6,-350.0;-866.9,-574.4,-350.0;-897.8,-520.9,-350.0;-891.4,-459.4,-350.0" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_19f55299-257d-47dd-91b7-2c58a9ef437f" position="-850,-586,-275" rotation="0,179,120" script="turret">
+      <nebula_object id="TURR_755e81f7-d5d8-44ea-b364-cc940b1b706e" position="-850,-586,-275" rotation="0,179,120" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -135,10 +135,10 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-850.0,-586.5,-275.0;-891.4,-540.6,-275.0;-897.8,-479.1,-275.0;-866.9,-425.6,-275.0;-810.5,-400.4,-275.0;-750.0,-413.3,-275.0;-708.6,-459.2,-275.0;-702.2,-520.7,-275.0;-733.1,-574.2,-275.0;-789.5,-599.3,-275.0" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="FORT_dc896a3b-94e3-4bd6-b264-8cb52d3d9245" position="800,-500,-400" rotation="0,0,45" script="turret">
+      <nebula_object id="FORT_c0b26168-b366-4bca-817e-c04f54b88c89" position="800,-500,-400" rotation="0,0,45" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="40.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_FORTIFICATION" />
-        <component id="Bot" bot_sub_type="Outpost" />
+        <component id="Bot" bot_sub_type="Outpost" group="" />
         <component id="Bonuses" />
         <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="1" fraction="BotHumans" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="36000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="10.00" />
@@ -146,11 +146,11 @@
         <component id="Raceable" race="Humans" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_988800dc-bad4-47b3-885c-547eca9c0af9" position="870,-429,-425" rotation="0,180,315" script="turret">
+      <nebula_object id="TURR_302c09fc-0593-4ead-948d-4079f591c6e2" position="870,-429,-425" rotation="0,180,315" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -161,11 +161,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="870.7,-429.3,-425.0;898.8,-484.4,-425.0;889.1,-545.4,-425.0;845.4,-589.1,-425.0;784.4,-598.8,-425.0;729.3,-570.7,-425.0;701.2,-515.6,-425.0;710.9,-454.6,-425.0;754.6,-410.9,-425.0;815.6,-401.2,-425.0" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_2222f3fa-8f3d-4628-abfb-7df7aebb3c07" position="703,-474,-350" rotation="0,180,194" script="turret">
+      <nebula_object id="TURR_f0f9c841-c641-4300-a927-4375b7723e09" position="703,-474,-350" rotation="0,180,194" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -176,11 +176,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="703.5,-474.2,-350.0;737.1,-422.4,-350.0;794.8,-400.2,-350.0;854.5,-416.2,-350.0;893.4,-464.2,-350.0;896.7,-526.0,-350.0;863.0,-577.8,-350.0;805.3,-599.9,-350.0;745.6,-583.9,-350.0;706.7,-535.9,-350.0" />
         <component id="Respawnable" interval="10.00" />
       </nebula_object>
-      <nebula_object id="TURR_8e23d555-9ca2-415b-99da-a0476f415cf7" position="825,-596,-275" rotation="0,180,75" script="turret">
+      <nebula_object id="TURR_c39cbb45-3ec1-4075-9433-22068b007515" position="825,-596,-275" rotation="0,180,75" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -198,32 +198,32 @@
         <component id="Raceable" race="Humans" />
         <component id="Teleport" />
       </nebula_object>
-      <nebula_object id="A_21889349-34bf-4dcf-8da2-8955d508ed56" position="-1753,-827,1730" rotation="351,39,353" script="">
+      <nebula_object id="A_ffeeb250-56e8-4aed-9078-9d77ec1939a4" position="-1753,-827,1730" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="A_ea72f2d4-22ad-4ceb-8d06-7d53d6177073" position="-1779,-850,1694" rotation="351,39,353" script="">
+      <nebula_object id="A_fbbb044f-fdc5-4b25-8c8c-57b52b805586" position="-1779,-850,1694" rotation="351,39,353" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_28d53549-6593-472a-940a-a3d24e94ca36" position="-1758,-843,1709" rotation="351,39,353" script="">
+      <nebula_object id="A_5e7143a2-e4f4-4d99-8c83-7728cff088a2" position="-1758,-843,1709" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_9c7566b1-960c-4e78-ace5-dae9c70a2654" position="-1775,-829,1730" rotation="351,39,353" script="">
+      <nebula_object id="A_6a0f159f-2477-4812-b826-197558bdf9a7" position="-1775,-829,1730" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="NPC_ba17d25a-660b-4f11-a3ed-cee8ddf5c38f" position="-1771,-838,1712" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_17f1e008-f20f-4c61-af6e-80320e1aa1dd" position="-1771,-838,1712" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -239,8 +239,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_29f68892-02ac-4911-86fe-5c5fceed1033" position="-1745,-837,1715" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_80db6d3e-1091-4a24-8ecc-aa5db01c5eca" position="-1745,-837,1715" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -256,8 +256,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_9485f381-a063-4ae7-9871-d6aa8d8e2873" position="-1764,-835,1730" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_00f8bbe6-175e-49d4-ace5-f4b2934671db" position="-1764,-835,1730" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -273,32 +273,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_5a59aef8-3e07-40e6-aa81-74783b702092" position="-2037,-1042,1511" rotation="351,39,353" script="">
+      <nebula_object id="A_812d9f84-96a9-42b1-85bf-7a0281f58eba" position="-2037,-1042,1511" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="A_2a0fdcb7-f1d4-4156-a756-49d55fd125dc" position="-2063,-1053,1535" rotation="351,39,353" script="">
+      <nebula_object id="A_fefb1163-3cb6-4677-b6c5-bf494e4eeb00" position="-2063,-1053,1535" rotation="351,39,353" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_5ed60211-4e14-4336-944c-b5f90560f8e5" position="-2051,-1060,1478" rotation="351,39,353" script="">
+      <nebula_object id="A_bb20ff33-f26e-469d-883c-246f266ca523" position="-2051,-1060,1478" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_818b1702-7655-405f-91f6-822631d86f9d" position="-2079,-1046,1497" rotation="351,39,353" script="">
+      <nebula_object id="A_d58a73ee-6a1f-4fe4-af88-9af204fc27b6" position="-2079,-1046,1497" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="NPC_cd31a0a0-8a1e-4526-879a-782aab6cec25" position="-2072,-1050,1506" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_da817e05-43e8-42bb-9c77-b067c1732104" position="-2072,-1050,1506" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -314,8 +314,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_ddb793b1-9403-46a8-9f34-735015ec45f5" position="-2044,-1053,1491" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_5f633bd9-6e45-434a-82f0-4e8dd7f7a83a" position="-2044,-1053,1491" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -331,8 +331,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_9558d0d9-5746-4a94-8762-6dbdfdd7cdb0" position="-2047,-1047,1521" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_ef0902ce-a27c-4623-8eac-bdba84115e34" position="-2047,-1047,1521" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -348,20 +348,20 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_f7fbeb62-3db4-4996-a559-db9cab340c01" position="-2270,-895,1792" rotation="351,39,353" script="">
+      <nebula_object id="A_7d197fa5-6ab7-4f25-93d9-27b8e7db8263" position="-2270,-895,1792" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="A_e02fdeff-2f9f-4127-877f-603edb9b38ba" position="-2296,-911,1786" rotation="351,39,353" script="">
+      <nebula_object id="A_0be92a49-3338-43fd-9c23-e1817fda59d2" position="-2296,-911,1786" rotation="351,39,353" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_3f2f5090-6dba-47be-a9e6-02704712e603" position="-2285,-901,1798" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_26dd998d-d0f6-4bba-9981-9252e83843de" position="-2285,-901,1798" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -377,8 +377,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_dc22880d-e636-4094-925f-db914879a70a" position="-2283,-905,1775" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_510197b9-bc51-4c30-99a7-cf682af5d4fd" position="-2283,-905,1775" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -394,32 +394,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_1e1250e4-f17d-4ce9-9263-7ec276e9bf91" position="-2118,-717,1830" rotation="349,353,1" script="">
+      <nebula_object id="A_314cc77c-7caa-4e9d-ba48-3b14b56fea76" position="-2118,-717,1830" rotation="349,353,1" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="A_c44aa11e-bf79-4b4c-9b3b-91973e9757ec" position="-2089,-728,1828" rotation="349,353,1" script="">
+      <nebula_object id="A_d3a4fa9f-bd26-4790-bfee-73bfe2c10664" position="-2089,-728,1828" rotation="349,353,1" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_ae242ae8-6161-411c-8fd9-a56a24e5670f" position="-2133,-730,1838" rotation="349,353,1" script="">
+      <nebula_object id="A_717eb2e3-75aa-4bdf-8542-a767fab594ec" position="-2133,-730,1838" rotation="349,353,1" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_7c223211-7441-4023-a8a7-d433962bdeb5" position="-2074,-713,1841" rotation="349,353,1" script="">
+      <nebula_object id="A_0a2041d7-b551-4350-9b5e-ed833fbe34a5" position="-2074,-713,1841" rotation="349,353,1" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="NPC_1abfcd5e-5993-4114-b611-066f04669c4f" position="-2119,-721,1838" rotation="349,353,1" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_156f11a3-524e-408f-b6a6-d694ef3a4d20" position="-2119,-721,1838" rotation="349,353,1" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -435,8 +435,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_4d87dd2d-ac2e-4a9d-99cf-e5daabb27b6e" position="-2086,-721,1841" rotation="349,353,1" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_55c40388-f43a-48f3-886b-f1b343185578" position="-2086,-721,1841" rotation="349,353,1" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -452,32 +452,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_797aa343-d10b-44ae-a2f8-3ca8777f5e02" position="-1812,-983,1569" rotation="351,39,353" script="">
+      <nebula_object id="A_86e18457-6895-40c7-862e-ef4b7e016b9f" position="-1812,-983,1569" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="A_45a9967f-9e1a-4635-9be8-4c0be9741131" position="-1838,-1005,1533" rotation="351,39,353" script="">
+      <nebula_object id="A_b6c066f4-f8a5-47d5-869b-70448b3a31ff" position="-1838,-1005,1533" rotation="351,39,353" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_8fbb3b32-aea9-4e04-b956-10734a2dd22a" position="-1817,-999,1548" rotation="351,39,353" script="">
+      <nebula_object id="A_1be18d4e-7345-4cda-b060-159764af57f0" position="-1817,-999,1548" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_c3617c1c-9ffa-4174-bb0b-20d4a463382f" position="-1834,-985,1569" rotation="351,39,353" script="">
+      <nebula_object id="A_f82908d1-d40c-489d-ad3a-2f382a58d8a3" position="-1834,-985,1569" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="NPC_296ec54b-4db3-46f3-b73c-e28356551b80" position="-1830,-994,1551" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_df3ad512-74cc-4d91-b9ef-e9bdb7e0913e" position="-1830,-994,1551" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -493,8 +493,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_d16e8b0d-eff9-4f20-b80b-02b77d39d09f" position="-1804,-993,1555" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_6a1bd1d2-6936-4ef6-851b-4fd5c240092e" position="-1804,-993,1555" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -510,8 +510,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_3f0294d2-7c3c-48df-bcc7-f06e97cb8f50" position="-1823,-991,1569" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_852dffd2-2048-408b-adba-75c31b243b47" position="-1823,-991,1569" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -527,20 +527,20 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_63948621-0c59-4ef4-b0db-e7fd98356ede" position="-2246,-977,1552" rotation="351,39,353" script="">
+      <nebula_object id="A_598df6c4-f849-4826-8def-1929eb791880" position="-2246,-977,1552" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="A_95603a9c-d38a-4fec-8fce-f584e061dfbc" position="-2272,-993,1547" rotation="351,39,353" script="">
+      <nebula_object id="A_d183b614-be20-430e-8d03-5386b234e83e" position="-2272,-993,1547" rotation="351,39,353" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_0f6babd9-f17e-49ed-aee8-a90499319c91" position="-2261,-982,1559" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_99599a29-5008-4210-b45a-17afac977a2b" position="-2261,-982,1559" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -556,8 +556,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_32a75519-dbfd-4831-b868-a51e0bc6d75e" position="-2258,-987,1536" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_d5d68473-7df3-45b0-932d-49d015fa21d3" position="-2258,-987,1536" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -573,32 +573,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_680c84bd-396d-425e-8470-6aee0088112f" position="-2118,-1174,1912" rotation="349,353,1" script="">
+      <nebula_object id="A_e496b55d-ead8-447b-83e2-b2b4e9293c46" position="-2118,-1174,1912" rotation="349,353,1" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="A_26338929-37af-462c-a7ad-37a18eef6bde" position="-2089,-1184,1910" rotation="349,353,1" script="">
+      <nebula_object id="A_3ff4369c-4a29-4c34-addc-4f2413aaa30c" position="-2089,-1184,1910" rotation="349,353,1" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_ba6e0947-a6e7-43bf-9dde-8d1a90c257ec" position="-2133,-1186,1920" rotation="349,353,1" script="">
+      <nebula_object id="A_6426be41-8820-453d-b9b3-3ec59ee4d61f" position="-2133,-1186,1920" rotation="349,353,1" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_880356f6-5037-4ca1-99b7-752f170729dd" position="-2074,-1170,1923" rotation="349,353,1" script="">
+      <nebula_object id="A_e28babbd-a0af-4189-bc19-3ed28945e6da" position="-2074,-1170,1923" rotation="349,353,1" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="NPC_adec96be-eb47-40f9-b54b-ded09e038048" position="-2119,-1178,1920" rotation="349,353,1" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_ad3bde9c-1cf0-43fb-bda9-afde77e6cab2" position="-2119,-1178,1920" rotation="349,353,1" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -614,8 +614,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_708a5789-c835-484a-b5fc-b1d4227071c4" position="-2086,-1177,1923" rotation="349,353,1" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_373b0be6-0c0e-44c3-baf3-d9674e23f518" position="-2086,-1177,1923" rotation="349,353,1" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -631,32 +631,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_2feacedd-e826-4bc6-aab8-9183eaee3cab" position="-1928,-946,1508" rotation="351,39,353" script="">
+      <nebula_object id="A_45f4b9f4-ea0e-494c-b939-a8955179eaa0" position="-1928,-946,1508" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="A_0b8db95e-4451-4de4-8057-4884e26d60bb" position="-1954,-957,1532" rotation="351,39,353" script="">
+      <nebula_object id="A_67de79b3-8bd5-4a3e-89cd-e4ff105e20ed" position="-1954,-957,1532" rotation="351,39,353" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_0cad9ac4-8656-440f-b430-2fb6afa13934" position="-1942,-964,1476" rotation="351,39,353" script="">
+      <nebula_object id="A_7487ec64-a432-434d-b534-6e9973156bb9" position="-1942,-964,1476" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_21a699a2-d5e3-46b5-bf50-17c47711bea6" position="-1971,-950,1494" rotation="351,39,353" script="">
+      <nebula_object id="A_901a6a4a-1d9d-4010-823e-86d5fdd2cde3" position="-1971,-950,1494" rotation="351,39,353" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="1" />
       </nebula_object>
-      <nebula_object id="NPC_b9fe0f73-851d-49c0-a0e4-83f804fead3a" position="-1963,-954,1503" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_6c4a2cc2-4231-429b-aac9-7a5e7ee021b4" position="-1963,-954,1503" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -672,8 +672,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_1b9cb208-af31-456f-9f1c-200da07c9bcd" position="-1935,-957,1489" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_2e83fe3c-2d36-439b-8af8-b00defbc492b" position="-1935,-957,1489" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -689,8 +689,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_6c91c611-885c-4903-915c-796454d18212" position="-1938,-951,1518" rotation="351,39,353" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_551df561-5916-4c1c-8896-5cf114a0f6de" position="-1938,-951,1518" rotation="351,39,353" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="1" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -713,26 +713,26 @@
         <component id="Raceable" race="Humans" />
         <component id="Teleport" />
       </nebula_object>
-      <nebula_object id="A_80937d02-d3be-4e85-99c4-f3346ce33e1f" position="2201,782,87" rotation="24,356,346" script="">
+      <nebula_object id="A_34970636-df22-42e7-9d25-775acecbda89" position="2201,782,87" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
       </nebula_object>
-      <nebula_object id="A_bc1cecdc-115e-4e98-8b27-3722bb301580" position="2204,768,88" rotation="24,356,346" script="">
+      <nebula_object id="A_4a55f485-df70-4b34-a324-2d9adeb21e11" position="2204,768,88" rotation="24,356,346" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_fc28bca3-3d68-4a04-953d-c614b3aafd34" position="2204,777,79" rotation="24,356,346" script="">
+      <nebula_object id="A_09ea532c-1015-4b4e-9fb7-ecc377cb37f8" position="2204,777,79" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_100aa8c1-90ef-4793-88f6-a99c019f58cb" position="2210,774,88" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_266c43fe-14ea-497d-929a-92d6e43cb975" position="2210,774,88" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -748,8 +748,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_2a439325-4682-4a7e-be3d-8021fd4597ca" position="2200,776,82" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_62bcee0b-dcd6-4d44-a707-358aa0d7d146" position="2200,776,82" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -765,26 +765,26 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_d01a5b24-9757-4bbf-bb8a-341a698b3ca6" position="2173,1110,202" rotation="24,356,346" script="">
+      <nebula_object id="A_6b35e541-4607-4142-a33f-b443f66aeaf6" position="2173,1110,202" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
       </nebula_object>
-      <nebula_object id="A_eab7b3c8-e959-46d5-993e-326712331382" position="2204,1087,212" rotation="24,356,346" script="">
+      <nebula_object id="A_019f5645-987a-4679-9eb8-1c386799b85a" position="2204,1087,212" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_cab947bb-d563-431f-9f06-400a65d34059" position="2162,1102,212" rotation="24,356,346" script="">
+      <nebula_object id="A_b42d5b84-f082-4d30-8677-6de9d7945acd" position="2162,1102,212" rotation="24,356,346" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_4396fb2a-940a-4baa-b684-795a7c5a6afb" position="2194,1096,212" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_7ff62b9a-5aa7-45d0-9e74-3c3f60f787f8" position="2194,1096,212" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -800,8 +800,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_6d9402c4-cb6f-45ec-b202-bda117fb18e5" position="2179,1115,205" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_b8725ba6-7c1e-4421-ade0-8afec48f113c" position="2179,1115,205" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -817,26 +817,26 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_5be6bf3e-48a5-4c33-ac76-a20f6fdaa378" position="2214,1001,-148" rotation="24,356,346" script="">
+      <nebula_object id="A_8cea7a76-46b6-4cd3-a727-3528eef5619b" position="2214,1001,-148" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_c4a30e6e-da04-4e3f-86fe-9c4b29b7df39" position="2229,988,-138" rotation="24,356,346" script="">
+      <nebula_object id="A_fac827a6-81dc-4ee0-b9fe-b83a8d6beed1" position="2229,988,-138" rotation="24,356,346" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_077447fe-0cc9-448a-837f-507eaa9375ba" position="2222,1000,-135" rotation="24,356,346" script="">
+      <nebula_object id="A_a3d6d7b0-bead-47a9-8bdb-6474e0779950" position="2222,1000,-135" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
       </nebula_object>
-      <nebula_object id="NPC_339cbc91-fdd7-4298-ac07-0e1e5397195b" position="2225,996,-145" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_cc140907-7023-41b4-8f50-6ad2c41c10fb" position="2225,996,-145" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -852,8 +852,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_954e4365-5992-4a4b-bc11-07f09449a2f4" position="2217,1006,-135" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_d05249f7-5b60-4276-949c-d9de7c569c9e" position="2217,1006,-135" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -869,20 +869,20 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_9663cc89-3e48-40b4-8d00-9d2012cbfe82" position="2013,940,-209" rotation="24,356,346" script="">
+      <nebula_object id="A_b48ef132-ec5d-4e4f-891a-ba2001c1222d" position="2013,940,-209" rotation="24,356,346" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_a1284060-7618-484b-b091-f3e0d49ec6a6" position="2003,949,-242" rotation="24,356,346" script="">
+      <nebula_object id="A_9e404d68-fe39-4e28-8466-e56a05d1f0bd" position="2003,949,-242" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_3fb90414-d050-4d73-8be7-d80d32f23c13" position="1986,956,-222" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_42ae6732-5048-4982-a018-657fa80e2820" position="1986,956,-222" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -898,32 +898,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_2cfbfcf7-222c-44c1-8b10-54b1b634e0f6" position="1920,1284,-32" rotation="24,356,346" script="">
+      <nebula_object id="A_ff02b49f-2035-484a-abe1-4602893affa1" position="1920,1284,-32" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_b7ae6339-b140-47fb-b646-bf4790c95dca" position="1916,1291,-21" rotation="24,356,346" script="">
+      <nebula_object id="A_7743ca78-1c39-4b31-aa1c-0d6a8a1e2f21" position="1916,1291,-21" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
       </nebula_object>
-      <nebula_object id="A_2b71456a-dee9-40db-9832-bf5e312032a9" position="1910,1285,-31" rotation="24,356,346" script="">
+      <nebula_object id="A_4c9f361e-4ecd-45d9-b168-5835ff93b5d6" position="1910,1285,-31" rotation="24,356,346" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_8b5f586d-cf02-4036-9c8c-0079f1090c56" position="1905,1277,-19" rotation="24,356,346" script="">
+      <nebula_object id="A_bd1038cb-acde-45df-b74b-30beb31be7e9" position="1905,1277,-19" rotation="24,356,346" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_4193f01d-c19c-4f67-9db3-69d536a2c641" position="1913,1292,-35" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_5ee03a52-8bfc-4008-a67d-0b790debca74" position="1913,1292,-35" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -939,8 +939,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_7e17b580-dc21-46b8-9adf-c4a32cf2ade0" position="1915,1279,-10" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_f710ecea-b07c-4657-8e47-1227c2ed3cb8" position="1915,1279,-10" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -956,8 +956,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_844df40f-4feb-48bc-ad68-9c08512429a5" position="1902,1287,-20" rotation="24,356,346" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_43186273-6129-4fce-b3f7-d62501420253" position="1902,1287,-20" rotation="24,356,346" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -973,26 +973,26 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_5795db8c-edbc-4b9a-ab07-607d063bf798" position="1829,1162,-129" rotation="43,159,4" script="">
+      <nebula_object id="A_6e8be322-b0d6-49b6-98d3-061129ee4f5a" position="1829,1162,-129" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
       </nebula_object>
-      <nebula_object id="A_96321782-6e14-426d-a4ca-3ecf33315e1f" position="1798,1146,-149" rotation="43,159,4" script="">
+      <nebula_object id="A_97ba03a1-bb71-4b8a-8258-5d7d86b95467" position="1798,1146,-149" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_dc83256f-4e0f-45aa-a804-9a9fb1262c1d" position="1840,1149,-131" rotation="43,159,4" script="">
+      <nebula_object id="A_330f942a-db7c-4854-bcad-517e04d16913" position="1840,1149,-131" rotation="43,159,4" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_3293a552-44fb-45a5-9334-1307aaf9efe8" position="1810,1152,-146" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_2a588695-6cf9-4ffb-9c59-cd0f0a583d28" position="1810,1152,-146" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1008,8 +1008,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_b2663372-82fb-41de-b3f2-d4d2e756bb2e" position="1826,1168,-136" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_1dbd9e54-0b13-4ff6-92f3-0b9a9ac33f3c" position="1826,1168,-136" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1025,26 +1025,26 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_c13a4948-dfd4-4e98-8aec-f9bf8e38a4ec" position="1817,817,-88" rotation="43,159,4" script="">
+      <nebula_object id="A_b82e37c6-fc07-4b95-b8bf-b8e3562c3197" position="1817,817,-88" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
       </nebula_object>
-      <nebula_object id="A_0407d86d-9d64-48df-94f8-c248d1422f0e" position="1809,805,-87" rotation="43,159,4" script="">
+      <nebula_object id="A_5528809d-2369-4fd2-a819-c4c538501f90" position="1809,805,-87" rotation="43,159,4" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_81ae8335-c4c9-429e-a840-43a6ef3f4632" position="1809,816,-81" rotation="43,159,4" script="">
+      <nebula_object id="A_b623a42c-f4fa-4cd0-aaa4-9cba0890c955" position="1809,816,-81" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_1275d6e5-aa84-4e21-ac48-8832edf36cb3" position="1806,812,-92" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_2d9e1874-d657-4be5-bcea-a049e27c0bd7" position="1806,812,-92" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1060,8 +1060,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_72ebb4ab-76bc-46ed-b38b-d9c8792e4bc7" position="1813,813,-82" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_01332492-97d7-4bc4-9dc2-777a8a42f0ce" position="1813,813,-82" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1077,32 +1077,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_d743762b-a765-489e-bf9d-d22f4bad6e74" position="2188,1247,61" rotation="43,159,4" script="">
+      <nebula_object id="A_7b5f507c-3081-425d-81db-3632160f65eb" position="2188,1247,61" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_d8ea09a8-6264-41ff-8ea0-a6f1df70aa24" position="2199,1249,52" rotation="43,159,4" script="">
+      <nebula_object id="A_b948a2e2-de1b-46a4-a96a-a2932d3e2f58" position="2199,1249,52" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
       </nebula_object>
-      <nebula_object id="A_90f8c392-1b4a-496e-9d4c-9c3df8c271b4" position="2198,1245,64" rotation="43,159,4" script="">
+      <nebula_object id="A_4275e380-e802-4d1f-a4c9-83b293fddc92" position="2198,1245,64" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_37c941e1-04ee-44f8-94f0-f7edcbd5e171" position="2204,1233,58" rotation="43,159,4" script="">
+      <nebula_object id="A_5c600c01-9ca2-4fe6-bd42-50b80479ff32" position="2204,1233,58" rotation="43,159,4" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_4692fa2c-391b-4826-9de5-4f5fb78229ae" position="2196,1253,65" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_43d36346-e1b5-4d35-aea3-2abfdf0e37c4" position="2196,1253,65" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1118,8 +1118,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_55f49b5a-ef52-4090-a993-271ac8cee236" position="2200,1234,45" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_af9ef0fb-f002-477f-ad40-921308c0633e" position="2200,1234,45" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1135,8 +1135,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_7fffea21-d980-429d-a644-96689f818528" position="2210,1241,58" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_a4d23cc4-7e1f-43a2-aebb-d8797fa9dd5b" position="2210,1241,58" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1152,20 +1152,20 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_16861114-3d4e-4888-824a-f9bff6987df5" position="1915,1011,229" rotation="43,159,4" script="">
+      <nebula_object id="A_228c7477-64d9-43db-a91f-5b3b929d957e" position="1915,1011,229" rotation="43,159,4" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_736aae34-a518-4666-b45c-b2453fee4984" position="1913,1027,260" rotation="43,159,4" script="">
+      <nebula_object id="A_3f159de3-bf2f-4f26-a4d8-b7070f1a3762" position="1913,1027,260" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_0ea80b1d-375a-45b6-b876-0b6b867f830a" position="1938,1024,250" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_1c4304aa-a110-48ab-9c23-ac819323ae0b" position="1938,1024,250" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1181,26 +1181,26 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_d14935fe-14f9-4ec4-808a-3caae7a80312" position="1791,1097,70" rotation="43,159,4" script="">
+      <nebula_object id="A_1b83216e-a385-4acd-8645-4ec171858e80" position="1791,1097,70" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_610ea9a1-b973-45ac-9b71-99aa50886f8d" position="1778,1086,56" rotation="43,159,4" script="">
+      <nebula_object id="A_f7596075-8cb3-4fda-bb7d-b73b08f6fdc8" position="1778,1086,56" rotation="43,159,4" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_7676ba4d-0898-4d48-80f4-acbad5772ba8" position="1790,1094,55" rotation="43,159,4" script="">
+      <nebula_object id="A_7dda58c6-f1b1-4605-abb8-a6459baef7f2" position="1790,1094,55" rotation="43,159,4" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="2" />
       </nebula_object>
-      <nebula_object id="NPC_62654f37-0198-4d3c-8270-0baa9d0c9c3b" position="1782,1094,64" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_5a7d12cf-46b1-4cd3-8831-2c43badadf88" position="1782,1094,64" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1216,8 +1216,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_a89ccef7-355e-438e-8af5-2079fee8e486" position="1796,1099,57" rotation="43,159,4" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_cecf1e5e-cca8-48b6-8ea2-d8c777970ccc" position="1796,1099,57" rotation="43,159,4" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="2" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1240,26 +1240,26 @@
         <component id="NebulaObject" item_type="Teleport" badge="" size="1.00" subzone_id="0" />
         <component id="Raceable" race="Humans" />
       </nebula_object>
-      <nebula_object id="A_71f71fdf-4ae0-416f-a829-0712620ae0bb" position="-2008,-866,-2040" rotation="352,81,319" script="">
+      <nebula_object id="A_b8cf720b-fc68-46cb-a648-6fa4053ff9e9" position="-2008,-866,-2040" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="A_2bf7e7fd-8e1e-4b3a-ae68-58bd8e15ba39" position="-2003,-893,-2048" rotation="352,81,319" script="">
+      <nebula_object id="A_8b00fe9c-b30e-41a6-821b-b94d4f5c1199" position="-2003,-893,-2048" rotation="352,81,319" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_dec02ad4-82d3-4df9-8f31-a5581ab25efb" position="-2026,-881,-2040" rotation="352,81,319" script="">
+      <nebula_object id="A_d8ef19ec-0bfa-4b17-96e9-079cf12c6915" position="-2026,-881,-2040" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_52595750-763e-40c8-8a4b-280aa9607903" position="-2011,-879,-2045" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_fbe4f56d-7b0e-48b2-8b44-305ca7ca6d6d" position="-2011,-879,-2045" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1275,8 +1275,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_e1dee2bd-3acf-4ea1-a842-3f2fb055fbcd" position="-2011,-879,-2045" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_a446a308-2138-4680-af0e-9404494c7c38" position="-2011,-879,-2045" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1292,20 +1292,20 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_0c78581a-47f3-40a1-ab2f-608098c981d5" position="-2227,-824,-1877" rotation="352,81,319" script="">
+      <nebula_object id="A_a37e364d-e06c-4064-a638-29da8d9aa8d0" position="-2227,-824,-1877" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="A_bfb4e5ac-82da-4dba-829c-99489104a200" position="-2230,-823,-1861" rotation="352,81,319" script="">
+      <nebula_object id="A_3635fc10-9a97-476d-8d03-13a3b66ed3f1" position="-2230,-823,-1861" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_88a66b3c-063d-42c6-ae50-0150e6ab0080" position="-2222,-822,-1867" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_0116754b-2fc8-448c-8af3-1729b6565e23" position="-2222,-822,-1867" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1321,32 +1321,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_6cf5074c-f76e-45d1-a783-9e56d03709af" position="-2182,-875,-1609" rotation="352,81,319" script="">
+      <nebula_object id="A_59085d34-ee4b-4e5c-b400-dc40868c04fd" position="-2182,-875,-1609" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="A_b4e82d72-06d3-4bf2-bc1e-c43f9395bc62" position="-2185,-878,-1591" rotation="352,81,319" script="">
+      <nebula_object id="A_afcd682c-217b-4e6d-8fb2-68417f1875cf" position="-2185,-878,-1591" rotation="352,81,319" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_d5862120-4d45-4f55-a599-82694d524fdc" position="-2197,-881,-1590" rotation="352,81,319" script="">
+      <nebula_object id="A_838bb791-b244-43aa-90a8-7e3a249c8916" position="-2197,-881,-1590" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_96e17960-1322-4ba2-8cbd-6d6aae103c1a" position="-2193,-879,-1598" rotation="352,81,319" script="">
+      <nebula_object id="A_526e6c02-6586-42e6-ae3e-5388cd76ed70" position="-2193,-879,-1598" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_bdaba2a2-a23c-4144-b12b-522aad93b5df" position="-2187,-872,-1597" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_748ec128-50fe-4ce4-a649-de8271da7719" position="-2187,-872,-1597" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1362,8 +1362,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_fa1e4a7f-938f-42f8-9fb2-29f0c1c352df" position="-2192,-886,-1593" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_c8039cf0-5ee6-4eb4-baae-168214451b53" position="-2192,-886,-1593" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1379,8 +1379,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_0ca68fdb-2fb0-4b12-8d94-d2785e0a003c" position="-2191,-876,-1608" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_45140724-9df1-42f9-8fc7-7884f8b8de4c" position="-2191,-876,-1608" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1396,26 +1396,26 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_401ea8a5-d673-4935-be8f-709468cc4b10" position="-1877,-1133,-1563" rotation="352,81,319" script="">
+      <nebula_object id="A_b64df4dc-ca7f-4066-bf26-076f1b84304e" position="-1877,-1133,-1563" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="A_5bce5193-7856-400e-96f7-66fd7474e142" position="-1895,-1156,-1559" rotation="352,81,319" script="">
+      <nebula_object id="A_9012b9f6-7748-4a09-86a2-eeffed7cd793" position="-1895,-1156,-1559" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_e06845a0-297a-4881-9325-240a9f0d90ab" position="-1870,-1158,-1574" rotation="352,81,319" script="">
+      <nebula_object id="A_79135894-2196-43d2-9dc5-b5ea0a7cee36" position="-1870,-1158,-1574" rotation="352,81,319" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_f1591c02-29d8-4209-a36a-f3b30a0fe5f1" position="-1896,-1158,-1580" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_717914e4-f336-4da7-abb0-02bceb264f5d" position="-1896,-1158,-1580" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1431,8 +1431,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_6468a479-d546-49a3-865d-1d2e90114b42" position="-1876,-1145,-1565" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_f1b6c440-66f3-4b61-a0fd-8aa429072dab" position="-1876,-1145,-1565" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1448,8 +1448,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_eb347554-2b95-4a00-85ac-c0127851f9bc" position="-1870,-1167,-1589" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_373e320f-9a05-4c31-97b4-c5f0271e6678" position="-1870,-1167,-1589" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1465,20 +1465,20 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_187e8be4-a596-4371-8903-4227fed9e079" position="-2286,-974,-1898" rotation="352,81,319" script="">
+      <nebula_object id="A_70f9ade8-7a40-4aab-9b5f-92b9db53be5b" position="-2286,-974,-1898" rotation="352,81,319" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_2ce905fb-1370-4ad1-b136-8b25d3453397" position="-2273,-973,-1921" rotation="352,81,319" script="">
+      <nebula_object id="A_2855a89a-e567-48b8-9686-748d5fd95000" position="-2273,-973,-1921" rotation="352,81,319" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="NPC_b29e43f5-d819-4f75-9a80-450d419b457c" position="-2277,-973,-1901" rotation="352,81,319" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_bcdb332e-4ad7-4091-bbaa-2fa9246b8285" position="-2277,-973,-1901" rotation="352,81,319" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1494,26 +1494,26 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_c0cc28e6-abc5-490e-930c-8f9ff5d80fbd" position="-2088,-1161,-2007" rotation="39,197,11" script="">
+      <nebula_object id="A_7fcf14e8-6326-43e1-b08c-7cf59373617f" position="-2088,-1161,-2007" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="A_a2d8ad51-fb90-4a56-8ba7-8a319da20995" position="-2112,-1169,-1993" rotation="39,197,11" script="">
+      <nebula_object id="A_3f19e954-2d10-4816-b3f5-529155ddb1ba" position="-2112,-1169,-1993" rotation="39,197,11" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_b71caaed-a02f-4865-893c-20ef3ceca5f9" position="-2090,-1156,-1984" rotation="39,197,11" script="">
+      <nebula_object id="A_6d57cb58-3bad-43d1-858c-116d9154c663" position="-2090,-1156,-1984" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_007184ce-f61c-4859-9c45-c06c11b0ac1d" position="-2098,-1161,-1996" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_11e13c2a-3a5f-41c0-a400-f67537b0199d" position="-2098,-1161,-1996" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1529,8 +1529,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_bba9cbe8-1c0e-41b9-b949-3dedaa4d0cfb" position="-2098,-1161,-1996" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_10ac3856-e250-4a5b-a216-e76035909f7f" position="-2098,-1161,-1996" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1546,32 +1546,32 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_6eac9d3b-f0d6-4dd6-899d-4b1085f5f18e" position="-1721,-980,-1729" rotation="39,197,11" script="">
+      <nebula_object id="A_2724804f-ea64-4966-bd5b-56fddad841f1" position="-1721,-980,-1729" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="A_4014c026-59ae-4d19-877d-270374dacf74" position="-1709,-992,-1721" rotation="39,197,11" script="">
+      <nebula_object id="A_28d45115-5289-4cd9-b1e7-52eb0f5a245e" position="-1709,-992,-1721" rotation="39,197,11" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_3d3cb711-fc88-4cf5-b97c-12a6ab8015d9" position="-1705,-987,-1711" rotation="39,197,11" script="">
+      <nebula_object id="A_caf1ce77-159b-4f67-8658-18727bfec781" position="-1705,-987,-1711" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_0e7887d8-8b77-4044-9d31-103b0ba5fd1f" position="-1711,-983,-1716" rotation="39,197,11" script="">
+      <nebula_object id="A_1f1e946e-74d1-48ae-98bb-f977d946cf45" position="-1711,-983,-1716" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_98b77029-676c-49ce-b528-913d4489436b" position="-1709,-985,-1725" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_f7d4721c-658e-44ed-b513-084b574c61ff" position="-1709,-985,-1725" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1587,8 +1587,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_5f3af3ed-1c17-4c93-a378-0808818b9a7a" position="-1712,-989,-1711" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_11f0065b-dce7-45a7-9700-f9af2a2ff434" position="-1712,-989,-1711" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1604,8 +1604,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_1aea0309-ccc7-4b8e-9f84-c8d8f68eee30" position="-1717,-977,-1722" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_61e919b2-a364-4ea8-a83d-b8cced76809d" position="-1717,-977,-1722" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1621,26 +1621,26 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_d06aee08-2d0a-4603-ae3d-117fa806bf33" position="-1970,-1294,-1748" rotation="39,197,11" script="">
+      <nebula_object id="A_573e59de-777a-40c7-8aee-833004b03dd5" position="-1970,-1294,-1748" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="A_94320d7c-d74e-45cf-b539-779785e42add" position="-1973,-1294,-1719" rotation="39,197,11" script="">
+      <nebula_object id="A_069fd24a-2dc4-4e5b-bfd0-635d777cc2a3" position="-1973,-1294,-1719" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_4667f762-fe96-46c4-8506-e76b007d9a0e" position="-1996,-1300,-1738" rotation="39,197,11" script="">
+      <nebula_object id="A_51254c5f-3f2c-4a59-9b5d-639b2fa3fe7a" position="-1996,-1300,-1738" rotation="39,197,11" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_b4cd322e-671a-417e-b546-99ae84656cdd" position="-1989,-1281,-1721" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_4241194e-13b3-4608-bfd6-0dce089471cf" position="-1989,-1281,-1721" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1656,8 +1656,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_0ef821ca-4b80-4044-9e36-d2e3ebb9add9" position="-1979,-1298,-1740" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_97d94a1c-3320-4bb9-958f-f89f72b9fae9" position="-1979,-1298,-1740" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1673,8 +1673,8 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="NPC_f368def0-cbe8-49fd-be69-a83b70bd5256" position="-2011,-1293,-1734" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_041cde5d-c996-4ce7-ab44-6004949b2e66" position="-2011,-1293,-1734" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1690,20 +1690,20 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_f90e2ba6-b7a9-4318-967e-d1670dc70afc" position="-1880,-774,-1896" rotation="39,197,11" script="">
+      <nebula_object id="A_a8a1cf1b-4569-4fb0-b68f-d2d2448b577d" position="-1880,-774,-1896" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="A_c76b662d-aa9f-4e32-aa4e-dac73ba3c129" position="-1867,-784,-1891" rotation="39,197,11" script="">
+      <nebula_object id="A_ab7b0fc7-c028-4013-a257-2ff8029d28c4" position="-1867,-784,-1891" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="NPC_f70c0d46-49cb-49f9-ab31-e4e8f94c1f8f" position="-1874,-784,-1898" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_62bd2c2d-adb5-4326-97eb-a125f3355341" position="-1874,-784,-1898" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1719,20 +1719,20 @@
         <component id="Energy" />
         <component id="Skills" />
       </nebula_object>
-      <nebula_object id="A_96003a9a-9410-4261-8006-c6c7eb7b0b22" position="-1936,-753,-1645" rotation="39,197,11" script="">
+      <nebula_object id="A_1bf1bb6e-754b-410b-adea-5f796a1589e2" position="-1936,-753,-1645" rotation="39,197,11" script="">
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
       </nebula_object>
-      <nebula_object id="A_55fed8f2-9b66-407c-85aa-e7da28dcef2f" position="-1956,-745,-1659" rotation="39,197,11" script="">
+      <nebula_object id="A_f5e03def-94b3-4860-a3fd-7b14227ca007" position="-1956,-745,-1659" rotation="39,197,11" script="">
         <component id="Respawnable" interval="240.00" />
         <component id="Asteroid" data_id="CraftAsteroid0001" />
         <component id="Model" sub_type="simple_model" model="CraftAsteroid0001" />
         <component id="NebulaObject" item_type="Asteroid" badge="" size="1.00" subzone_id="3" />
       </nebula_object>
-      <nebula_object id="NPC_34b9f39b-efc8-4dba-9554-d5d507f87f73" position="-1940,-756,-1652" rotation="39,197,11" script="">
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+      <nebula_object id="NPC_1462c1f6-a72c-4fbe-8324-209375ab5c1c" position="-1940,-756,-1652" rotation="39,197,11" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="3" />
         <component id="Target" />
         <component id="Bonuses" />
@@ -1769,11 +1769,11 @@
         <component id="NebulaObject" item_type="Teleport" badge="" size="1.00" subzone_id="0" />
         <component id="Raceable" race="Humans" />
       </nebula_object>
-      <nebula_object id="TURR_ccfe3c09-94d2-4b70-b842-4e191b96ee6c" position="-750,300,300" rotation="90,270,0" script="turret">
+      <nebula_object id="TURR_5c2d4b4d-e72e-432c-bd99-bad4687b2ae8" position="-750,300,300" rotation="90,270,0" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -1784,11 +1784,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-750.0,300.0,300.0;-661.8,300.0,328.6;-607.3,300.0,403.6;-607.3,300.0,496.4;-661.8,300.0,571.4;-750.0,300.0,600.0;-838.2,300.0,571.4;-892.7,300.0,496.4;-892.7,300.0,403.6;-838.2,300.0,328.6" />
         <component id="DatabaseObject" database_id="7ec02d03-43d1-4224-a1de-e505efcd1560" />
       </nebula_object>
-      <nebula_object id="TURR_d79a1b09-cc6b-45b1-8cef-ce4ff4a1da81" position="-870,440,520" rotation="45,300,270" script="turret">
+      <nebula_object id="TURR_aad7c1a7-d9f6-422b-b4b9-26d98080a951" position="-870,440,520" rotation="45,300,270" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -1799,11 +1799,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-870.0,440.0,520.0;-905.4,413.0,404.7;-880.5,342.3,306.4;-804.8,254.9,262.7;-707.2,184.2,290.3;-625.1,157.2,378.6;-589.7,184.2,493.9;-614.6,254.9,592.2;-690.3,342.3,635.9;-787.8,413.0,608.3" />
         <component id="DatabaseObject" database_id="f8f761ca-7a45-4f21-8125-9c83a797263c" />
       </nebula_object>
-      <nebula_object id="TURR_43b64699-16d5-488f-b377-8e9f986b0ee1" position="-595,120,540" rotation="45,239,90" script="turret">
+      <nebula_object id="TURR_1853f09c-2c7e-4b65-82eb-606f1ce63407" position="-595,120,540" rotation="45,239,90" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -1814,7 +1814,7 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-595.0,120.0,540.0;-697.7,153.8,650.4;-819.7,242.1,684.8;-914.3,351.4,630.2;-945.4,439.8,507.4;-901.2,473.6,363.2;-798.5,439.8,252.8;-676.5,351.4,218.4;-581.9,242.1,273.0;-550.8,153.8,395.9" />
         <component id="DatabaseObject" database_id="2abe2c96-4b5c-4ffb-920b-b17b132f823f" />
       </nebula_object>
-      <nebula_object id="NPC_a52e96e3-b725-413a-ae50-dec18a456676" position="-772,271,343" rotation="0,0,0" script="">
+      <nebula_object id="NPC_b120799c-3305-4003-a45b-5df0aded325e" position="-772,271,343" rotation="0,0,0" script="">
         <component id="Skills" />
         <component id="Energy" />
         <component id="Raceable" race="Borguzands" />
@@ -1829,9 +1829,9 @@
         <component id="Bonuses" />
         <component id="Target" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
       </nebula_object>
-      <nebula_object id="NPC_2b0b47f5-0385-431f-9028-9579580671f4" position="-689,319,547" rotation="0,0,0" script="">
+      <nebula_object id="NPC_941d615f-6594-4f7b-8570-1cddfd6c1176" position="-689,319,547" rotation="0,0,0" script="">
         <component id="Skills" />
         <component id="Energy" />
         <component id="Raceable" race="Borguzands" />
@@ -1846,9 +1846,9 @@
         <component id="Bonuses" />
         <component id="Target" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
       </nebula_object>
-      <nebula_object id="NPC_da029b3e-4ec4-4f10-8556-d04a9e48d381" position="-650,239,443" rotation="0,0,0" script="">
+      <nebula_object id="NPC_4c1952fd-b371-4c08-86fa-19af4894d137" position="-650,239,443" rotation="0,0,0" script="">
         <component id="Skills" />
         <component id="Energy" />
         <component id="Raceable" race="Borguzands" />
@@ -1863,9 +1863,9 @@
         <component id="Bonuses" />
         <component id="Target" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
       </nebula_object>
-      <nebula_object id="NPC_66f03055-bdf1-4a3d-a348-4dc0874cfda3" position="-829,372,443" rotation="0,0,0" script="">
+      <nebula_object id="NPC_d76107fc-0d8a-4107-b2a8-abb4eaaee4f3" position="-829,372,443" rotation="0,0,0" script="">
         <component id="Skills" />
         <component id="Energy" />
         <component id="Raceable" race="Borguzands" />
@@ -1880,13 +1880,13 @@
         <component id="Bonuses" />
         <component id="Target" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
       </nebula_object>
-      <nebula_object id="TURR_2de987c0-3475-46b5-a436-e30e6051c8ca" position="0,-300,-880" rotation="90,270,0" script="turret">
+      <nebula_object id="TURR_5a1c36ff-2623-4f7e-b10d-923117c37aa6" position="0,-300,-880" rotation="90,270,0" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -1897,11 +1897,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="0.0,-300.0,-880.0;88.2,-300.0,-851.4;142.7,-300.0,-776.4;142.7,-300.0,-683.6;88.2,-300.0,-608.6;0.0,-300.0,-580.0;-88.2,-300.0,-608.6;-142.7,-300.0,-683.6;-142.7,-300.0,-776.4;-88.2,-300.0,-851.4" />
         <component id="DatabaseObject" database_id="19bdfc26-2fbe-44c7-bc91-7410ad77831f" />
       </nebula_object>
-      <nebula_object id="TURR_c9eff3f7-2075-435c-8bed-eefa6703d54c" position="-120,-160,-680" rotation="45,300,270" script="turret">
+      <nebula_object id="TURR_d4d1bec2-2259-47db-9096-82e15022227f" position="-120,-160,-680" rotation="45,300,270" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -1912,11 +1912,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="-120.0,-160.0,-680.0;-155.4,-187.0,-795.3;-130.5,-257.7,-893.6;-54.8,-345.1,-937.3;42.8,-415.8,-909.7;124.9,-442.8,-821.4;160.3,-415.8,-706.1;135.4,-345.1,-607.8;59.7,-257.7,-564.1;-37.8,-187.0,-591.7" />
         <component id="DatabaseObject" database_id="b01455a7-9934-4849-bf5c-32e939f82f5e" />
       </nebula_object>
-      <nebula_object id="TURR_aa88f327-ee8e-458f-9316-a19cf9b57f04" position="155,-480,-660" rotation="45,239,90" script="turret">
+      <nebula_object id="TURR_08525e22-597e-4446-b40f-f1a6f89026c1" position="155,-480,-660" rotation="45,239,90" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -1927,7 +1927,7 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="155.0,-480.0,-660.0;52.3,-446.2,-549.6;-69.7,-357.9,-515.2;-164.3,-248.6,-569.8;-195.4,-160.2,-692.6;-151.2,-126.4,-836.8;-48.5,-160.2,-947.2;73.5,-248.6,-981.6;168.1,-357.9,-927.0;199.2,-446.2,-804.1" />
         <component id="DatabaseObject" database_id="bbff33d2-5655-4a0c-a94e-97fd692a0f28" />
       </nebula_object>
-      <nebula_object id="NPC_7a64fd0c-421e-478f-ba68-844f4039a1e3" position="-93,-225,-750" rotation="0,0,0" script="">
+      <nebula_object id="NPC_ab218a8e-41f7-4b13-8322-fbc4fa76dfa5" position="-93,-225,-750" rotation="0,0,0" script="">
         <component id="Skills" />
         <component id="Energy" />
         <component id="Raceable" race="Borguzands" />
@@ -1942,9 +1942,9 @@
         <component id="Bonuses" />
         <component id="Target" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
       </nebula_object>
-      <nebula_object id="NPC_8b2f891f-b2f1-482e-bd7c-6d077d1453e5" position="85,-359,-750" rotation="0,0,0" script="">
+      <nebula_object id="NPC_b2617221-fc47-438a-afcc-3230febf9719" position="85,-359,-750" rotation="0,0,0" script="">
         <component id="Skills" />
         <component id="Energy" />
         <component id="Raceable" race="Borguzands" />
@@ -1959,9 +1959,9 @@
         <component id="Bonuses" />
         <component id="Target" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
       </nebula_object>
-      <nebula_object id="NPC_15fa5b9d-36c5-4abf-a685-038176573bb7" position="47,-279,-646" rotation="0,0,0" script="">
+      <nebula_object id="NPC_cb29ebfe-d26a-4c12-9b49-ffdb48ac5531" position="47,-279,-646" rotation="0,0,0" script="">
         <component id="Skills" />
         <component id="Energy" />
         <component id="Raceable" race="Borguzands" />
@@ -1976,9 +1976,9 @@
         <component id="Bonuses" />
         <component id="Target" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
       </nebula_object>
-      <nebula_object id="NPC_c62ed366-3bdc-4b69-8f7d-ce68e27202f2" position="-35,-327,-849" rotation="0,0,0" script="">
+      <nebula_object id="NPC_4f9b6a91-be42-4895-96cf-9af8c515be54" position="-35,-327,-849" rotation="0,0,0" script="">
         <component id="Skills" />
         <component id="Energy" />
         <component id="Raceable" race="Borguzands" />
@@ -1993,13 +1993,13 @@
         <component id="Bonuses" />
         <component id="Target" />
         <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
-        <component id="Bot" bot_sub_type="StandardCombatNpc" />
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
       </nebula_object>
-      <nebula_object id="TURR_2a71fba1-783f-47f4-b7bd-e544d6a0f88e" position="750,300,300" rotation="90,270,0" script="turret">
+      <nebula_object id="TURR_4afb8fa2-896a-4a33-adb2-0d0dd8fbd442" position="750,300,300" rotation="90,270,0" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -2010,11 +2010,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="750.0,300.0,300.0;838.2,300.0,328.6;892.7,300.0,403.6;892.7,300.0,496.4;838.2,300.0,571.4;750.0,300.0,600.0;661.8,300.0,571.4;607.3,300.0,496.4;607.3,300.0,403.6;661.8,300.0,328.6" />
         <component id="DatabaseObject" database_id="f0e6daee-ee53-41a9-a2bd-02fc3ee6ee26" />
       </nebula_object>
-      <nebula_object id="TURR_45f516f4-32d0-4eae-8df7-459f46bde896" position="630,440,520" rotation="45,300,270" script="turret">
+      <nebula_object id="TURR_f2ca7176-ee7e-48f9-94c8-44b0bcf6b959" position="630,440,520" rotation="45,300,270" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -2025,11 +2025,11 @@
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="630.0,440.0,520.0;594.6,413.0,404.7;619.5,342.3,306.4;695.2,254.9,262.7;792.8,184.2,290.3;874.9,157.2,378.6;910.3,184.2,493.9;885.4,254.9,592.2;809.7,342.3,635.9;712.2,413.0,608.3" />
         <component id="DatabaseObject" database_id="546c3f2d-8081-431b-8692-f1e6c677e207" />
       </nebula_object>
-      <nebula_object id="TURR_32b90a02-c277-437b-8533-64c952e5ca97" position="905,120,540" rotation="45,239,90" script="turret">
+      <nebula_object id="TURR_e61f715c-a1a6-408f-8f47-5136fcdc29a7" position="905,120,540" rotation="45,239,90" script="turret">
         <component id="NebulaObject" item_type="Bot" badge="outpost" size="0.00" subzone_id="0" />
         <component id="Model" sub_type="simple_model" model="HUMAN_TURRET" />
         <component id="Turret" />
-        <component id="Bot" bot_sub_type="Turret" />
+        <component id="Bot" bot_sub_type="Turret" group="" />
         <component id="Bonuses" />
         <component id="Damagable" sub_type="damagable_outpost" max_health="1000.00" ignore_damage_at_start="True" ignore_damage_interval="60.00" create_chest_when_killed="False" fixed_input_damage="1.00" additional_hp="0.00" />
         <component id="Raceable" race="Humans" />
@@ -2039,6 +2039,171 @@
         <component id="Movable" sub_type="simple_movable" speed="10.00" />
         <component id="CombatAI" sub_type="ai_follow_path_combat" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="True" attack_moving_type="AttackStay" path="905.0,120.0,540.0;802.3,153.8,650.4;680.3,242.1,684.8;585.7,351.4,630.2;554.6,439.8,507.4;598.8,473.6,363.2;701.5,439.8,252.8;823.5,351.4,218.4;918.1,242.1,273.0;949.2,153.8,395.9" />
         <component id="DatabaseObject" database_id="675e1964-c78c-4bb1-a147-ceefc993ecb2" />
+      </nebula_object>
+      <nebula_object id="ContractMark: ct003-4-be4d" position="-615,912,-263" rotation="358,44,0" script="">
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="ContractMark" group="" />
+        <component id="SubZone" subzone_id="4" inner_radius="300.00" outer_radius="350.00" />
+        <component id="ContractMark" sub_type="kill_npc_group_contract_mark" contract_id="ct003" group="ct003_1" />
+      </nebula_object>
+      <nebula_object id="ct003_1_ct0031_a325" position="-592,932,-264" rotation="349,353,1" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="ct003_1" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="4" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="3" fraction="Pirate" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy2" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="none" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Humans" />
+        <component id="Energy" />
+        <component id="Skills" />
+        <component id="ContractObject" contract_id="ct003" events="GameObjectDeath" />
+      </nebula_object>
+      <nebula_object id="ct003_1_ct0032_f71f" position="-713,969,-310" rotation="20,48,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="ct003_1" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="4" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="3" fraction="Pirate" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy2" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="none" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Humans" />
+        <component id="Energy" />
+        <component id="Skills" />
+        <component id="ContractObject" contract_id="ct003" events="GameObjectDeath" />
+      </nebula_object>
+      <nebula_object id="ct003_1_ct0033_a167" position="-711,1038,-151" rotation="17,144,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="ct003_1" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="4" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="3" fraction="Pirate" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy2" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="none" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Humans" />
+        <component id="Energy" />
+        <component id="Skills" />
+        <component id="ContractObject" contract_id="ct003" events="GameObjectDeath" />
+      </nebula_object>
+      <nebula_object id="ct003_1_ct0034_11db" position="-564,1030,-132" rotation="17,201,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="ct003_1" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="4" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="3" fraction="Pirate" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy2" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="none" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Humans" />
+        <component id="Energy" />
+        <component id="Skills" />
+        <component id="ContractObject" contract_id="ct003" events="GameObjectDeath" />
+      </nebula_object>
+      <nebula_object id="ct003_1_ct0035_8f7b" position="-396,997,-373" rotation="18,295,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="ct003_1" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="4" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="3" fraction="Pirate" />
+        <component id="Ship" sub_type="ship_bot" difficulty="easy2" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="none" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Humans" />
+        <component id="Energy" />
+        <component id="Skills" />
+        <component id="ContractObject" contract_id="ct003" events="GameObjectDeath" />
+      </nebula_object>
+      <nebula_object id="ContractMark: ct045-5-9b07" position="-63,1026,2367" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="ContractMark" group="" />
+        <component id="SubZone" subzone_id="5" inner_radius="300.00" outer_radius="350.00" />
+        <component id="ContractMark" sub_type="kill_special_npc_contract_mark" contract_id="ct045" group="ct045_1" />
+      </nebula_object>
+      <nebula_object id="ct045_1_ct0456_63a1" position="-63,1160,2367" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="ct045_1" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="5" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="DarthTribe" level="3" fraction="Pirate" />
+        <component id="Ship" sub_type="ship_bot" difficulty="none" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="boss" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Humans" />
+        <component id="Energy" />
+        <component id="Skills" />
+        <component id="ContractObject" contract_id="ct045" events="GameObjectDeath" />
+      </nebula_object>
+      <nebula_object id="NPC_83218a7b-15a4-41aa-b6c1-8de7e42bcdfa" position="-63,1026,2169" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="5" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="RedEye" level="3" fraction="Pirate" />
+        <component id="Ship" sub_type="ship_bot" difficulty="none" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="none" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Humans" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="NPC_1a396fa8-51e5-4262-92a4-fe4db520f456" position="-63,1026,2566" rotation="0,0,0" script="">
+        <component id="Bot" bot_sub_type="StandardCombatNpc" group="" />
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="5" />
+        <component id="Target" />
+        <component id="Bonuses" />
+        <component id="Damagable" sub_type="damagable_ship" create_chest_when_killed="True" />
+        <component id="Character" sub_type="character_bot" workshop="RedEye" level="3" fraction="Pirate" />
+        <component id="Ship" sub_type="ship_bot" difficulty="none" />
+        <component id="Weapon" sub_type="weapon_ship" difficulty="none" cooldown="2.00" />
+        <component id="Movable" sub_type="bot_ship_movable" />
+        <component id="Respawnable" interval="240.00" />
+        <component id="CombatAI" sub_type="ai_wander_point" align_with_forward_direction="True" rotation_speed="0.500" use_hit_prob_for_agro="False" attack_moving_type="AttackPurchase" radius="25.00" />
+        <component id="PlayerAI" />
+        <component id="Raceable" race="Humans" />
+        <component id="Energy" />
+        <component id="Skills" />
+      </nebula_object>
+      <nebula_object id="ContractMark: ct015-6-0fba" position="-3004,1282,-812" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="0" />
+        <component id="Bot" bot_sub_type="ContractMark" group="" />
+        <component id="ContractMark" sub_type="explore_location_contract" contract_id="ct015" location_name="ct015_1" />
+        <component id="SubZone" subzone_id="6" inner_radius="300.00" outer_radius="350.00" />
+      </nebula_object>
+      <nebula_object id="TRIGGER-ct015_1(350)-4d77" position="-3004,1282,-812" rotation="0,0,0" script="">
+        <component id="NebulaObject" item_type="Bot" badge="" size="1.00" subzone_id="6" />
+        <component id="Bot" bot_sub_type="Trigger" group="" />
+        <component id="Trigger" name="ct015_1" radius="350" />
       </nebula_object>
     </nebula_objects>
     <events />

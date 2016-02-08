@@ -10,7 +10,8 @@ namespace nebula_console_test {
         static void Main(string[] args) {
             ContractTests tests = new ContractTests();
             //tests.TestContractGeneration();
-            tests.TestKillNPCGroupContractServerClientCompativility();
+            //tests.TestKillNPCGroupContractServerClientCompativility();
+            tests.TestExploreLocationParsing();
         }
     }
 }

@@ -168,11 +168,16 @@
     <Compile Include="Game\Contracts\ContractManager.cs" />
     <Compile Include="Game\Contracts\ContractObject.cs" />
     <Compile Include="Game\Contracts\ContractRewardExecutor.cs" />
+    <Compile Include="Game\Contracts\ExploreLocationContract.cs" />
     <Compile Include="Game\Contracts\Generators\ContractGenerator.cs" />
+    <Compile Include="Game\Contracts\Generators\ExploreLocationContractGenerator.cs" />
+    <Compile Include="Game\Contracts\Generators\KillNPCContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\KillNPCGroupContractGenerator.cs" />
     <Compile Include="Game\Contracts\KillNPCContract.cs" />
     <Compile Include="Game\Contracts\KillNPCGroupContract.cs" />
     <Compile Include="Game\Contracts\Marks\ContractMark.cs" />
+    <Compile Include="Game\Contracts\Marks\ExploreLocationContractMark.cs" />
+    <Compile Include="Game\Contracts\Marks\KillNPCContractMark.cs" />
     <Compile Include="Game\Contracts\Marks\KillNPCGroupContractMark.cs" />
     <Compile Include="Game\DamageInfo.cs" />
     <Compile Include="Game\DebugActionExecutor.cs" />
@@ -183,7 +188,9 @@
     <Compile Include="Game\Events\EventManager.cs" />
     <Compile Include="Game\Events\EventSubscriber.cs" />
     <Compile Include="Game\Events\KillBossEvent.cs" />
+    <Compile Include="Game\Events\LocationTrigger.cs" />
     <Compile Include="Game\Events\PlayerEventSubscriber.cs" />
+    <Compile Include="Game\Events\TriggerEvent.cs" />
     <Compile Include="Game\ExitWorkshopSavedInfo.cs" />
     <Compile Include="Game\Extensions.cs" />
     <Compile Include="Game\ConsoleLogging.cs" />

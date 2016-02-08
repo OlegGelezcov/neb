@@ -24,6 +24,8 @@
         raceable_model,
         SimpleTeleport,
         PersonalTeleport,
-        kill_npc_group_contract_mark
+        kill_npc_group_contract_mark,
+        kill_special_npc_contract_mark,
+        explore_location_contract
     }
 }

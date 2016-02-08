@@ -1,4 +1,5 @@
-﻿using ExitGames.Client.Photon;
+﻿using System;
+using ExitGames.Client.Photon;
 using Nebula.Client.Utils;
 using ServerClientCommon;
 
@@ -32,6 +33,10 @@ namespace Nebula.Client.Contracts {
             hash.Add("counter", counter);
             hash.Add("targetworld", targetWorld);
             return hash;
+        }
+
+        public override bool TargetAtWorld(string worldId) {
+            return (false == string.IsNullOrEmpty(worldId)) && (targetWorld == worldId);
         }
     }
 }

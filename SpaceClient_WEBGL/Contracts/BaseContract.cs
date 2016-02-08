@@ -8,7 +8,7 @@ using Nebula.Client.Utils;
 using ServerClientCommon;
 
 namespace Nebula.Client.Contracts {
-    public class BaseContract : IInfoParser {
+    public abstract class BaseContract : IInfoParser {
         public string id { get; private set; }
         public ContractState state { get; private set; }
         public int stage { get; private set; }
@@ -48,6 +48,8 @@ namespace Nebula.Client.Contracts {
             };
             return dumpHash;
         }
+
+        public abstract bool TargetAtWorld(string worldId);
     }
 
 }

@@ -16,6 +16,8 @@ namespace Nebula.Client.Contracts {
                     return new KillNPCContract(hash);
                 case ContractCategory.killNPCGroup:
                     return new KillNPCGroupContract(hash);
+                case ContractCategory.exploreLocation:
+                    return new ExploreLocationContract(hash);
                 default:
                     return null;
             }

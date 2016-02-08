@@ -151,13 +151,13 @@ namespace Nebula {
                 if (m_UpdateOnceCalled) {
                     float curTime = CommonUtils.SecondsFrom1970();
                     float delta = curTime - m_UpdateTime;
-                    if (delta > 60) {
-                        /*
+                    if (delta > 300) {
+                        
                         log.InfoFormat("server don't response: {0} seconds. Try restart".Color(LogColor.red), delta);
                         m_UpdateOnceCalled = false;
                         DeleteAllFromWorlds();
                         Stop();
-                        Start();*/
+                        Start();
                         log.InfoFormat("NO RESPONSE = {0} seconds!!!!".Color(LogColor.red), delta);
                     } else {
                         log.InfoFormat("check passed success with interval: {0}".Color(LogColor.cyan), delta);

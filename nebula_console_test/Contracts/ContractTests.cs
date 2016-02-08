@@ -54,5 +54,14 @@ namespace nebula_console_test.Contracts {
             Console.WriteLine("Client:");
             Console.WriteLine(clientContract.ToString());
         }
+
+        public void TestExploreLocationParsing() {
+            ContractResource resource = new ContractResource();
+            resource.Load("Data/contracts.xml");
+
+            var data = resource.contracts.GetRandom(Common.ContractCategory.exploreLocation);
+            ExploreLocationContractData exploreLocationData = data as ExploreLocationContractData;
+            Console.WriteLine(exploreLocationData.GetCount(Common.Race.Humans));
+        }
     }
 }

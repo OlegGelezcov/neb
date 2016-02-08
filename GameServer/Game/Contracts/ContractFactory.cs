@@ -1,11 +1,7 @@
 ﻿using Common;
 using ExitGames.Logging;
 using ServerClientCommon;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nebula.Game.Contracts {
     public class ContractFactory {
@@ -18,6 +14,8 @@ namespace Nebula.Game.Contracts {
                     return new KillNPCContract(hash, owner );
                 case ContractCategory.killNPCGroup:
                     return new KillNPCGroupContract(hash, owner);
+                case ContractCategory.exploreLocation:
+                    return new ExploreLocationContract(hash, owner);
                 default: {
                         s_Log.ErrorFormat("not exist contract catgeory: {0}", category);
                         return null;

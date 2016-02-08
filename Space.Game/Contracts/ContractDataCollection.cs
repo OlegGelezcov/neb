@@ -1,9 +1,9 @@
 ﻿using Common;
+using Space.Game;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace Nebula.Contracts {
@@ -29,6 +29,10 @@ namespace Nebula.Contracts {
             switch(category) {
                 case ContractCategory.killNPCGroup:
                     return new KillNPCGroupContractData(element);
+                case ContractCategory.killNPC:
+                    return new KillNPCContractData(element);
+                case ContractCategory.exploreLocation:
+                    return new ExploreLocationContractData(element);
                 default:
                     return null;
             }
@@ -53,6 +57,8 @@ namespace Nebula.Contracts {
         public int GetContractCount(int level) {
             return GetContracts(level).Count;
         }
+
+
 
         public ContractData GetContract(string id) {
             ContractData data;
@@ -83,6 +89,17 @@ namespace Nebula.Contracts {
             return leveledContracts;
         }
 
-
+        public ContractData GetRandom(ContractCategory category) {
+            List<ContractData> dataList = new List<ContractData>();
+            foreach(var pc in m_Contracts) {
+                if(pc.Value.category == category) {
+                    dataList.Add(pc.Value);
+                }
+            }
+            if(dataList.Count > 0 ) {
+                return dataList.AnyElement();
+            }
+            return null;
+        }
     }
 }

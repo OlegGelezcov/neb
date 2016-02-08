@@ -15,7 +15,8 @@
         PvpStore,
         Pet,
         FounderCube,
-        ContractMark
+        ContractMark,
+        Trigger
     }
 }
 

@@ -7,7 +7,7 @@ namespace Nebula.Game.Contracts.Marks {
 
         private ContractMarkData m_Data;
 
-        public void Init(ContractMarkData data) {
+        public virtual void Init(ContractMarkData data) {
             m_Data = data;
             if (props != null) {
                 UpdateProperty();

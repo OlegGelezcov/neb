@@ -207,6 +207,16 @@ namespace Space.Game.Resources.Zones {
                                             componentCollection.Add(ComponentID.ContractMark, killNPCGroupContractData);
                                         }
                                         break;
+                                    case ComponentSubType.kill_special_npc_contract_mark: {
+                                            KillNPCContractMarkData killNPCContractMarkData = new KillNPCContractMarkData(ce);
+                                            componentCollection.Add(ComponentID.ContractMark, killNPCContractMarkData);
+                                        }
+                                        break;
+                                    case ComponentSubType.explore_location_contract: {
+                                            ExploreLocationContractMarkData exploreLocationContractMarkData = new ExploreLocationContractMarkData(ce);
+                                            componentCollection.Add(ComponentID.ContractMark, exploreLocationContractMarkData);
+                                        }
+                                        break;
                                 }
                             }
                             break;
@@ -368,6 +378,11 @@ namespace Space.Game.Resources.Zones {
                             {
                                 PlanetObjectComponentData data = new PlanetObjectComponentData(ce);
                                 componentCollection.Add(ComponentID.Planet, data);
+                            }
+                            break;
+                        case ComponentID.Trigger: {
+                                LocationTriggerComponentData data = new LocationTriggerComponentData(ce);
+                                componentCollection.Add(ComponentID.Trigger, data);
                             }
                             break;
                         case ComponentID.Ship:
