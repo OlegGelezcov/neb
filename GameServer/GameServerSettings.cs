@@ -23,6 +23,7 @@ namespace Nebula {
         public string TimedEffectsCollectionName;
         public string PetCollectionName { get; private set; }
         public string ContractCollectionName { get; private set; }
+        public string AchievmentCollectionName { get; private set; }
 
 
         public static GameServerSettings Default {
@@ -45,7 +46,8 @@ namespace Nebula {
                     WorldStateCollectionName = "world_state_collection",
                     TimedEffectsCollectionName = "timed_effects",
                     PetCollectionName = "pets",
-                    ContractCollectionName = "contracts"
+                    ContractCollectionName = "contracts",
+                    AchievmentCollectionName = "achievments"
                 };
 #else
                 return new GameServerSettings {
@@ -65,7 +67,8 @@ namespace Nebula {
                     WorldStateCollectionName = "world_state_collection",
                     TimedEffectsCollectionName = "timed_effects",
                     PetCollectionName = "pets",
-                    ContractCollectionName = "contracts"
+                    ContractCollectionName = "contracts",
+                    AchievmentCollectionName = "achievments"
                 };
 #endif
             }

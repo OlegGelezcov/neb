@@ -29,7 +29,8 @@
 
         craft_resource = 21,
         pet_skin = 22,
-        founder_cube = 23
+        founder_cube = 23,
+        contract_item = 24,
 
         //pass elenment
         //pass

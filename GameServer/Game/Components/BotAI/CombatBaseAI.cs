@@ -446,10 +446,10 @@ namespace Nebula.Game.Components.BotAI {
 
                         ChestSourceInfo sourceInfo = new ChestSourceInfo { hasWorkshop = true, level = mCharacter.level, sourceWorkshop = (Workshop)mCharacter.workshop, difficulty = difficulty };
                         var dropListComponent = GetComponent<DropListComponent>();
-                        ItemDropList itemDropList = null;
-                        if(dropListComponent != null ) {
-                            itemDropList = dropListComponent.dropList;
-                        }
+                        //ItemDropList itemDropList = null;
+                        //if(dropListComponent != null ) {
+                        //    itemDropList = dropListComponent.dropList;
+                        //}
 
                         ObjectCreate.Chest(
                             nebulaObject.world as MmoWorld,
@@ -457,7 +457,7 @@ namespace Nebula.Game.Components.BotAI {
                             mChestLiveDuration,
                             GetComponent<DamagableObject>().damagers,
                             sourceInfo,
-                            itemDropList
+                            dropListComponent
                             ).AddToWorld();
                     }
                 }

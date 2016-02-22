@@ -2,15 +2,18 @@
 using ExitGames.Logging;
 using GameMath;
 using Nebula.Contracts;
+using Nebula.Contracts.Rewards;
 using Nebula.Game.Components;
 using Nebula.Game.Utils;
+using Nebula.Inventory.Objects;
 using Space.Game;
 using Space.Game.Drop;
 using Space.Game.Inventory;
 using Space.Game.Inventory.Objects;
 using Space.Game.Resources;
+using System;
 using System.Collections.Generic;
-
+using System.Linq;
 
 namespace Nebula.Game.Contracts {
 
@@ -46,7 +49,27 @@ namespace Nebula.Game.Contracts {
                                 }
                             }
                             break;
-
+                        case ContractRewardType.scheme: {
+                                var item = GiveSchemeReward(player, reward as ContractSchemeDataReward);
+                                if(item != null ) {
+                                    items.Add(item);
+                                }
+                            }
+                            break;
+                        case ContractRewardType.nebula_element: {
+                                var item = GiveNebulaElement(player, reward as ContractNebulaElementDataReward);
+                                if(item != null ) {
+                                    items.Add(item);
+                                }
+                            }
+                            break;
+                        case ContractRewardType.craft_resource: {
+                                var item = GiveCraftResource(player, reward as ContractCraftResourceDataReward);
+                                if(item != null ) {
+                                    items.Add(item);
+                                }
+                            }
+                            break;
                     }
                 }
             }
@@ -59,6 +82,8 @@ namespace Nebula.Game.Contracts {
             }
             return items;
         }
+
+        
 
         private void GiveCreditsReward(MmoActor player, ContractCreditsDataReward contractCreditsDataReward) {
             player.ActionExecutor.AddCredits(contractCreditsDataReward.count);
@@ -91,6 +116,30 @@ namespace Nebula.Game.Contracts {
             return null;
         }
 
+        private ServerInventoryItem GiveCraftResource(MmoActor player, ContractCraftResourceDataReward reward ) {
+            if(reward == null ) {
+                return null;
+            }
+            var resourceList = player.resource.craftObjects.all; //.Where(o => o.color != ObjectColor.orange).ToList();
+            if(resourceList.Count == 0 ) {
+                return null;
+            }
+            var craftResourceObject = resourceList.AnyElement();
+            CraftResourceObject obj = new CraftResourceObject(craftResourceObject.id, craftResourceObject.color);
+            return new ServerInventoryItem(obj, reward.count); 
+        }
+
+        private ServerInventoryItem GiveNebulaElement(MmoActor player, ContractNebulaElementDataReward reward ) {
+            if(reward == null ) {
+                return null;
+            }
+
+            var randomPassiveBonus = player.resource.PassiveBonuses.allData.ToList().AnyElement();
+            string nebulaElementId = randomPassiveBonus.elementID;
+            NebulaElementObject nebulaElementObject = new NebulaElementObject(nebulaElementId, nebulaElementId);
+            return new ServerInventoryItem(nebulaElementObject, reward.count);
+        }
+
         private ServerInventoryItem GiveWeaponReward(MmoActor player, ContractWeaponDataReward weaponReward ) {
             var playerCharacter = player.GetComponent<CharacterObject>();
             WeaponDropper.WeaponDropParams dropParams = new WeaponDropper.WeaponDropParams(
@@ -105,6 +154,22 @@ namespace Nebula.Game.Contracts {
             WeaponDropper weaponDropper = dropManager.GetWeaponDropper(dropParams);
             WeaponObject weapon = weaponDropper.DropWeapon(colorInfo);
             return new ServerInventoryItem(weapon, 1);
+        }
+
+        private ServerInventoryItem GiveSchemeReward(MmoActor player, ContractSchemeDataReward schemeReward) {
+            Workshop workshop = (Workshop)player.GetComponent<CharacterObject>().workshop;
+
+            SchemeObject scheme = new SchemeObject(new SchemeObject.SchemeInitData(
+                Guid.NewGuid().ToString(), 
+                string.Empty, 
+                player.GetComponent<CharacterObject>().level,
+                workshop, 
+                player.resource.ModuleTemplates.RandomModule(workshop).Id, 
+                schemeReward.color, 
+                new Dictionary<string, int>(), 
+                string.Empty)
+                );
+            return new ServerInventoryItem(scheme, 1);
         }
     }
 }

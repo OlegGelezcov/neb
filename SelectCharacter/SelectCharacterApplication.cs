@@ -81,6 +81,8 @@ namespace SelectCharacter {
 
         public PvpStoreManager pvpStore { get; private set; }
 
+        public Achievments.AchievmentCache achievmentCache { get; private set; }
+
         public static new SelectCharacterApplication Instance {
             get {
                 return instance;
@@ -182,6 +184,8 @@ namespace SelectCharacter {
                 friends = new FriendService(this);
 
                 pvpStore = new PvpStoreManager(this);
+
+                achievmentCache = new Achievments.AchievmentCache(this);
 
                 Protocol.AllowRawCustomValues = true;
                 this.PublicIpAddress = PublicIPAddressReader.ParsePublicIpAddress(SelectCharacterSettings.Default.PublicIPAddress);
@@ -347,5 +351,8 @@ namespace SelectCharacter {
             }
         }
 
+        public void AddAchievmentVariable(string gameRef, string variable, int count ) {
+            MasterPeer.CallS2SMethod(NebulaCommon.ServerType.Game, "AddAchievmentVariable", new object[] { gameRef, variable, count });
+        }
     }
 }

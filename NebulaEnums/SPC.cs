@@ -307,6 +307,21 @@ namespace ServerClientCommon {
         TargetWorld = 294,
         Contract = 295,
         DeclineStart = 296,
-        DeclineEnd = 297
+        DeclineEnd = 297,
+        AchievmentId = 298,
+        AchievmentTierId = 299,
+        SPEED_ControlIsMoving = 300,
+        SPEED_IsStopped = 301,
+        SPEED_ModelSpeed = 302,
+        SPEED_BonusesAdd = 303,
+        SPEED_PassiveAbilitiesAdd = 304,
+        SPEED_AccelerationAdd = 305,
+
+        RESIST_Blocked = 306,
+        RESIST_ModelValue = 307,
+        RESIST_BonusesAdd = 308,
+        RESIST_PassiveBonusesAdd = 309,
+
+        ShipParamName = 310
     }
 }

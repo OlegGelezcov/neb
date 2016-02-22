@@ -68,7 +68,7 @@ namespace Nebula.Game.Components {
 
             var world = nebulaObject.world as MmoWorld;
             var levelCalc = nebulaObject.resource.Leveling;
-            GivePvpPoints();
+            float npcLevel = damagerCollection.GetLevel(nebulaObject);
 
             foreach(var p in damagers ) {
                 var damager = p.Value as DamageInfo;
@@ -91,6 +91,8 @@ namespace Nebula.Game.Components {
                     float finalExp = expToNextLevel * expPC;
 
                     playerCharacter.AddExp((int)finalExp);
+
+                    damagerCollection.GivePvpPoints(player, nebulaObject, npcLevel, playerLevel);
 
                     log.InfoFormat("Outpost damagable death, {0} on level {1} receive exp {2}", 
                         playerCharacter.login, playerLevel, (int)finalExp);

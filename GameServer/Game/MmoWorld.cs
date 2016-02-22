@@ -304,6 +304,10 @@
                 if (playerCharacter != null) {
                     playerCharacter.AddPvpPoints(100);
                 }
+                var achievment = pItem.Value.GetComponent<AchievmentComponent>();
+                if(achievment != null ) {
+                    achievment.OnWorldCaptured();
+                }
             }
         }
 

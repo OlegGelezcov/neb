@@ -16,6 +16,10 @@ namespace Nebula.Game.Contracts.Generators {
                     return new KillNPCContractGenerator();
                 case ContractCategory.exploreLocation:
                     return new ExploreLocationContractGenerator();
+                case ContractCategory.itemDelivery:
+                    return new ItemDeliveryContractGenerator();
+                case ContractCategory.foundItem:
+                    return new FoundItemContractGenerator();
                 default:
                     s_Log.ErrorFormat("contract generator for category: {0} don't exists", category);
                     return null;

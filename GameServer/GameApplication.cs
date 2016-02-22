@@ -64,6 +64,13 @@ public class GameApplication : ApplicationBase
 
     //private readonly PoolFiber loopFiber;
     
+    public MmoActor GetServerActor(string gameRef) {
+        MmoActor player;
+        if(serverActors.TryGetValue(gameRef, out player)) {
+            return player;
+        }
+        return null;
+    }
 
     public string databaseConnectionString { get; private set; }
 

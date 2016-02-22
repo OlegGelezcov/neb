@@ -3,6 +3,7 @@ using ExitGames.Logging;
 using Nebula.Game.Components;
 using Nebula.Game.Contracts;
 using Nebula.Game.Contracts.Generators;
+using Nebula.Inventory.Objects;
 using ServerClientCommon;
 using Space.Game;
 using System.Collections;
@@ -116,7 +117,20 @@ namespace Nebula.Game {
             ContractManager contractManager = player.GetComponent<ContractManager>();
             if(false == contractManager.HasProposedContract(contractId)) {
                 Hashtable ret = CreateResponse(RPCErrorCode.ProposedContractNotFound);
+                return ret;
             }
+
+            var contractData = player.resource.contracts.GetContract(contractId);
+            if(contractData == null ) {
+                return CreateResponse(RPCErrorCode.ErrorOfAcceptContract);
+            }
+
+            if(contractData.category == ContractCategory.itemDelivery) {
+                if(false == player.Inventory.HasFreeSpace() ) {
+                    return CreateResponse(RPCErrorCode.LowInventorySpace);
+                }
+            }
+
             BaseContract contract;
             if(contractManager.AcceptProposedContract(contractId, out contract)) {
                 Hashtable ret = CreateResponse(RPCErrorCode.Ok);
@@ -155,11 +169,31 @@ namespace Nebula.Game {
                 Hashtable hash = CreateResponse(RPCErrorCode.Ok);
                 hash.Add((int)SPC.Contract, completedContract.GetInfo());
                 hash.Add((int)SPC.Items, itArr);
+
+                var achievments = player.GetComponent<AchievmentComponent>();
+                achievments.OnContractCompleted();
                 return hash;
             }
             return CreateResponse(RPCErrorCode.UnknownError);
         }
 
+        public int TestAddContractItems() {
+            var ids = player.resource.contractItems.ids;
+            foreach(var id in ids) {
+                ContractItemObject itemObject = new ContractItemObject(id, "ct007");
+                player.Inventory.Add(itemObject, 1);
+            }
+            player.EventOnInventoryUpdated();
+            return (int)RPCErrorCode.Ok;
+        }
 
+        public int TestRemoveContractItems() {
+            var ids = player.Inventory.GetItemIds(InventoryObjectType.contract_item);
+            foreach(var id in ids ) {
+                player.Inventory.Remove(InventoryObjectType.contract_item, id.ID, id.count);
+            }
+            player.EventOnInventoryUpdated();
+            return (int)RPCErrorCode.Ok;
+        }
     }
 }

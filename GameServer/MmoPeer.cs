@@ -4,7 +4,6 @@
     using Nebula.Game.Components;
     using Nebula.Game.Contracts;
     using Nebula.Game.Events;
-    using Nebula.Game.OperationHandlers;
     using Nebula.Game.Pets;
     using NebulaCommon.SelectCharacter;
     using Photon.SocketServer;
@@ -192,7 +191,8 @@
                     typeof(PlayerTimedEffects),
                     typeof(PetManager),
                     typeof(PlayerEventSubscriber),
-                    typeof(ContractManager)
+                    typeof(ContractManager),
+                    typeof(AchievmentComponent)
                 };
 
                 Dictionary<byte, object> tags = new Dictionary<byte, object> {
@@ -268,6 +268,7 @@
 
                 avatar.Spawn(operation.Position);
                 log.Info("Avatar Spawn fire....");
+
                 return null;
             } catch (Exception ex) {
                 CL.Out(LogFilter.PLAYER, ex.Message);

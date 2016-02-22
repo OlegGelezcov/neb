@@ -1,10 +1,6 @@
 ﻿using ExitGames.Client.Photon;
 using Nebula.Client.Utils;
 using ServerClientCommon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nebula.Client.Contracts {
     public class ExploreLocationContract : BaseContract {
@@ -33,6 +29,10 @@ namespace Nebula.Client.Contracts {
         public override bool TargetAtWorld(string worldId) {
             return (false == string.IsNullOrEmpty(worldId)) &&
                 (targetWorld == worldId);
+        }
+
+        public override string GetTargetWorld() {
+            return targetWorld;
         }
     }
 }

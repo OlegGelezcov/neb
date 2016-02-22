@@ -1,4 +1,5 @@
 ﻿using Common;
+using Nebula.Client.Contracts.Rewards;
 
 namespace Nebula.Client.Contracts {
     public class ContractRewardFactory {
@@ -14,6 +15,12 @@ namespace Nebula.Client.Contracts {
                     return new OreContractReward(element.element);
                 case ContractRewardType.weapon:
                     return new WeaponContractReward(element.element);
+                case ContractRewardType.scheme:
+                    return new SchemeContractReward(element);
+                case ContractRewardType.nebula_element:
+                    return new NebulaElementContractReward(element);
+                case ContractRewardType.craft_resource:
+                    return new CraftResourceContractReward(element);
                 default:
                     return null;
             }

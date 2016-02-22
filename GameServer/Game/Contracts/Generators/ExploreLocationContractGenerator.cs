@@ -36,7 +36,6 @@ namespace Nebula.Game.Contracts.Generators {
 
             ExploreLocationContract contract = new ExploreLocationContract(
                 resultContractData.id,
-                ContractState.accepted,
                 0,
                 sourceWorld,
                 manager,

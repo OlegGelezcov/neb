@@ -61,6 +61,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Achievments\AchievmentCache.cs" />
+    <Compile Include="Achievments\AchievmentCacheObject.cs" />
+    <Compile Include="Achievments\AchievmentDocument.cs" />
     <Compile Include="Auction\AuctionFilter.cs" />
     <Compile Include="Auction\AuctionItem.cs" />
     <Compile Include="Auction\AuctionObjectTypeFilter.cs" />
@@ -148,6 +151,7 @@
     <Compile Include="OperationHandlers\MoveItemFromStationToBankOperationHandler.cs" />
     <Compile Include="OperationHandlers\RegisterClientOperationHandler.cs" />
     <Compile Include="OperationHandlers\RequestServerIDOperationHandler.cs" />
+    <Compile Include="OperationHandlers\RPCInvokeMethodOperationHandler.cs" />
     <Compile Include="OperationHandlers\SelectCharacterOperationHandler.cs" />
     <Compile Include="OperationHandlers\SendPushToPlayersOperationHandler.cs" />
     <Compile Include="OperationHandlers\SetGuildDescriptionOperationHandler.cs" />
@@ -194,6 +198,7 @@
     <Compile Include="Operations\RemoveAuctionItemOperationResponse.cs" />
     <Compile Include="Operations\RequestServerID.cs" />
     <Compile Include="Operations\RequestServerIDResponse.cs" />
+    <Compile Include="Operations\RPCInvokeOperation.cs" />
     <Compile Include="Operations\SelectCharacterOperationRequest.cs" />
     <Compile Include="Operations\SelectCharacterOperationResponse.cs" />
     <Compile Include="Operations\SendPushToPlayersOperationRequest.cs" />

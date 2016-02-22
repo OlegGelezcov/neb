@@ -28,6 +28,7 @@ namespace Nebula.Game.Components {
         private PlayerBonuses mBonuses;
         private RaceableObject mRace;
         private PetManager m_PetManager;
+        private AchievmentComponent m_Achivments;
 
         public override Hashtable DumpHash() {
             var hash =  base.DumpHash();
@@ -97,6 +98,7 @@ namespace Nebula.Game.Components {
             mBonuses = GetComponent<PlayerBonuses>();
             mRace = GetComponent<RaceableObject>();
             m_PetManager = GetComponent<PetManager>();
+            m_Achivments = GetComponent<AchievmentComponent>();
         }
 
 
@@ -125,6 +127,9 @@ namespace Nebula.Game.Components {
 
             if(m_PetManager) {
                 m_PetManager.AddExp((int)System.Math.Round((float)(e + additionalExp) * 0.5f));
+            }
+            if(m_Achivments != null ) {
+                m_Achivments.SetVariable("player_level", resource.Leveling.LevelForExp(exp));
             }
         }
 

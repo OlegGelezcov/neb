@@ -31,5 +31,9 @@ namespace Nebula.Client.Contracts {
         public override bool TargetAtWorld(string worldId) {
             return (false == string.IsNullOrEmpty(worldId)) && (targetWorld == worldId);
         }
+
+        public override string GetTargetWorld() {
+            return targetWorld;
+        }
     }
 }

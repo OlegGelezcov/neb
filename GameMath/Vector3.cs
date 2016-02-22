@@ -303,6 +303,14 @@
             }
         }
 
+        public bool isZero {
+            get {
+                return Mathf.Approximately(X, 0.0f) &&
+                    Mathf.Approximately(Y, 0.0f) &&
+                    Mathf.Approximately(Z, 0.0f);
+            }
+        }
+
         public static bool operator ==(Vector3 left, Vector3 right)
         {
             return left.mx == right.mx && left.my == right.my && left.mz == right.mz;

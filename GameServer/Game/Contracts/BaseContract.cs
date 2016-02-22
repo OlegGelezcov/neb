@@ -23,22 +23,26 @@ namespace Nebula.Game.Contracts {
             ParseInfo(hash);
         }
 
-        public BaseContract(string id, 
-            ContractState state, 
+        public BaseContract(string id,  
             int stage, 
             string sourceWorld, 
             ContractCategory category, 
             ContractManager contractOwner) {
 
             m_Id = id;
-            m_State = state;
+            m_State = ContractState.proposed;
             m_Stage = stage;
             m_SourceWorld = sourceWorld;
             m_Category = category;
             m_ContractOwner = contractOwner;
         }
 
+        /// <summary>
+        /// Called after accpting this contract by player
+        /// </summary>
+        public virtual void OnAccepted() { }
 
+        public virtual void OnDeclined() { }
 
         public override string ToString() {
             return string.Format("id: {0}, state: {1}, stage: {2}, source zone: {3}, category: {4}",
@@ -126,10 +130,16 @@ namespace Nebula.Game.Contracts {
         }
 
         public bool Decline() {
+            var oldState = state;
+
             if(state != ContractState.declined) {
                 if(SetState(ContractState.declined)) {
                     m_DeclineStartTime = CommonUtils.SecondsFrom1970();
                     m_DeclineEndTime = m_DeclineStartTime + 2 * 60;
+                    if(oldState == ContractState.accepted) {
+                        OnDeclined();
+                    }
+        
                     return true;
                 }
             }

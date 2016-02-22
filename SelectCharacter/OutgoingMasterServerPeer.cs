@@ -168,10 +168,33 @@ namespace SelectCharacter {
                             SendEvent(retEvent, new SendParameters());
                             break;
                         }
+                    case S2SEventCode.InvokeMethodEnd: {
+                            bool success = (bool)eventData.Parameters[(byte)ServerToServerParameterCode.Success];
+                            object result = eventData.Parameters[(byte)ServerToServerParameterCode.Result] as object;
+                            string method = eventData.Parameters[(byte)ServerToServerParameterCode.Method] as string;
+                            NebulaCommon.ServerType serverType = (NebulaCommon.ServerType)(byte)eventData.Parameters[(byte)ServerToServerParameterCode.TargetServer];
+                            if (success) {
+                                log.InfoFormat("method {0} successfully called on server {1}", method, serverType);
+                            } else {
+                                log.InfoFormat("fail call method {0} on server {1}", method, serverType);
+                            }
+                        }
+                        break;
                 }
             }catch(Exception ex) {
                 log.Error(ex);
             }
+        }
+
+        public void CallS2SMethod(ServerType serverType, string method, object[] arguments) {
+            S2SInvokeMethodStart start = new S2SInvokeMethodStart {
+                arguments = arguments,
+                method = method,
+                sourceServerID = SelectCharacterApplication.ServerId.ToString(),
+                targetServerType = (byte)serverType
+            };
+            EventData evt = new EventData((byte)S2SEventCode.InvokeMethodStart, start);
+            application.MasterPeer.SendEvent(evt, new SendParameters());
         }
 
         /// <summary>

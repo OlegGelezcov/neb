@@ -95,6 +95,7 @@ namespace SelectCharacter {
             mHandlers.Add(SelectCharacterOperationCode.MoveItemFromBankToStation, new MoveItemFromBankToStationOperationHandler(application, this));
             mHandlers.Add(SelectCharacterOperationCode.BuyPvpItem, new BuyPvpItemOperationHandler(application, this));
             mHandlers.Add(SelectCharacterOperationCode.RequestServerId, new RequestServerIDOperationHandler(application, this));
+            mHandlers.Add(SelectCharacterOperationCode.RPCInvokeMethod, new RPCInvokeMethodOperationHandler(application, this));
         }
 
         protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail) {
@@ -113,6 +114,8 @@ namespace SelectCharacter {
 
             //save notification and remove from notification cache
             application.Notifications.OnDisconnect(characterId);
+
+            application.achievmentCache.Remove(characterId);
 
             //remove and invalidate peer
             RemoveClientPeerFromApplication();

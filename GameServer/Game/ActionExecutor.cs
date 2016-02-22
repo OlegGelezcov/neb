@@ -8,6 +8,7 @@ namespace Space.Game {
     using Nebula.Game;
     using Nebula.Game.Bonuses;
     using Nebula.Game.Components;
+    using Nebula.Game.Events;
     using Nebula.Inventory;
     using Nebula.Inventory.Objects;
     using Nebula.Server.Components;
@@ -185,6 +186,12 @@ namespace Space.Game {
             if(Player.Inventory.AddFromContainer(chest, Player.nebulaObject.Id, objId, out obj)) {
                 Player.EventOnInventoryItemAdded(containerId, containerType, new List<IInventoryObject> { obj.Object });
                 Player.EventOnInventoryUpdated();
+
+                if(obj.Object.Type == InventoryObjectType.craft_resource && obj.Object.Id == "res_034") {
+                    Player.GetComponent<AchievmentComponent>().AddVariable("collected_orange_craft_element", obj.Count);
+                }
+                Player.GetComponent<PlayerEventSubscriber>().OnEvent(new InventoryItemsAddedEvent(Player.nebulaObject, new List<ServerInventoryItem> { obj }));
+
                 return new Hashtable {
                         {(int)SPC.ContainerId,            containerId     },
                         {(int)SPC.ContainerType,          containerType   },
@@ -240,9 +247,17 @@ namespace Space.Game {
                 }
                 ConcurrentBag<ServerInventoryItem> addedObjects = null;
                 if(!Player.Inventory.AddAllFromChest(chest, Player.nebulaObject.Id, out addedObjects)) {
-                 //   log.Info("error of adding from container objects");
+                    //   log.Info("error of adding from container objects");
                     return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError} };//GetErrorResponse("EM0016");
-                } 
+                }
+
+                var achievments = Player.GetComponent<AchievmentComponent>();
+                foreach (var addedInvItem in addedObjects) {
+                    if (addedInvItem.Object.Type == InventoryObjectType.craft_resource && addedInvItem.Object.Id == "res_034") {
+                        achievments.AddVariable("collected_orange_craft_element", addedInvItem.Count);
+                    }
+                    
+                }
 
                 if (addedObjects.Count > 0)
                 {
@@ -251,6 +266,7 @@ namespace Space.Game {
                         this.Player.EventOnInventoryItemAdded(containerItemId, containerItemType, new List<IInventoryObject> { obj.Object });
                     }
                     this.Player.EventOnInventoryUpdated();
+                    Player.GetComponent<PlayerEventSubscriber>().OnEvent(new InventoryItemsAddedEvent(Player.nebulaObject, addedObjects.ToList() ));
                 }
 
                 if (addedObjects.Count < sourceCount)
@@ -299,12 +315,21 @@ namespace Space.Game {
             int slotsForItems = this.Player.Inventory.SlotsForItems(asteroidComponent.contentDictionary);
 
             if(freeSlots >= slotsForItems) {
+                int totalCount = 0;
                 foreach(var c in asteroidComponent.content) {
                     Player.Inventory.Add(c.Material, c.Count);
+                    totalCount += c.Count;
                 }
+
                 asteroidComponent.ClearContent();
                 asteroidComponent.DestroyIfEmpty();
                 Player.EventOnInventoryUpdated();
+
+                var achievments = Player.GetComponent<AchievmentComponent>();
+                if (achievments != null) {
+                    achievments.OnOreCollected(totalCount);
+                }
+
                 var res = new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
                 res.Add((int)SPC.ContainerId, asteroidComponent.nebulaObject.Id);
                 res.Add((int)SPC.ContainerType, asteroidComponent.nebulaObject.Type);
@@ -350,7 +375,15 @@ namespace Space.Game {
 
             var contentObject = asteroid.ContentObject(itemId);
             asteroid.RemoveContentObject(contentObject.Material.Id);
+
+            int cnt = contentObject.Count;
             this.Player.Inventory.Add(contentObject.Material, contentObject.Count);
+
+            var achievments = Player.GetComponent<AchievmentComponent>();
+            if(achievments != null ) {
+                achievments.OnOreCollected(cnt);
+            }
+
             asteroid.DestroyIfEmpty();
 
             this.Player.EventOnInventoryUpdated();
@@ -373,6 +406,11 @@ namespace Space.Game {
             List<ServerInventoryItem> removeFromInventory = new List<ServerInventoryItem>();
 
             foreach(var pTyped in inventory.Items) {
+
+                //exclude contract items from moving
+                if(pTyped.Key == InventoryObjectType.contract_item) {
+                    continue;
+                }
 
                 foreach(var pItem in pTyped.Value) {
 
@@ -413,6 +451,13 @@ namespace Space.Game {
             {
                // log.InfoFormat("not founded item: {0} of type: {1}".f(inventoryItemId, (InventoryObjectType)inventoryObjectType));
                 return new Hashtable { { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL }, { ACTION_RESULT.MESSAGE, "EM0011" } };
+            }
+
+            if(sourceItem.Object.Type == InventoryObjectType.contract_item ) {
+                return new Hashtable {
+                    { ACTION_RESULT.RESULT, ACTION_RESULT.FAIL },
+                    { ACTION_RESULT.MESSAGE, "Don't allow move contract items..."}
+                };
             }
 
             int numberSlotsForItem = this.Player.Station.StationInventory.SlotsForItems(new Dictionary<string, InventoryObjectType> { { inventoryItemId, (InventoryObjectType)inventoryObjectType } });
@@ -595,6 +640,12 @@ namespace Space.Game {
                     if(result[ACTION_RESULT.RESULT].ToString() == ACTION_RESULT.SUCCESS) {
                         Player.EventOnInventoryUpdated();
                         Player.EventOnStationHoldUpdated();
+
+                        var achievments = Player.GetComponent<AchievmentComponent>();
+                        if(achievments != null ) {
+                            achievments.OnModuleCraft();
+                        }
+
                      //   log.InfoFormat("result module workshop: {0}", result[(int)SPC.Workshop].ToString());
                     }
 
@@ -864,6 +915,10 @@ namespace Space.Game {
             if(inventoryCount < count ) {
                 return GetErrorResponse("count");
             }
+
+            //if(type == (byte)InventoryObjectType.contract_item) {
+            //    return GetErrorResponse("type");
+            //}
 
             if(count > 0 )
             {
@@ -1392,11 +1447,18 @@ namespace Space.Game {
             }
 
             NebulaElementObject element = new NebulaElementObject(miningStationComponent.nebulaElementID, miningStationComponent.nebulaElementID);
+            int count = miningStationComponent.currentCount;
             Player.Inventory.Add(element, miningStationComponent.currentCount);
           //  log.InfoFormat("added to inventory = {0} nebula elements [red]", miningStationComponent.currentCount);
 
             Player.EventOnInventoryUpdated();
             miningStationComponent.MakeEmpty();
+
+            var achievments = Player.GetComponent<AchievmentComponent>();
+            if(achievments != null) {
+                achievments.OnCollectNebulaElement(count);
+            }
+
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
             };
@@ -1747,6 +1809,10 @@ namespace Space.Game {
             Player.Inventory.Remove(InventoryObjectType.turret, itemID, 1);
             Player.EventOnInventoryUpdated();
             Player.nebulaObject.mmoWorld().SaveWorldState();
+
+            var achievments = Player.GetComponent<AchievmentComponent>();
+            achievments.OnTurretCreated();
+
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1832,6 +1898,10 @@ namespace Space.Game {
             Player.Inventory.Remove(InventoryObjectType.fortification, itemID, 1);
             Player.EventOnInventoryUpdated();
             Player.nebulaObject.mmoWorld().SaveWorldState();
+
+            var achievments = Player.GetComponent<AchievmentComponent>();
+            achievments.OnFortificationCreated();
+
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1895,6 +1965,10 @@ namespace Space.Game {
             Player.Inventory.Remove(InventoryObjectType.outpost, itemID, 1);
             Player.EventOnInventoryUpdated();
             Player.nebulaObject.mmoWorld().SaveWorldState();
+
+            var achievments = Player.GetComponent<AchievmentComponent>();
+            achievments.OnOutpostCreated();
+
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -2356,6 +2430,18 @@ namespace Space.Game {
         public int RestartLoop() {
             Player.application.updater.Restart();
             return (int)RPCErrorCode.Ok;
+        }
+
+        public int TestAddContractItems() {
+            return m_ContractOps.TestAddContractItems();
+        }
+
+        public int TestRemoveContractItems() {
+            return m_ContractOps.TestRemoveContractItems();
+        }
+
+        public Hashtable GetAchievmentInfo() {
+            return Player.GetComponent<AchievmentComponent>().GetInfo();
         }
     }
 }

@@ -26,6 +26,9 @@
         PersonalTeleport,
         kill_npc_group_contract_mark,
         kill_special_npc_contract_mark,
-        explore_location_contract
+        explore_location_contract,
+        normal_drop_list,
+        contract_drop_list,
+        found_item_contract_mark
     }
 }

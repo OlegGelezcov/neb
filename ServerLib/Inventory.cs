@@ -93,6 +93,7 @@ namespace Common
             return false;
         }
 
+
         public void Remove(InventoryObjectType type, string id, int count) {
             T item = default(T);
             if (TryGetItem(type, id, out item)) {

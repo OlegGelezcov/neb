@@ -10,5 +10,7 @@ namespace Common {
         TriggerExit = 3,
         TriggerEnter = 4,
         TriggerStay = 5,
+        EnterStation = 6,
+        InventoryItemsAdded = 7
     }
 }

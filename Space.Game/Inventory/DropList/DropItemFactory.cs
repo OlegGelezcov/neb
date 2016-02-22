@@ -1,8 +1,5 @@
 ﻿using Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace Nebula.Inventory.DropList {
@@ -35,6 +32,11 @@ namespace Nebula.Inventory.DropList {
                         PetColor color = (PetColor)Enum.Parse(typeof(PetColor), element.GetString("color"));
                         string template = element.GetString("template");
                         return new PetSchemeDropItem(template, color, min, max, prob);
+                    }
+                case InventoryObjectType.contract_item: {
+                        string template = element.GetString("template");
+                        string contract = element.GetString("contract");
+                        return new ContractObjectDropItem(template, contract, min, max, prob);
                     }
                 default:
                     return null;

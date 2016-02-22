@@ -35,8 +35,8 @@ namespace Nebula.Game.Contracts {
             m_TargetWorld = hash.GetValue<string>((int)SPC.TargetWorld, string.Empty);
         }
 
-        public KillNPCContract(string id, ContractState state, int stage, string sourceWorld, ContractManager manager, string botName, string targetWorld)
-            : base(id, state, stage, sourceWorld, ContractCategory.killNPC, manager) {
+        public KillNPCContract(string id,  int stage, string sourceWorld, ContractManager manager, string botName, string targetWorld)
+            : base(id,  stage, sourceWorld, ContractCategory.killNPC, manager) {
             m_BotName = botName;
             m_TargetWorld = targetWorld;
         }

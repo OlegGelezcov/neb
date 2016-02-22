@@ -23,6 +23,8 @@ namespace Nebula.Game.Components {
         protected PlayerBonuses cachedBonuses { get; private set; }
         protected PlayerSkills cachedSkills { get; private set; }
         protected DamagableObject cachedDamagable { get; private set; }
+        private AchievmentComponent m_Achievments;
+
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -101,6 +103,7 @@ namespace Nebula.Game.Components {
             cachedDamagable = GetComponent<DamagableObject>();
             mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
             mMessage = GetComponent<MmoMessageComponent>();
+            m_Achievments = GetComponent<AchievmentComponent>();
         }
 
         public override void Update(float deltaTime) {
@@ -357,6 +360,10 @@ namespace Nebula.Game.Components {
             }
             hit.SetActualDamage(actualDamage);
             hit.SetRemainTargetHp(target.health);
+
+            if(m_Achievments != null ) {
+                m_Achievments.OnMakeDamage(actualDamage);
+            }
         }
 
         private void StartDamageDron(DamagableObject targetObject, float inputDamage, byte workshop, int level, byte race) {

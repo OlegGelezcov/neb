@@ -45,8 +45,8 @@ namespace Nebula.Game.Contracts {
             m_TargetWorld = hash.GetValue<string>((int)SPC.TargetWorld, string.Empty);
         }
 
-        public KillNPCGroupContract(string id, ContractState state, int stage, string sourceWorld, ContractManager owner, int cnt, string grpName, string targetWorld)
-            : base(id, state, stage, sourceWorld, ContractCategory.killNPCGroup, owner) {
+        public KillNPCGroupContract(string id,  int stage, string sourceWorld, ContractManager owner, int cnt, string grpName, string targetWorld)
+            : base(id,  stage, sourceWorld, ContractCategory.killNPCGroup, owner) {
             m_Count = cnt;
             m_BotGroupName = grpName;
             m_Counter = 0;

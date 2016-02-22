@@ -9,6 +9,12 @@ namespace Nebula.Game.Skills {
             var sourceTarget = source.Target();
             if(!sourceTarget.inCombat && sourceTarget.noSubscribers) {
                 source.SetInvisibility(true);
+
+                var sourceShip = source.GetComponent<PlayerShip>();
+                if(sourceShip != null ) {
+                    sourceShip.SetInvisTimer(10);
+                }
+
                 return true;
             }
             return false;

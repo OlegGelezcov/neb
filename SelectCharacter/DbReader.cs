@@ -17,8 +17,9 @@ namespace SelectCharacter {
 
         public MongoClient DbClient { get; private set; }
         public MongoServer DbServer { get; private set; }
-
         public MongoDatabase Database { get; private set; }
+
+
         public MongoCollection<DbPlayerCharactersObject> PlayerCharacters { get; private set; }
         public MongoCollection<CharacterNotifications> Notifications { get; private set; }
         public MongoCollection<ChatMessage> Chat { get; private set; }
@@ -34,8 +35,11 @@ namespace SelectCharacter {
         public MongoCollection<CharacterInfo> characters { get; private set; }
         public MongoCollection<BankSave> banks { get; private set; }
         public MongoCollection<DatabaseCharacterName> characterNames { get; private set; }
+        
 
 
+        private MongoDatabase m_NebulaDatabase;
+        public MongoCollection<Achievments.AchievmentDocument> achievments { get; private set; }
 
         //mails collections
         public MongoCollection<MailBox> Mails { get; private set; }
@@ -61,6 +65,9 @@ namespace SelectCharacter {
             characters = Database.GetCollection<CharacterInfo>("character_info");
             banks = Database.GetCollection<BankSave>("banks");
             characterNames = Database.GetCollection<DatabaseCharacterName>("character_names");
+
+            m_NebulaDatabase = DbServer.GetDatabase("nebula");
+            achievments = m_NebulaDatabase.GetCollection<Achievments.AchievmentDocument>("achievments");
         }
 
         public bool ExistsCharacterName(string characterName ) {

@@ -30,8 +30,10 @@ namespace Nebula.Game.Contracts {
             m_LocationName = hash.GetValue<string>((int)SPC.Group, string.Empty);
             m_TargetWorld = hash.GetValue<string>((int)SPC.TargetWorld, string.Empty);
         }
-        public ExploreLocationContract(string id, ContractState state, int stage, string sourceWorld, ContractManager manager, string locationName, string targetWorld)
-            : base(id, state, stage, sourceWorld, ContractCategory.exploreLocation, manager) {
+        public ExploreLocationContract(string id,  int stage, 
+            string sourceWorld, ContractManager manager, string locationName, 
+            string targetWorld)
+            : base(id, stage, sourceWorld, ContractCategory.exploreLocation, manager) {
             m_LocationName = locationName;
             m_TargetWorld = targetWorld;
         }

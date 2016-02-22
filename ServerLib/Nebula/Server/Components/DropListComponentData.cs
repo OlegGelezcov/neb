@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Common;
 using System.Xml.Linq;
-using Common;
 
 namespace Nebula.Server.Components {
-    public class DropListComponentData : ComponentData {
+    public abstract class DropListComponentData : MultiComponentData {
 
         public XElement parentElement { get; private set; }
 

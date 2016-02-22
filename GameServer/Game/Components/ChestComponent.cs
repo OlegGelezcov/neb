@@ -53,13 +53,15 @@ namespace Nebula.Game.Components {
             return dict;
         }
 
-        public void Fill(ConcurrentDictionary<string, DamageInfo> inDamagers, ItemDropList dropList, ChestSourceInfo sourceInfo = null) {
+        public void Fill(ConcurrentDictionary<string, DamageInfo> inDamagers, DropListComponent dropListComponent, ChestSourceInfo sourceInfo = null) {
 
             content = new ConcurrentDictionary<string, ConcurrentDictionary<string, ServerInventoryItem>>();
 
-
-            foreach(var damagePair in inDamagers) {
-                FillForDamager(damagePair.Value, dropList, sourceInfo);
+            if (dropListComponent != null) {
+                foreach (var damagePair in inDamagers) {
+                    var dropPair = dropListComponent.GetDropList(damagePair.Value);
+                    FillForDamager(damagePair.Value, dropPair.dropList, sourceInfo);
+                }
             }
         }
 
@@ -178,6 +180,13 @@ namespace Nebula.Game.Components {
                                     }
                                 }
                                 break;
+                            case InventoryObjectType.contract_item: {
+                                    var contractDropItem = dropItem as ContractObjectDropItem;
+                                    if(contractDropItem != null ) {
+                                        GenerateContractItemObject(contractDropItem.templateId, contractDropItem.contractId, count, newObjects);
+                                    }
+                                }
+                                break;
                         }
                     }
                 }
@@ -193,6 +202,14 @@ namespace Nebula.Game.Components {
                     petManager.ChestFilled(nebulaObject);
                 }
             }
+        }
+
+        private void GenerateContractItemObject(string template, string contractId, int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects ) {
+            if(string.IsNullOrEmpty(template)) {
+                return;
+            }
+            ContractItemObject obj = new ContractItemObject(template, contractId);
+            newObjects.TryAdd(obj.Id, new ServerInventoryItem(obj, count));
         }
 
         private void GeneratePetScheme(Race race, string template, PetColor color, int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects) {

@@ -11,18 +11,19 @@ namespace Nebula.Client.Contracts {
         public int minCount { get; private set; }
         public int maxCount { get; private set; }
 
+#if UP
         public OreContractReward(UPXElement element)
             : base(element) {
             minCount = element.GetInt("min_count");
             maxCount = element.GetInt("max_count");
         }
-
+#else
         public OreContractReward(XElement element)
             : base(element) {
             minCount = element.GetInt("min_count");
             maxCount = element.GetInt("max_count");
         }
-
+#endif
 
     }
 }

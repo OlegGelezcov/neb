@@ -1,6 +1,7 @@
 ﻿using Common;
 using Nebula.Game.Components;
 using Nebula.Inventory;
+using Nebula.Inventory.Objects;
 using ServerClientCommon;
 using Space.Game.Drop;
 using Space.Game.Inventory.Objects;
@@ -69,6 +70,39 @@ namespace Space.Game.Inventory {
             return new Hashtable { { ACTION_RESULT.RESULT,  ACTION_RESULT.SUCCESS },
                 { (int)SPC.Workshop, result.Workshop.ToString() },
                 { ACTION_RESULT.RETURN, schemeID } };
+        }
+
+        public bool RemoveContractItems(string contractId ) {
+            ConcurrentBag<ServerInventoryItem> contractItems = new ConcurrentBag<ServerInventoryItem>();
+            if(Items.ContainsKey(InventoryObjectType.contract_item)) {
+                foreach(var pkv in Items[InventoryObjectType.contract_item]) {
+                    if(pkv.Value.Object is ContractItemObject) {
+                        if( (pkv.Value.Object as ContractItemObject).contractId == contractId ) {
+                            contractItems.Add(pkv.Value);
+                        }
+                    }
+                }
+            }
+
+            foreach(var it in contractItems) {
+                Remove(it.Object.Type, it.Object.Id, it.Count);
+            }
+
+            return (contractItems.Count > 0);
+        }
+
+        public bool HasContractItems(string contractId ) {
+            if(Items.ContainsKey(InventoryObjectType.contract_item)) {
+                foreach(var pit in Items[InventoryObjectType.contract_item]) {
+                    ContractItemObject obj = pit.Value.Object as ContractItemObject;
+                    if(obj != null ) {
+                        if(obj.contractId == contractId ) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
 
         //public bool SplitItems(string itemID, int count ) {
@@ -160,6 +194,18 @@ namespace Space.Game.Inventory {
                 }
             }
             return result;
+        }
+
+        public List<IDCountPair> GetItemIds(InventoryObjectType type) {
+            List<IDCountPair> ids = new List<IDCountPair>();
+            foreach(var p in _items ) {
+                foreach(var p2 in p.Value) {
+                    if(p2.Value.Object.Type == type ) {
+                        ids.Add(new IDCountPair {  ID = p2.Key, count = p2.Value.Count  });
+                    }
+                }
+            }
+            return ids;
         }
 
         public int FreeSlots

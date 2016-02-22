@@ -361,5 +361,23 @@ namespace SelectCharacter {
         public bool AddPvpPoints(string login, string gameRef, string character, int count) {
             return application.Stores.AddPvpPoints(login, gameRef, character, count);
         }
+
+        public Hashtable GetCharacterAchievments(string characterId ) {
+            Hashtable variables =  application.achievmentCache.GetAchievments(characterId);
+            string characterName = string.Empty;
+            SelectCharacterClientPeer peer;
+            if(application.Clients.TryGetPeerForCharacterId(characterId, out peer)) {
+                var character = application.Players.GetCharacter(peer.id, characterId);
+                if(character != null ) {
+                    characterName = character.Name;
+                }
+            }
+
+            return new Hashtable {
+                { (int)SPC.CharacterId, characterId },
+                { (int)SPC.CharacterName, characterName },
+                { (int)SPC.Variables, variables }
+            };
+        }
     }
 }

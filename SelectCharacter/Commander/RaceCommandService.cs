@@ -75,12 +75,21 @@ namespace SelectCharacter.Commander {
         private bool SetCommander(int race, string login, string gameRefID, string characterID ) {
             bool result =  GetCommand(race).SetCommander(login, gameRefID, characterID);
             cache.SetChanged(true);
+            //send achievment commander variable
+            if (result) {
+                application.AddAchievmentVariable(gameRefID, "commander_count", 1);
+            }
+
             return result;
         }
 
         private bool SetAdmiral(int race, string login, string gameRefID, string characterID ) {
             bool result =  GetCommand(race).SetAdmiral(login, gameRefID, characterID);
             cache.SetChanged(true);
+            //send achievment admiral variable
+            if (result) {
+                application.AddAchievmentVariable(gameRefID, "admiral_count", 1);
+            }
             return result;
         }
 

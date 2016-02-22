@@ -121,6 +121,9 @@ namespace Nebula.Game{
             Hashtable hash = CreateResponse(RPCErrorCode.Ok);
             hash.Add((int)SPC.Pet, petInfo.GetInfo(player.resource));
 
+            var achievments = player.GetComponent<AchievmentComponent>();
+            achievments.SetVariable("max_pet_color", (int)petInfo.color);
+
             return hash;
         }
 
@@ -293,6 +296,10 @@ namespace Nebula.Game{
             var message = player.GetComponent<MmoMessageComponent>();
             player.EventOnStationHoldUpdated();
             message.ReceivePetsUpdate();
+
+            var achievments = player.GetComponent<AchievmentComponent>();
+            achievments.SetVariable("max_pet_color", (int)petData.color);
+
             return CreateResponse(RPCErrorCode.Ok);
         }
 

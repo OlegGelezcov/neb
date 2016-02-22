@@ -49,6 +49,7 @@ namespace Nebula.Game.Components {
             CONSTRUCTION_INTERVAL = time;
             mConstructionTimer = time;
             SetUnderConstruction(true);
+            nebulaObject.mmoWorld().SaveWorldState();
         }
 
         private void SetUnderConstruction(bool value) {

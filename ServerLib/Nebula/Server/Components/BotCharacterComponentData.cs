@@ -23,6 +23,10 @@ namespace Nebula.Server.Components {
             this.fraction = fraction;
         }
 
+        public void SetLevel(int level) {
+            this.level = level;
+        }
+
         public BotCharacterComponentData(Hashtable hash) {
             workshop = (Workshop)(byte)hash.GetValue<int>((int)SPC.Workshop, (int)Workshop.Arlen);
             level = hash.GetValue<int>((int)SPC.Level, 0);

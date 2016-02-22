@@ -37,6 +37,7 @@ namespace Common {
         MoveItemFromStationToBank,
         MoveItemFromBankToStation,
         BuyPvpItem,
-        RequestServerId
+        RequestServerId,
+        RPCInvokeMethod
     }
 }

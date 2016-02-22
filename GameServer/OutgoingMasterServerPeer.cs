@@ -33,10 +33,12 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
     private bool redirected = false;
     private IDisposable updateLoop;
     private GameApplication m_App;
+    private readonly S2SMethodInvoker m_Invoker;
 
     public OutgoingMasterServerPeer(IRpcProtocol protocol, IPhotonPeer nativePeer, GameApplication application)
         : base(protocol, nativePeer) {
         m_App = application;
+        m_Invoker = new S2SMethodInvoker(m_App);
         //this.application = application;
         log.InfoFormat("connection to master at {0}:{1} established (id={2}), serverId={3}", this.RemoteIP, this.RemotePort, this.ConnectionId, GameApplication.ServerId);
         this.RequestFiber.Enqueue(this.Register);
@@ -114,10 +116,38 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
             case S2SEventCode.WorldRaceChanged:
                 HandleWorldRaceChanged(eventData, sendParameters);
                 break;
+            case S2SEventCode.InvokeMethodStart:
+                HandleInvokeMethodStart(eventData, sendParameters);
+                break;
         }
     }
 
     #region Game Methods
+
+    private void HandleInvokeMethodStart(IEventData eventData, SendParameters sendParameters) {
+        string method = (string)eventData.Parameters[(byte)ServerToServerParameterCode.Method];
+        object[] arguments = eventData.Parameters[(byte)ServerToServerParameterCode.Arguments] as object[];
+        string sourceServerID = eventData.Parameters[(byte)ServerToServerParameterCode.SourceServer] as string;
+        byte targetServetType = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.TargetServer];
+
+        var mtd = m_Invoker.GetType().GetMethod(method);
+        S2SInvokeMethodEnd end = new S2SInvokeMethodEnd {
+            method = method,
+            sourceServerID = sourceServerID,
+            targetServerType = targetServetType,
+        };
+
+        if(mtd != null ) {
+            object result = mtd.Invoke(m_Invoker, arguments);
+            end.callSuccess = true;
+            end.result = result;
+        } else {
+            end.callSuccess = false;
+            end.result = null;
+        }
+        EventData retEvent = new EventData((byte)S2SEventCode.InvokeMethodEnd, end);
+        SendEvent(retEvent, new SendParameters());
+    }
     /// <summary>
     /// Handle race status update from Select Character Server
     /// </summary>

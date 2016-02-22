@@ -65,6 +65,8 @@
     <Compile Include="ConnectionRole.cs" />
     <Compile Include="ConsoleLogContext.cs" />
     <Compile Include="DatabaseUsers.cs" />
+    <Compile Include="Database\AchievmentDatabase.cs" />
+    <Compile Include="Database\AchievmentDocument.cs" />
     <Compile Include="Database\CharacterDatabase.cs" />
     <Compile Include="Database\ContractDatabase.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
@@ -98,9 +100,11 @@
     <Compile Include="Game\BaseRPCOperations.cs" />
     <Compile Include="Game\Bonuses\Buff.cs" />
     <Compile Include="Game\Bonuses\PlayerBonus.cs" />
+    <Compile Include="Game\Components\AchievmentComponent.cs" />
     <Compile Include="Game\Components\Activators\ActivatorObject.cs" />
     <Compile Include="Game\Components\Activators\SpawnPiratesActivator.cs" />
     <Compile Include="Game\Components\AsteroidComponent.cs" />
+    <Compile Include="Game\Components\ContractDropListComponent.cs" />
     <Compile Include="Game\Components\DatabaseObject.cs" />
     <Compile Include="Game\Components\DropListComponent.cs" />
     <Compile Include="Game\Components\ExpTimedEffect.cs" />
@@ -133,6 +137,7 @@
     <Compile Include="Game\Components\MmoMessageComponent.cs" />
     <Compile Include="Game\Components\ModelComponent.cs" />
     <Compile Include="Game\Components\MovableObject.cs" />
+    <Compile Include="Game\Components\NormalDropListComponent.cs" />
     <Compile Include="Game\Components\NotShipDamagableObject.cs" />
     <Compile Include="Game\Components\Outpost.cs" />
     <Compile Include="Game\Components\OutpostDamagable.cs" />
@@ -169,24 +174,32 @@
     <Compile Include="Game\Contracts\ContractObject.cs" />
     <Compile Include="Game\Contracts\ContractRewardExecutor.cs" />
     <Compile Include="Game\Contracts\ExploreLocationContract.cs" />
+    <Compile Include="Game\Contracts\FoundItemContract.cs" />
     <Compile Include="Game\Contracts\Generators\ContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\ExploreLocationContractGenerator.cs" />
+    <Compile Include="Game\Contracts\Generators\FoundItemContractGenerator.cs" />
+    <Compile Include="Game\Contracts\Generators\ItemDeliveryContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\KillNPCContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\KillNPCGroupContractGenerator.cs" />
+    <Compile Include="Game\Contracts\ItemDeliveryContract.cs" />
     <Compile Include="Game\Contracts\KillNPCContract.cs" />
     <Compile Include="Game\Contracts\KillNPCGroupContract.cs" />
     <Compile Include="Game\Contracts\Marks\ContractMark.cs" />
     <Compile Include="Game\Contracts\Marks\ExploreLocationContractMark.cs" />
+    <Compile Include="Game\Contracts\Marks\FoundItemContractMark.cs" />
     <Compile Include="Game\Contracts\Marks\KillNPCContractMark.cs" />
     <Compile Include="Game\Contracts\Marks\KillNPCGroupContractMark.cs" />
     <Compile Include="Game\DamageInfo.cs" />
+    <Compile Include="Game\DamagerCollection.cs" />
     <Compile Include="Game\DebugActionExecutor.cs" />
     <Compile Include="Game\EventConnectionManager.cs" />
     <Compile Include="Game\Events\BaseEvent.cs" />
     <Compile Include="Game\Events\ContractEvent.cs" />
     <Compile Include="Game\Events\DestroyPirateStationEvent.cs" />
+    <Compile Include="Game\Events\EnterStationEvent.cs" />
     <Compile Include="Game\Events\EventManager.cs" />
     <Compile Include="Game\Events\EventSubscriber.cs" />
+    <Compile Include="Game\Events\InventoryItemsAddedEvent.cs" />
     <Compile Include="Game\Events\KillBossEvent.cs" />
     <Compile Include="Game\Events\LocationTrigger.cs" />
     <Compile Include="Game\Events\PlayerEventSubscriber.cs" />
@@ -453,6 +466,7 @@
     <Compile Include="Game\WorldNpcManager.cs" />
     <Compile Include="NebulaLogger.cs" />
     <Compile Include="OutgoingMasterServerPeer.cs" />
+    <Compile Include="S2SMethodInvoker.cs" />
     <Compile Include="Saving\MailBoxSaveObject.cs" />
     <Compile Include="Saving\MailMessageChannel.cs" />
     <Compile Include="ServerRuntimeStats.cs" />
@@ -594,6 +608,7 @@
   <ItemGroup>
     <Content Include="assets\connection_config_local.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="assets\database_connection.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

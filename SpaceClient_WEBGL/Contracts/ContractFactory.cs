@@ -2,10 +2,6 @@
 using ExitGames.Client.Photon;
 using Nebula.Client.Utils;
 using ServerClientCommon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nebula.Client.Contracts {
     public class ContractFactory {
@@ -18,6 +14,10 @@ namespace Nebula.Client.Contracts {
                     return new KillNPCGroupContract(hash);
                 case ContractCategory.exploreLocation:
                     return new ExploreLocationContract(hash);
+                case ContractCategory.itemDelivery:
+                    return new ItemDeliveryContract(hash);
+                case ContractCategory.foundItem:
+                    return new FoundItemContract(hash);
                 default:
                     return null;
             }

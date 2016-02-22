@@ -1,8 +1,8 @@
 ﻿using Common;
+using Nebula.Contracts.Rewards;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 
 namespace Nebula.Contracts {
@@ -32,6 +32,12 @@ namespace Nebula.Contracts {
                     return new ContractOreDataReward(element);
                 case ContractRewardType.weapon:
                     return new ContractWeaponDataReward(element);
+                case ContractRewardType.scheme:
+                    return new ContractSchemeDataReward(element);
+                case ContractRewardType.nebula_element:
+                    return new ContractNebulaElementDataReward(element);
+                case ContractRewardType.craft_resource:
+                    return new ContractCraftResourceDataReward(element);
                 default:
                     return null;
             }

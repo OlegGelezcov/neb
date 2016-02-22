@@ -1,13 +1,8 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Common;
 #if UP
 using Nebula.Client.UP;
 #else
 using System.Xml.Linq;
-using Nebula.Client.UP;
 #endif
 namespace Nebula.Client {
     public class UniXMLElement {
@@ -29,7 +24,33 @@ namespace Nebula.Client {
         public UniXMLElement() { }
 
 
+        public string GetString(string key) {
+            return element.GetString(key);
+        }
 
+        public int GetInt(string key) {
+            return element.GetInt(key);
+        }
 
+        public bool GetBool(string key) {
+            return element.GetBool(key);
+        }
+
+        public float GetFloat(string key) {
+            return element.GetFloat(key);
+        }
+
+        public bool HasAttribute(string name) {
+#if UP
+            if(element.HasAtt(name)) {
+                return true;
+            }
+#else
+            if(element.HasAttribute(name)) {
+                return true;
+            }
+#endif
+            return false;
+        }
     }
 }

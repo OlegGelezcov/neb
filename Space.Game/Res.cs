@@ -15,7 +15,8 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.IO;
-
+    using Nebula.Contracts.Inventory;
+    using Nebula.Achievments;
 
     public class Res : IRes {
 
@@ -169,6 +170,11 @@
 
             m_ContractResource.Load(Path.Combine(basePath, "Data/contracts.xml"));
 
+            contractItems = new ContractItemDataCollection();
+            contractItems.Load(Path.Combine(basePath, "Data/contract_items.xml"));
+
+            achievments = new AchievmentDataCollection();
+            achievments.Load(Path.Combine(basePath, "Data/achievments.xml"));
         }
 
 
@@ -371,6 +377,16 @@
                 if (_logger == null) { _logger = new EmptyNebulaLogger(); }
                 return _logger;
             }
+        }
+
+        public ContractItemDataCollection contractItems {
+            get;
+            private set;
+        }
+
+        public AchievmentDataCollection achievments {
+            get;
+            private set;
         }
 
         public static void SetLogger(INebulaLogger log) {

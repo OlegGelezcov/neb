@@ -10,5 +10,7 @@ namespace Nebula.Game.Utils {
         public const string white = "white";
         public const string cyan = "cyan";
         public const string dy = "dy";
+        public const string yellow = "yellow";
+        public const string green = "green";
     }
 }

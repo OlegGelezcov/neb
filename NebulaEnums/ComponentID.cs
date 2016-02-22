@@ -56,6 +56,7 @@ namespace Common {
         ContractManager,
         ContractObject = 49,
         ContractMark = 50,
-        Trigger = 51
+        Trigger = 51,
+        Achievments = 52
     }
 }

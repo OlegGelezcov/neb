@@ -5,6 +5,11 @@
         public const int rpc_AcceptContract = 3;
         public const int rpc_DeclineContract = 4;
         public const int rpc_CompleteContract = 5;
+        public const int rpc_TestAddContractItems = 6;
+        public const int rpc_TestRemoveContractItems = 7;
+        public const int rpc_GetAchievments = 8;
+        public const int rpc_GetParamDetail = 9;
 
+        public const int rpc_sc_SetRaceStatus = 10;
     }
 }

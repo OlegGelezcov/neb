@@ -18,9 +18,9 @@ namespace Space.Game.Drop
             {  Difficulty.easy2, 1f },
             {  Difficulty.medium, 1.5f },
             {  Difficulty.none, 1f },
-            {  Difficulty.hard, 2f },
-            {  Difficulty.boss, 3f },
-            {  Difficulty.boss2, 4f }
+            {  Difficulty.hard, 1.2f },
+            {  Difficulty.boss, 1.5f },
+            {  Difficulty.boss2, 2f }
         };
 
         public class WeaponDropParams

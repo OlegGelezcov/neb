@@ -40,6 +40,7 @@ namespace Nebula.Game.Components {
             }
         }
 
+
         public virtual void SetModule(ShipModule module, out ShipModule prevModule) {
             this.shipModel.SetModule(module, out prevModule);
             this.shipModel.Update();

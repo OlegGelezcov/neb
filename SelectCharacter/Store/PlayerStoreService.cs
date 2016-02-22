@@ -486,6 +486,9 @@ namespace SelectCharacter.Store {
             if(mApplication.Clients.TryGetPeerForGameRefId(gameRefID, out peer)) {
                 peer.SendCreditsReceived(credits);
             }
+
+            //invoke rpc for credits achievment
+            mApplication.AddAchievmentVariable(gameRefID, "player_credits",  credits);
             return true;
         }
 

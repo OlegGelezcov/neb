@@ -50,6 +50,7 @@ namespace Nebula.Client.Contracts {
         }
 
         public abstract bool TargetAtWorld(string worldId);
+        public abstract string GetTargetWorld();
     }
 
 }

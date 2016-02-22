@@ -42,7 +42,7 @@ namespace Space.Game.Resources
                     base_hp_factor = e.Element("base_hp_factor").GetFloat("value"),
                     base_speed_factor = e.Element("base_speed_factor").GetFloat("value"),
                     base_cargo_factor = e.Element("base_cargo_factor").GetFloat("value"),
-                    resistance_aux_number = e.Element("resistance_aux_number").GetFloat("value"),
+                    //resistance_aux_number = e.Element("resistance_aux_number").GetFloat("value"),
                     critical_chance_aux_number = e.Element("critical_chance_aux_number").GetFloat("value"),
                     bonus_aux_number = e.Element("bonus_aux_number").GetFloat("value"),
                     slot_settings = LoadSlotSettings(e.Element("slots"))
@@ -74,13 +74,14 @@ namespace Space.Game.Resources
                     speed_bonus_points_value = e.Element("speed_bonus_points_value").GetFloat("value"),
                     hp_points_factor = e.Element("hp_points_factor").GetFloat("value"),
                     speed_points_factor = e.Element("speed_points_factor").GetFloat("value"),
-                    resistance_points_factor = e.Element("resistance_points_factor").GetFloat("value"),
+                    //resistance_points_factor = e.Element("resistance_points_factor").GetFloat("value"),
                     critical_chance_points_factor = e.Element("critical_chance_points_factor").GetFloat("value"),
                     critical_damage_points_factor = e.Element("critical_damage_points_factor").GetFloat("value"),
                     damage_bonus_points_factor = e.Element("damage_bonus_points_factor").GetFloat("value"),
                     energy_bonus_points_factor = e.Element("energy_bonus_points_factor").GetFloat("value"),
                     cargo_bonus_points_factor = e.Element("cargo_bonus_points_factor").GetFloat("value"),
-                    speed_bonus_points_factor = e.Element("speed_bonus_points_factor").GetFloat("value")
+                    speed_bonus_points_factor = e.Element("speed_bonus_points_factor").GetFloat("value"),
+                    resist_max = e.Element("resist_max").GetFloat("value")
                 };
                 if ( !result.TryAdd(slotType, data) ) {
                     throw new Exception("Error of adding ModuleSlotSettingData to dictionary");
@@ -99,7 +100,7 @@ namespace Space.Game.Resources
         public float base_hp_factor;
         public float base_speed_factor;
         public float base_cargo_factor;
-        public float resistance_aux_number;
+        //public float resistance_aux_number;
         public float critical_chance_aux_number;
         public float bonus_aux_number;
         public ConcurrentDictionary<ShipModelSlotType, ModuleSlotSettingData> slot_settings;
@@ -123,12 +124,13 @@ namespace Space.Game.Resources
         public float speed_bonus_points_value;
         public float hp_points_factor;
         public float speed_points_factor;
-        public float resistance_points_factor;
+        //public float resistance_points_factor;
         public float critical_chance_points_factor;
         public float critical_damage_points_factor;
         public float damage_bonus_points_factor;
         public float energy_bonus_points_factor;
         public float cargo_bonus_points_factor;
         public float speed_bonus_points_factor;
+        public float resist_max;
     }
 }

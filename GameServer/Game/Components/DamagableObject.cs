@@ -17,12 +17,13 @@ namespace Nebula.Game.Components {
         private const float NO_ABSORB = -1f;
         private PlayerBonuses mBonuses;
         private PlayerSkills m_Skills;
+        private AchievmentComponent m_Achievments;
 
         public override Hashtable DumpHash() {
             var hash =  base.DumpHash();
             hash["health"] = health.ToString();
             hash["god?"] = god.ToString();
-            hash["damagers_count"] = damagers.Count.ToString();
+            hash["damagers_count"] = m_Damagers.count.ToString();
             hash["ignore_damage_at_spawn?"] = mIgnoreDamageTimer.ToString();
             hash["ignore_damage_at_spawn_interval"] = ignoreDamageInterval.ToString();
             hash["ignore_damage_timer"] = mIgnoreDamageTimer.ToString();
@@ -33,8 +34,8 @@ namespace Nebula.Game.Components {
             hash["absorbed_damage"] = mAbsorbedDamage.ToString();
             hash["timed_damage"] = (timedDamage != null) ? timedDamage.damagePerSecond.ToString() : "0";
             hash["heal_blocked?"] = healBlocked.ToString();
-            hash["difficulty_mult"] = myDifficultyMult.ToString();
-            hash["level"] = myLevel.ToString();
+            //hash["difficulty_mult"] = myDifficultyMult.ToString();
+            //hash["level"] = myLevel.ToString();
             return hash;
         }
         private float mHealth = 1000;
@@ -48,7 +49,7 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public ConcurrentDictionary<string, DamageInfo> damagers { get; private set; } = new ConcurrentDictionary<string, DamageInfo>();
+        private readonly DamagerCollection m_Damagers = new DamagerCollection();
 
         public bool ignoreDamageAtStart { get; private set; }
         public float ignoreDamageInterval { get; private set; } = -1f;
@@ -114,31 +115,18 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private float myDifficultyMult {
+        public ConcurrentDictionary<string, DamageInfo> damagers {
             get {
-                float d = 1.0f;
-                BotShip botShip = GetComponent<BotShip>();
-
-                if (botShip != null) {
-                    if (nebulaObject.HasTag((byte)PS.Difficulty)) {
-                        d = nebulaObject.resource.GetDifficultyMult((Difficulty)(byte)nebulaObject.Tag((byte)PS.Difficulty));
-                    }
-                    //difficulty = nebulaObject.resource.GetDifficultyMult(GetComponent<BotShip>().difficulty);
-                }
-                return d;
+                return m_Damagers.damagers;
             }
         }
 
-        private float myLevel {
+        protected DamagerCollection damagerCollection {
             get {
-                float level = 1.0f;
-                var character = GetComponent<CharacterObject>();
-                if (character != null) {
-                    level = character.level;
-                }
-                return level;
+                return m_Damagers;
             }
         }
+
 
         public abstract float maximumHealth { get; }
 
@@ -168,8 +156,8 @@ namespace Nebula.Game.Components {
                 if(mmoMessanger) {
                     if(GetComponent<MmoActor>()) {
                         mmoMessanger.SendKilled(EventReceiver.OwnerAndSubscriber);
+                        //nebulaObject.mmoWorld().OnEvent()
                     } else {
-                        
                         mmoMessanger.SendKilled(EventReceiver.ItemSubscriber);
                     }
                 }
@@ -229,12 +217,7 @@ namespace Nebula.Game.Components {
         }
 
         public bool HasDamager(string id ) {
-            if(damagers != null ) {
-                if(damagers.ContainsKey(id)) {
-                    return true;
-                }
-            }
-            return false;
+            return m_Damagers.Has(id);
         }
 
         public override void Start() {
@@ -245,6 +228,7 @@ namespace Nebula.Game.Components {
             mBonuses = GetComponent<PlayerBonuses>();
             timedDamage = new TimedDamage(this);
             m_Skills = GetComponent<PlayerSkills>();
+            m_Achievments = GetComponent<AchievmentComponent>();
         }
 
         public override void Update(float deltaTime) {
@@ -339,7 +323,12 @@ namespace Nebula.Game.Components {
                         mult = 1.0f;
                     }
                 }
-                health += Mathf.Abs(heal.value) * mult;
+
+                float val = Mathf.Abs(heal.value) * mult;
+                health += val;
+                if(m_Achievments != null ) {
+                    m_Achievments.OnHeal(val);
+                }
             }
         }
         public void SubHealth(float hp) {
@@ -370,19 +359,10 @@ namespace Nebula.Game.Components {
 
         
         public void AddDamager(string damagerID, byte damagerType, float damage, byte workshop, int level, byte race) {
-            //nebulaObject.SendMessage("InCombat");
-            //if(damagers == null ) {
-            //    damagers = new Dictionary<string, DamageInfo>();
-            //}
-            if(damagers.ContainsKey(damagerID)) {
-                damagers[damagerID].AddDamage(damage);
-                nebulaObject.SendMessage(ComponentMessages.OnNewDamage, damagers[damagerID]);
-            } else {
-                if (race != (byte)Race.None && damagerType == (byte)ItemType.Avatar) {
-                    var damageInfo = new DamageInfo(damagerID, damagerType, damage, workshop, level, race);
-                    damagers.TryAdd(damagerID, damageInfo);
-                    nebulaObject.SendMessage(ComponentMessages.OnNewDamage, damageInfo);
-                }
+
+            var damageInfo = m_Damagers.Add(damagerID, damagerType, damage, workshop, level, race);
+            if(damageInfo != null ) {
+                nebulaObject.SendMessage(ComponentMessages.OnNewDamage, damageInfo);
             }
         }
 
@@ -450,55 +430,11 @@ namespace Nebula.Game.Components {
 
 
 
-        private float DamagerPlayerLevel(NebulaObject damager) {
-            var playerCharacter = damager.GetComponent<PlayerCharacterObject>();
-            if(playerCharacter != null ) {
-                return playerCharacter.level;
-            }
-            return 1.0f;
-        }
-
         public virtual void Death() {
-            int damagerCount = 0;
-            foreach (var damager in damagers) {
-                if (damager.Value.DamagerType == ItemType.Avatar) {
-                    damagerCount++;
-                }
-            }
+            int damagerCount = m_Damagers.playerDamagerCount;
 
             if (mWasKilled) {
-                if(nebulaObject.Type == (byte)ItemType.Avatar) {
-                    log.InfoFormat("player was killed and give pvp points [purple]");
-                    GivePvpPoints();
-
-                }
-
-                float difficulty = myDifficultyMult;
-                float npcLevel = myLevel;
-
-                foreach (var damager in damagers) {
-                    if (damager.Value.DamagerType == ItemType.Avatar) {
-                        NebulaObject damagerObject;
-                        if (nebulaObject.world.TryGetObject((byte)damager.Value.DamagerType, damager.Value.DamagerId, out damagerObject)) {
-                            int baseExp = 20;
-                            float playerLevel = DamagerPlayerLevel(damagerObject);
-
-                            float levelRat = npcLevel / playerLevel;
-
-                            float bexp = (difficulty * levelRat * (baseExp));
-                            float hpExp = difficulty * Mathf.ClampLess(maximumHealth - 1000, 0f) * 0.01f;
-                            if(levelRat < 1.0f ) {
-                                hpExp *= levelRat;
-                            }
-                            int exp = (int)Math.Round(bexp + hpExp);
-
-                            log.InfoFormat("sended exp = {0} for bot difficulty = {1}, hp exp bonus = {2}", 
-                                exp, difficulty, (int)(difficulty * Mathf.ClampLess(maximumHealth - 1000, 0f) * 0.01f));
-                            damagerObject.GetComponent<PlayerCharacterObject>().AddExp(exp);
-                            damagerObject.SendMessage(ComponentMessages.OnEnemyDeath, nebulaObject);
-                        }
-                    }
-                }
+                m_Damagers.OnOwnerKilled(nebulaObject);
             } else {
                 if (nebulaObject.Type == (byte)ItemType.Avatar) {
                     log.InfoFormat("Player does was not killed exp not give [purple]");
@@ -508,62 +444,8 @@ namespace Nebula.Game.Components {
         }
 
 
-        //send pvp points to players, only called on players
-        protected void GivePvpPoints() {
-            //if i am player
-            if (nebulaObject.Type == (byte)ItemType.Avatar) {
-                log.InfoFormat("give php point from avatar... [red]");
-                int meLevel = nebulaObject.Character().level;
 
-                foreach (var pDamage in damagers) {
-                    var damager = pDamage.Value;
-                    if (damager.DamagerType == ItemType.Avatar) {
-                        if (damager.level <= (meLevel - 5)) {
-                            GivePvpPointsToDamager(damager, 10);
-                        } else if ((damager.level > (meLevel - 5) && (damager.level <= (meLevel + 5)))) {
-                            GivePvpPointsToDamager(damager, 5);
-                        }
-                    }
-                }
-            } else if(nebulaObject.Type == (byte)ItemType.Bot ) {
 
-                //give pvp points from killing turrets, fortifications, outposts
-                var botObject = nebulaObject.GetComponent<BotObject>();
-                if(botObject != null ) {
-                    int points = 0;
-                    switch((BotItemSubType)botObject.botSubType) {
-                        case BotItemSubType.Turret:
-                            points = 5;
-                            break;
-                        case BotItemSubType.Outpost:
-                            points = 10;
-                            break;
-                        case BotItemSubType.MainOutpost:
-                            points = 20;
-                            break;
-                    }
-
-                    if (points > 0) {
-                        foreach (var pDamage in damagers) {
-                            var damager = pDamage.Value;
-                            if (damager.DamagerType == ItemType.Avatar) {
-                                GivePvpPointsToDamager(damager, points);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void GivePvpPointsToDamager(DamageInfo damager, int points ) {
-            NebulaObject damagerObject = null;
-            if(nebulaObject.mmoWorld().TryGetObject((byte)ItemType.Avatar, damager.DamagerId, out damagerObject)) {
-                var damagerCharacter = damagerObject.Character() as PlayerCharacterObject;
-                if(damagerCharacter != null ) {
-                    damagerCharacter.AddPvpPoints(points);
-                }
-            }
-        }
 
         public override int behaviourId {
             get {
@@ -571,19 +453,7 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private void ClearDamagers() {
-            //if(damagers == null ) {
-            //    damagers = new Dictionary<string, DamageInfo>();
-            //}
-            damagers.Clear();
-        }
 
-        //Handler of message which sended from PlayerTarget component, when object bot exit from combat state
-        //public void ExitCombat() {
-        //    //log.InfoFormat("bot exit from Combat state yellow");
-        //    //ClearDamagers();
-        //    //SetHealth(maximumHealth);
-        //}
 
         public class TimedDamage {
 

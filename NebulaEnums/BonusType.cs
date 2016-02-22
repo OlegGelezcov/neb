@@ -244,7 +244,8 @@ namespace Common {
         increase_energy_regen_on_cnt,
         decrease_energy_regen_on_pc,
         decrease_energy_regen_on_cnt,
-        auto_loot_chest
+        auto_loot_chest,
+        invisibility
     }
 
     /// <summary>
@@ -270,7 +271,8 @@ namespace Common {
         restore_hp_on_sec,
         absorb_damage,
         convert_damage_to_hp,
-        vampirism
+        vampirism,
+        invisibility
     }
 
     public static class BuffUtils {
@@ -407,6 +409,8 @@ namespace Common {
                     return new BonusType[] { BonusType.convert_absorbed_damage_to_hp_pc };
                 case BuffParameter.vampirism:
                     return new BonusType[] { BonusType.vampirism_pc };
+                case BuffParameter.invisibility:
+                    return new BonusType[] { BonusType.invisibility };
                 default:
                     return new BonusType[] { };
             }

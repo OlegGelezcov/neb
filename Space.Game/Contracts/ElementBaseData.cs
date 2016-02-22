@@ -14,6 +14,12 @@ namespace Nebula.Contracts {
         public List<Race> races { get; private set; }
 
         public ElementBaseData(XElement element) {
+            Load(element);
+        }
+
+        public ElementBaseData() { }
+
+        public virtual void Load(XElement element) {
             name = element.GetString("name");
             zones = element.GetString("zones").Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).ToList();
             minLevel = element.GetInt("min_level");

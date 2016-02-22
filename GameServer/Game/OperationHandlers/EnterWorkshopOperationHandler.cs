@@ -11,6 +11,7 @@ using Space.Server;
 using Nebula.Game.Components;
 using ExitGames.Logging;
 using Nebula.Game.Pets;
+using Nebula.Engine;
 
 namespace Nebula.Game.OperationHandlers {
     public class EnterWorkshopOperationHandler : BasePlayerOperationHandler {
@@ -69,6 +70,7 @@ namespace Nebula.Game.OperationHandlers {
                 var eventData = new EventData((byte)EventCode.WorkshopEntered, workshopEntered);
                 actor.Peer.SendEvent(eventData, new SendParameters { ChannelId = Settings.ItemEventChannel, Unreliable = false });
                 actor.SetWorkshopStatus(true);
+                actor.nebulaObject.SendMessage(ComponentMessages.OnEnterStation);
                 //(actor.nebulaObject as Item).ClearChannels();
                 //CreateNewItem(actor);
             } catch (Exception ex) {

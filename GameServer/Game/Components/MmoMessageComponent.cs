@@ -684,7 +684,7 @@ namespace Nebula.Game.Components {
             ContractEvent(contract, CustomEventCode.ContractStageChanged);
         }
         private void ContractEvent(BaseContract contract, CustomEventCode code) {
-            if(false == nebulaObject) {
+            if(null == nebulaObject) {
                 return;
             }
             var eventInstance = new ItemGeneric {
@@ -696,6 +696,41 @@ namespace Nebula.Game.Components {
             SendParameters sendParameters = new SendParameters {
                  ChannelId = Settings.ItemEventChannel,
                   Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        public void ReceiveItemsAdded(InventoryType inventoryType) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.ItemsAdded,
+                EventData = new Hashtable {
+                    { (int)SPC.Inventory, (byte)inventoryType }
+                }
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        public void ReceiveAchievmentUnlocked(string achievmentId, int tierId ) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.AchievmentUnlocked,
+                EventData = new Hashtable {
+                    { (int)SPC.AchievmentId,        achievmentId },
+                    { (int)SPC.AchievmentTierId,    tierId }
+                }
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
             };
             var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
             ReceiveEvent(eventData, sendParameters);

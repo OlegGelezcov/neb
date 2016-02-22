@@ -128,6 +128,7 @@ namespace SelectCharacter.Guilds {
             mApplication.Players.SetGuild(owner.gameRefId, owner.characterId, newGuild.ownerCharacterId);
             mApplication.DB.Guilds.Save(newGuild);
 
+            mApplication.AddAchievmentVariable(owner.gameRefId, "coalition_member", 1);
             //send guild update
             SendGuildUpdateEvent(owner.characterId, newGuild.GetInfo(mApplication));
 
@@ -309,6 +310,7 @@ namespace SelectCharacter.Guilds {
             if (guild != null) {
                 SendGuildUpdateEvent(memberCharacterID, guild.GetInfo(mApplication));
             }
+            mApplication.AddAchievmentVariable(member.gameRefId, "coalition_member", 1);
             return true;
         }
 
@@ -377,6 +379,10 @@ namespace SelectCharacter.Guilds {
 
             SendGuildUpdateEvent(handlerCharacterID, targetGuild.GetInfo(mApplication));
             SendGuildUpdateEvent(targetCharacterID, targetGuild.GetInfo(mApplication));
+
+            mApplication.AddAchievmentVariable(member.gameRefId, "coalition_member", 1);
+            mApplication.AddAchievmentVariable(handlerMember.gameRefId, "coalition_member_accepted", 1);
+
             return true;
         }
 
@@ -602,6 +608,9 @@ namespace SelectCharacter.Guilds {
             SendGuildUpdateEvent(sourceMember.characterId, guild.Data.GetInfo(mApplication));
             SendGuildUpdateEvent(targetMember.characterId, guild.Data.GetInfo(mApplication));
 
+            if(newStatus == GuildMemberStatus.Moderator ) {
+                mApplication.AddAchievmentVariable(targetMember.gameRefId, "coalition_officier", 1);
+            }
             return true;
         }
 

@@ -1,6 +1,8 @@
 ﻿using Common;
 using Common.Space.Game.Resources;
+using Nebula.Achievments;
 using Nebula.Contracts;
+using Nebula.Contracts.Inventory;
 using Nebula.Inventory.DropList;
 using Nebula.Pets;
 using Nebula.Resources;
@@ -12,7 +14,7 @@ using Space.Game.Ship;
 using System.Collections.Generic;
 
 namespace Space.Game {
-    public interface IRes : IContractResource {
+    public interface IRes : IContractResource, IContractItemCollection, IAchievmentResource {
         WeaponData RandomWeapon(Workshop workshop);
 
         ColorInfo WeaponColor(ObjectColor color);

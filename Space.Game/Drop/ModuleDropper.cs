@@ -25,9 +25,9 @@ namespace Space.Game.Drop
             {  Difficulty.easy2, 0.7f },
             {  Difficulty.medium, 1f },
             {  Difficulty.none, 1f },
-            {  Difficulty.hard, 2f },
-            {  Difficulty.boss, 3f },
-            {  Difficulty.boss2, 4f }
+            {  Difficulty.hard, 2.2f },
+            {  Difficulty.boss, 2.5f },
+            {  Difficulty.boss2, 2f }
         };
 
         public class ModuleDropParams
@@ -141,7 +141,7 @@ namespace Space.Game.Drop
 
            
             foreach(AdditionalParameter prm in GenerateAdditionalParameters(colorInfo)) {
-                SetAddionalParameter(ref module, slotSetting, prm);
+                SetAddionalParameter(ref module, slotSetting, prm, colorInfo);
             }
 
             int[] skills = dropParams.resource.skillDropping.AllowedSkills(dropParams.workshop, dropParams.slotType, dropParams.level);
@@ -193,28 +193,31 @@ namespace Space.Game.Drop
             return result;
         }
 
-        private void SetAddionalParameter(ref ShipModule module, ModuleSlotSettingData slotSetting,  AdditionalParameter prm) {
+        private void SetAddionalParameter(ref ShipModule module, ModuleSlotSettingData slotSetting,  AdditionalParameter prm, ColorInfo color) {
+            int pointsMax = 10;
+
+            
             switch(prm) {
                 case AdditionalParameter.resist:
-                    module.SetResist(BalanceFormulas.ComputeRESISTANCE(Rand.Int(1, 10), slotSetting.resistance_points_value, slotSetting.resistance_points_factor, dropParams.level));
+                    module.SetResist(BalanceFormulas.ComputeRESISTANCE(Rand.Int(1, pointsMax), pointsMax, dropParams.level, dropParams.resource.Leveling.CapLevel(), slotSetting.resist_max, color.factor));
                     break;
                 case AdditionalParameter.damage_bonus:
-                    module.SetDamageBonus(BalanceFormulas.ComputeDAMAGEBONUS(Rand.Int(1, 10), slotSetting.damage_bonus_points_value, slotSetting.damage_bonus_points_factor, dropParams.level));
+                    module.SetDamageBonus(BalanceFormulas.ComputeDAMAGEBONUS(Rand.Int(1, pointsMax), slotSetting.damage_bonus_points_value, slotSetting.damage_bonus_points_factor, dropParams.level));
                     break;
                 case AdditionalParameter.energy_bonus:
-                    module.SetEnergyBonus(BalanceFormulas.ComputeENERGYBONUS(Rand.Int(1, 10), slotSetting.energy_bonus_points_value, slotSetting.energy_bonus_points_factor, dropParams.level));
+                    module.SetEnergyBonus(BalanceFormulas.ComputeENERGYBONUS(Rand.Int(1, pointsMax), slotSetting.energy_bonus_points_value, slotSetting.energy_bonus_points_factor, dropParams.level));
                     break;
                 case AdditionalParameter.crit_chance:
-                    module.SetCritChance(BalanceFormulas.ComputeCRITCHANCE(Rand.Int(1, 10), slotSetting.critical_chance_points_value, slotSetting.critical_chance_points_factor, dropParams.level));
+                    module.SetCritChance(BalanceFormulas.ComputeCRITCHANCE(Rand.Int(1, pointsMax), slotSetting.critical_chance_points_value, slotSetting.critical_chance_points_factor, dropParams.level));
                     break;
                 case AdditionalParameter.crit_damage:
-                    module.SetCritDamage(BalanceFormulas.ComputeCRITDAMAGEBONUS(Rand.Int(1, 10), slotSetting.critical_damage_points_value, slotSetting.critical_damage_points_factor, dropParams.level));
+                    module.SetCritDamage(BalanceFormulas.ComputeCRITDAMAGEBONUS(Rand.Int(1, pointsMax), slotSetting.critical_damage_points_value, slotSetting.critical_damage_points_factor, dropParams.level));
                     break;
                 case AdditionalParameter.speed_bonus:
-                    module.SetSpeedBonus(BalanceFormulas.ComputeSPEEDBONUS(Rand.Int(1, 10), slotSetting.speed_bonus_points_value, slotSetting.speed_bonus_points_factor, dropParams.level));
+                    module.SetSpeedBonus(BalanceFormulas.ComputeSPEEDBONUS(Rand.Int(1, pointsMax), slotSetting.speed_bonus_points_value, slotSetting.speed_bonus_points_factor, dropParams.level));
                     break;
                 case AdditionalParameter.hold_bonus:
-                    module.SetHoldBonus(BalanceFormulas.ComputeCARGOBONUS(Rand.Int(1, 10), slotSetting.cargo_bonus_points_value, slotSetting.cargo_bonus_points_factor, dropParams.level));
+                    module.SetHoldBonus(BalanceFormulas.ComputeCARGOBONUS(Rand.Int(1, pointsMax), slotSetting.cargo_bonus_points_value, slotSetting.cargo_bonus_points_factor, dropParams.level));
                     break;
             }
         }

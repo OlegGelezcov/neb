@@ -73,6 +73,10 @@ namespace Nebula.Game {
                                         components.Add(typeof(ExploreLocationContractMark));
                                     }
                                     break;
+                                case ComponentSubType.found_item_contract_mark: {
+                                        components.Add(typeof(FoundItemContractMark));
+                                    }
+                                    break;
                             }
                         }
                         break;
@@ -141,7 +145,16 @@ namespace Nebula.Game {
                         }
                         break;
                     case ComponentID.DropList: {
-                            components.Add(typeof(DropListComponent));
+                            switch((comp.Value as MultiComponentData).subType) {
+                                case ComponentSubType.normal_drop_list: {
+                                        components.Add(typeof(NormalDropListComponent));
+                                    }
+                                    break;
+                                case ComponentSubType.contract_drop_list: {
+                                        components.Add(typeof(ContractDropListComponent));
+                                    }
+                                    break;
+                            }
                         }
                         break;
                     case ComponentID.ContractObject: {
@@ -375,6 +388,10 @@ namespace Nebula.Game {
                                         nebObject.GetComponent<ExploreLocationContractMark>().Init(comp.Value as ExploreLocationContractMarkData);
                                     }
                                     break;
+                                case ComponentSubType.found_item_contract_mark: {
+                                        nebObject.GetComponent<FoundItemContractMark>().Init(comp.Value as FoundItemContractMarkData);
+                                    }
+                                    break;
                             }
                         }
                         break;
@@ -447,7 +464,17 @@ namespace Nebula.Game {
                         }
                         break;
                     case ComponentID.DropList: {
-                            nebObject.GetComponent<DropListComponent>().Init(comp.Value as DropListComponentData);
+                            switch ((comp.Value as MultiComponentData).subType) {
+                                case ComponentSubType.normal_drop_list: {
+                                        nebObject.GetComponent<NormalDropListComponent>().Init(comp.Value as NormalDropListComponentData);
+                                    }
+                                    break;
+                                case ComponentSubType.contract_drop_list: {
+                                        nebObject.GetComponent<ContractDropListComponent>().Init(comp.Value as ContractDropListComponentData);
+                                    }
+                                    break;
+                            }
+                            
                         }
                         break;
                     case ComponentID.Bot:
@@ -608,7 +635,7 @@ namespace Nebula.Game {
                         if (weapon != null) {
                             var dropListComp = obj.GetComponent<DropListComponent>();
                             if (dropListComp == null) {
-                                dropListComp = obj.AddComponent<DropListComponent>();
+                                dropListComp = obj.AddComponent<NormalDropListComponent>();
 
                                 List<DropItem> dropItems = null;
                                 switch(weapon.weaponDifficulty) {
@@ -716,7 +743,7 @@ namespace Nebula.Game {
             float duration, 
             ConcurrentDictionary<string, DamageInfo> inDamagers, 
             ChestSourceInfo sourceInfo, 
-            ItemDropList dropList) {
+            DropListComponent dropListComponent) {
 
             int subZone = world.ResolvePositionSubzone(position);
 
@@ -734,7 +761,8 @@ namespace Nebula.Game {
             chestObject.name = "Container";
             ChestComponent chest = chestObject.GetComponent<ChestComponent>();
             chest.SetDuration(duration);
-            chest.Fill(inDamagers, dropList, sourceInfo);
+      
+            chest.Fill(inDamagers, dropListComponent, sourceInfo);
             return chestObject;
         }
 

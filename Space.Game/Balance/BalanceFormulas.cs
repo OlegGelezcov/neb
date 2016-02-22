@@ -43,9 +43,14 @@ namespace Nebula.Balance {
             return (int)Math.Round(first + second);
         }
         //=========================================================================================================
-        public static float ComputeRESISTANCE(int points, float pointsValue, float pointsFactor, int level) {
+        public static float ComputeRESISTANCE(int points, int pointsMax,  int level, int levelMax,  float resistMax, float colorMult) {
             //return points * pointsValue * Mathf.Pow(pointsFactor, level - 1);
-            return points * pointsValue * pointsFactor * ((float)level / 12.0f + 1);
+            //return points * pointsValue * pointsFactor * ((float)level / 12.0f + 1);
+            float resistance = colorMult * points * ( 2.0f * (float)level / (float)(level + levelMax) )* (resistMax / pointsMax) * Rand.Float(0.4f, 1.0f);
+            if(resistance > resistMax ) {
+                resistance = resistMax;
+            }
+            return resistance;
         }
 
         public static float ComputeDAMAGEBONUS(int points, float pointsValue, float pointsFactor, int level) {

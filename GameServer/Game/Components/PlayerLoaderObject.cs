@@ -44,6 +44,7 @@ namespace Nebula.Game.Components {
                 GetComponent<PlayerTimedEffects>().Load();
                 GetComponent<PetManager>().Load();
                 GetComponent<ContractManager>().Load();
+                GetComponent<AchievmentComponent>().Load();
             }
         }
 
@@ -68,6 +69,7 @@ namespace Nebula.Game.Components {
                 TimedEffectsDatabase.instance(app).SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
                 PetDatabase.instance(app).SavePets(character.characterId, player.GetComponent<PetManager>().pets);
                 ContractDatabase.instance(app).SaveContracts(character.characterId, player.GetComponent<ContractManager>().GetSave());
+                AchievmentDatabase.instance(app).SaveAchievment(character.characterId, player.GetComponent<AchievmentComponent>().GetSave());
             }
         }
 

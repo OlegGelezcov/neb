@@ -33,7 +33,6 @@ namespace Nebula.Game.Contracts.Generators {
 
             KillNPCContract contract = new KillNPCContract(
                 resultContractData.id,
-                ContractState.accepted,
                 0,
                 sourceWorld,
                 manager,

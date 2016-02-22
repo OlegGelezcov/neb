@@ -38,7 +38,7 @@ namespace Nebula.Game.Contracts.Generators {
             }
 
             KillNPCGroupContract contract = new KillNPCGroupContract(resultContractData.id, 
-                ContractState.accepted, 0, 
+                 0, 
                 sourceWorld, 
                 manager, 
                 groupData.count, 

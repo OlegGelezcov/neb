@@ -52,5 +52,10 @@ namespace Nebula.Engine {
         public const string OnMakeFire = "OnMakeFire";
 
         public const string OnWasKilled = "OnWasKilled";
+
+        /// <summary>
+        /// Sended to self when entered to station
+        /// </summary>
+        public const string OnEnterStation = "OnEnterStation";
     }
 }

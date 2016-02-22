@@ -35,6 +35,11 @@ namespace Nebula.Game.Components {
 
         public virtual void SetLevel(int inLevel) {
             level = inLevel;
+            if(mInitData != null ) {
+                if(mInitData.level != level) {
+                    mInitData.SetLevel(level);
+                }
+            }
         }
 
         public virtual void SetFraction(FractionType inFraction) {

@@ -49,6 +49,8 @@ namespace Common
         ContractCompleted = 46,
         ContractsUpdate = 47,
         ContractDeclined = 48,
+        ItemsAdded = 49,
+        AchievmentUnlocked = 50,
 
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19

@@ -19,7 +19,7 @@ namespace Space.Game.Ship
 
         private IRes resource;
 
-        public const float resistance_aux_number = 15000;
+        //public const float resistance_aux_number = 15000;
         public const float critical_chance_aux_number = 10000;
         public const float bonus_aux_number = 10000;
 
@@ -333,7 +333,10 @@ namespace Space.Game.Ship
                         sum += s.Module.Resist;
                     }
                 }
-                return sum / (sum + resistance_aux_number);
+                if(sum > 0.8f ) {
+                    sum = 0.8f;
+                }
+                return sum;
             }
         }
 

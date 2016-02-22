@@ -27,5 +27,16 @@ namespace Nebula.Inventory.DropList {
                 return m_Items;
             }
         }
+
+        public ContractObjectDropItem GetContractObjectItem(string template) {
+            foreach(var it in items) {
+                if(it.type == Common.InventoryObjectType.contract_item ) {
+                    if( (it as ContractObjectDropItem).templateId == template ) {
+                        return (it as ContractObjectDropItem);
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

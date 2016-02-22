@@ -33,6 +33,10 @@ namespace Nebula.Contracts {
                     return new KillNPCContractData(element);
                 case ContractCategory.exploreLocation:
                     return new ExploreLocationContractData(element);
+                case ContractCategory.itemDelivery:
+                    return new ItemDeliveryContractData(element);
+                case ContractCategory.foundItem:
+                    return new FoundItemContractData(element);
                 default:
                     return null;
             }

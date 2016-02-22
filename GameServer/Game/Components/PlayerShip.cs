@@ -1,19 +1,17 @@
 ﻿using Common;
 using ExitGames.Logging;
+using GameMath;
+using Nebula.Database;
 using Nebula.Engine;
-using Nebula.Game.Components;
-using Space.Database;
+using ServerClientCommon;
 using Space.Game;
 using Space.Game.Drop;
+using Space.Game.Inventory;
 using Space.Game.Ship;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using GameMath;
-using Space.Game.Resources;
-using Space.Game.Inventory;
-using ServerClientCommon;
-using Nebula.Database;
+using Nebula.Game.Bonuses;
 
 namespace Nebula.Game.Components {
 
@@ -35,8 +33,9 @@ namespace Nebula.Game.Components {
         private MmoActor player;
         private ShipWeapon mWeapon;
         private PlayerCharacterObject mCharacter;
-
-
+        private readonly ResistanceDetail m_ResistDetail = new ResistanceDetail();
+        private PassiveBonusesComponent m_PassiveBonuses;
+        private float m_InvisTimer = -1;
 
         public override void Start() {
             mWeapon = RequireComponent<ShipWeapon>();
@@ -45,8 +44,12 @@ namespace Nebula.Game.Components {
             mAI = RequireComponent<AIState>();
             mBonuses = RequireComponent<PlayerBonuses>();
             mCharacter = RequireComponent<PlayerCharacterObject>();
+
+            m_PassiveBonuses = GetComponent<PassiveBonusesComponent>();
+
             SetModel(new ShipModel(resource));
-            
+            m_ResistDetail.Reset();
+
             log.Info("PlayerShip.Start() completed");
         }
 
@@ -87,18 +90,77 @@ namespace Nebula.Game.Components {
             return hash;
         }
 
+        public class ResistanceDetail : IInfoSource {
+            public int blockedMult { get; private set; }
+            public float modelValue { get; private set; }
+            public float bonusesAdd { get; private set; }
+            public float passiveAbilitiesAdd { get; private set; }
+
+            private float m_Total;
+
+            public void Reset() {
+                blockedMult = 1;
+                modelValue = 0.0f;
+                bonusesAdd = 0.0f;
+                passiveAbilitiesAdd = 0.0f;
+            }
+
+            private void UpdateTotal() {
+                m_Total = Mathf.Clamp(blockedMult * (modelValue + bonusesAdd + passiveAbilitiesAdd), 0.0f, 0.9f);
+            }
+
+            public float total {
+                get {
+                    return m_Total;
+                }
+            }
+
+            public void SetBlocked(bool blocked) {
+                if(blocked) {
+                    blockedMult = 0;
+                } else {
+                    blockedMult = 1;
+                }
+                UpdateTotal();
+            }
+            public void SetModelValue(float val) {
+                modelValue = val;
+                UpdateTotal();
+            }
+
+            public void SetBonusesAdd(float val) {
+                bonusesAdd = val;
+                UpdateTotal();
+            }
+
+            public void SetPassiveAbiltiesAdd(float val) {
+                passiveAbilitiesAdd = val;
+                UpdateTotal();
+            }
+
+            public Hashtable GetInfo() {
+                return new Hashtable {
+                    {(int)SPC.RESIST_Blocked, blockedMult },
+                    {(int)SPC.RESIST_ModelValue, modelValue },
+                    {(int)SPC.RESIST_BonusesAdd, bonusesAdd },
+                    {(int)SPC.RESIST_PassiveBonusesAdd, passiveAbilitiesAdd }
+                };
+            }
+        }
+
         public override float damageResistance {
             get {
-                //check if resist blocked
-                if(blockResist.blocked) {
-                    return 0f;
-                }
+                m_ResistDetail.Reset();
+                m_ResistDetail.SetBlocked(blockResist.blocked);
+                m_ResistDetail.SetModelValue(shipModel.resistance);
+                m_ResistDetail.SetBonusesAdd(m_ResistDetail.total * (1.0f + mBonuses.resistPcBonus) + mBonuses.resistCntBonus - m_ResistDetail.total);
 
-                float val = shipModel.resistance;
-                val *= Mathf.Clamp01(1 + mBonuses.resistPcBonus);
-                val += mBonuses.resistCntBonus;
-                val = Mathf.Clamp01(val);
-                return val;
+                if(m_PassiveBonuses != null && m_PassiveBonuses.resistTier > 0 ) {
+                    m_ResistDetail.SetPassiveAbiltiesAdd(m_PassiveBonuses.resistBonus);
+                } else {
+                    m_ResistDetail.SetPassiveAbiltiesAdd(0);
+                }
+                return m_ResistDetail.total;
             }
         }
 
@@ -130,6 +192,19 @@ namespace Nebula.Game.Components {
                     }
                 }
             }
+
+            if(m_InvisTimer > 0 ) {
+                m_InvisTimer -= deltaTime;
+                if(m_InvisTimer <= 0.0f ) {
+                    if(nebulaObject.invisible) {
+                        nebulaObject.SetInvisibility(false);
+                    }
+                }
+            }
+        }
+
+        public void SetInvisTimer(float time) {
+            m_InvisTimer = time;
         }
 
 
@@ -280,5 +355,24 @@ namespace Nebula.Game.Components {
         }
         #endregion
 
+        public Hashtable GetResistanceDetail() {
+            float dump = damageResistance;
+            return m_ResistDetail.GetInfo();
+        }
+
+        public void OnInvisibilityChanged(bool invis ) {
+            if(invis) {
+                log.InfoFormat("adding invisibility buff");
+                Buff invisBuff = new Buff(BonusType.invisibility.ToString(), nebulaObject, BonusType.invisibility, -1, 1, () => { return nebulaObject.invisible == true; }, -1, false);
+                if(mBonuses != null ) {
+                    mBonuses.SetBuff(invisBuff);
+                }
+            } else {
+                log.InfoFormat("removing invisibility buff");
+                if(mBonuses != null ) {
+                    mBonuses.RemoveBuffs(BonusType.invisibility);
+                }
+            }
+        }
     }
 }

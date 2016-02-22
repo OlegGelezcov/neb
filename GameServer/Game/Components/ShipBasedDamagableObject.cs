@@ -132,14 +132,14 @@ namespace Nebula.Game.Components {
             mIncreaseRegenSpeedTimer = time;
         }
 
-        private float ApplyResistPassiveBonus(float inputResist) {
-            if(nebulaObject.IsPlayer()) {
-                if(mPassiveBonuses != null && mPassiveBonuses.resistTier > 0 ) {
-                    return Mathf.Clamp01(inputResist + mPassiveBonuses.resistBonus);
-                }
-            }
-            return inputResist;
-        }
+        //private float ApplyResistPassiveBonus(float inputResist) {
+        //    if(nebulaObject.IsPlayer()) {
+        //        if(mPassiveBonuses != null && mPassiveBonuses.resistTier > 0 ) {
+        //            return Mathf.Clamp01(inputResist + mPassiveBonuses.resistBonus);
+        //        }
+        //    }
+        //    return inputResist;
+        //}
 
         public override InputDamage ReceiveDamage(InputDamage inputDamage) {
 
@@ -173,7 +173,7 @@ namespace Nebula.Game.Components {
             if (mShip != null) {
                 resist = mShip.damageResistance;
             }
-            resist = ApplyResistPassiveBonus(resist);
+            //resist = ApplyResistPassiveBonus(resist);
 
             inputDamage.SetDamage(inputDamage.damage * (1.0f - Mathf.Clamp01(resist)));
             inputDamage.SetDamage(AbsorbDamage(inputDamage.damage));

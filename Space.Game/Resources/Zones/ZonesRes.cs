@@ -217,6 +217,11 @@ namespace Space.Game.Resources.Zones {
                                             componentCollection.Add(ComponentID.ContractMark, exploreLocationContractMarkData);
                                         }
                                         break;
+                                    case ComponentSubType.found_item_contract_mark: {
+                                            FoundItemContractMarkData ficmData = new FoundItemContractMarkData(ce);
+                                            componentCollection.Add(ComponentID.ContractMark, ficmData);
+                                        }
+                                        break;
                                 }
                             }
                             break;
@@ -287,8 +292,19 @@ namespace Space.Game.Resources.Zones {
                             }
                             break;
                         case ComponentID.DropList: {
-                                DropListComponentData data = new DropListComponentData(ce);
-                                componentCollection.Add(ComponentID.DropList, data);
+                                ComponentSubType subType = (ComponentSubType)Enum.Parse(typeof(ComponentSubType), ce.GetString("sub_type"));
+                                switch(subType) {
+                                    case ComponentSubType.normal_drop_list: {
+                                            NormalDropListComponentData data = new NormalDropListComponentData(ce);
+                                            componentCollection.Add(ComponentID.DropList, data);
+                                        }
+                                        break;
+                                    case ComponentSubType.contract_drop_list: {
+                                            ContractDropListComponentData data = new ContractDropListComponentData(ce);
+                                            componentCollection.Add(ComponentID.DropList, data);
+                                        }
+                                        break;
+                                }
                             }
                             break;
                         case ComponentID.NebulaObject:

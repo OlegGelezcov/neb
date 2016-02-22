@@ -5,6 +5,7 @@ using Nebula.Engine;
 using Nebula.Game.Components;
 using Nebula.Game.Events;
 using Nebula.Game.Utils;
+using Nebula.Inventory.DropList;
 using Space.Game;
 using System;
 using System.Collections;
@@ -275,10 +276,14 @@ namespace Nebula.Game.Contracts {
                 if(false == HasActiveContract(foundedContract.category)) {
                     BaseContract rc;
                     if(m_ProposedContracts.TryRemove(foundedContract.category, out rc)) {
-                        foundedContract.Accept();
+                        
+                        bool acceptedStatus = foundedContract.Accept();
                         if(AddOrReplaceActiveContract(foundedContract)) {
                             m_MmoMessage.ContractsUpdate(GetInfo());
                             m_MmoMessage.ContractAccepted(foundedContract);
+                            if (acceptedStatus) {
+                                foundedContract.OnAccepted();
+                            }
                             return true;
                         }
                     }
@@ -382,7 +387,26 @@ namespace Nebula.Game.Contracts {
             return null;
         }
 
-       
+        public void OnEnterStation() {
+            s_Log.InfoFormat("OnEnterStation() message received at ContractManager".Color(LogColor.yellow));
+            EnterStationEvent evt = new EnterStationEvent(nebulaObject);
+            OnEvent(evt);
+        }
+
+        public List<string> FilterFoundItemContractForItems(List<string> dropList) {
+            List<string> outputList = new List<string>();
+            foreach(var pac in m_ActiveContracts ) {
+                if(pac.Value.state == ContractState.accepted && pac.Value.stage == 0 ) {
+                    if(pac.Value.category == ContractCategory.foundItem ) {
+                        FoundItemContract contract = pac.Value as FoundItemContract;
+                        if(dropList.Contains(contract.itemId)) {
+                            outputList.Add(contract.itemId);
+                        }
+                    }
+                }
+            }
+            return outputList;
+        }
     }
 
     public class ContractSave {

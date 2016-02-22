@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Common {
     public enum PetColor : int {
-        gray,
-        white,
-        blue,
-        yellow,
-        green,
-        orange
+        gray = 0,
+        white = 1,
+        blue = 2,
+        yellow = 3,
+        green = 4,
+        orange = 5
     }
 }
