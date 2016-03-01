@@ -18,32 +18,34 @@ namespace Common
         /// <summary>
         /// The avatar.
         /// </summary>
-        Avatar,
+        Avatar = 0,
 
         /// <summary>
         /// The bot (fake avatar).
         /// </summary>
-        Bot,
+        Bot = 1,
 
         /// <summary>
         /// Some chest in world
         /// </summary>
-        Chest,
+        Chest = 2,
 
         /// <summary>
         /// Asteroid item
         /// </summary>
-        Asteroid,
+        Asteroid = 3,
 
         /// <summary>
         /// World event object
         /// </summary>
-        Event,
+        Event = 4,
 
-        SharedChest,
+        SharedChest = 5,
 
-        Teleport,
+        Teleport = 6,
 
-        Station
+        Station = 7,
+
+        None = 8
     }
 }

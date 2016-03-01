@@ -37,12 +37,35 @@ namespace Nebula.Game.OperationHandlers {
                     return CallGetAchievments(actor, request, operation);
                 case RPCID.rpc_GetParamDetail:
                     return CallGetParamDetail(actor, request, operation);
+                case RPCID.rpc_SetPlayerMark:
+                    return CallSetPlayerMark(actor, request, operation);
                 default:
                     return new OperationResponse(request.OperationCode) {
                         ReturnCode = (int)ReturnCode.InvalidRPCID,
                         DebugMessage = string.Format("not found rpc with id = {0}", operation.rpcId)
                     };
             }
+        }
+
+        private OperationResponse CallSetPlayerMark(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length >= 2 ) {
+                string id = (string)op.parameters[0];
+                byte type = (byte)op.parameters[1];
+                var targetComponent = player.GetComponent<PlayerTarget>();
+                if(targetComponent != null ) {
+                    if(string.IsNullOrEmpty(id)) {
+                        targetComponent.ClearMarkedItem();
+                    } else {
+                        targetComponent.SetMarkedItem(id, type);
+                    }
+                    RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                        rpcId = op.rpcId,
+                        result = true
+                    };
+                    return new OperationResponse(request.OperationCode, responseInstance);
+                }
+            }
+            return InvalidOperationParameter(request);
         }
 
         private OperationResponse CallGetParamDetail(MmoActor player, OperationRequest request, RPCInvokeOperation op) {

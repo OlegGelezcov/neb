@@ -35,6 +35,7 @@ namespace SelectCharacter.OperationHandlers {
                 string charId = (string)op.parameters[1];
                 int raceStatus = (int)op.parameters[2];
                 bool success = application.Players.SetRaceStatus(gameRef, charId, raceStatus);
+
                 RPCInvokeResponse responseInstance = new RPCInvokeResponse {
                     rpcId = op.rpcId,
                     result = success

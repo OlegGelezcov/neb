@@ -33,8 +33,20 @@ namespace SelectCharacter.Commander {
             }
         }
 
-        public void AddCommand(RaceCommand command) {
-            mCommands.TryAdd(command.race, command);
+        public bool AddCommand(RaceCommand command) {
+
+            if(mCommands.ContainsKey(command.race)) {
+
+                RaceCommand oldCommand;
+                if(mCommands.TryRemove(command.race, out oldCommand )){
+                    return mCommands.TryAdd(command.race, command);
+                } else {
+                    return false;
+                }
+            } else {
+                return mCommands.TryAdd(command.race, command);
+            }
+            
         }
     }
 }

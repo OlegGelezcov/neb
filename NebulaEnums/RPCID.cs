@@ -11,5 +11,7 @@
         public const int rpc_GetParamDetail = 9;
 
         public const int rpc_sc_SetRaceStatus = 10;
+
+        public const int rpc_SetPlayerMark = 11;
     }
 }

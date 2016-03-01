@@ -112,6 +112,7 @@ namespace Common
         Timer = 90,
         BotGroup = 91,
         ContractId = 92,
-        Mark = 93
+        Mark = 93,
+        Group = 94
     }
 }

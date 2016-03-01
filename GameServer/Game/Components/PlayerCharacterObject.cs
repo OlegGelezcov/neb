@@ -163,6 +163,11 @@ namespace Nebula.Game.Components {
             props.SetProperty((byte)PS.RaceStatus, raceStatus);
         }
 
+        public void OnStationExited() {
+            log.InfoFormat("player exited from station, requesting status...".Color(LogColor.orange));
+            mPlayer.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "RequestRaceStatus", new object[] { nebulaObject.Id, characterId });
+        }
+
         public override void Update(float deltaTime) {
             base.Update(deltaTime);
 
@@ -185,14 +190,26 @@ namespace Nebula.Game.Components {
             if(mUpdateRaceStatusBonusTimer <= 0f) {
                 mUpdateRaceStatusBonusTimer = RACE_STATUS_BONUS_UPDATE_INTERVAL;
                 if (isCommanderOrAdmiral()) {
-                    mBonuses.SetBuff(new Buff("race_status", null, BonusType.increase_resist_on_pc, RACE_STATUS_BONUS_UPDATE_INTERVAL * 2, 0.5f));
+                    mBonuses.SetBuff(new Buff("race_status", null, BonusType.increase_resist_on_cnt, RACE_STATUS_BONUS_UPDATE_INTERVAL * 2, 0.5f));
                 }
             }
         }
 
 
         public void SetGroup(Group grp) {
+
             group = grp;
+            UpdateGroupProperty();
+        }
+
+        private void UpdateGroupProperty() {
+            if (group == null) {
+                props.SetProperty((byte)PS.Group, string.Empty);
+                log.InfoFormat("player group setted = {0}", "(null)");
+            } else {
+                props.SetProperty((byte)PS.Group, (group.groupID != null) ? group.groupID : string.Empty);
+                log.InfoFormat("player group setted = {0}", group.groupID);
+            }
         }
 
 
@@ -229,6 +246,7 @@ namespace Nebula.Game.Components {
             if(group.groupID == groupID.ToString() ) {
                 group.Clear();
             }
+            UpdateGroupProperty();
         }
 
         public void AddPvpPoints(int points) {

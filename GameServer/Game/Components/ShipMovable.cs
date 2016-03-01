@@ -3,6 +3,8 @@ using System.Collections;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Server.Components;
+using Common;
+using ExitGames.Logging;
 
 namespace Nebula.Game.Components {
 
@@ -13,7 +15,7 @@ namespace Nebula.Game.Components {
         private BaseShip m_Ship;
         private PlayerBonuses m_Bonuses;
         protected readonly SpeedDetail m_SpeedDetail = new SpeedDetail();
-
+        //private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
         public void Init(BotShipMovableComponentData data ) { }
 
@@ -40,14 +42,20 @@ namespace Nebula.Game.Components {
 
         public override float maximumSpeed {
             get {
-                return ship.shipModel.speed;
+                float s = ship.shipModel.speed;
+                if (nebulaObject.IsPlayer()) {
+                    UpdateSpeedProperties(s);
+                }
+                return s;
             }
         }
 
         public override float speed {
             get {
                 UpdateDetail();
-                return m_SpeedDetail.total;
+                float total = m_SpeedDetail.total;
+
+                return total;
             }
         }
 
@@ -57,6 +65,11 @@ namespace Nebula.Game.Components {
             m_SpeedDetail.SetModelSpeed(normalSpeed);
             m_SpeedDetail.SetBonusAdd(GetSpeedWithBonuses(m_SpeedDetail.modelSpeed) - m_SpeedDetail.modelSpeed);
 
+        }
+
+        public override void Update(float deltaTime) {
+            base.Update(deltaTime);
+            
         }
 
         protected float GetSpeedWithBonuses(float inputSpeed) {

@@ -113,5 +113,26 @@ namespace Nebula.Balance {
             float second = distancePoints * distancePointsValue * distancePointsFactor * ((float)level / 12.0f + 1);
             return (first + second);
         }
+
+        public static float RemapParameter(int level, int groupCount ) {
+            float baseVal = 0;
+            switch(groupCount) {
+                case 1:
+                    baseVal = 0f;
+                    break;
+                case 2:
+                    baseVal = 0.1f;
+                    break;
+                case 3:
+                    baseVal = 0.2f;
+                    break;
+                case 4:
+                    baseVal = 0.3f;
+                    break;
+                     
+            }
+
+            return baseVal + level * 0.01f;
+        }
     }
 }

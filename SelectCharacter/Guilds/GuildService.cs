@@ -135,6 +135,8 @@ namespace SelectCharacter.Guilds {
             return true;
         }
 
+        
+
         private void SendGuildUpdateEvent(string characterID, Hashtable guildInfo ) {
             SelectCharacterClientPeer peer = null;
             if (mApplication.Clients.TryGetPeerForCharacterId(characterID, out peer)) {

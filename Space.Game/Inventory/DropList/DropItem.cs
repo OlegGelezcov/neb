@@ -38,8 +38,12 @@ namespace Nebula.Inventory.DropList {
             }
         }
 
-        public bool Roll(out int count) {
-            if (Rand.Float01() < prob) {
+        private float RemapParameter(int groupCount, int level) {
+            return 0.05f * groupCount + 0.003f * level;
+        }
+
+        public bool Roll(out int count, int groupCount, int playerLevel) {
+            if (Rand.Float01() < (prob + RemapParameter(groupCount, playerLevel)) ) {
                 count = Rand.Int(minCount, maxCount);
                 return true;
             } else {

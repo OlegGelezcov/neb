@@ -35,15 +35,19 @@ namespace Nebula.Game.Components {
             return hash;
         }
 
+        public void UpdateSpeedProperties(float val) {
+            if (props != null ) {
+                props.SetProperty((byte)PS.CurrentLinearSpeed, val);
+                props.SetProperty((byte)PS.MaxLinearSpeed, val);
+            }
+        }
+
         public override void Update(float deltaTime) {
 
             if(nebulaObject.IAmBotAndNoPlayers()) {
                 return;
             }
-
-
-            nebulaObject.properties.SetProperty((byte)PS.CurrentLinearSpeed, speed);
-            nebulaObject.properties.SetProperty((byte)PS.MaxLinearSpeed, speed);
+            UpdateSpeedProperties(speed);
 
             if(mStopTimer >= 0f ) {
                 mStopTimer -= deltaTime;

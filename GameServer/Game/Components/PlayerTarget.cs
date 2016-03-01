@@ -5,6 +5,8 @@ using Nebula.Server.Components;
 using Space.Game;
 using System.Collections;
 using System.Collections.Concurrent;
+using System;
+using ServerClientCommon;
 
 namespace Nebula.Game.Components {
     public class PlayerTarget : NebulaBehaviour, IInfoSource, IDatabaseObject
@@ -20,6 +22,7 @@ namespace Nebula.Game.Components {
 
 
         private readonly ConcurrentDictionary<string, NebulaObject> mSubscribers = new ConcurrentDictionary<string, NebulaObject>();
+        private readonly PlayerMarkedItem m_MarkedItem = new PlayerMarkedItem();
 
         public bool inCombat { get; private set; } = false;
         private float inCombatTimer = -1f;
@@ -50,6 +53,59 @@ namespace Nebula.Game.Components {
                     }
                 }
                 return false;
+            }
+        }
+
+        public void SetMarkedItem(string objId, byte objType) {
+            var old = m_MarkedItem.SetMark(objId, objType);
+            Hashtable hash = m_MarkedItem.GetInfo();
+            hash.Add((int)SPC.Source, nebulaObject.Id);
+            hash.Add((int)SPC.PrevId, old.id);
+            hash.Add((int)SPC.PrevType, old.type);
+            SendPlayerMark(hash);
+        }
+
+        public void ClearMarkedItem() {
+            var old = m_MarkedItem.Clear();
+            Hashtable hash = m_MarkedItem.GetInfo();
+            hash.Add((int)SPC.Source, nebulaObject.Id);
+            hash.Add((int)SPC.PrevId, old.id);
+            hash.Add((int)SPC.PrevType, old.type);
+            SendPlayerMark(hash);
+        }
+
+        private void SendPlayerMark(Hashtable hash) {
+            var world = nebulaObject.mmoWorld();
+
+            var character = nebulaObject.GetComponent<PlayerCharacterObject>();
+            if (character != null && character.group != null) {
+
+                if (character.group.members != null) {
+
+                    foreach (var pkvMember in character.group.members) {
+
+                        var member = pkvMember.Value;
+
+                        if (member.gameRefID != nebulaObject.Id) {
+
+                            NebulaObject groupMemberObj;
+                            if (world.TryGetObject((byte)ItemType.Avatar, member.gameRefID, out groupMemberObj)) {
+
+                                var memberMmo = groupMemberObj.GetComponent<MmoMessageComponent>();
+
+                                if (memberMmo != null) {
+
+                                    memberMmo.ReceivePlayerMark(hash);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            var myMmo = nebulaObject.GetComponent<MmoMessageComponent>();
+            if (myMmo != null) {
+                myMmo.ReceivePlayerMark(hash);
             }
         }
 
@@ -347,6 +403,52 @@ namespace Nebula.Game.Components {
 
         public bool IsNotTarget(string id) {
             return (false == IsTarget(id));
+        }
+    }
+
+    public class PlayerMarkedItem : IInfoSource {
+        private string m_Id;
+        private byte m_Type;
+
+        public PlayerMarkedItem(string id, byte type) {
+            m_Id = id;
+            m_Type = type;
+        }
+        public PlayerMarkedItem() {
+            Clear();
+        }
+
+        public PlayerMarkedItem SetMark(string id, byte type) {
+            PlayerMarkedItem old = new PlayerMarkedItem(this.id, this.type);
+            m_Id = id;
+            m_Type = type;
+            return old;
+        }
+
+        public PlayerMarkedItem Clear() {
+            PlayerMarkedItem old = new PlayerMarkedItem(this.id, this.type);
+            m_Id = string.Empty;
+            m_Type = (byte)ItemType.None;
+            return old;
+        }
+
+        public Hashtable GetInfo() {
+            return new Hashtable {
+                {(int)SPC.Id, id },
+                {(int)SPC.Type, type}
+            };
+        }
+
+        public string id {
+            get {
+                return m_Id;
+            }
+        }
+
+        public byte type {
+            get {
+                return m_Type;
+            }
         }
     }
 }

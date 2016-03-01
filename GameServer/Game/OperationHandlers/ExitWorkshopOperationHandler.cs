@@ -1,5 +1,6 @@
 ﻿using Common;
 using ExitGames.Logging;
+using Nebula.Engine;
 using Nebula.Game.Components;
 using Nebula.Game.Pets;
 using Photon.SocketServer;
@@ -66,6 +67,7 @@ namespace Nebula.Game.OperationHandlers {
                     actor.SetNewSubZone((actor.World as MmoWorld).ResolvePositionSubzone(actor.WorkshopSavedInfo.Position.ToVector3()));
                     actor.nebulaObject.SetInvisibility(false);
                     actor.GetComponent<PetManager>().Reinitialize();
+                    actor.nebulaObject.SendMessage(ComponentMessages.OnStationExited);
 
                 } else {
                     //ConsoleLogging.Get.Print(LogFilter.ALL, "EXIT WORKSHOP: NOW IN NOT WORKSHOP");

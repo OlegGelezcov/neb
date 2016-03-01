@@ -3,6 +3,7 @@ using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using NebulaCommon.Group;
 using Space.Game;
 using System;
 using System.Collections.Concurrent;
@@ -71,14 +72,53 @@ namespace Nebula.Game {
             float npcLevel = GetLevel(owner);
             float npcMaxHealth = MaxHealth(owner);
 
+            List<NebulaObject> playerGroups = new List<NebulaObject>();
+
             foreach(var kvp in m_Damagers ) {
                 if(kvp.Value.DamagerType == Common.ItemType.Avatar ) {
                     NebulaObject nebObject;
                     if(owner.world.TryGetObject((byte)kvp.Value.DamagerType, kvp.Value.DamagerId, out nebObject)) {
-                        GiveExpAndPvpPointsToPlayer(nebObject, owner, difficulty, npcLevel, npcMaxHealth);
+                        if (false == AddToGroup(nebObject, playerGroups)) {
+                            GiveExpAndPvpPointsToPlayer(nebObject, owner, difficulty, npcLevel, npcMaxHealth);
+                        }
                     }
                 }
             }
+
+            if(playerGroups.Count > 0 ) {
+                foreach(NebulaObject pgo in playerGroups) {
+                    GiveExpAndPvpPointsToPlayer(pgo, owner, difficulty, npcLevel, npcMaxHealth);
+                }
+            }
+        }
+
+        private bool AddToGroup(NebulaObject obj, List<NebulaObject> groupObjects) {
+            var character = obj.GetComponent<PlayerCharacterObject>();
+            if(character != null && character.hasGroup ) {
+                if(false == ContainsGroupObject(groupObjects, obj)) {
+                    groupObjects.Add(obj);
+                }
+
+                foreach(var member in character.group.members) {
+                    NebulaObject go;
+                    if(obj.mmoWorld().TryGetObject((byte)ItemType.Avatar, member.Value.gameRefID, out go)) {
+                        if(false == ContainsGroupObject(groupObjects, go)) {
+                            groupObjects.Add(go);
+                        }
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        private bool ContainsGroupObject(List<NebulaObject> groupList, NebulaObject source) {
+            foreach(var obj in groupList) {
+                if(obj.Id == source.Id) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void GiveExpAndPvpPointsToPlayer(NebulaObject playerObject, NebulaObject owner, float difficulty, float npcLevel, float npcMaxHealth ) {

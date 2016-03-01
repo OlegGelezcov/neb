@@ -57,5 +57,7 @@ namespace Nebula.Engine {
         /// Sended to self when entered to station
         /// </summary>
         public const string OnEnterStation = "OnEnterStation";
+
+        public const string OnStationExited = "OnStationExited";
     }
 }

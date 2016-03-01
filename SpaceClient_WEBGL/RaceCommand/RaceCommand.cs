@@ -39,19 +39,37 @@ namespace Nebula.Client.RaceCommand {
 
         public bool hasCommander {
             get {
-                return members.ContainsKey(RaceCommandKey.COMMANDER);
+                if( members.ContainsKey(RaceCommandKey.COMMANDER) ) {
+                    var cmd = members[RaceCommandKey.COMMANDER];
+                    if(cmd != null ) {
+                        return cmd.has;
+                    }
+                }
+                return false;
             }
         }
 
         public bool hasFirstAdmiral {
             get {
-                return members.ContainsKey(RaceCommandKey.ADMIRAL1);
+                if( members.ContainsKey(RaceCommandKey.ADMIRAL1) ) {
+                    var firstAdmiral = members[RaceCommandKey.ADMIRAL1];
+                    if(firstAdmiral != null ) {
+                        return firstAdmiral.has;
+                    }
+                }
+                return false;
             }
         }
 
         public bool hasSecondAdmiral {
             get {
-                return members.ContainsKey(RaceCommandKey.ADMIRAL2);
+                if( members.ContainsKey(RaceCommandKey.ADMIRAL2) ) {
+                    var secondAdmiral = members[RaceCommandKey.ADMIRAL2];
+                    if(secondAdmiral != null ) {
+                        return secondAdmiral.has;
+                    }
+                }
+                return false;
             }
         }
 

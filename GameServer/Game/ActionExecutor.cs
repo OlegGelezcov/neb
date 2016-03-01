@@ -83,7 +83,8 @@ namespace Space.Game {
             }
             return new Hashtable {
                 { (int)SPC.ControlState, (byte)Player.GetComponent<AIState>().controlState},
-                { (int)SPC.Speed, Player.GetComponent<MovableObject>().maximumSpeed }
+                { (int)SPC.MaxHitSpeed, Player.GetComponent<MovableObject>().maximumSpeed },
+                { (int)SPC.Speed, Player.GetComponent<MovableObject>().speed }
             };
         }
 
@@ -1135,7 +1136,9 @@ namespace Space.Game {
 
             return new Hashtable {
                 { (int)SPC.ControlState, (byte)playerAI.controlState },
-                { (int)SPC.ShiftState, playerAI.shiftState.keyPressed }
+                { (int)SPC.ShiftState, playerAI.shiftState.keyPressed },
+                { (int)SPC.Speed, Player.GetComponent<MovableObject>().speed },
+                { (int)SPC.MaxHitSpeed, Player.GetComponent<MovableObject>().maximumSpeed }
             };
         }
 
@@ -1151,7 +1154,9 @@ namespace Space.Game {
 
             return new Hashtable {
                 { (int)SPC.ControlState, (byte)playerAI.controlState },
-                { (int)SPC.ShiftState, playerAI.shiftState.keyPressed }
+                { (int)SPC.ShiftState, playerAI.shiftState.keyPressed },
+                { (int)SPC.Speed, Player.GetComponent<MovableObject>().speed },
+                { (int)SPC.MaxHitSpeed, Player.GetComponent<MovableObject>().maximumSpeed }
             };
         }
 

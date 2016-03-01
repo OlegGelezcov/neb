@@ -8,6 +8,7 @@ using Space.Server;
 using System;
 using System.Collections.Concurrent;
 using System.Collections;
+using Nebula.Game.Events;
 
 namespace Nebula.Game.Components {
     public abstract class DamagableObject  : NebulaBehaviour{
@@ -160,6 +161,11 @@ namespace Nebula.Game.Components {
                     } else {
                         mmoMessanger.SendKilled(EventReceiver.ItemSubscriber);
                     }
+                }
+
+                if(nebulaObject.IsPlayer()) {
+                    log.InfoFormat("player was killed, send PlayerKilledEvent to world");
+                    nebulaObject.mmoWorld().OnEvent(new PlayerKilledEvent(nebulaObject));
                 }
             }
         }

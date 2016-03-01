@@ -62,6 +62,9 @@ namespace Nebula.Database {
             foreach(var pItem in itemsToSave) {
                 var save = NebulaObjectSave.FromGameObject(pItem.Value as GameObject);
                 if(save != null ) {
+                    if(saves.ContainsKey(save.id)) {
+                        saves.Remove(save.id);
+                    }
                     saves.Add(save.id, save);
                 }
             }

@@ -21,22 +21,18 @@ namespace SelectCharacter.Commander {
         }
 
         public bool SetCommander(string login, string gameRefID, string characterID) {
-            if (!commander.has) {
-                commander.Set(login, gameRefID, characterID);
-                return true;
-            }
-            return false;
+            commander.Set(login, gameRefID, characterID);
+            return true;
         }
 
-        public bool SetAdmiral(string login, string gameRefID, string characterID ) {
-            if(!firstAdmiral.has) {
-                firstAdmiral.Set(login, gameRefID, characterID);
-                return true;
-            } else if(!secondAdmiral.has) {
-                secondAdmiral.Set(login, gameRefID, characterID);
-                return true;
-            }
-            return false;
+        public bool SetFirstAdmiral(string login, string gameRefID, string characterID ) {
+            firstAdmiral.Set(login, gameRefID, characterID);
+            return true;
+        }
+
+        public bool SetSecondAdmiral(string login, string gameRefID, string characterID ) {
+            secondAdmiral.Set(login, gameRefID, characterID);
+            return true;
         }
 
         public bool IsAdmiral(string characterID ) {
@@ -47,6 +43,15 @@ namespace SelectCharacter.Commander {
                 return true;
             }
             return false;
+        }
+
+        public void ClearAdmiral(string characterId ) {
+            if(firstAdmiral.has && firstAdmiral.characterID == characterId) {
+                firstAdmiral.Clear();
+            }
+            if(secondAdmiral.has && secondAdmiral.characterID == characterId) {
+                secondAdmiral.Clear();
+            }
         }
     }
 }

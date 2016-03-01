@@ -51,6 +51,7 @@ namespace Common
         ContractDeclined = 48,
         ItemsAdded = 49,
         AchievmentUnlocked = 50,
+        ReceivePlayerMark = 51,
 
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19

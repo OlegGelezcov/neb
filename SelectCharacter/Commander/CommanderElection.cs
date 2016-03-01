@@ -71,6 +71,7 @@ namespace SelectCharacter.Commander {
         }
 
         private void RestartVotingPertiod() {
+            log.InfoFormat("restart voting called");
             //send new commander and send notification and log message to users
             ComputeNewCommander();
             //setting new voting date
@@ -98,6 +99,7 @@ namespace SelectCharacter.Commander {
             }
 
             if(maxVoicesCandidate != null ) {
+                log.InfoFormat("set commander from voting results = {0}", maxVoicesCandidate.characterID);
                 //change race status in race commands service
                 application.RaceCommands.SetRaceStatus(race, RaceStatus.Commander, maxVoicesCandidate.login, maxVoicesCandidate.gameRefID, maxVoicesCandidate.characterID);
 

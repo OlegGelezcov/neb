@@ -20,6 +20,8 @@ namespace Nebula.Game.Contracts {
                     return new ItemDeliveryContract(hash, owner);
                 case ContractCategory.foundItem:
                     return new FoundItemContract(hash, owner);
+                case ContractCategory.killPlayer:
+                    return new KillPlayerContract(hash, owner);
                 default: {
                         s_Log.ErrorFormat("not exist contract catgeory: {0}", category);
                         return null;

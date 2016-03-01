@@ -43,9 +43,12 @@ namespace Nebula.Game.Components {
                 }
 
                 shiftState.OnKeyDown(Time.curtime());
+                nebulaObject.properties.SetProperty((byte)PS.ShiftPressed, shiftState.keyPressed);
 
             } else {
                 shiftState.OnKeyUp();
+                nebulaObject.properties.SetProperty((byte)PS.ShiftPressed, shiftState.keyPressed);
+
             }
         }
 

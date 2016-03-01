@@ -44,6 +44,16 @@ namespace Nebula.Game.Components {
             m_SpeedDetail.SetAccelerationEffect(GetShiftSpeed(m_SpeedDetail.total) - m_SpeedDetail.total);
         }
 
+        public override float speed {
+            get {
+                var total =  base.speed;
+                if (nebulaObject.IsPlayer()) {
+                    UpdateSpeedProperties(total);
+                }
+                return total;
+            }
+        }
+
         private float GetSpeedWithPassiveBonus(float inputSpeed) {
             if (m_PassiveBonuses != null && m_PassiveBonuses.speedTier > 0) {
                 inputSpeed *= (1.0f + m_PassiveBonuses.speedBonus);
@@ -60,6 +70,7 @@ namespace Nebula.Game.Components {
 
         public override void Update(float deltaTime) {
             base.Update(deltaTime);
+            log.InfoFormat("linear speed after update = {0}", props.GetProperty((byte)PS.CurrentLinearSpeed));
         }
 
         public Hashtable GetSpeedDetail() {

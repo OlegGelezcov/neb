@@ -322,6 +322,8 @@ namespace ServerClientCommon {
         RESIST_BonusesAdd = 308,
         RESIST_PassiveBonusesAdd = 309,
 
-        ShipParamName = 310
+        ShipParamName = 310,
+        PrevId = 311,
+        PrevType = 312
     }
 }

@@ -73,11 +73,19 @@ namespace SelectCharacter.Characters {
                 var character = player.Data.GetCharacter(characterID);
 
                 bool result = mApplication.RaceCommands.SetRaceStatus(character.Race, (RaceStatus)raceStatus, player.Data.Login.ToLower(), gameRefID, characterID);
+
+                if(result) {
+                    character.raceStatus = raceStatus;
+                }
+
+                
                 log.InfoFormat("set race status {0} to race = {1}, login = {2}, gameRefID = {3}, character ID = {4}, result = {5}",
                     (RaceStatus)raceStatus, (Race)(byte)character.Race, player.Data.Login, gameRefID, characterID, result);
 
                 mApplication.SendRaceStatusChanged(gameRefID, characterID, raceStatus);
                 SendCharacterUpdateToClient(player);
+
+                mCache.SaveModified(mApplication.DB);
 
                 return true;
             }

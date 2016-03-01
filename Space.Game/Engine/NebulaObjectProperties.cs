@@ -9,7 +9,7 @@ using System.Text;
 namespace Nebula.Engine {
     public class NebulaObjectProperties : NebulaBehaviour {
 
-        public ConcurrentDictionary<byte, object> properties { get; private set; }
+        private ConcurrentDictionary<byte, object> properties { get; set; }
         public int propertiesRevision { get; private set; }
 
 

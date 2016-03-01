@@ -735,6 +735,21 @@ namespace Nebula.Game.Components {
             var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
             ReceiveEvent(eventData, sendParameters);
         }
+
+        public void ReceivePlayerMark(Hashtable hash) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.ReceivePlayerMark,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
         //===================================================================
         public override int behaviourId {
             get {

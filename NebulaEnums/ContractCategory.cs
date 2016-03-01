@@ -5,6 +5,7 @@
         unknown = 3,
         killNPCGroup = 4,
         itemDelivery = 5,
-        foundItem = 6
+        foundItem = 6,
+        killPlayer = 7
     }
 }

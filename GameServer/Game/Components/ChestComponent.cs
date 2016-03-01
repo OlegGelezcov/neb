@@ -1,6 +1,7 @@
 ﻿using Common;
 using ExitGames.Logging;
 using GameMath;
+using Nebula.Balance;
 using Nebula.Engine;
 using Nebula.Game.Pets;
 using Nebula.Inventory.DropList;
@@ -92,8 +93,13 @@ namespace Nebula.Game.Components {
             }
 
 
+            int groupCount = 1;
 
-            float remapWeight = GetColorRemapWeight(damager);
+            NebulaObject playerObject = GetNebulaObject(damager);
+
+            groupCount = GetGroupCount(playerObject);
+
+            float remapWeight = GetColorRemapWeight(playerObject, groupCount);
 
             if (dropList == null) {
                 //generate single weapon
@@ -109,7 +115,9 @@ namespace Nebula.Game.Components {
                     d,
                     newObjects,
                     remapWeight,
-                    dropList);
+                    dropList,
+                    damager.level,
+                    groupCount);
             }
             //generate single scheme
 
@@ -133,11 +141,13 @@ namespace Nebula.Game.Components {
             Difficulty difficulty,
             ConcurrentDictionary<string, ServerInventoryItem> newObjects,
             float remapWeight,
-            ItemDropList dropList) {
+            ItemDropList dropList,
+            int playerLevel,
+            int groupCount) {
 
             foreach(var dropItem in dropList.items) {
                 int count;
-                if(dropItem.Roll(out count)) {
+                if(dropItem.Roll(out count, groupCount, playerLevel)) {
                     if(count > 0 ) {
                         switch(dropItem.type) {
                             case InventoryObjectType.Weapon: {
@@ -251,17 +261,42 @@ namespace Nebula.Game.Components {
             newObjects.TryAdd(mat.Id, new ServerInventoryItem(mat, count));
         }
 
-        private float GetColorRemapWeight(DamageInfo damager) {
-            if(damager.DamagerType == ItemType.Avatar) {
-                var item = nebulaObject.mmoWorld().GetItem((it) => {
-                    if (it.Type == (byte)ItemType.Avatar && it.Id == damager.DamagerId) {
-                        return true;
+        private NebulaObject GetNebulaObject(DamageInfo damager) {
+            NebulaObject playerObject;
+            if(nebulaObject.mmoWorld().TryGetObject((byte)ItemType.Avatar, damager.DamagerId, out playerObject)) {
+                return playerObject;
+            }
+            return null;
+        }
+
+        private int GetGroupCount(NebulaObject playerObject) {
+            int groupCount = 1;
+            if(playerObject != null ) {
+                var playerCharacter = playerObject.GetComponent<PlayerCharacterObject>();
+
+                if (playerCharacter != null) {
+                    if (playerCharacter.hasGroup) {
+                        if (playerCharacter.group.memberCount > 1) {
+                            groupCount = playerCharacter.group.memberCount;
+                        }
                     }
-                    return false;
-                });
-                if(item != null ) {
-                    return item.GetComponent<PassiveBonusesComponent>().coloredLootBonus;
                 }
+            }
+            return groupCount;
+        }
+
+        private float GetColorRemapWeight(NebulaObject playerObject,  int groupCount) {
+            if(playerObject != null ) {
+                var passiveBonuses = playerObject.GetComponent<PassiveBonusesComponent>();
+                float remap = 0.0f;
+                if (passiveBonuses != null) {
+                    remap += passiveBonuses.coloredLootBonus;
+                }
+
+                var character = playerObject.GetComponent<PlayerCharacterObject>();
+
+                remap += BalanceFormulas.RemapParameter(character.level, groupCount);
+                return Mathf.Clamp01(remap);
             }
             return 0f;
         }

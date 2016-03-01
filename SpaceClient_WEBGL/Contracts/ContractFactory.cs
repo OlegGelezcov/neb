@@ -18,6 +18,8 @@ namespace Nebula.Client.Contracts {
                     return new ItemDeliveryContract(hash);
                 case ContractCategory.foundItem:
                     return new FoundItemContract(hash);
+                case ContractCategory.killPlayer:
+                    return new KillPlayerContract(hash);
                 default:
                     return null;
             }

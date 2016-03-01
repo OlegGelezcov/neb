@@ -14,10 +14,11 @@ namespace Nebula.Client.Contracts {
 #if UP
         public ContractReward(UPXElement element) : this(new UniXMLElement(element)) {
         }
-#endif
+#else
 
         public ContractReward(XElement element) : this(new UniXMLElement(element)) {
         }
+#endif
 
         public ContractReward(UniXMLElement element) {
             rewardType = (ContractRewardType)System.Enum.Parse(typeof(ContractRewardType), element.element.GetString("type"));

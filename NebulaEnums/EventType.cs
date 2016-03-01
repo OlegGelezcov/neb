@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Common {
+﻿namespace Common {
     public enum EventType : int {
         GameObjectDeath = 1,
         None = 2,
@@ -11,6 +6,7 @@ namespace Common {
         TriggerEnter = 4,
         TriggerStay = 5,
         EnterStation = 6,
-        InventoryItemsAdded = 7
+        InventoryItemsAdded = 7,
+        PlayerKilled = 8
     }
 }
