@@ -15,6 +15,7 @@ namespace Nebula.Inventory.Objects {
             m_Id = id;
             m_Binded = binded;
             m_Skin = skin;
+            isNew = true;
             var dump = GetInfo();
         }
 
@@ -24,6 +25,16 @@ namespace Nebula.Inventory.Objects {
 
 
         #region IInventoryObject
+        public bool isNew {
+            get;
+            private set;
+        }
+        public void ResetNew() {
+            isNew = false;
+        }
+        public void SetNew(bool val) {
+            isNew = val;
+        }
         public bool binded {
             get {
                 return m_Binded;
@@ -76,6 +87,7 @@ namespace Nebula.Inventory.Objects {
         public Hashtable GetInfo() {
             Hashtable hash = InventoryUtils.ItemHash(Id, Level, ObjectColor.white, Type, (PlacingType)placingType, binded, splittable);
             hash.Add((int)SPC.Skin, skin);
+            hash.Add((int)SPC.IsNew, isNew);
             m_Raw = hash;
             return hash;
         }
@@ -85,6 +97,7 @@ namespace Nebula.Inventory.Objects {
             m_Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             m_Binded = info.GetValue<bool>((int)SPC.Binded, false);
             m_Skin = info.GetValue<string>((int)SPC.Skin, string.Empty);
+            isNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
 
         #endregion

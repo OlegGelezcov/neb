@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Common;
+using Nebula.Drop;
 using Nebula.Engine;
 using Nebula.Game.Components;
-using Common;
 using Space.Game;
+using System.Collections;
 
 namespace Nebula.Game.Skills {
     public class Skill_000007DA : SkillExecutor {
@@ -57,9 +54,11 @@ namespace Nebula.Game.Skills {
 
                 float curTime = Time.curtime();
 
-                float damage = sourceWeapon.GetDamage(false) * dmgMult;
+                float damage = sourceWeapon.GetDamage(false).totalDamage * dmgMult;
 
-                InputDamage inpDamage = new InputDamage(source, damage);
+                WeaponDamage wd = new WeaponDamage(sourceWeapon.myWeaponBaseType);
+                wd.SetBaseTypeDamage(damage);
+                InputDamage inpDamage = new InputDamage(source, wd);
                 foreach(var pair in items) {
                     if(pair.Value.Id != targetObject.Id ) {
                         pair.Value.GetComponent<DamagableObject>().ReceiveDamage(inpDamage);

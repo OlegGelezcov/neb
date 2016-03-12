@@ -18,6 +18,10 @@ namespace Nebula.Client.Inventory.Objects {
         public Workshop workshop { get; private set; }
         public bool binded { get; private set; }
 
+        public float rocketDamage { get; private set; }
+        public float laserDamage { get; private set; }
+        public float acidDamage { get; private set; }
+        public WeaponBaseType baseType { get; private set; }
 
 
 
@@ -25,7 +29,10 @@ namespace Nebula.Client.Inventory.Objects {
             return rawHash;
         }
 
-
+        public bool isNew {
+            get;
+            private set;
+        }
 
 
         public void ParseInfo(Hashtable info) {
@@ -42,6 +49,13 @@ namespace Nebula.Client.Inventory.Objects {
             this.baseCritChance = (float)info.GetValueFloat((int)SPC.CritChance);
             workshop = (Workshop)(byte)(int)info.GetValueInt((int)SPC.Workshop, (int)Workshop.DarthTribe);
             binded = info.GetValueBool((int)SPC.Binded, binded);
+            isNew = info.GetValueBool((int)SPC.IsNew);
+
+            rocketDamage = info.GetValueFloat((int)SPC.RocketDamage);
+            laserDamage = info.GetValueFloat((int)SPC.LaserDamage);
+            acidDamage = info.GetValueFloat((int)SPC.AcidDamage);
+
+            baseType = (WeaponBaseType)info.GetValueInt((int)SPC.WeaponBaseType, (int)WeaponBaseType.Rocket);
         }
 
         public WeaponInventoryObjectInfo() { }

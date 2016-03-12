@@ -11,11 +11,13 @@ namespace Nebula.Database {
         public List<string> visitedZones { get; set; }
         public bool isNewDocument { get; set; }
         public int points { get; set; }
+        public List<string> loreRecords { get; set; }
 
         public void Set(AchievmentSave save) {
             variables = save.variables;
             visitedZones = save.visitedZones;
             points = save.points;
+            loreRecords = save.loreRecords;
             isNewDocument = false;
         }
 
@@ -26,7 +28,10 @@ namespace Nebula.Database {
             if(visitedZones == null ) {
                 visitedZones = new List<string>();
             }
-            return new AchievmentSave(variables, visitedZones, points);
+            if(loreRecords == null ) {
+                loreRecords = new List<string>();
+            }
+            return new AchievmentSave(variables, visitedZones, points, loreRecords);
         }
     }
 }

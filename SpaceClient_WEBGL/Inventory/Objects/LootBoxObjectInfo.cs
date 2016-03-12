@@ -1,5 +1,6 @@
 ﻿using Common;
 using ExitGames.Client.Photon;
+using Nebula.Client.Utils;
 using ServerClientCommon;
 
 namespace Nebula.Client.Inventory.Objects {
@@ -9,6 +10,10 @@ namespace Nebula.Client.Inventory.Objects {
             ParseInfo(hash);
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
 
         public string dropList {
             get;
@@ -65,6 +70,7 @@ namespace Nebula.Client.Inventory.Objects {
             level = info.GetValue<int>((int)SPC.Level, 0);
             binded = info.GetValue<bool>((int)SPC.Binded, true);
             dropList = info.GetValue<string>((int)SPC.DropList, string.Empty);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
     }
 }

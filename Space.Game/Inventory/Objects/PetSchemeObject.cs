@@ -16,6 +16,8 @@ namespace Nebula.Inventory.Objects {
             m_Id = id;
             m_Binded = binded;
             m_Color = petColor;
+            isNew = true;
+
             m_Raw = GetInfo();
         }
 
@@ -24,6 +26,16 @@ namespace Nebula.Inventory.Objects {
         }
 
         #region IInventoryObject
+        public bool isNew {
+            get;
+            private set;
+        }
+        public void ResetNew() {
+            isNew = false;
+        }
+        public void SetNew(bool val) {
+            isNew = val;
+        }
         public bool binded {
             get {
                 return m_Binded;
@@ -76,6 +88,7 @@ namespace Nebula.Inventory.Objects {
         public Hashtable GetInfo() {
             Hashtable hash = InventoryUtils.ItemHash(Id, Level, Pet2ObjColor(), Type, (PlacingType)placingType, binded, splittable);
             hash.Add((int)SPC.PetColor, (int)petColor);
+            hash.Add((int)SPC.IsNew, isNew);
             m_Raw = hash;
             return hash;
         }
@@ -85,6 +98,7 @@ namespace Nebula.Inventory.Objects {
             m_Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             m_Binded = info.GetValue<bool>((int)SPC.Binded, false);
             m_Color = (PetColor)info.GetValue<int>((int)SPC.PetColor, (int)PetColor.gray);
+            isNew = info.GetValue<bool>((int)SPC.IsNew, false);
         } 
         #endregion
 

@@ -1,4 +1,5 @@
 ﻿using Common;
+using Nebula.Drop;
 using Nebula.Engine;
 
 namespace Nebula.Game.Components {
@@ -9,7 +10,7 @@ namespace Nebula.Game.Components {
 
     public struct InputDamage {
         private NebulaObject m_Damager;
-        private float m_Damage;
+        private WeaponDamage m_Damage;
 
         private Workshop m_Workshop;
         private int m_Level;
@@ -17,7 +18,7 @@ namespace Nebula.Game.Components {
         private DamageParams m_DamageParams;
 
 
-        public InputDamage(NebulaObject source, float damage, DamageParams damageParams = null) {
+        public InputDamage(NebulaObject source, WeaponDamage damage, DamageParams damageParams = null) {
             m_Damager = source;
             m_Damage = damage;
             if(m_Damager) {
@@ -43,7 +44,7 @@ namespace Nebula.Game.Components {
             m_DamageParams = damageParams;
         }
 
-        public void SetDamage(float dmg) {
+        public void SetDamage(WeaponDamage dmg) {
             m_Damage = dmg;
         }
 
@@ -53,7 +54,7 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public float damage {
+        public WeaponDamage damage {
             get {
                 return m_Damage;
             }

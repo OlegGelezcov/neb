@@ -53,6 +53,7 @@ namespace Nebula.Database {
                      isNewDocument = isNew,
                      variables = new Hashtable(),
                      visitedZones = new System.Collections.Generic.List<string>(),
+                     loreRecords = new System.Collections.Generic.List<string>(),
                      points = 0
                 };
                 achievmentDocuments.Save(document);

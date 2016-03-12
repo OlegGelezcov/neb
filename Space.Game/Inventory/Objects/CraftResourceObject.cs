@@ -8,11 +8,13 @@ namespace Nebula.Inventory.Objects {
         private string m_Id;
         private Hashtable m_Raw;
         private ObjectColor m_Color;
+        private bool m_IsNew;
 
         public CraftResourceObject(string id, ObjectColor color, bool inBinded = false) {
             m_Id = id;
             binded = inBinded;
             m_Color = color;
+            m_IsNew = false;
         }
 
         public CraftResourceObject(Hashtable hash) {
@@ -71,6 +73,19 @@ namespace Nebula.Inventory.Objects {
             }
         }
 
+        public bool isNew {
+            get {
+                return m_IsNew;
+            }
+        }
+
+        public void ResetNew() {
+            m_IsNew = false;
+        }
+        public void SetNew(bool val) {
+            m_IsNew = val;
+        }
+
         public Hashtable GetInfo() {
             m_Raw = new Hashtable {
                 { (int)SPC.Id, Id },
@@ -79,7 +94,8 @@ namespace Nebula.Inventory.Objects {
                 { (int)SPC.PlacingType, placingType },
                 { (int)SPC.Binded, binded },
                 { (int)SPC.Splittable, splittable },
-                { (int)SPC.Color, (int)(byte)color}
+                { (int)SPC.Color, (int)(byte)color},
+                { (int)SPC.IsNew, isNew }
             };
             return m_Raw;
         }
@@ -89,6 +105,7 @@ namespace Nebula.Inventory.Objects {
             m_Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
             m_Color = (ObjectColor)(byte)info.GetValue<int>((int)SPC.Color, (int)(byte)ObjectColor.white);
+            m_IsNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
     }
 }

@@ -17,6 +17,7 @@ using GameMath;
 using ExitGames.Logging;
 using Nebula.Game.Bonuses;
 using Nebula.Database;
+using Nebula.Drop;
 
 namespace Nebula.Game.Components {
 
@@ -665,7 +666,8 @@ namespace Nebula.Game.Components {
             return false;
         }
 
-        public float ModifyDamage(DamagableObject target, float inputDamage) {
+        public WeaponDamage ModifyDamage(DamagableObject target, WeaponDamage inputDamage) {
+
             if(nebulaObject.Type == (byte)ItemType.Avatar) {
                 if(HasSkill(m43AID)) {
                     var skill = GetSkillById(m43AID);
@@ -674,7 +676,8 @@ namespace Nebula.Game.Components {
                         if(target.health < target.maximumHealth * m43a.hpPc ) {
                             if(false == Mathf.Approximately(m43a.dmgMult, 0f)) {
                                 log.InfoFormat("modify damage on {0}% with skill 43A", m43a.dmgMult);
-                                return inputDamage * m43a.dmgMult;
+                                inputDamage.Mult(m43a.dmgMult);
+                                return inputDamage;
                             }
                         }
                     }

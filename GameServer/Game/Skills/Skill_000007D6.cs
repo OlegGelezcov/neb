@@ -33,7 +33,7 @@ namespace Nebula.Game.Skills {
             var message = source.MmoMessage();
             var targetObject = source.Target().targetObject;
 
-            var healValue = weapon.GetDamage(false) * healMult;
+            var healValue = weapon.GetDamage(false).totalDamage * healMult;
             var firstHeal = weapon.Heal(targetObject, healValue, skill.data.Id);
             message.SendHeal(Common.EventReceiver.OwnerAndSubscriber, firstHeal);
 

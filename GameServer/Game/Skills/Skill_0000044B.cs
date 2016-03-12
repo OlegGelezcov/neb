@@ -28,8 +28,8 @@ namespace Nebula.Game.Skills {
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {
-                var timedDamage = sourceWeapon.GenerateDamage() * timedDmgMult / timedDmgTime;
-                targetDamagable.SetTimedDamage(timedDmgTime, timedDamage);
+                var timedDamage = sourceWeapon.GenerateDamage().totalDamage * timedDmgMult / timedDmgTime;
+                targetDamagable.SetTimedDamage(timedDmgTime, timedDamage, sourceWeapon.myWeaponBaseType);
                 sourceMessage.SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
                 return true;
             } else {

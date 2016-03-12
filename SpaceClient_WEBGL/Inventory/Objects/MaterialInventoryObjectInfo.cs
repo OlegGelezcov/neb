@@ -18,6 +18,11 @@ namespace Nebula.Client.Inventory.Objects {
             this.ParseInfo(info);
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+
         public string Name {
             get {
                 return this.name;
@@ -78,6 +83,7 @@ namespace Nebula.Client.Inventory.Objects {
             this.materialType = (MaterialType)(int)info.GetValueInt((int)SPC.MaterialType, (int)MaterialType.ore.toByte());
             this.templateId = info.GetValueString((int)SPC.Template);
             binded = info.GetValueBool((int)SPC.Binded);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
 
         public bool HasColor() {

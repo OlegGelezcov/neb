@@ -5,13 +5,15 @@ using Space.Game;
 using GameMath;
 using Nebula.Engine;
 using System;
+using Nebula.Drop;
+using Common;
 
 namespace Nebula.Game.Components {
     public class SimpleWeapon : BaseWeapon, IDatabaseObject {
 
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
         private float mOptimalDistance;
-        private float mDamage;
+        private float m_DamageVal;
         private float mCooldown;
         private bool mUseTargetHP = false;
         private float mTargetHPPercent = 0f;
@@ -19,16 +21,27 @@ namespace Nebula.Game.Components {
         private bool mReady = true;
         private PlayerBonuses mBonuses;
         private IDatabaseComponentData mInitData;
+        private RaceableObject m_Raceable;
 
         public override void Start() {
             base.Start();
             mBonuses = GetComponent<PlayerBonuses>();
+            m_Raceable = GetComponent<RaceableObject>();
+        }
+
+        public override WeaponBaseType myWeaponBaseType {
+            get {
+                if(m_Raceable != null ) {
+                    return CommonUtils.Race2WeaponBaseType((Race)m_Raceable.race);
+                }
+                return WeaponBaseType.Rocket;
+            }
         }
 
         public void Init(SimpleWeaponComponentData data) {
             mInitData = data;
             mOptimalDistance = data.optimalDistance;
-            mDamage = data.damage;
+            m_DamageVal = data.damage;
             mCooldown = data.cooldown;
             mUseTargetHP = data.useTargetHPForDamage;
             mTargetHPPercent = data.targetHPPercentDamage;
@@ -52,18 +65,18 @@ namespace Nebula.Game.Components {
         }
 
 
-        public override float GetDamage(bool isCrit) {
+        public override WeaponDamage GetDamage(bool isCrit) {
             if (!mUseTargetHP) {
-                return mDamage;
+                return new WeaponDamage(Common.WeaponBaseType.Rocket, m_DamageVal, 0, 0);
             } else {
                 if(!cachedTarget.targetObject) {
-                    return 0f;
+                    return new WeaponDamage(Common.WeaponBaseType.Rocket);
                 }
                 var targetDamagable = cachedTarget.targetObject.GetComponent<DamagableObject>();
                 if(!targetDamagable) {
-                    return 0f;
+                    return new WeaponDamage(Common.WeaponBaseType.Rocket);
                 }
-                return targetDamagable.maximumHealth * mTargetHPPercent;
+                return new WeaponDamage(Common.WeaponBaseType.Rocket, targetDamagable.maximumHealth * mTargetHPPercent, 0, 0);
             }
         }
 

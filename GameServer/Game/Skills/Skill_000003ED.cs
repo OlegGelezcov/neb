@@ -33,7 +33,8 @@ namespace Nebula.Game.Skills {
                     if(mastery) {
                         dmgPerSecTime *= 2;
                     }
-                    targ.GetComponent<DamagableObject>().SetTimedDamage(dmgPerSecTime, hit.ActualDamage * dmgPerSecPC);
+
+                    targ.GetComponent<DamagableObject>().SetTimedDamage(dmgPerSecTime, hit.actualDamage.totalDamage * dmgPerSecPC, sourceWeapon.myWeaponBaseType);
                 }
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;

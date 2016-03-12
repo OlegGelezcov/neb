@@ -20,9 +20,21 @@
 
         public Vector3(float[] tuple)
         {
-            mx = tuple[0];
-            my = tuple[1];
-            mz = tuple[2];
+            if (tuple.Length > 0) {
+                mx = tuple[0];
+            } else {
+                mx = 0;
+            }
+            if (tuple.Length > 1) {
+                my = tuple[1];
+            } else {
+                my = 0;
+            }
+            if (tuple.Length > 2) {
+                mz = tuple[2];
+            } else {
+                mz = 0;
+            }
         }
 
         public Vector3(float x, float y, float z)

@@ -6,6 +6,7 @@
 //
 namespace Space.Game {
     using Common;
+    using Nebula.Drop;
     using ServerClientCommon;
     using System.Collections;
 
@@ -16,7 +17,7 @@ namespace Space.Game {
         public  bool hitAllowed;
         public  bool isCritical;
 
-        private float actualDamage;
+        private WeaponDamage m_ActualDamage;
         private bool gunsOverheatted;
         private bool weaponBlocked;
         private string errorMessageId;
@@ -40,9 +41,9 @@ namespace Space.Game {
             this.errorMessageId = errorMsgId;
         }
 
-        public void SetActualDamage(float actualDamage)
+        public void SetActualDamage(WeaponDamage actualDamage)
         {
-            this.actualDamage = actualDamage;
+            m_ActualDamage = actualDamage;
         }
 
         public void SetGunsOverheatted(bool overheatted)
@@ -55,9 +56,11 @@ namespace Space.Game {
             this.weaponBlocked = weaponBlocked;
         }
 
-        public float ActualDamage
+        public WeaponDamage actualDamage
         {
-            get { return this.actualDamage; }
+            get {
+                return m_ActualDamage;
+            }
         }
 
         public bool GunsOverheatted
@@ -96,13 +99,17 @@ namespace Space.Game {
         public Hashtable GetInfo() {
             return new Hashtable {
                 {(int)SPC.IsHitted, isHitted },
-                { (int)SPC.ActualDamage, ActualDamage},
+                { (int)SPC.ActualDamage, actualDamage.totalDamage },
                 { (int)SPC.OverheatingGuns, GunsOverheatted},
                 { (int)SPC.FireBlocked, IsWeaponBlocked},
                 { (int)SPC.FireAllowed, hitAllowed},
                 { (int)SPC.IsCritical, isCritical },
                 { (int)SPC.HitProb, hitProb},
-                { (int)SPC.ErrorMessageId, ErrorMessageId}
+                { (int)SPC.ErrorMessageId, ErrorMessageId},
+                { (int)SPC.RocketDamage, actualDamage.rocketDamage },
+                { (int)SPC.LaserDamage, actualDamage.laserDamage },
+                { (int)SPC.AcidDamage, actualDamage.acidDamage },
+                { (int)SPC.WeaponBaseType, (int)actualDamage.baseType }
             };
         }
     }

@@ -25,6 +25,11 @@ namespace Nebula.Client.Inventory.Objects {
             this.ParseInfo(info);
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+
         public string Id {
             get { return this.id; }
         }
@@ -90,7 +95,8 @@ namespace Nebula.Client.Inventory.Objects {
                 {(int)SPC.ProductionSpeed, this.ProductionSpeed },
                 {(int)SPC.ProtectionInterval, this.ProtectionInterval },
                 {(int)SPC.Health, this.Health },
-                {(int)SPC.Binded, binded }
+                {(int)SPC.Binded, binded },
+                {(int)SPC.IsNew, isNew }
             };
         }
 
@@ -104,6 +110,7 @@ namespace Nebula.Client.Inventory.Objects {
             this.protectionInterval = info.GetValueFloat((int)SPC.ProtectionInterval);
             this.health = info.GetValueFloat((int)SPC.Health);
             binded = info.GetValueBool((int)SPC.Binded);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
 
         public bool HasColor() {

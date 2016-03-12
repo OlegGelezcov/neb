@@ -1,9 +1,11 @@
 ﻿using Common;
 using ExitGames.Logging;
+using Nebula.Drop;
 using Nebula.Engine;
 using Nebula.Game.Components;
 using Space.Game;
 using System.Collections;
+using System;
 
 namespace Nebula.Game.Pets {
     public class PetWeapon : BaseWeapon {
@@ -13,6 +15,7 @@ namespace Nebula.Game.Pets {
         private float m_Timer;
         private PlayerTarget m_Target;
         private MmoMessageComponent m_Message;
+        private RaceableObject m_Race;
 
         public override void Awake() {
             base.Awake();
@@ -23,11 +26,21 @@ namespace Nebula.Game.Pets {
             m_Pet = GetComponent<PetObject>();
             m_Target = GetComponent<PlayerTarget>();
             m_Message = GetComponent<MmoMessageComponent>();
+            m_Race = GetComponent<RaceableObject>();
 
             if(m_Pet) {
                 if(m_Pet.info != null ) {
                     m_Timer = m_Pet.info.Cooldown(nebulaObject.resource.petParameters.cooldown);
                 }
+            }
+        }
+
+        public override WeaponBaseType myWeaponBaseType {
+            get {
+                if(m_Race != null ) {
+                    return CommonUtils.Race2WeaponBaseType((Race)m_Race.race);
+                }
+                return WeaponBaseType.Rocket;
             }
         }
 
@@ -48,7 +61,7 @@ namespace Nebula.Game.Pets {
                     ResetTimer();
                 }
             } else if(m_Pet.info.damageType == Common.WeaponDamageType.heal) {
-                Hashtable heal = Heal(m_Target.targetObject, GetDamage(false));
+                Hashtable heal = Heal(m_Target.targetObject, GetDamage(false).totalDamage);
                 m_Message.SendHeal(Common.EventReceiver.ItemSubscriber, heal);
                 ResetTimer();
             }
@@ -66,13 +79,24 @@ namespace Nebula.Game.Pets {
             return base.Fire(targetObject, out hit, skillID, damageMult, forceShot, useDamageMultSelfAsDamage);
         }
 
-        public override float GetDamage(bool isCrit) {
+        //private WeaponBaseType myWeaponBaseType {
+        //    get {
+        //        if(m_Race != null ) {
+        //            return CommonUtils.Race2WeaponBaseType((Race)m_Race.race);
+        //        }
+        //        return WeaponBaseType.Rocket;
+        //    }
+        //}
+
+        public override WeaponDamage GetDamage(bool isCrit) {
             if(m_Pet) {
                 if(m_Pet.info != null ) {
-                    return m_Pet.info.Damage(nebulaObject.resource.petParameters.damage, nebulaObject.resource.Leveling);
+                    WeaponDamage dmg = new WeaponDamage(myWeaponBaseType);
+                    dmg.SetBaseTypeDamage(m_Pet.info.Damage(nebulaObject.resource.petParameters.damage, nebulaObject.resource.Leveling));
+                    return dmg;
                 }
             }
-            return 0f;
+            return new WeaponDamage(myWeaponBaseType);
         }
 
         public override Hashtable Heal(NebulaObject targetObject, float healValue, int skillID = -1) {
@@ -116,7 +140,7 @@ namespace Nebula.Game.Pets {
             if(m_Timer > 0f ) {
                 m_Timer -= deltaTime;
             }
-            nebulaObject.properties.SetProperty((byte)PS.Damage, GetDamage(false));
+            nebulaObject.properties.SetProperty((byte)PS.Damage, GetDamage(false).totalDamage);
             if (m_Pet) {
                 nebulaObject.properties.SetProperty((byte)PS.LightCooldown, m_Pet.info.Cooldown(nebulaObject.resource.petParameters.cooldown));
             }

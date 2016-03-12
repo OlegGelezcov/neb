@@ -44,6 +44,11 @@ namespace Nebula.Client {
 
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+
         public bool IsBelongToSet {
             get {
                 return (false == string.IsNullOrEmpty(set));
@@ -94,6 +99,7 @@ namespace Nebula.Client {
             Hashtable craftMaterialsHash = info.GetValueHash((int)SPC.CraftMaterials);
             this.craftMaterials = craftMaterialsHash.toDict<string, int>();                                                     //23
             binded = info.GetValue<bool>((int)SPC.Binded, false);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
 
         public bool HasColor() {

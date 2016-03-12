@@ -21,7 +21,7 @@ namespace Nebula.Game.Skills {
             float resistTime = skill.GetFloatInput("resist_time");
 
 
-            float damage = source.Weapon().GetDamage(false);
+            float damage = source.Weapon().GetDamage(false).totalDamage;
             float healing = damage * healMult;
 
             bool mastery = RollMastery(source);

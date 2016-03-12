@@ -9,6 +9,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System;
 using ServerClientCommon;
+using Nebula.Drop;
 
 namespace Nebula.Game.Components {
 
@@ -25,6 +26,11 @@ namespace Nebula.Game.Components {
         private float m_Distance = 0.0f;
         private readonly List<string> m_VisitedZones = new List<string>();
 
+        /// <summary>
+        /// all founded in space lore records
+        /// </summary>
+        private List<string> m_FoundedLoreRecords = new List<string>();
+
         public override int behaviourId {
             get {
                 return (int)ComponentID.Achievments;
@@ -35,6 +41,19 @@ namespace Nebula.Game.Components {
             get {
                 return m_Points;
             }
+        }
+
+        public bool FoundLoreRecord(string id) {
+            if (!string.IsNullOrEmpty(id)) {
+                if (!m_FoundedLoreRecords.Contains(id)) {
+                    m_FoundedLoreRecords.Add(id);
+                    if (m_Message != null) {
+                        m_Message.FoundLoreRecord(id);
+                    }
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override void Start() {
@@ -77,6 +96,12 @@ namespace Nebula.Game.Components {
             }
 
             m_Points = save.points;
+
+            m_FoundedLoreRecords = save.loreRecords;
+            if(m_FoundedLoreRecords == null ) {
+                m_FoundedLoreRecords = new List<string>();
+            }
+
             m_Loaded = true;
         }
 
@@ -88,7 +113,7 @@ namespace Nebula.Game.Components {
 
         public AchievmentSave GetSave() {
             Hashtable hash = GetInfo();
-            return new AchievmentSave(hash[(int)SPC.Variables] as Hashtable, m_VisitedZones, points);
+            return new AchievmentSave(hash[(int)SPC.Variables] as Hashtable, m_VisitedZones, points, m_FoundedLoreRecords);
         }
 
         public Hashtable GetInfo() {
@@ -97,9 +122,14 @@ namespace Nebula.Game.Components {
                 hash.Add(kvp.Key, kvp.Value);
             }
 
+            if(m_FoundedLoreRecords == null ) {
+                m_FoundedLoreRecords = new List<string>();
+            }
+
             Hashtable info = new Hashtable {
                 {(int)SPC.Points, points },
-                {(int)SPC.Variables, hash }
+                {(int)SPC.Variables, hash },
+                {(int)SPC.LoreRecords, m_FoundedLoreRecords.ToArray() }
             };
             return info;
         }
@@ -208,8 +238,8 @@ namespace Nebula.Game.Components {
             AddVariable("total_captured", 1);
         }
 
-        public void OnMakeDamage(float val) {
-            AddVariable("total_damage", (int)val);
+        public void OnMakeDamage(WeaponDamage val) {
+            AddVariable("total_damage", (int)val.totalDamage);
         }
 
         public void OnHeal(float val ) {
@@ -252,11 +282,13 @@ namespace Nebula.Game.Components {
         public Hashtable variables { get; private set; }
         public List<string> visitedZones { get; private set; }
         public int points { get; private set; }
+        public List<string> loreRecords { get; private set; }
 
-        public AchievmentSave(Hashtable hash, List<string> visZones, int points) {
+        public AchievmentSave(Hashtable hash, List<string> visZones, int points, List<string> lorRecs) {
             variables = hash;
             visitedZones = visZones;
             this.points = points;
+            loreRecords = lorRecs;
         }
     }
 }

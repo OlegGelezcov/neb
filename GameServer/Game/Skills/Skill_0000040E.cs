@@ -13,7 +13,7 @@ namespace Nebula.Game.Skills {
 
             float healMult = skill.GetFloatInput("heal_mult");
             var weapon = source.Weapon();
-            float damage = weapon.GetDamage(false);
+            float damage = weapon.GetDamage(false).totalDamage;
             float healValue = damage * healMult;
 
             bool mastery = RollMastery(source);

@@ -7,6 +7,7 @@ namespace Nebula.Inventory.Objects {
     public class FortificationInventoryObject : IInventoryObject{
         public int race { get; private set; }
         private Hashtable mRaw;
+        private bool m_IsNew;
 
         public FortificationInventoryObject(Hashtable info) {
             ParseInfo(info);
@@ -15,6 +16,7 @@ namespace Nebula.Inventory.Objects {
             Id = inID;
             race = inRace;
             binded = inBinded;
+            m_IsNew = true;
         }
 
         public bool binded {
@@ -61,7 +63,17 @@ namespace Nebula.Inventory.Objects {
         public void Bind() {
             binded = true;
         }
-
+        public bool isNew {
+            get {
+                return m_IsNew;
+            }
+        }
+        public void ResetNew() {
+            m_IsNew = false;
+        }
+        public void SetNew(bool val) {
+            m_IsNew = val;
+        }
         public Hashtable GetInfo() {
             return new Hashtable {
                 { (int)SPC.Id, Id },
@@ -71,7 +83,8 @@ namespace Nebula.Inventory.Objects {
                 { (int)SPC.PlacingType, placingType },
                 { (int)SPC.Binded, binded },
                 { (int)SPC.Race, race },
-                { (int)SPC.Splittable, splittable }
+                { (int)SPC.Splittable, splittable },
+                { (int)SPC.IsNew, isNew }
             };
         }
 
@@ -80,6 +93,7 @@ namespace Nebula.Inventory.Objects {
             Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
             race = info.GetValue<int>((int)SPC.Race, (int)(byte)Race.None);
+            m_IsNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
     }
 }

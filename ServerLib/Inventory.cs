@@ -31,6 +31,14 @@ namespace Common
             }
         }
 
+        public void ResetNew() {
+            foreach(var pFiltered in _items) {
+                foreach(var pItem in pFiltered.Value) {
+                    pItem.Value.Object.ResetNew();
+                }
+            }
+        }
+
         /// <summary>
         /// Return all items dictionary in inventory
         /// </summary>
@@ -71,6 +79,7 @@ namespace Common
             T item = default(T);
             if (TryGetItem(obj.Type, obj.Id, out item)) {
                 item.Add(count);
+                item.Object.SetNew(true);
                 return true;
             }
             else
@@ -81,10 +90,12 @@ namespace Common
                         T nItem = new T();
                         nItem.Set(obj, count);
                         _items[obj.Type].Add(obj.Id, nItem);
+                        nItem.Object.SetNew(true);
                     }
                     else {
                         T nItem = new T();
                         nItem.Set(obj, count);
+                        nItem.Object.SetNew(true);
                         _items.Add(obj.Type, new Dictionary<string, T> { { obj.Id, nItem } });
                     }
                     return true;
@@ -98,6 +109,7 @@ namespace Common
             T item = default(T);
             if (TryGetItem(type, id, out item)) {
                 item.Remove(count);
+                item.Object.ResetNew();
                 if (false == item.Has) {
                     _items[type].Remove(item.Object.Id);
                 }

@@ -11,6 +11,7 @@ using ExitGames.Logging;
 using Nebula.Engine;
 using Nebula.Server.Components;
 using Space.Game;
+using Nebula.Drop;
 
 namespace Nebula.Game.Components {
     public class NotShipDamagableObject : DamagableObject, IDatabaseObject {
@@ -67,14 +68,15 @@ namespace Nebula.Game.Components {
             base.Update(deltaTime);
         }
 
-        protected virtual float ModifyDamage(float damage) {
+        protected virtual WeaponDamage ModifyDamage(WeaponDamage damage) {
             return damage;
         }
 
         public override InputDamage ReceiveDamage(InputDamage inputDamage) {
             InputDamage damageFromBase = base.ReceiveDamage(inputDamage);
             if (!nebulaObject ) {
-                damageFromBase.SetDamage(0f);
+                damageFromBase.damage.ClearAllDamages();
+                //damageFromBase.SetDamage(0f);
                 return damageFromBase;
             }
             nebulaObject.SendMessage(ComponentMessages.InCombat);
@@ -83,29 +85,32 @@ namespace Nebula.Game.Components {
                 if(isFortification) {
                     log.InfoFormat("fortification ignored damage at start [blue]");
                 }
-                damageFromBase.SetDamage(0f);
+                //damageFromBase.SetDamage(0f);
+                damageFromBase.damage.ClearAllDamages();
                 return damageFromBase;
             }
             if (god) {
                 log.InfoFormat("[{0}]: Bot if GOD, damage ignored [blue]", (nebulaObject.world as MmoWorld).Zone.Id);
-                damageFromBase.SetDamage(0f);
+                //damageFromBase.SetDamage(0f);
+                damageFromBase.damage.ClearAllDamages();
                 return damageFromBase;
             }
 
             if(mBonuses) {
                 if(mBonuses.isImmuneToDamage) {
                     log.InfoFormat("Has bonus to ignore damage... [blue]");
-                    damageFromBase.SetDamage(0.0f);
+                    //damageFromBase.SetDamage(0.0f);
+                    damageFromBase.damage.ClearAllDamages();
                 }
             }
 
             damageFromBase.SetDamage(ModifyDamage(damageFromBase.damage));
             damageFromBase.SetDamage(AbsorbDamage(damageFromBase.damage));
 
-            SubHealth(damageFromBase.damage);
+            SubHealth(damageFromBase.damage.totalDamage);
 
             if (damageFromBase.hasDamager) {
-                AddDamager(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.damage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race);
+                AddDamager(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.damage.totalDamage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race);
             }
 
             //if (mEventedObject != null) {

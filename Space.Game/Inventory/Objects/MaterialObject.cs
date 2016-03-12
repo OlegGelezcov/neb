@@ -18,6 +18,7 @@ namespace Space.Game.Inventory.Objects
         private int level;
         private Workshop workshop;
         private Hashtable mRaw;
+        private bool m_IsNew;
 
         public bool binded { get; private set; } = false;
 
@@ -30,6 +31,7 @@ namespace Space.Game.Inventory.Objects
             this.materialType = MaterialType.ore;
             this.name = string.Empty;
             this.templateId = id;
+            m_IsNew = true;
         }
 
         public MaterialObject(string id, Workshop workshop, int level, MaterialData data)
@@ -40,6 +42,7 @@ namespace Space.Game.Inventory.Objects
             this.materialType = data.Type;
             this.name = data.Name;
             this.templateId = data.Id;
+            m_IsNew = true;
         }
 
         public MaterialObject(string id, Workshop workshop, int level, MaterialType materialType, string name, string templateId) {
@@ -49,6 +52,7 @@ namespace Space.Game.Inventory.Objects
             this.materialType = materialType;
             this.name = name;
             this.templateId = templateId;
+            m_IsNew = true;
         }
 
         public IInventoryObject splittedCopy {
@@ -124,8 +128,17 @@ namespace Space.Game.Inventory.Objects
                 return true;
             }
         }
-
-
+        public bool isNew {
+            get {
+                return m_IsNew;
+            }
+        }
+        public void ResetNew() {
+            m_IsNew = false;
+        }
+        public void SetNew(bool val) {
+            m_IsNew = val;
+        }
 
         public Hashtable GetInfo()
         {
@@ -140,6 +153,7 @@ namespace Space.Game.Inventory.Objects
             result.Add((int)SPC.PlacingType, placingType);
             result.Add((int)SPC.Binded, binded);
             result.Add((int)SPC.Splittable, splittable);
+            result.Add((int)SPC.IsNew, isNew);
             return result;
         }
 
@@ -153,6 +167,7 @@ namespace Space.Game.Inventory.Objects
             this.materialType = (MaterialType)info.GetValue<byte>((int)SPC.MaterialType, MaterialType.ore.toByte());
             this.templateId = info.GetValue<string>((int)SPC.Template, string.Empty);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
+            m_IsNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
     }
 }

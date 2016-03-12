@@ -1,0 +1,857 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<strings>
+  <string key="err_duplicate_contract_category" en="You can't take more than 1 contract of this type at the same time." ru="Вы не можете принять более одного контракта данной категории одновременно." />
+  <string key="err_contract_gen" en="Error while taking a contract. Try later." ru="Ошибка получения контракта. Попробуйте позже" />
+  <string key="err_no_contract" en="At this moment there are no available contracts.Try later." ru="В данный момент нет доступных контрактов этой категории. Попробуйте позже." />
+  <string key="err_unhandled" en="Unprocessed error: {0}" ru="Необработанная ошибка: {0}" />
+  <string key="err_no_proposed" en="Offered contract is not found" ru="Предложенный контракт не найден" />
+  <string key="err_pcnf" en="Offered contract is not found" ru="Предложенный контракт не найден" />
+  <string key="err_ac" en="Error while taking a contract" ru="Ошибка получения контракта" />
+  <string key="ct001_name" en="Attack" ru="Нападение" />
+  <string key="ct001_accept" en="В системе [world] замечен [group]. В донесении указан след одного корабля, но шансы встретить одинокого преступника невелики. Условия контракта предусматривают уничтожение противника в связи с нарушением им границ и представляемой опасностью для обитателей системы. Дополнительная информация: [group] - представитель одной из наиболее сильных и многочисленных преступных групп обитаемого космоса. Члены группы агрессивны, жестоки, в переговоры не вступают. Находятся вне действия правил и законов во всех известных системах." ru="В системе [world] замечен [group]. В донесении указан след одного корабля, но шансы встретить одинокого преступника невелики. Условия контракта предусматривают уничтожение противника в связи с нарушением им границ и представляемой опасностью для обитателей системы. Дополнительная информация: [group] - представитель одной из наиболее сильных и многочисленных преступных групп обитаемого космоса. Члены группы агрессивны, жестоки, в переговоры не вступают. Находятся вне действия правил и законов во всех известных системах." />
+  <string key="ct001_hint" en="Destroy [count] ships [group] in the system [world]" ru="Уничтожить [count] кораблей противника ([group]) в системе [world]" />
+  <string key="ct001_complete" en="Enemy ship group is destroyed. No Losses. The report of this event is delivered to base." ru="Группа вражеских кораблей уничтожена. Потерь нет. Отчёт о произошедшем доставлен на базу." />
+  <string key="ct002_name" en="Space plague" ru="Космическая чума" />
+  <string key="ct002_accept" en="The outbreak of space plague is recorded in the system [world]. Need to check what is happened, if needed, clear the district, by destroying everybody [group]. Additional information: Space plague is general and most long-living incurable illness in the history of all races. The reasons of its emergence aren't found out, that makes impossible the creation of a vaccine, development of prevention and different ways of protection." ru="Зафиксирована вспышка космической чумы в системе [world]. Необходимо провести проверку произошедшего и, при необходимости, зачистить местность: каждый [group] должен быть уничтожен. Дополнительная информация: Космическая чума является общей и самой долгоживущей неизлечимой болезнью в истории всех рас. Причины её возникновения не обнаружены, что делает невозможным создание вакцины, разработку профилактики и иных способов защиты." />
+  <string key="ct002_hint" en="Destroy [count] ships [group] in the system [world]" ru="Уничтожить [count] кораблей противника ([group]) в системе [world]" />
+  <string key="ct002_complete" en="The center of infection is suppressed, there is no danger to the system. All ships, which underwent infection with space plague are destroyed." ru="Очаг заражения подавлен, опасности для системы не представляет. Все корабли, подвергшиеся заражению космической чумой, уничтожены." />
+  <string key="ct003_name" en="Infected break" ru="Прорыв Заражённых" />
+  <string key="ct003_accept" en="In the system [world] there was a break of the ship group[group]. The ships need to be destroyed, as all of them are the uncontrollable centers of an illness spread and bear danger to everything alive in the system." ru="В системе [world] произошёл прорыв группы кораблей, на каждом из них есть минимум один [group]. Корабли необходимо уничтожить, поскольку все они являются неконтролируемыми очагами распространения болезни и несут опасность всему живому в системе. Дополнительная информация: У инфицированных космической чумой наблюдается моментальное и необоснованное повышение агрессивности, затем - полная потеря разума. Не имея возможности контролировать своё поведение, Заражённые представляют смертельную опасность для окружающих." />
+  <string key="ct003_hint" en="Destroy [count] ships [group] in the system [world]" ru="Уничтожить [count] кораблей противника ([group]) в системе [world]" />
+  <string key="ct003_complete" en="Circumstances of a ship group emergence, bearing space plague are investigated. As the basic was proposed of incomplete infection at which the second phase of an illness doesn't come, and the infected creatures keep partial ability of analysis and synthesis." ru="Обстоятельства появления группы кораблей, несущих космическую чуму, выясняются. В качестве основного выдвинуто предложение о неполном заражении, при котором вторая фаза болезни не наступает, и инфицированные существа сохраняют частичную способность к анализу и синтезу." />
+  <string key="ct004_name" en="Conspirators" ru="Заговорщики" />
+  <string key="ct004_accept" en="The scout-ship made a jump by incorrect coordinates and on the place of appearance found unknown base, then it was immediately attacked by a group of ships [group]. Before destruction he managed to send the help signal. It is necessary to check the  coordinates, specified by it in the system [world] and suppress any resistance.Additional information:[group] - inside enemies of the race, conspirators, directing their forces for destruction of similar species" ru="Корабль-разведчик совершил прыжок по неверно заданным координатам и на месте своего появления обнаружил неопознанную базу, после чего был незамедлительно атакован группой кораблей, на всех знак - [group]. Перед уничтожением он успел послать сигнал о помощи. Необходимо проверить указанные им координаты в системе [world] и подавить любое сопротивление. Дополнительная информация: [group] - внутренний враг расы, один из заговорщиков, направляющих свои силы на уничтожение себе подобных." />
+  <string key="ct004_hint" en="Destroy [count] enemy ships ([group]) in the system [world]" ru="Уничтожить [count] кораблей противника ([group]) в системе [world]" />
+  <string key="ct004_complete" en="The base belonged to the conspirators supporting strengthening of military operations for the purpose of the fastest mutually destruction of the most part of leaders and troops of the race. Resistance is suppressed, the base of conspirators is destroyed." ru="База принадлежала заговорщикам, выступающим за усиление боевых действий с целью скорейшего взаимоуничтожения большей части лидеров и войск расы. Сопротивление подавлено, база заговорщиков уничтожена." />
+  <string key="ct005_name" en="Unacceptable progressiveness" ru="Неприемлемая прогрессивность" />
+  <string key="ct005_accept" en="Observers reported about emergence of a group of the ships, belonging [group]. To the [group] relate equally in all areas of space and system [world] won't become an exception - arrived ships have to be destroyed. Additional information: According postulates [group], all conflicts and misunderstandings can be solved the only way - interracial selection and making of general descendants. Biological association is equally unacceptable for all races, and from secret approval of kriptizid's leaders, mankind and borguzand, everybody who is related to Stuori, death is pronounced." ru="Наблюдатели сообщили о появлении группы кораблей, принадлежащих [group]. К [group] относятся одинаково во всех областях космоса и система [world] не станет исключением - пришедшие корабли должны быть уничтожены. Дополнительная информация: Согласно постулатам [group], все конфликты и непонимания можно решить единственным способом - межрасовой селекцией и выведением общих потомков. Биологическое объединение является в равной степени неприемлемым для всех рас, и с негласного одобрения лидеров криптизидов, человечества и боргу'зандов, всем, кто имеет отношение к Стуори, вынесен заочный смертный приговор." />
+  <string key="ct005_hint" en="Destroy [count] enemy ships ([group]) in the system [world]" ru="Уничтожить [count] кораблей противника ([group]) в системе [world]" />
+  <string key="ct005_complete" en="Allegedly, Stuori's appearance is connected with the next wave of settling of system. Interest, which is presented by newcomers to system,can be easily explained: Stuori needs followers and genetic material. It is both simplest to receive in the most populated systems." ru="Предположительно, появление Стуори связано с очередной волной заселения системы. Интерес, который представляют вновь прибывшие в систему, легко объясним: Стуори нужны последователи и генетический материал. И то, и другое проще всего получить в наиболее заселённых системах." />
+  <string key="ct006_name" en="Conspirators" ru="Дезертиры" />
+  <string key="ct006_accept" en="Strengthening of military operations was reflected on the system [world] - patrol marked emergence of enemy group. Each ship of the group - [group] also shouldn't be neither in this system, nor in any another. They are occupied with search of a safe place, and it is necessary to prevent them, having completely destroyed their group. Additional information: The traitors who self-willedally left fighting ranks all-consuming thirst of life directs, they fear to lose it, make rash and illegal acts that leads to deserved punishment - death." ru="Усиление военных действий отразилось на системе [world] - патруль засек появление вражеской группы. Каждый корабль группы - [group] и не должен находиться ни в этой системе, ни в какой-либо другой. Они заняты поиском безопасного места, и необходимо помешать им, полностью уничтожив их группу. Дополнительная информация: Изменниками, самовольно покинувшими боевые ряды, руководит всепоглощающая жажда жизни, они страшатся потерять её, совершают необдуманные и противоправные поступки, что приводит к заслуженному наказанию - смерти." />
+  <string key="ct006_hint" en="Destroy [count] enemy ships ([group]) in the system [world]" ru="Уничтожить [count] кораблей противника ([group]) в системе [world]" />
+  <string key="ct006_complete" en="Due to the deserters increasштп in numberб it is recommended to strengthen defense and to carry out regular inspections of fighting capacity of security groups and the patrols." ru="В связи с увеличением числа дезертиров рекомендуется усилить оборону и проводить регулярные проверки боеспособности охранных групп и патрулей." />
+  <!--Contract on delivery items....-->
+  <string key="ct010_name" en="Replenishment of stocks" ru="Восполнение запасов" />
+  <string key="ct010_accept" en="A station in the system [world] needs planned replenishment of stocks. All needed stuff is delivered by the ships of  transport fleet, however requested by the sattion's employees [item] treats as category of subjects of increased danger and it has to be transported separately. It is needed to receive and bring it to the system, observing necessary precautionary measures." ru="Станция в системе [world] нуждается в плановом пополнении запасов. Всё необходимое доставляется силами кораблей транспортного флота, однако запрошенный работниками станции [item] относится к категории предметов повышенной опасности и должен перевозиться отдельно. Его нужно получить и доставить в систему, соблюдая необходимые меры предосторожности." />
+  <string key="ct010_hint" en="Deliver [item] to the station in the system [world]" ru="Доставить [item] на станцию в системе [world]" />
+  <string key="ct010_complete" en="Freight is delivered to the station. Transportation was successfull,transportation rules weren't violated. At present moment freight is in a separated room, where it will undergo a number of tests, then it will be available for work." ru="Груз доставлен на станцию. Транспортировка прошла успешно, правила перевозки не нарушались. На данный момент груз находится в отдельном помещении, где пройдёт ряд проверок, после чего будет доступен для работы." />
+  <string key="ct011_name" en="Necessary equipment" ru="Необходимое оборудование" />
+  <string key="ct011_accept" en="Time is suitable for thorough studying of untouched earlier areas in the system [world]. Number of the scientists, who are on the station in system, becomes more, and their inquiries also grow. Scientists are perfectly equipped, but for the solution of some tasks, standard equipment isn't enough and there is a need for using of the unique - such as [item] and similar to it." ru="Подошло время для досконального изучения нетронутых ранее областей в системе [world]. Количество учёных, находящихся на станции в системе, становится всё больше, и их запросы также растут. Учёные отлично оснащены, но для решения некоторых задач стандартного оборудования недостаточно и появляется необходимость в использовании уникального - такого как [item] и ему подобного." />
+  <string key="ct011_hint" en="Deliver[item] on station in the system [world]" ru="Доставить [item] на станцию в системе [world]" />
+  <string key="ct011_complete" en="Delivery of freight was successfull, its further movements in system are assumed by the transport ship, attributed to station. It will transport the working with the equipment scientists also." ru="Доставка груза прошла успешно, его дальнейшие перемещения по системе берёт на себя транспортный корабль, приписанный к станции. Он же будет перевозить работающих с оборудованием учёных." />
+  <string key="ct012_name" en="Trophie" ru="Трофей" />
+  <string key="ct012_accept" en="Emergence of pirates group is recorded. The group is completely destroyed by the patrol ships,no losses, as a result of fighting collision was received [item] - rare and rather valuable trophy. It is needed to be delivered to the station [world] - the equipment which is there in the best way suitable for studying of items of this kind." ru="Зафиксировано появление группы пиратов. Группа полностью уничтожена патрульными кораблями, потерь нет, в результате боевого столкновения был получен [item] - редкий и достаточно ценный трофей. Его необходимо доставить на станцию в системе [world] - находящееся там оборудование наилучшим образом подходит для изучения предметов подобного типа." />
+  <string key="ct012_hint" en="Deliver [item] to station in the system [world]" ru="Доставить [item] на станцию в системе [world]" />
+  <string key="ct012_complete" en="Studying of the delivered freight goes according to the plan, visible deviations are not revealed. Traces of kinetic impact on surfaces are minimum and don't influence on functionality." ru="Изучение доставленного груза проходит по плану, видимых отклонений не обнаружено. Следы кинетического воздействия на поверхности минимальны и не влияют на функциональность." />
+  <string key="ct043_name" en="Hierarchy of the crime world" ru="Иерархия преступного мира" />
+  <string key="ct043_accept" en="Location of the system [world], and its arrangement concerning other systems leads to the increased quantity of tthe crime elements, stopping on its planets. Among them there is one of the leaders of a large group - [group]. Total violations quantity, which he made, counts as four death sentences. It is necessary to find it, and to carry out sentences. Additional information: [group] - one of honorarable titles in the crime world hierarchy. Strong and dangerous criminal, possessing solid combat experience can deserve it." ru="Местонахождение системы [world], и её расположение относительно других систем приводит к повышенному количеству преступных элементов, останавливающихся на её планетах. Среди них один из главарей крупной группировки - [group]. Общее количество нарушений, которые он совершил, тянет на четыре смертных приговора. Необходимо найти его, и привести приговоры в исполнение. Дополнительная информация: [group] - одно из почётных званий в иерархии преступного мира. Его может заслужить сильный и опасный преступник, обладающий солидным опытом боевых действий." />
+  <string key="ct043_hint" en="Destroy the espessially dangerous criminal, known as [group], in the system [world]" ru="Уничтожить особо опасного преступника, известного как [group], в системе [world]" />
+  <string key="ct043_complete" en="The crime world has difficult branched hierarchy, and the liquidated leader - not the only laws's violator. And the higher the rank occupied by the criminal, the bigger loss of their organization will be caused by its destruction." ru="Преступный мир имеет сложную разветвлённую иерархию, и ликвидированный главарь - не единственный нарушитель законов. И чем выше занимаемое преступником звание, тем больший урон их организации нанесёт его уничтожение." />
+  <string key="ct044_name" en="Military tribunal" ru="Военный трибунал" />
+  <string key="ct044_accept" en="Information about location of the criminal arrived, known as[group]. It is known for non-compliance to the orders, numerous violations and the subsequent to them escape, that is equal to the death sentence. Is in system [group],  acts alone, but it doesn't do it less dangerous. Additional information: Aara, the Security service, Gukh'ol's Punishers - special kriptizid groups, people and borgu'zand, into whose duties is included the performance of similar protection functions of populated systems from the outside invasion. Increased responsibility imposes a number of requirements, that's why the fighters of these groups are one of the most trained and informed in the military environment." ru="Поступила информация о местонахождении преступника, известного как [group]. Он известен неподчинением приказам, неоднократными нарушениями и последующим за ними побегом, что равносильно смертному приговору. Находится в системе [group], действует в одиночку, но это не делает его менее опасным. Дополнительная информация: Аарой, Служба безопасности, Каратели Гух'ола - особые отряды криптизидов, людей и боргу'зандов, в чьи обязанности входит выполнение схожих функций по охране заселённых систем от вторжения извне. Повышенная ответственность накладывает ряд требований, поэтому бойцы этих отрядов являются одними из наиболее тренированных и информированных в военной среде." />
+  <string key="ct044_hint" en="Destroy the espessially dangerous criminal, known as [group], in the system [world]" ru="Уничтожить особо опасного преступника, известного как [group], в системе [world]" />
+  <string key="ct044_complete" en="Target was destroyed, no losses. As a recommendation was proposed on fuller disclosure of the biography of especially dangerous criminals having the military past is made. The detailed indication of their skills and opportunities will increase the efficiency of any type of interaction, at a meeting with them." ru="Цель уничтожена, потерь нет. В качестве рекомендации выдинуто предложение о более полном раскрытии биографии особо опасных преступников, имеющих военное прошлое. Подробное указание их навыков и возможностей повысит эффективность любого типа взаимодействия, при встрече с ними." />
+  <string key="ct045_name" en="The tired out beast" ru="Загнанный зверь" />
+  <string key="ct045_accept" en="Discovered [group] - one of the espessially dangerous criminals, wanted on all star systems. Location - [world]. On its destruction it is necessary to be careful - it is not alone and it is well protected. Additional information: In the ranks of Stuori it is possible to meet representatives of all three races. They call themselves far-sighted and progressive inhabitants of the modern world, however their purpose and ways used for its achievement cause categorical rejection from the colleagues. Stuori are destroyed at any opportunity, rather often - the real hunting can be arranged, trying to get leaders of their community." ru="Обнаружен [group] - один из особо опасных преступников, разыскиваемых по всем звёздным системам. Местонахождение - [world]. При его уничтожении необходимо соблюдать осторожность - он не один и хорошо охраняется. Дополнительная информация: В рядах Стуори можно встретить представителей всех трёх рас. Они называют себя дальновидными и прогрессивными жителями современного мира, однако их цель и используемые для её достижения способы вызывают категорическое неприятие со стороны собратьев. Стуори уничтожают при любом удобном случае, нередко - устраивают настоящую охоту, пытаясь достать лидеров их сообщества." />
+  <string key="ct045_hint" en="Destroy the espessially dangerous criminal, known as [group], in the system [world]" ru="Уничтожить особо опасного преступника, известного как [group], в системе [world]" />
+  <string key="ct045_complete" en="Stuori lost one of their leaders, but whether it was a considerable loss for their organization or not - unknown. Despite all power of the operating prospecting groups, information on Stuori's main group remains to be extremely poor." ru="Стуори потеряли одного из своих лидеров, но стала ли значительной для их организации подобная потеря - неизвестно. Не смотря на всю мощь действующих разведывательных групп, информация о костяке Стуори остаётся крайне скудной." />
+  <string key="ct046_name" en="Supplier" ru="Поставщик" />
+  <string key="ct046_accept" en="Work of scouts revealed some aspects of smugglers activity and could find one of her representatives. [group] placed in the system [world], it is necessary to intercept it in time until he left the system, and destroy it. Additional information: The Darkfaced - unofficial association which is engaged with smuggling and trading items, information, living creatures in general and dissassembled types - everything that can be valued and is inaccessible to be received in usual case. Pay big attention to secret measures, work through figureheads, preferring to lose in profit, but not to open the structure of their organization." ru="Работа разведчиков выявила некоторые аспекты деятельности контрабандистов и смогла обнаружить одного из её представителей. [group] находится в системе [world], нужно успеть перехватить его, пока он не покинул систему, и уничтожить. Дополнительная информация: Тёмноликие - неофициальное объединение, занимающееся контрабандой и торговлей предметами, информацией, живыми существами в целом и разобранном видах - всем, что может представлять ценность и недоступно для получения в обычном порядке. Уделяют большое внимание конспиративным мерам, действуют через подставных лиц, предпочитая потерять в прибыли, но не раскрыть структуру своей организации." />
+  <string key="ct046_hint" en="Destroy especially dangerous criminal,known as [group], in the system [world]" ru="Уничтожить особо опасного преступника, известного как [group], в системе [world]" />
+  <string key="ct046_complete" en="Тёмноликие - мастера по части сокрытия своих действий, но они не всесильны: допущенные ими ошибки и некоторые косвенные данные говорят о том, что уничтожение цели нанесло ощутимый урон сети контрабандистов в этом секторе." ru="Тёмноликие - мастера по части сокрытия своих действий, но они не всесильны: допущенные ими ошибки и некоторые косвенные данные говорят о том, что уничтожение цели нанесло ощутимый урон сети контрабандистов в этом секторе." />
+  <!--Explore location contracts-->
+  <string key="ct013_name" en="New deposits" ru="Новые месторождения" />
+  <string key="ct013_accept" en="The system [world] belongs to a group of the low-studied perspective systems. Some data indicates possible existence of large reserves of fresh water in it. It is necessary to investigate the specified area in the system and to deliver the received data to the next base. Additional information: Potentially perspective systems - systems in which existence of valuable items can be, such as: rudy asteroids; planets, full of minerals, and planets, suitable for life; power sources of planetary scale. Any system can become potentially perspective, in which there is at least one unknown area." ru="Система [world] относится к группе малоизученных перспективных систем. Некоторые данные указывают на возможное наличие в ней больших запасов пресной воды. Необходимо исследовать указанную область в системе и доставить полученные сведения на ближайшую базу. Дополнительная информация: Потенциально перспективные системы - системы, в которых предполагается наличие ценных объектов, таких как: рудые астероиды; планеты, полные полезных ископаемых, и планеты, пригодные для жизни; источники энергии планетарного масштаба. Потенциально перспективной может стать любая система, в которой есть хоть одна неизученная область." />
+  <string key="ct013_hint" en="Gather information about the low-experienced area [location] in the system [world]" ru="Собрать информацию о малоизведанной области [location] в системе [world]" />
+  <string key="ct013_complete" en="Small, not costing development asteroids are found in the specified area; reserves of fresh water and large-scale mineral deposits are not revealed." ru="В указанной области найдены мелкие, не стоящие разработки астероиды; запасов пресной воды и крупных месторождений полезных ископаемых не обнаружено." />
+  <string key="ct014_name" en="Prophylactics" ru="Профилактика" />
+  <string key="ct014_accept" en="Over the system's planets [world] not so long ago the space plague spread. General infection was stopped, the centers of an illness were localized in short terms and destroyed. Now the system is under constant surveillance, and now came the time for check of its areas for existence of strains and possible recurrence. Additional information: Space plague - an illness to which any reasonable being is subject. First time it was found by kriptizids, long before human and borguzand races emergency. Since then and so far the outbreaks of plague are regularly registered in all territory of the habitable space." ru="По планетам системы [world] не так давно пронеслась космическая чума. Повальное заражение было остановлено, очаги болезни удалось локализовать в краткие сроки и уничтожить. Теперь система находится под постоянным надзором, и сейчас пришло время для проверки её областей на наличие штаммов и возможного рецидива. Дополнительная информация: Космическая чума - болезнь, которой подвержено любое разумное существо. Впервые была обнаружена криптизидами задолго до появления людской и боргу'зандской рас. С тех пор и до настоящего времени вспышки чумы регулярно регистрируются на всей территории обжитого космоса." />
+  <string key="ct014_hint" en="Gather the information about a low-experienced area [location] in the system [world]" ru="Собрать информацию о малоизведанной области [location] в системе [world]" />
+  <string key="ct014_complete" en="Illness centers aren't found. In the process of search it was succeeded to find the group of asteroids with raised content of ore. Samples are collected and delivered to the ship for studying." ru="Очаги болезни не обнаружены. В процессе поиска удалось найти группу астероидов с повышенным содержанием руды. Образцы собраны и доставлены на корабль для изучения." />
+  <string key="ct015_name" en="Patroling" ru="Патрулирование" />
+  <string key="ct015_accept" en="One of patrol groups needs replenishment -  ship, capable to carry out single raid and to gather data, without drawing excess attention. The ship needs to gather information, studied the area in the system [world]. Additional information: Patrol groups are related to armed forces and are the law enforcement bodies, ensuring safety of the space systems belonging to race. Generally their tasks are reduced to patrol of space objects, transition points, and also boundary systems even if they aren't property of race." ru="Один из патрульных отрядов нуждается в пополнении - корабле, способном провести одиночный рейд и собрать сведения, не привлекая лишнего внимания. Кораблю необходимо получить информацию, изучив область в системе [world]. Дополнительная информация: Патрульные отряды относятся к вооружённым силам и являются органами правопорядка, обеспечивающими безопасность принадлежащих расе космических систем. В основном, их задачи сводятся к патрулированию космических объектов, точек перехода, а также граничных систем, даже если они и не являются собственностью расы." />
+  <string key="ct015_hint" en="Gather information about the low-experienced area [location] in the system [world]" ru="Собрать информацию о малоизведанной области [location] в системе [world]" />
+  <string key="ct015_complete" en="The congestion of enemy forces on system's borders are observed. Their quantity and activity doesn't exceed admissible limits." ru="Наблюдается скопление вражеских сил на границах системы. Их количество и активность не превышает допустимых пределов." />
+  <string key="ct016_name" en="Inspection" ru="Инспекция" />
+  <string key="ct016_accept" en="The system [world] holds strategically important position, connects some trade and transport ways to one knot, and its loss endangers all star sector. In the past the system was exposed to be captured, but every time it was returned. It is necessary to visit [world] with unplanned inspection, to check defense capability and readiness for military operations. Additional information: Occupation of star systems - a power method of expansion of a vital space and the main mean of enrichment. It is characterized by a total destruction of all alive and hostile in system with the subsequent establishment of dictatorship in it. " ru="Система [world] занимает стратегически важное положение, связывает несколько торгово-транспортных путей в один узел, и её потеря ставит под удар весь звёздный сектор. В прошлом система подвергалась захвату, но каждый раз её удавалось отбить обратно. Необходимо посетить [world] с внеплановой инспекцией, проверить обороноспособность и готовность к боевым действиям. Дополнительная информация: Захват звёздных систем - силовой метод расширения жизненного пространства и основное средство обогащения. Характеризуется тотальным уничтожением всего живого и враждебного в системе с последующим установлением в ней диктатуры. " />
+  <string key="ct016_hint" en="Gather information about the low-experienced area [location] in the system [world]" ru="Собрать информацию о малоизведанной области [location] в системе [world]" />
+  <string key="ct016_complete" en="In system regular inspections are carried out, however all data specify that isn't enough of them. The system needs strengthening of defense and increasement inspection number, having preventive character. " ru="В системе проводятся регулярные проверки, однако все данные указывают на то, что их недостаточно. Система нуждается в усилении обороны и увеличении числа инспекций, носящих профилактический характер. " />
+  <string key="ct017_name" en="Reconnaissance" ru="Разведка" />
+  <string key="ct017_accept" en="The distress signal from the scout ship arrived, which is in the system [world]. It is necessary to visit system, find the ship and to give it any possible help. Additional information: Scouts - singles, investigating not studied star systems and space objects. The ships of scouts are equipped with various types of sensors, possibility of record and reservation of a large number of information." ru="Поступил сигнал бедствия с корабля-разведчика, находящегося в системе [world]. Необходимо посетить систему, найти корабль и оказать ему любую возможную помощь. Дополнительная информация: Разведчики - одиночки, исследующие неизученные звёздные системы и космические объекты. Корабли разведчиков в обязательном порядке оснащены различными типами сенсоров, возможностью записи и сохранения большого количества информации." />
+  <string key="ct017_hint" en="Gather information about the low-experienced area [location] in the system [world]" ru="Собрать информацию о малоизведанной области [location] в системе [world]" />
+  <string key="ct017_complete" en="Ship fragments are found, allegedly - the scout. Identification on a place is impossible. Fragments are sent to the next base for the detailed analysis." ru="Найдены фрагменты корабля, предположительно - разведчика. Идентификация на месте невозможна. Фрагменты отправлены на ближайшую базу для детального анализа." />
+  <string key="ct018_name" en="Secret mission" ru="Секретная миссия" />
+  <string key="ct018_accept" en="The researchers working in the system [world], came across the spectral radiation of extraordinary strong density. The head of mission assumes that the similar trace can lead to an artifact, and insists on detailed studying of area of the system, in which this radiation was recorded. Additional information:  disappeared civilizations - the civilizations which were allegedly existing for many thousands of years before emergence of human, borguzand and kriptizid races. Their search belongs to priority tasks as assumes receiving new knowledge which will allow to strengthen technical, information or other superiority over other races." ru="Исследователи, работающие в системе [world], наткнулись на спектральное излучение необычайно сильной плотности. Глава миссии предполагает, что подобный след может привести к артефакту, и настаивает на подробном изучении области системы, в которой было зафиксировано это излучение. Дополнительная информация: Исчезнувшие цивилизации - цивилизации, предположительно существовавшие за много тысяч лет до появления расы людей, боргу'зандов и криптизидов. Их поиск относится к приоритетным задачам, поскольку предполагает получение новых знаний, которые позволят усилить техническое, информационное или иное превосходство над другими расами." />
+  <string key="ct018_hint" en="Gather the information about the low-experienced area[location] in the system [world]" ru="Собрать информацию о малоизведанной области [location] в системе [world]" />
+  <string key="ct018_complete" en="In connection with the special status of mission all information is secret." ru="В связи с особым статусом миссии вся информация засекречена." />
+  <string key="ct001_1" en="Space pirate" ru="Космических пират" />
+  <string key="ct002_1" en="Infected" ru="Заражённый" />
+  <string key="ct003_1" en="Infected" ru="Заражённый" />
+  <string key="ct001_2" en="brbrbrbr" ru="brbrbrbr" />
+  <string key="ct043_1" en="Destroyes" ru="Сокрушитель" />
+  <string key="ct044_1" en="Commander-traitor" ru="Командир-предатель" />
+  <string key="ct045_1" en="Stuori's leader" ru="Лидер Стуори" />
+  <string key="ct046_1" en="Darkfaced" ru="Тёмноликий" />
+  <string key="ct013_1" en="UM 18" ru="UM 18" />
+  <string key="ct014_1" en="PKS 0044+030" ru="PKS 0044+030" />
+  <string key="ct015_1" en="MK 357" ru="MK 357" />
+  <string key="ct016_1" en="MSH 01-121" ru="MSH 01-121" />
+  <string key="ct017_1" en="B3 0225+389" ru="B3 0225+389" />
+  <string key="ct018_1" en="3C 95" ru="3C 95" />
+  <string key="contract_ready" en="Can be finished" ru="Можно сдать" />
+  <string key="contract_completed" en="Completed" ru="Выполнено" />
+  <string key="killnpcgroup_accepted" en="Destroyed: [count]" ru="Уничтожено: [count]" />
+  <string key="contract_declined" en="Declined, next can be taken after [time]" ru="Отменен, взять следующий можно через [time]" />
+  <string key="b_journal" en="Flight log" ru="Журнал" />
+  <string key="cm_nm" en="Contract: [contract]" ru="Контракт: [contract]" />
+  <string key="record_data" en="Process of the analysis and data recording: [pc]" ru="Процесс анализа и записи данных: [pc]" />
+  <string key="contract_stage_changed" en="The contract [name] was refreshed" ru="Контракт [name] обновлен" />
+  <string key="n_contract_accepted" en="The contract [name] was received" ru="Контракт [name] получен" />
+  <string key="n_contract_ready" en="The contract [name] can be finished" ru="Контракт [name] можно сдать" />
+  <string key="ci001_name" en="Personal token" ru="Личный жетон" />
+  <string key="ci002_name" en="Mesic strings" ru="Мезонные струны" />
+  <string key="ci003_name" en="Plasma PD-radiator" ru="Плазменный PD-излучатель" />
+  <string key="ci004_name" en="Memory crystal" ru="Кристалл памяти" />
+  <string key="ci005_name" en="Prototype of a laser rifle" ru="Прототип лазерной винтовки" />
+  <string key="ci006_name" en="Neutron generator" ru="Нейтронный генератор" />
+  <string key="ci007_name" en="Hybrid radiator" ru="Гибридный излучатель" />
+  <string key="ci008_name" en="Clamp quark field" ru="Фиксатор кварк-поля" />
+  <string key="ci009_name" en="Broadband modulator" ru="Широкополосной модулятор" />
+  <string key="ci010_name" en="Pulse controler" ru="Импульсный контроллер" />
+  <string key="ci011_name" en="Converter of alpha particles" ru="Преобразователь альфа-частиц" />
+  <string key="ci012_name" en="Vardor sample" ru="Образец вардора" />
+  <string key="ci013_name" en="Translocator" ru="Транслокатор" />
+  <string key="ci_desc" en="This item is needed for the completing of a contract. Deliver it by destination" ru="Этот предмет требуется для выполнения контракта. Доставьте его по назначению." />
+  <string key="type_contract_item" en="Item for a contract" ru="Предмет для контракта" />
+  <string key="ship_items_added" en="New items are added to the hold" ru="Новые предметы добавлены в трюм" />
+  <string key="ca001_name" en="PvP" ru="PvP" />
+  <string key="a001_name" en="Destroyer" ru="Разрушитель" />
+  <string key="a001_desc" en="Destroy [count] enemy ships  of other players" ru="Уничтожить [count] вражеских кораблей других игроков" />
+  <string key="ta001_name" en="Tease" ru="Задира" />
+  <string key="ta002_name" en="Gladiator" ru="Гладиатор" />
+  <string key="ta003_name" en="Dominator" ru="Доминатор" />
+  <string key="ta004_name" en="God of war" ru="Бог войны" />
+  <string key="a002_name" en="Defender" ru="Защитник" />
+  <string key="a002_desc" en="Destroy [count] enemy ships  of other players" ru="Уничтожить [count] вражеских кораблей в своей звездной системе" />
+  <string key="ta005_name" en="My system" ru="Моя система" />
+  <string key="ta006_name" en="Defender" ru="Защитник" />
+  <string key="ta007_name" en="Guard of the race" ru="Страж своей расы" />
+  <string key="a003_name" en="Space adventurer" ru="Космический авантюрист" />
+  <string key="a003_desc" en="Destroy [count] enemy ships of other okayers in the solar system" ru="Уничтожить [count] кораблей игроков в звездной системе другой расы" />
+  <string key="ta008_name" en="Aggressor" ru="Агрессор" />
+  <string key="ta009_name" en="Conqueror" ru="Захватчик" />
+  <string key="ta010_name" en="Завоеватель" ru="Завоеватель" />
+  <string key="a004_name" en="Repairing work" ru="Ремонтные работы" />
+  <string key="a004_desc" en="Repair the housing by [count]" ru="Отремонтировать обшивку на [count]" />
+  <string key="ta011_name" en="Панацея" ru="Панацея" />
+  <string key="a005_name" en="Destructive power" ru="Разрушительная мощь" />
+  <string key="a005_desc" en="Damage dealt to enemy's housing [count] points" ru="Повредить ошибку вражеских кораблей на [count] единиц" />
+  <string key="ta012_name" en="Bringer of death" ru="Несущий смерть" />
+  <string key="a006_name" en="Operability of engines" ru="Работоспособность двигателей" />
+  <string key="a006_desc" en="Fly over [count] NU" ru="Пролететь [count] NU" />
+  <string key="ta013_name" en="Strange" ru="Странник" />
+  <string key="ca002_name" en="System capturing" ru="Захват систем" />
+  <string key="a007_name" en="Expansion of possessions" ru="Расширение владений" />
+  <string key="a007_desc" en="Capture [count] star systems" ru="Захватить [count] звездных систем" />
+  <string key="ta014_name" en="The beginning conqueror" ru="Начинающий завоеватель" />
+  <string key="ta015_name" en="Мы никогда не остановимся" ru="Мы никогда не остановимся" />
+  <string key="ta016_name" en="Экспансия" ru="Экспансия" />
+  <string key="ca003_name" en="Craft" ru="Крафт" />
+  <string key="a008_name" en="Techsmith" ru="Технокузнец" />
+  <string key="a008_desc" en="Create [count] modules" ru="Создать [count] модулей" />
+  <string key="ta017_name" en="Technician" ru="Техник" />
+  <string key="ta018_name" en="Mechanic" ru="Механик" />
+  <string key="ta019_name" en="Shipbuilder" ru="Кораблестроитель" />
+  <string key="ca004_name" en="Resources gathering" ru="Сбор ресурсов" />
+  <string key="a009_name" en="Nebula miner" ru="Туманный рудокоп" />
+  <string key="a009_desc" en="Gather [count] ore units" ru="Добыть [count] единиц руды" />
+  <string key="ta020_name" en="Getter" ru="Добытчик" />
+  <string key="ta021_name" en="Miner" ru="Рудокоп" />
+  <string key="ta022_name" en="Miner" ru="Шахтер" />
+  <string key="a010_name" en="Drilling operations" ru="Буровые работы" />
+  <string key="a010_desc" en="Gather [count] nebula elements" ru="Добыть [count] небула-элементов" />
+  <string key="ta023_name" en="Ценитель элементов" ru="Ценитель элементов" />
+  <string key="ta024_name" en="Адепт элементов" ru="Адепт элементов" />
+  <string key="ta025_name" en="Мастер элементов" ru="Мастер элементов" />
+  <string key="ca005_name" en="PvE" ru="PvE" />
+  <string key="a011_name" en="Pirate fighter" ru="Истребитель пиратов" />
+  <string key="a011_desc" en="Destroy [count] ships of the Space pirate group" ru="Уничтожить [count] кораблей группы Космические пираты" />
+  <string key="ta026_name" en="Space pirates persecutor" ru="Преследователь Космических пиратов" />
+  <string key="ta027_name" en="Space pirates hunter" ru="Ловец Космических пиратов" />
+  <string key="ta028_name" en="Space pirates fighter" ru="Истребитель Космических пиратов" />
+  <string key="a012_name" en="O'Shali fighter" ru="Истребитель О’шали" />
+  <string key="a012_desc" en="Destroy [count] from O'Shali ship group" ru="Уничтожить [count] кораблей группы О'шали" />
+  <string key="ta029_name" en="O'Shali persecutor" ru="Преследователь О'шали" />
+  <string key="ta030_name" en="O'Shali hunter" ru="Ловец О'шали" />
+  <string key="ta031_name" en="O'Shali fighter" ru="Истребитель О'шали" />
+  <string key="a013_name" en="Llerey fighter" ru="Истребитель Ллерей" />
+  <string key="a013_desc" en="Destroy [count] ships of the Llerey group" ru="Уничтожить [count] кораблей группы Ллерей" />
+  <string key="ta032_name" en="Llerey persecutor" ru="Преследователь Ллерей" />
+  <string key="ta033_name" en="Llerey hunter" ru="Ловец Ллерей" />
+  <string key="ta034_name" en="Llerey fighter" ru="Истребитель Ллерей" />
+  <string key="ca006_name" en="Coalition" ru="Коалиция" />
+  <string key="a014_name" en="Member of the space society" ru="Член космического общества" />
+  <string key="a014_desc" en="Enter the coaliton" ru="Вступить в коалицию" />
+  <string key="ta035_name" en="Recruit" ru="Новобранец" />
+  <string key="a015_name" en="Important member of the space society" ru="Важный член космического общества" />
+  <string key="a015_desc" en="Get entitled as an officer in the coalition" ru="Получить звание офицера в коалиции" />
+  <string key="ta036_name" en="Карьерист" ru="Карьерист" />
+  <string key="a016_name" en="Flotilla expansion" ru="Расширение флотилии" />
+  <string key="a016_desc" en="Accept [count] persons to the coalition" ru="Принять [count] человек в коалицию" />
+  <string key="ta037_name" en="Это только начало" ru="Это только начало" />
+  <string key="ta038_name" en="Небольшой отряд" ru="Небольшой отряд" />
+  <string key="ta039_name" en="К бою готовы" ru="К бою готовы" />
+  <string key="ca007_name" en="Level" ru="Уровень" />
+  <string key="a017_name" en="Through asteroids and fragments" ru="Сквозь астероиды и обломки" />
+  <string key="a017_desc" en="Get to level [count]" ru="Достигнуть уровня [count]" />
+  <string key="ta040_name" en="Начало пути" ru="Начало пути" />
+  <string key="ta041_name" en="Закалённый боец" ru="Закалённый боец" />
+  <string key="ta042_name" en="Ветеран" ru="Ветеран" />
+  <string key="ca008_name" en="Credits" ru="Кредиты" />
+  <string key="a018_name" en="Galactic banker" ru="Галактический банкир" />
+  <string key="a018_desc" en="Earn [count] credits" ru="Заработать [count] кредитов" />
+  <string key="ta043_name" en="Торговец-новичок" ru="Торговец-новичок" />
+  <string key="ta044_name" en="Торговец-адепт" ru="Торговец-адепт" />
+  <string key="ta045_name" en="Торговец-эксперт" ru="Торговец-эксперт" />
+  <string key="ca009_name" en="Companions" ru="Спутники" />
+  <string key="a019_name" en="Rarities collector" ru="Собиратель редкостей" />
+  <string key="a019_desc" en="Find [count] neutron units" ru="Найти [count] единиц нейтрония" />
+  <string key="ta046_name" en="Сталкер-новичок" ru="Сталкер-новичок" />
+  <string key="ta047_name" en="Сталкер-адепт" ru="Сталкер-адепт" />
+  <string key="ta048_name" en="Сталкер-эксперт" ru="Сталкер-эксперт" />
+  <string key="a020_name" en="Constructor" ru="Конструктор" />
+  <string key="a020_desc" en="Change the quality of a companion to [count]" ru="Изменить качество одного из спутников до [count]" />
+  <string key="ta049_name" en="Конструктор" ru="Конструктор" />
+  <string key="ta050_name" en="Изобретатель" ru="Изобретатель" />
+  <string key="ta051_name" en="Инженер" ru="Инженер" />
+  <string key="ta052_name" en="Проектировщик" ru="Проектировщик" />
+  <string key="ta053_name" en="Специалист" ru="Специалист" />
+  <string key="ta054_name" en="Мастер" ru="Мастер" />
+  <string key="ca010_name" en="Race" ru="Раса" />
+  <string key="a021_name" en="Aspiration to the stars" ru="Стремление к звёздам" />
+  <string key="a021_desc" en="Become the race admiral [count] times" ru="Стать адмиралом расы [count] раз" />
+  <string key="a022_name" en="Leader of the race" ru="Лидер расы" />
+  <string key="a022_desc" en="Become the high-commander [count] times" ru="Стать главнокомандующим расы [count] раз" />
+  <string key="ta055_name" en="Zealous employee" ru="Ретивый служащий" />
+  <string key="ta056_name" en="Верный командир" ru="Верный командир" />
+  <string key="ta057_name" en="Полководец" ru="Полководец" />
+  <string key="ta058_name" en="Ведущий лидер" ru="Ведущий лидер" />
+  <string key="ta059_name" en="Предводитель" ru="Предводитель" />
+  <string key="ta060_name" en="Вождь" ru="Вождь" />
+  <string key="ca011_name" en="Contracts" ru="Контракты" />
+  <string key="a023_name" en="Galactic guard" ru="Галактический страж" />
+  <string key="a023_desc" en="Complete [count] contracts" ru="Завершить [count] контрактов" />
+  <string key="ta061_name" en="Наемник" ru="Наемник" />
+  <string key="ta062_name" en="Наймит" ru="Наймит" />
+  <string key="ta063_name" en="Кондотьер" ru="Кондотьер" />
+  <string key="ca012_name" en="Constructions" ru="Конструкции" />
+  <string key="a024_name" en="Weapon mechanic" ru="Оружейный механик" />
+  <string key="a024_desc" en="Build [count] turrets" ru="Построить [count] турелей" />
+  <string key="ta064_name" en="Деятель" ru="Деятель" />
+  <string key="ta065_name" en="Строитель" ru="Строитель" />
+  <string key="a025_name" en="Engineer" ru="Инженер" />
+  <string key="a025_desc" en="Build [count] fortifications" ru="Построить [count] укреплений" />
+  <string key="ta066_name" en="Architect" ru="Архитектор" />
+  <string key="ta067_name" en="Создатель" ru="Создатель" />
+  <string key="a026_name" en="Founder" ru="Основатель" />
+  <string key="a026_desc" en="Build [count] outposts" ru="Построить [count] аванпостов" />
+  <string key="ta0670_name" en="Основатель" ru="Основатель" />
+  <string key="ta068_name" en="Созидатель" ru="Созидатель" />
+  <string key="ta069_name" en="Демиург" ru="Демиург" />
+  <string key="ca013_name" en="Space exploring" ru="Изучение космоса" />
+  <string key="a027_name" en="Space learning" ru="Изучение космоса" />
+  <string key="a027_desc" en="Discover [count] systems" ru="Открыть [count] систем" />
+  <string key="ta070_name" en="Путешественник" ru="Путешественник" />
+  <string key="ta071_name" en="Исследователь" ru="Исследователь" />
+  <string key="ta072_name" en="Эксперт в навигации" ru="Эксперт в навигации" />
+  <string key="ach_unlocked" en="Achivement unlocked: [tier]" ru="Вы заработали достижение: [tier]" />
+  <string key="un_ach_name" en="Achivements: [name]" ru="Достижения: [name]" />
+  <string key="view_ach" en="Look achivements " ru="Посмотреть достижения" />
+  <string key="ct007_name" en="Coolectioners" ru="Коллекционеры" />
+  <string key="ct007_accept" en="Ship remains are found, the damage analysis indicates the happened battle, it is probable - with one opponent. Survived are not present, identification marks and personal items are absent. It is necessary to find the attacker, take everything from it, that it took away from the ship, bring it to the system [world]. Additional information: Personal items of the ships pilots - one of collecting items in the crime world. The most valuable and demanded are those items, which identifying a track record and the biography of the owner they belong to." ru="Обнаружены останки корабля, анализ повреждений указывает на произошедшее сражение, вероятно - с одним противником. Выживших нет, опознавательные знаки и личные вещи отсутствуют. Необходимо найти нападавшего, взять у него всё, что он забрал с корабля, и доставить в систему [world]. Дополнительная информация: Личные вещи пилотов кораблей - один из предметов коллекционирования в преступном мире. К наиболее ценным и востребованным относятся предметы, идентифицирующие послужной список и биографию владельца." />
+  <string key="ct007_hint" en="Find a personal token of the pilot and bring it on station in the system [world]." ru="Найти личный жетон пилота и привезти на станцию в системе [world]." />
+  <string key="ct007_complete" en="During the battle a violator was destroyed. The search of its ship yielded positive result - the personal token of the pilot, and also the identification marks belonging, apparently, to the previous victims of the criminal and drawings of unknown motive system were found." ru="В ходе сражения нарушитель был уничтожен. Обыск его корабля дал положительный результат - найден личный жетон пилота, а также опознавательные знаки, принадлежавшие, судя по всему, предыдущим жертвам преступника, и чертежи неопознанной двигательной системы." />
+  <string key="ct008_name" en="Dexterous thief" ru="Ловкий вор" />
+  <string key="ct008_accept" en="Information of smuggling attempt is received. Sensors recorded a characteristic trace, it is unstable, data for creation of a possible further route of the movement insufficiently. It is necessary to intercept the ship carrier before it leaves the specified system, to withdraw illicit goods and to hand over on station in system [world]. Additional information: The black market - the place where it is possible to become the owner of everything that is impossible to receive in others - official and lawful - places." ru="Получена информация о попытке контрабанды. Сенсоры зафиксировали характерный след, он нестабилен, данных для построения возможного дальнейшего маршрута движения недостаточно. Необходимо перехватить корабль-носитель до того, как он покинет указанную систему, изъять контрабандный товар и сдать на станцию в системе [world]. Дополнительная информация: Чёрный рынок - место, где можно стать владельцем всего, что нельзя получить в иных - официальных и законных - местах." />
+  <string key="ct008_hint" en="Find the mesic strings and bring them to station in the system [world]." ru="Найти мезонные струны и привезти на станцию в системе [world]." />
+  <string key="ct008_complete" en="Information on the ship carrier wasn't confirmed. The ordinary smuggler, single, has no relation to Darkfaced. It was destroyed after refusal of the offer to give up voluntary." ru="Информация о корабле-носителе не подтвердилась. Обычный контрабандист, одиночка, отношения к Тёмноликим не имеет. Уничтожен после отказа от предложения о добровольной сдаче." />
+  <string key="ct009_name" en="Favourite toy" ru="Любимая игрушка" />
+  <string key="ct009_accept" en="The plasma PD radiator, inaccessible to wide use, - completely independent weapon of increased power - fell into hands of one of monsters. The weapon doesn't demand expendables (cartridges, charging batteries), for what is highly appreciated not only colonialists and scouts of planetary level for whom it is developed, but also members of criminal community. It is necessary to find the monster and to return a radiator to the system [world]. Additional information: The monster - a rank in hierarchy of the crime world. The main qualities necessary for its receiving - increased cruelty, high pain threshold, total absence of moral qualities and their analogs." ru="Недоступный для широкого использования плазменный PD-излучатель - полностью автономное оружие повышенной мощности - попал в руки одного из извергов. Оружие не требует расходных материалов (патроны, зарядные батареи), за что высоко ценится не только колонизаторами и разведчиками планетарного уровня, для которых и разработано, но и членами преступного сообщества. Необходимо найти изверга и вернуть излучатель в систему [world]. Дополнительная информация: Изверг - звание в иерархии преступного мира. Основные качества, необходимые для его получения - повышенная жестокость, высокий болевой порог, полное отсутствие моральных качеств и их аналогов." />
+  <string key="ct009_hint" en="Find the plasma PD radiator and bring it to station in the system [world]." ru="Найти плазменный PD-излучатель и привезти на станцию в системе [world]." />
+  <string key="ct009_complete" en="Appearance of the radiator indicates on its active using from the moment of theft. Monsters, owing to professional qualities, collect and use a huge number of weapon, however application of a plasma radiator inside of a ship shows the extremely unhealthy interest in similar type of arms. It is recommended to consider this fact by production and distribution of PD radiators." ru="Внешний вид излучателя указывает на его активное использование с момента кражи. Изверги, в силу профессиональных качеств, собирают и используют огромное количество оружия, однако применение плазменного излучателя внутри корабля говорит о крайне нездоровом интересе к подобному типу вооружения. Рекомендуется учитывать этот факт при производстве и распространении PD-излучателей." />
+  <string key="ct004_1" en="Discordant" ru="Несогласный" />
+  <string key="ct005_1" en="Stuori" ru="Стуори" />
+  <string key="ct006_1" en="Deserter" ru="Дезертир" />
+  <string key="ct013_2" en="PHL 658" ru="PHL 658" />
+  <string key="ct013_3" en="UM 202" ru="UM 202" />
+  <string key="ct013_1c" en="3ZW 2" ru="3ZW 2" />
+  <string key="ct013_2c" en="Q 0013+0213" ru="Q 0013+0213" />
+  <string key="ct013_3c" en="S5 0014+81" ru="S5 0014+81" />
+  <string key="ct013_1b" en="4C 25.01" ru="4C 25.01" />
+  <string key="ct013_2b" en="A 0021+25" ru="A 0021+25" />
+  <string key="ct013_3b" en="PG 0026+129" ru="PG 0026+129" />
+  <string key="ct013_1n" en="2E 0037+0607" ru="2E 0037+0607" />
+  <string key="ct013_2n" en="2E 0039-0158" ru="2E 0039-0158" />
+  <string key="ct013_3n" en="PB 6151" ru="PB 6151" />
+  <string key="ct014_1c" en="S 10785" ru="S 10785" />
+  <string key="ct014_1b" en="OB-081" ru="OB-081" />
+  <string key="ct014_1n" en="MK 1148" ru="MK 1148" />
+  <string key="ct014_2" en="Q 0049+0019A" ru="Q 0049+0019A" />
+  <string key="ct014_2c" en="1ZW 1" ru="1ZW 1" />
+  <string key="ct014_2b" en="PG 0052+251" ru="PG 0052+251" />
+  <string key="ct014_2n" en="UM 301" ru="UM 301" />
+  <string key="ct014_3" en="IRAS 01072-0348" ru="IRAS 01072-0348" />
+  <string key="ct014_3c" en="GC 0109+224" ru="GC 0109+224" />
+  <string key="ct014_3b" en="PG 0117+213" ru="PG 0117+213" />
+  <string key="ct014_3n" en="2ZW 1 " ru="2ZW 1 " />
+  <string key="ct015_1c" en="1ES 0120+340" ru="1ES 0120+340" />
+  <string key="ct015_1b" en="4C-00.10" ru="4C-00.10" />
+  <string key="ct015_1n" en="OC-038" ru="OC-038" />
+  <string key="ct015_2" en="OC+358" ru="OC+358" />
+  <string key="ct015_2c" en="UM 357" ru="UM 357" />
+  <string key="ct015_2b" en="TEX 0145+386" ru="TEX 0145+386" />
+  <string key="ct015_2n" en="IRAS 01475+3554" ru="IRAS 01475+3554" />
+  <string key="ct015_3" en="KUV 01507-0744" ru="KUV 01507-0744" />
+  <string key="ct015_3c" en="S5 0153+74" ru="S5 0153+74" />
+  <string key="ct015_3b" en="MK 1014" ru="MK 1014" />
+  <string key="ct015_3n" en="3C 57" ru="3C 57" />
+  <string key="ct016_1c" en="1E 0200-089" ru="1E 0200-089" />
+  <string key="ct016_1b" en="3C 59" ru="3C 59" />
+  <string key="ct016_1n" en="MK 586" ru="MK 586" />
+  <string key="ct016_2" en="MCG 0-6-39" ru="MCG 0-6-39" />
+  <string key="ct016_2c" en="PKS 0215+015" ru="PKS 0215+015" />
+  <string key="ct016_2b" en="PKS 0219-164" ru="PKS 0219-164" />
+  <string key="ct016_2n" en="3C 66A" ru="3C 66A" />
+  <string key="ct017_1c" en="1ES 0229+200" ru="1ES 0229+200" />
+  <string key="ct017_1b" en="PHL 1377" ru="PHL 1377" />
+  <string key="ct017_1n" en="AO 0235+164" ru="AO 0235+164" />
+  <string key="ct017_2" en="S2 0241+62" ru="S2 0241+62" />
+  <string key="ct017_2c" en="KUV 02513-0536" ru="KUV 02513-0536" />
+  <string key="ct017_2b" en="US 3498" ru="US 3498" />
+  <string key="ct017_2n" en="MS 03180-1937" ru="MS 03180-1937" />
+  <string key="ct018_1c" en="MSH 03-19" ru="MSH 03-19" />
+  <string key="ct018_1b" en="NRAO 149" ru="NRAO 149" />
+  <string key="ct018_1n" en="OF-109" ru="OF-109" />
+  <string key="ct018_2" en="1H 0414+009" ru="1H 0414+009" />
+  <string key="ct018_2c" en="3C 110" ru="3C 110" />
+  <string key="ct018_2b" en="OF-024" ru="OF-024" />
+  <string key="ct018_2n" en="OF+038" ru="OF+038" />
+  <string key="ct043_1c" en="OF+092" ru="OF+092" />
+  <string key="ct043_1b" en="S5 0454+84" ru="S5 0454+84" />
+  <string key="ct043_5" en="MG 0509+0541" ru="MG 0509+0541" />
+  <string key="ct043_5c" en="1E 0514-005" ru="1E 0514-005" />
+  <string key="ct043_5b" en="HS 0624+6907" ru="HS 0624+6907" />
+  <string key="ct043_9" en="1ES 0647+250" ru="1ES 0647+250" />
+  <string key="ct043_9c" en="MS 07007+6338" ru="MS 07007+6338" />
+  <string key="ct043_9b" en="7ZW 118" ru="7ZW 118" />
+  <string key="ct043_13" en="B2 0709+370" ru="B2 0709+370" />
+  <string key="ct043_13b" en="S5 0716+71" ru="S5 0716+71" />
+  <string key="ct043_13c" en="PKS 0735+178" ru="PKS 0735+178" />
+  <string key="ct043_17" en="OI+061" ru="OI+061" />
+  <string key="ct043_21" en="B2 0738+313" ru="B2 0738+313" />
+  <string key="ct043_25" en="4C 41.30" ru="4C 41.30" />
+  <string key="ct043_29" en="IRAS 07483+0328" ru="IRAS 07483+0328" />
+  <string key="ct044_2" en="B2 0749+379" ru="B2 0749+379" />
+  <string key="ct044_6" en="GB 0751+485" ru="GB 0751+485" />
+  <string key="ct044_10" en="OI+90.4" ru="OI+90.4" />
+  <string key="ct044_14" en="1E 0754+395" ru="1E 0754+395" />
+  <string key="ct044_2c" en="KUV 07549+4228" ru="KUV 07549+4228" />
+  <string key="ct044_6c" en="IRAS 07598+6508" ru="IRAS 07598+6508" />
+  <string key="ct044_10c" en="MS 08019+2129" ru="MS 08019+2129" />
+  <string key="ct044_14c" en="SBS 0801+581" ru="SBS 0801+581" />
+  <string key="ct044_2b" en="KUV 08057+4148" ru="KUV 08057+4148" />
+  <string key="ct044_6b" en="1ES 0806+524" ru="1ES 0806+524" />
+  <string key="ct044_10b" en="KUV 08070+4109" ru="KUV 08070+4109" />
+  <string key="ct044_14b" en="PG 0804+762" ru="PG 0804+762" />
+  <string key="ct044_18" en="RX J08153+2735" ru="RX J08153+2735" />
+  <string key="ct044_22" en="KUV 08126+4154" ru="KUV 08126+4154" />
+  <string key="ct044_26" en="OJ-131" ru="OJ-131" />
+  <string key="ct044_30" en="OJ+049" ru="OJ+049" />
+  <string key="ct045_7" en="US 1329" ru="US 1329" />
+  <string key="ct045_11" en="TEX 0836+182" ru="TEX 0836+182" />
+  <string key="ct045_15" en="CSO 199" ru="CSO 199" />
+  <string key="ct045_1c" en="4C 71.07" ru="4C 71.07" />
+  <string key="ct045_7c" en="KUV 08384+4103" ru="KUV 08384+4103" />
+  <string key="ct045_11c" en="DW 0839+18" ru="DW 0839+18" />
+  <string key="ct045_15c" en="7ZW 244" ru="7ZW 244" />
+  <string key="ct045_1b" en="TON 951" ru="TON 951" />
+  <string key="ct045_7b" en="0846+51W1" ru="0846+51W1" />
+  <string key="ct045_11b" en="LB 8741" ru="LB 8741" />
+  <string key="ct045_15b" en="OJ+287" ru="OJ+287" />
+  <string key="ct045_19" en="TON 978" ru="TON 978" />
+  <string key="ct045_23" en="LB 9292" ru="LB 9292" />
+  <string key="ct045_27" en="PG 0906+484" ru="PG 0906+484" />
+  <string key="ct046_8" en="SBS 0909+532" ru="SBS 0909+532" />
+  <string key="ct046_12" en="OK+222" ru="OK+222" />
+  <string key="ct046_1c" en="NGC 2841 UB3" ru="NGC 2841 UB3" />
+  <string key="ct046_8c" en="TON 1057" ru="TON 1057" />
+  <string key="ct046_12c" en="US 737" ru="US 737" />
+  <string key="ct046_1b" en="MK 707" ru="MK 707" />
+  <string key="ct046_8b" en="NPM1G +01.0247" ru="NPM1G +01.0247" />
+  <string key="ct046_12b" en="TON 1078" ru="TON 1078" />
+  <string key="ct046_16" en="PG 0935+416" ru="PG 0935+416" />
+  <string key="ct046_20" en="PG 0936+396" ru="PG 0936+396" />
+  <string key="ct046_24" en="J01.03" ru="J01.03" />
+  <string key="ct046_28" en="4C 12.35" ru="4C 12.35" />
+  <string key="ccat_killspecialnpc" en="Special enemies destruction" ru="Уничтожение особых противников" />
+  <string key="ccat_exploring" en="System exploring" ru="Исследование систем" />
+  <string key="ccat_itemdelivery" en="Items delivery" ru="Доставка предметов" />
+  <string key="ccat_finditem" en="Items search" ru="Поиск предметов" />
+  <string key="ccat_dung" en="Cleaning of external systems and landing on planets" ru="Зачистка внешних систем и приземление на планеты" />
+  <string key="ccat_defconstr" en="Defensive structures destruction" ru="Уничтожение защитных конструкций" />
+  <string key="ccat_companions" en="'Work with companions' contracts" ru="Контракты 'Работа с компаньонами'" />
+  <string key="ccat_syscapture" en="System capture" ru="Захват систем" />
+  <string key="lbl_contracts" en="Contracts" ru="Контракты" />
+  <string key="lbl_achiev" en="Achivements" ru="Достижения" />
+  <string key="lbl_stats" en="Statistics" ru="Статистика" />
+  <string key="lbl_journal" en="Navigation data log" ru="Навигационный журнал" />
+  <string key="lbl_accept" en="Accept" ru="Принять" />
+  <string key="lbl_decline" en="Reject" ru="Отклонить" />
+  <string key="lbl_complete" en="Turn in" ru="Сдать" />
+  <string key="lbl_showonmap" en="Show on the map" ru="Показать на карте" />
+  <string key="lbl_glossary" en="Glossary" ru="Глоссарий" />
+  <string key="ccat_killnpcgroup" en="Groups of opponents destruction" ru="Уничтожение групп противников" />
+  <string key="ccat_killplayer" en="Other players destruction" ru="Уничтожение других игроков" />
+  <string key="ccat_needaccept" en="The contract is offered - you can accept or refuse it. If you refuse, you will be able to receive the following contract type only in 2 hours." ru="Контракт предложен - вы можете принять или отказаться от него. Если вы откажетесь, то следующий контракт из этой категории вы сможете получить только через 2 часа." />
+  <string key="atier_template" en="Level: [tier]" ru="Уровень: [tier]" />
+  <string key="rew_cred" en="Credits" ru="Кредиты" />
+  <string key="rew_exp" en="Experience" ru="Опыт" />
+  <string key="rew_weapon" en="Random weapon of the specified quality" ru="Случайное оружие указанного качества" />
+  <string key="rew_neb_element" en="Random nebula element" ru="Случайный небула-элемент" />
+  <string key="rew_craft_rc" en="Random craft resource for the companion" ru="Случайный кр. ресурс для компаньона" />
+  <string key="rew_scheme" en="Random scheme of the specified quality" ru="Случайная схема указанного качества" />
+  <string key="rew_ore" en="Random ore" ru="Случайная руда" />
+  <string key="evt_ach_unlocked" en="Next achivement level [name] reached." ru="Следующий уровень достижения [name] достигнут." />
+  <string key="warn_cdecl" en="Do you really want to cancel the current contract? You'll be able to take next only in 2 hours." ru="Вы действительно хотите отменить текущий контракт? Взять следующий получится только через 2 часа." />
+  <string key="apoints" en="Points: [count]" ru="Очки: [count]" />
+  <string key="atotal_opened" en="In total opened: [count]" ru="Всего открыто: [count]" />
+  <string key="ap_total" en="Points: [count]" ru="Очки: [count]" />
+  <string key="s_is_moving" en="Moving" ru="В движении" />
+  <string key="s_is_stopped" en="Immobilized" ru="Обездвижен" />
+  <string key="s_modelspeed" en="Model's speed" ru="Скорость модели" />
+  <string key="s_speedbonadd" en="From bonuses" ru="От бонусов" />
+  <string key="s_paadd" en="From passive abilities" ru="От пассивных способ." />
+  <string key="s_is_accelerated" en="Acceleration" ru="Ускорение" />
+  <string key="res_blocked" en="Blocked" ru="Блокировано" />
+  <string key="res_model" en="Model's damage resistance" ru="Сопрот. урону модели" />
+  <string key="res_bonus" en="From effects" ru="От эффектов" />
+  <string key="res_passive" en="From passive abilities" ru="От пассив. способностей" />
+  <string key="invisibility" en="Invisibility" ru="Невидимость" />
+  <string key="s_makemark" en="Place the mark" ru="Поставить отметку" />
+  <string key="s_releasemark" en="Remove the mark" ru="Снять отметку" />
+  <string key="s_no_contract" en="You don't have contracts of this type" ru="У вас нет контракта этой категории" />
+  <string key="s_get_contract" en="Get a contract" ru="Получить контракт" />
+  
+  <!--*****************************************-->
+  <string key="s_keyboard" en="Keyboard" ru="Keyboard" />
+  <string key="s_everywhere"
+          en="Everywhere"
+          ru="Везде" />
+  <string key="s_key_hold"
+          en="Hold (On\Off)"
+          ru="Трюм (вкл.\выкл.)" />
+  <string key="s_key_menu"
+          en="Menu (On\Off)"
+          ru="Меню (вкл.\ выкл.)" />
+  <string key="s_key_note"
+          en="Notifications (On\Off)"
+          ru="Уведомления (вкл.\выкл.)" />
+  <string key="s_key_help"
+          en="Help (On\Off)"
+          ru="Помощь (вкл.\выкл.)" />
+  <string key="s_key_journal"
+          en="Navigation data log (On\Off)"
+          ru="Навигационный журнал (вкл.\выкл.)" />
+  <string key="s_key_store"
+          en="Store (On\Off)"
+          ru="Магазин (вкл.\выкл.)" />
+  <string key="s_title_atspace"
+          en="In the space"
+          ru="В космосе" />
+  <string key="s_key_moving"
+          en="Motion (On\Off)"
+          ru="Движение (вкл.\выкл.)" />
+  <string key="s_key_acceleration"
+          en="Accelerated motion (On\Off)"
+          ru="Ускоренное движение (вкл.\выкл.)" />
+  <string key="s_key_map"
+          en="Map (On\Off)"
+          ru="Карта (вкл.\выкл.)" />
+  <string key="s_key_objscan"
+          en="Object scanner (On\Off)"
+          ru="Сканнер объектов (вкл.\выкл.)" />
+  <string key="s_key_group"
+          en="Groups (On\Off)"
+          ru="Группы (вкл.\выкл.)" />
+  <string key="s_title_atstation"
+          en="On the station"
+          ru="На станции" />
+  <string key="s_key_compan"
+          en="Companions (On\Off)"
+          ru="Компаньоны (вкл.\выкл.)" />
+  <string key="s_key_exitst"
+          en="Fly from the station"
+          ru="Вылететь из станции" />
+  <string key="s_under_construction"
+          en="Key binding stil in development"
+          ru="Назначение клавиш еще в разработке" />
+  <string key="s_make_admiral_ok"
+          en="A Player was successfully nominated as admiral"
+          ru="Игрок успешно назначен адмиралом" />
+  <string key="s_make_admiral_fail"
+          en="Unable to nominate a player as admiral"
+          ru="Не получилось назначить игрока адмиралом" />
+  
+  <!--Contracts part 2-->
+  <string key="ct019_name"
+          en="Трофеи"
+          ru="Трофеи" />
+  <string key="ct019_accept"
+          en="Пришла пора повесить на 'стену доблести' пару-тройку трофеев. Клыки, рога, маски, браслеты - подойдёт почти всё, разве что с органикой не увлекайся, а то опять все помещения дезинфицировать придётся."
+          ru="Пришла пора повесить на 'стену доблести' пару-тройку трофеев. Клыки, рога, маски, браслеты - подойдёт почти всё, разве что с органикой не увлекайся, а то опять все помещения дезинфицировать придётся." />
+  <string key="ct019_hint"
+          en="Уничтожить [count] кораблей других игроков."
+          ru="Уничтожить [count] кораблей других игроков." />
+  <string key="ct019_complete"
+          en="Хорошо сделанная работа - пример остальным пилотам. Делай всё должным образом, и когда-нибудь у тебя появится шанс стать примером."
+          ru="Хорошо сделанная работа - пример остальным пилотам. Делай всё должным образом, и когда-нибудь у тебя появится шанс стать примером." />
+
+  <string key="ct020_name"
+          en="В атаку!"
+          ru="В атаку!" />
+  <string key="ct020_accept"
+          en="Залог жизни и процветания - победа над вражеской ордой! И не важно, какие виды и формы она принимает - уничтожить можно всё! Твоя прямая обязанность - совершать боевые вылеты, сеять смерть и разрушение, подавлять противника физически и морально. И помни: секундное промедление стоит жизни!"
+          ru="Залог жизни и процветания - победа над вражеской ордой! И не важно, какие виды и формы она принимает - уничтожить можно всё! Твоя прямая обязанность - совершать боевые вылеты, сеять смерть и разрушение, подавлять противника физически и морально. И помни: секундное промедление стоит жизни!" />
+  <string key="ct020_hint"
+          en="Уничтожить [count] кораблей других игроков."
+          ru="Уничтожить [count] кораблей других игроков." />
+  <string key="ct020_complete"
+          en="Отличная работа! На лицо профессионализм и любовь к военному делу. Хвалю, боец!"
+          ru="Отличная работа! На лицо профессионализм и любовь к военному делу. Хвалю, боец!" />
+
+  <string key="ct021_name"
+          en="Риск"
+          ru="Риск" />
+  <string key="ct021_accept"
+          en="Война - дело хлопотное, но выгодное. И кроме материальных радостей, она приносит немало почестей. Готов получить и то, и другое? Давай, вперёд! Риск? Нет, не слышал! И ты про него забудь! Будешь забивать себе голову всякой ерундой - точно не вернёшься!"
+          ru="Война - дело хлопотное, но выгодное. И кроме материальных радостей, она приносит немало почестей. Готов получить и то, и другое? Давай, вперёд! Риск? Нет, не слышал! И ты про него забудь! Будешь забивать себе голову всякой ерундой - точно не вернёшься!" />
+  <string key="ct021_hint"
+          en="Уничтожить [count] кораблей других игроков."
+          ru="Уничтожить [count] кораблей других игроков." />
+  <string key="ct021_complete"
+          en="Каждый твой вылет - не просто гибель пары-тройки вражеских кораблей. Такие, как ты, двигают военную машину вперёд, прокладывают путь нашим инженерам, учёным, рабочим, не дают потеряться нашей расе в громаде космических просторов!"
+          ru="Каждый твой вылет - не просто гибель пары-тройки вражеских кораблей. Такие, как ты, двигают военную машину вперёд, прокладывают путь нашим инженерам, учёным, рабочим, не дают потеряться нашей расе в громаде космических просторов!" />
+
+  <string key="ct022_name"
+          en="Чёткий удар"
+          ru="Чёткий удар" />
+  <string key="ct022_accept"
+          en="Поторопись, боец, нужна твоя помощь! Сектор 'Гамма' находится под плотным огнём противника! И пока они стачивают зубы о нашу оборону, вряд ли заметят маленький корабль, который проникнет им в тыл и нанесёт несколько смертельных ударов."
+          ru="Поторопись, боец, нужна твоя помощь! Сектор 'Гамма' находится под плотным огнём противника! И пока они стачивают зубы о нашу оборону, вряд ли заметят маленький корабль, который проникнет им в тыл и нанесёт несколько смертельных ударов." />
+  <string key="ct022_hint"
+          en="Уничтожить [count] кораблей других игроков."
+          ru="Уничтожить [count] кораблей других игроков." />
+  <string key="ct022_complete"
+          en="Отбой задаче! Противник покидает сектор, и крутиться сейчас рядом с ним слишком опасно - такой “привет” может прилететь, что корабль придётся по кускам собирать."
+          ru="Отбой задаче! Противник покидает сектор, и крутиться сейчас рядом с ним слишком опасно - такой “привет” может прилететь, что корабль придётся по кускам собирать." />
+
+  <string key="ct023_name"
+        en="Манёвры"
+        ru="Манёвры" />
+  <string key="ct023_accept"
+          en="В последнее время участились случаи столкновений на границах наших территорий. Полетай вокруг да около и будь внимателен - возможно, в налётах есть закономерность, и было бы неплохо её вычислить. Встретишь врага - бей первым."
+          ru="В последнее время участились случаи столкновений на границах наших территорий. Полетай вокруг да около и будь внимателен - возможно, в налётах есть закономерность, и было бы неплохо её вычислить. Встретишь врага - бей первым." />
+  <string key="ct023_hint"
+          en="Уничтожить [count] кораблей других игроков."
+          ru="Уничтожить [count] кораблей других игроков." />
+  <string key="ct023_complete"
+          en="Выглядит беспорядочно… слишком беспорядочно для естественного течения событий. Помню, лет пятнадцать тому назад мы сталкивались с подобным - безобидные полёты оказались мощнейшей точкой прорыва: три потерянные системы, восемь разрушенных укреплений и сотни разбитых кораблей."
+          ru="Выглядит беспорядочно… слишком беспорядочно для естественного течения событий. Помню, лет пятнадцать тому назад мы сталкивались с подобным - безобидные полёты оказались мощнейшей точкой прорыва: три потерянные системы, восемь разрушенных укреплений и сотни разбитых кораблей." />
+
+  <string key="ct024_name"
+        en="Заработок"
+        ru="Заработок" />
+  <string key="ct024_accept"
+          en="Медаль доблести тому, кто уложит наибольшее количество врагов! Хрустящую и шелестящую медаль под названием 'Пачка космических кредитов'. Кто готов рискнуть и стать чуточку богаче? Может быть ты, боец?"
+          ru="Медаль доблести тому, кто уложит наибольшее количество врагов! Хрустящую и шелестящую медаль под названием 'Пачка космических кредитов'. Кто готов рискнуть и стать чуточку богаче? Может быть ты, боец?" />
+  <string key="ct024_hint"
+          en="Уничтожить [count] кораблей других игроков."
+          ru="Уничтожить [count] кораблей других игроков." />
+  <string key="ct024_complete"
+          en="Правильному пилоту - честный заработок!"
+          ru="Правильному пилоту - честный заработок!" />
+  <string key="new_item"
+          en="New!"
+          ru="Новый!" />
+
+
+  <string key="btn_create_pet"
+          en="Создать спутника"
+          ru="Создать спутника" />
+  <!--Manual quests-->
+  <string key="stq000_name"
+          en="Создайте спутника"
+          ru="Создайте спутника" />
+  <string key="stq000_start"
+          en="Чтобы создать спутника, выполните все этапы задания, указанные ниже."
+          ru="Чтобы создать спутника, выполните все этапы задания, указанные ниже." />
+  <string key="stq000_complete"
+          en="Спутники бывают двух типов: Атакующий и Ремонтный"
+          ru="Спутники бывают двух типов: Атакующий и Ремонтный" />
+  
+  <string key="stq000_0"
+          en="Откройте окно 'Станция'"
+          ru="Откройте окно 'Станция'" />
+  <string key="stq000_1"
+        en="Окройте вкладку 'Ангар' в окне станции"
+        ru="Окройте вкладку 'Ангар' в окне станции" />
+  <string key="stq000_2"
+        en="В списке предметов выберете 'Система сборки спутника'"
+        ru="В списке предметов выберете 'Система сборки спутника'" />
+  <string key="stq000_3"
+        en="В списке действий нажмите кнопку 'Создать спутника'"
+        ru="В списке действий нажмите кнопку 'Создать спутника'" />
+  
+  <string key="stq001_name"
+          en="Отправляйтесь в космос"
+          ru="Отправляйтесь в космос" /> 
+  <string key="stq001_0"
+          en="Нажмите на кнопку Вылететь в космос"
+          ru="Нажмите на кнопку Вылететь в космос" />
+  
+  <string key="spq000_name"
+          en="Управление камерой"
+          ru="Управление камерой" />
+  <string key="spq000_start"
+        en="Камеру можно вращать вокруг корабля и приближать-удалять от него для оптимального обзора."
+        ru="Камеру можно вращать вокруг корабля и приближать-удалять от него для оптимального обзора." />
+  <string key="spq000_complete"
+        en="Освойтесь с движением камеры и перейдем к следующему пункту обучения"
+        ru="Освойтесь с движением камеры и перейдем к следующему пункту обучения" />
+  <string key="spq000_0"
+        en="Поверните камеру вокруг корабля"
+        ru="Поверните камеру вокруг корабля" />
+  <string key="spq000_1"
+        en="Приблизьте и удалите камеру от корабля"
+        ru="Приблизьте и удалите камеру от корабля" />
+  <string key="spq001_name"
+          en="Научитесь управлять кораблём"
+          ru="Научитесь управлять кораблём" />
+  <string key="spq001_0"
+          en="Нажмите на кнопку 'Движение' вашего корабля для начала движения"
+          ru="Нажмите на кнопку 'Движение' вашего корабля для начала движения" />
+  <string key="spq001_1"
+          en="Выберите направление полета два раза кликнув в любом месте экрана"
+          ru="Выберите направление полета два раза кликнув в любом месте экрана" />
+  <string key="spq001_2"
+          en="Нажмите кнопку 'Ускорение' движения корабля"
+          ru="Нажмите кнопку 'Ускорение' движения корабля" />
+  <string key="spq001_3"
+          en="Нажмите кнопку 'Ускорение' еще раз чтобы снизить скорость"
+          ru="Нажмите кнопку 'Ускорение' еще раз чтобы снизить скорость" />
+  <string key="spq001_4"
+          en="Нажмите кнопку 'Движение' еще раз, чтобы полностью остановить движение"
+          ru="Нажмите кнопку 'Движение' еще раз, чтобы полностью остановить движение" />
+
+  <string key="spq002_name"
+          en="Совершите прыжок к белому маяку"
+          ru="Совершите прыжок к белому маяку" />
+  <string key="spq002_start"
+          en="Белые маяки обозначают интересные подзоны в текущей системе"
+          ru="Белые маяки обозначают интересные подзоны в текущей системе" />
+  <string key="spq002_complete"
+          en="Игрок может прыгнуть к любому маяку. В зависимости от цвета маяки обозначают тип областей, на которые они указывают. Также вы можете устанавливать собственные маяки"
+          ru="Игрок может прыгнуть к любому маяку. В зависимости от цвета маяки обозначают тип областей, на которые они указывают. Также вы можете устанавливать собственные маяки" />
+  <string key="spq002_0"
+          en="Откройте Действия->Сканер Объектов"
+          ru="Откройте Действия->Сканер Объектов" />
+  <string key="spq002_1"
+        en="Нажмите на вкладку Маяки"
+        ru="Нажмите на вкладку Маяки" />
+  <string key="spq002_2"
+        en="В появившемся списке маяков нажмите на любой маяк белого цвета"
+        ru="В появившемся списке маяков нажмите на любой маяк белого цвета" />
+  <string key="spq002_3"
+          en="В списке контекстных действий для маяка выберите 'Прыгнуть'"
+          ru="В списке контекстных действий для маяка выберите 'Прыгнуть'" />
+
+  <string key="spq003_name"
+          en="Уничтожьте вражеский NPC корабль"
+          ru="Уничтожьте вражеский NPC корабль" />
+  <string key="spq003_start"
+          en="Вражеские NPC корабли бывают двух типов: красные (агрессивные) и жёлтые (не агрессивные)."
+          ru="Вражеские NPC корабли бывают двух типов: красные (агрессивные) и жёлтые (не агрессивные)." />
+  <string key="spq003_complete"
+          en="После уничтожения некоторых NPC кораблей появляется контейнер с ценной добычей."
+          ru="После уничтожения некоторых NPC кораблей появляется контейнер с ценной добычей." />
+  <string key="spq003_0"
+          en="Выделите ближайший вражеский NPC корабль, выделенный красным квадратом"
+          ru="Выделите ближайший вражеский NPC корабль, выделенный красным квадратом" />
+  <string key="spq003_1"
+        en="Приблизьтесь на оптимальную для атаки дистанцию к выделенному NPC кораблю"
+        ru="Приблизьтесь на оптимальную для атаки дистанцию к выделенному NPC кораблю" />
+  <string key="spq003_2"
+        en=" Используя доступное оружие, унитожьте NPC корабль"
+        ru=" Используя доступное оружие, унитожьте NPC корабль" />
+
+  <string key="spq004_name"
+          en="Добудьте руду из астероида"
+          ru="Добудьте руду из астероида" />
+  <string key="spq004_start"
+          en="Руда нужна для производства модулей, улучшающих характеристики вашего корабля"
+          ru="Руда нужна для производства модулей, улучшающих характеристики вашего корабля" />
+  <string key="spq004_complete"
+          en="Существует большое количество видов руды, которые вы будете находить по мере исследования других систем"
+          ru="Существует большое количество видов руды, которые вы будете находить по мере исследования других систем" />
+  <string key="spq004_0"
+          en="Откройте Действия-Сканер Объектов"
+          ru="Откройте Действия-Сканер Объектов" />
+  <string key="spq004_1"
+          en="Выберите категорию Астероиды в сканнере объектов"
+          ru="Выберите категорию Астероиды в сканнере объектов" />
+  <string key="spq004_2"
+          en="Выберите астероид в списке видимых астероидов"
+          ru="Выберите астероид в списке видимых астероидов" />
+  <string key="spq004_3"
+          en="Приблизьтесь к выбранному астероиду на оптимальное расстояние, с которого можно начать добычу"
+          ru="Приблизьтесь к выбранному астероиду на оптимальное расстояние, с которого можно начать добычу" />
+  <string key="spq004_4"
+          en="Нажмите на астероид, после чего нажмите кнопку Взять"
+          ru="Нажмите на астероид, после чего нажмите кнопку Взять" />
+
+  <string key="spq005_name"
+          en="Вернитесь на станцию"
+          ru="Вернитесь на станцию" />
+  <string key="spq005_start"
+          en="Маяки всех станций обозначены в сканере объектов жёлтым цветом."
+          ru="Маяки всех станций обозначены в сканере объектов жёлтым цветом." />
+  <string key="spq005_complete"
+          en="Станция есть в каждой системе, доступ к ангару возможен из станции в любой системе"
+          ru="Станция есть в каждой системе, доступ к ангару возможен из станции в любой системе" />
+  <string key="spq005_0"
+          en="Откройте Действия-Сканер объектов"
+          ru="Откройте Действия-Сканер объектов" />
+  <string key="spq005_1"
+          en="Выберите раздел 'Маяки'"
+          ru="Выберите раздел 'Маяки'" />
+  <string key="spq005_2"
+          en="Нажмите на маяк станции (желтый цвет)"
+          ru="Нажмите на маяк станции (желтый цвет)" />
+  <string key="spq005_3"
+          en="Нажмите кнопку Прыгнуть"
+          ru="Нажмите кнопку Прыгнуть" />
+  <string key="spq005_4"
+          en="Выберите станцию и зайдите в нее"
+          ru="Выберите станцию и зайдите в нее" />
+
+  <string key="stq002_name"
+          en="Выполните контракт"
+          ru="Выполните контракт" />
+  <string key="stq002_start"
+          en=" Выполняя контракты, вы получите опыт, кредиты и ценные предметы"
+          ru=" Выполняя контракты, вы получите опыт, кредиты и ценные предметы" />
+  <string key="stq002_complete"
+          en="Если отменить принятый контракт, то следующий вы сможете взять только через определенное время"
+          ru="Если отменить принятый контракт, то следующий вы сможете взять только через определенное время" />
+  <string key="stq002_0"
+          en="Откройте Журнал-Контракты"
+          ru="Откройте Журнал-Контракты" />
+  <string key="stq002_1"
+          en="Нажмите на тип контракта Доставка предметов-Получить контракт-Принять"
+          ru="Нажмите на тип контракта Доставка предметов-Получить контракт-Принять" />
+  <string key="stq002_2"
+          en="Нажмите кнопку Вылететь в космос"
+          ru="Нажмите кнопку Вылететь в космос" />
+
+  <string key="spq006_start"
+          en="Вы получили контракт по доставке предмета на другую станцию. Сейчас мы будем к ней перемещаться"
+          ru="Вы получили контракт по доставке предмета на другую станцию. Сейчас мы будем к ней перемещаться" />
+  <string key="spq006_0"
+          en="Откройте карту."
+          ru="Откройте карту." />
+  <string key="spq006_1"
+          en="Откройте обзор карты мира."
+          ru="Откройте обзор карты мира." />
+  <string key="spq006_2"
+          en="Выделите систему с голубым кругом, после чего нажмите Переместиться"
+          ru="Выделите систему с голубым кругом, после чего нажмите Переместиться" />
+  <string key="spq006_3"
+          en="Войдите на станцию в целевой системе, чтобы сдать контракт"
+          ru="Войдите на станцию в целевой системе, чтобы сдать контракт" />
+
+  <string key="spq007_name"
+          en="Добудьте необходимые ресурсы для улучшения качества спутника"
+          ru="Добудьте необходимые ресурсы для улучшения качества спутника"/>
+  <string key="spq007_start"
+         en="Ресурсы для улучшения спутников можно получить за уничтожение вражеских NPC кораблей. Цвет получаемых ресурсов взаимосвязан с цветом вражеского корабля."
+         ru="Ресурсы для улучшения спутников можно получить за уничтожение вражеских NPC кораблей. Цвет получаемых ресурсов взаимосвязан с цветом вражеского корабля."/>
+  <string key="spq007_complete"
+          en="После нахождения всех ресурсов вернитесь на станцию, чтобы улучшить компаньона."
+          ru="После нахождения всех ресурсов вернитесь на станцию, чтобы улучшить компаньона." />
+  <string key="spq007_0"
+          en="Найдите Крам - 1 шт."
+          ru="Найдите Крам - 1 шт." />
+  <string key="spq007_1"
+        en="Найдите Антиматерия - 1шт."
+        ru="Найдите Антиматерия - 1шт." />
+  <string key="spq007_2"
+        en="Найдите Анит - 1 шт."
+        ru="Найдите Анит - 1 шт." />
+  <string key="spq007_3"
+        en="Найдите Тимолин - 1 шт."
+        ru="Найдите Тимолин - 1 шт." />
+  <string key="spq007_4"
+        en="Найдите Мимикрирующий сплав - 1 шт."
+        ru="Найдите Мимикрирующий сплав - 1 шт." />
+
+  <string key="stq003_name"
+          en="Улучшите качество спутника до белого"
+          ru="Улучшите качество спутника до белого" />
+  <string key="stq003_start"
+          en="Чтобы улучшить качество спутника, вам нужно добыть необходимое кол-во ресурсов определенного вида."
+          ru="Чтобы улучшить качество спутника, вам нужно добыть необходимое кол-во ресурсов определенного вида." />
+  <string key="stq003_complete"
+          en="Повышение качества спутника влияет на улучшение его урона, прочности, опт. дистанции и времени перезарядки."
+          ru="Повышение качества спутника влияет на улучшение его урона, прочности, опт. дистанции и времени перезарядки." />
+  <string key="stq003_0"
+          en="Откройте главное окно"
+          ru="Откройте главное окно" />
+  <string key="stq003_1"
+          en="Откройте вкладку содержимого трюма корабля"
+          ru="Откройте вкладку содержимого трюма корабля" />
+  <string key="stq003_2"
+          en="Перенисите все из корабля в ангар"
+          ru="Перенисите все из корабля в ангар" />
+  <string key="stq003_3"
+          en="Откройте окно просмотра компаньонов"
+          ru="Откройте окно просмотра компаньонов" />
+  <string key="stq003_4"
+          en="Выберите компаньона и нажмите 'Изменить'"
+          ru="Выберите компаньона и нажмите 'Изменить'" />
+  <string key="stq003_5"
+          en="Проверьте что вам хватает ресурсов для улучшения и нажмите Улучшить в разделе Улучшение качества"
+          ru="Проверьте что вам хватает ресурсов для улучшения и нажмите Улучшить в разделе Улучшение качества" />
+
+  <string key="stq004_name"
+          en="Улучшите уровень мастерства спутника "
+          ru="Улучшите уровень мастерства спутника " />
+  <string key="stq004_start"
+          en="Чтобы улучшить мастерство спутника, вам необходимо добыть нужное кол-во ресурсов определенного вида."
+          ru="Чтобы улучшить мастерство спутника, вам необходимо добыть нужное кол-во ресурсов определенного вида." />
+  <string key="stq004_complete"
+          en="Улучшение мастерства спутника даёт шанс двойного срабатывания умений игрока"
+          ru="Улучшение мастерства спутника даёт шанс двойного срабатывания умений игрока" />
+  <string key="stq004_0"
+          en="Найдите Вург - 2 шт."
+          ru="Найдите Вург - 2 шт." />
+  <string key="stq004_1"
+          en="На станции переместите добытые Вурги в Ангар с трюма"
+          ru="На станции переместите добытые Вурги в Ангар с трюма" />
+  <string  key="stq004_2"
+           en="Откройтк окно Компаньонов и нажмите кнопку Изменить на спутнике"
+           ru="Откройтк окно Компаньонов и нажмите кнопку Изменить на спутнике" />
+  <string key="stq004_3"
+          en="Нажмите Улучшить в разделе Улучшение Мастерства"
+          ru="Нажмите Улучшить в разделе Улучшение Мастерства" />
+</strings>

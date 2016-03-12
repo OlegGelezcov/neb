@@ -94,6 +94,10 @@ namespace Nebula.Game {
                             components.Add(typeof(PlanetObject));
                         }
                         break;
+                    case ComponentID.LoreBox: {
+                            components.Add(typeof(LoreBoxComponent));
+                        }
+                        break;
                     case ComponentID.CombatAI:
                         switch((comp.Value as MultiComponentData).subType) {
                             case ComponentSubType.ai_follow_path_combat:
@@ -448,6 +452,10 @@ namespace Nebula.Game {
                     case ComponentID.Energy:
                         {
                             nebObject.GetComponent<ShipEnergyBlock>().Init(comp.Value as EnergyComponentData);
+                        }
+                        break;
+                    case ComponentID.LoreBox: {
+                            nebObject.GetComponent<LoreBoxComponent>().Init(comp.Value as LoreBoxComponentData);
                         }
                         break;
                     case ComponentID.FounderCube: {

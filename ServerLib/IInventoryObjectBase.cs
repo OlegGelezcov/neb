@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections;
 
 
-namespace Common
-{
+namespace Common {
+
     public interface IInventoryObjectBase : IInfo, IPlacingType
     {
         string Id { get; }
         InventoryObjectType Type { get; }
         Hashtable rawHash { get; }
+        bool isNew { get; }
+
+        void ResetNew();
+        void SetNew(bool val);
     }
 }

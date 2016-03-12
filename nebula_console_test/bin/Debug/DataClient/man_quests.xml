@@ -1,0 +1,94 @@
+﻿<quests>
+  <!--Station quests-->
+  <quest id="stq000" type="station" name="stq000_name" start_text="stq000_start" complete_text="stq000_complete" index="0" prev_quests="">
+    <stage id="0" text="stq000_0" event="eOpenPanelHubUI"        hint="open_station"       />
+    <stage id="1" text="stq000_1" event="eOpenAngarTab"         hint="open_angar_tab"     />
+    <stage id="2" text="stq000_2" event="eSelectPetSchemeItem"  hint="select_pet_scheme"  />
+    <stage id="3" text="stq000_3" event="eUsePetScheme"         hint="create_companion"       />
+  </quest>
+  
+  <quest id="stq001" type="station" name="stq001_name" start_text="" complete_text="" index="1" prev_quests="" >
+    <stage id="0" text="stq001_0" event="eExitStation"  hint="click_exit_station" />
+  </quest>
+  
+  <quest id="stq002" type="station" name="stq002_name" start_text="stq002_start" complete_text="" index="2" prev_quests="spq005">
+    <stage id="0" text="stq002_0" event="eOpenJournal" hint="open_journal" />
+    <stage id="1" text="stq002_1" event="eApplyContract" hint="apply_contract" />
+    <stage id="2" text="stq002_2" event="eExitStation" hint="click_exit_station" />
+  </quest>
+
+  <quest id="stq003" type="station" name="stq003_name" start_text="stq003_start" complete_text="stq003_complete" index="3" prev_quests="spq007">
+    <stage id="0" text="stq003_0" event="eOpenPanelHubUI" hint="open_companions_button" />
+    <stage id="1" text="stq003_1" event="eOpenHoldTab" hint="open_hold_tab" />
+    <stage id="2" text="stq003_2" event="eMoveAllToAngar" hint="move_all_to_angar" />
+    <stage id="3" text="stq003_3" event="eOpenCompanions" hint="open_companions_button" />
+    <stage id="4" text="stq003_4" event="eChangeCompanion" hint="open_change_companion" />
+    <stage id="5" text="stq003_5" event="eUpgradeCompanion" hint="upgrade_companion" />
+  </quest>
+
+  <quest id="stq004" type="station" name="stq004_name" start_text="stq004_start" complete_text="stq004_complete" index="4" prev_quests="">
+    <stage id="0" text="stq004_0" event="eInventoryUpdated"   hint="inventory_updated"              />
+    <stage id="1" text="stq004_1" event="eStationUpdated"     hint="station_updated"                />
+    <stage id="2" text="stq004_2" event="eChangeCompanion"    hint="open_change_companion"          />
+    <stage id="3" text="stq004_3" event="eUpgradeMasteryCompanion" hint="upgrade_mastery_companion" />
+  </quest>
+    
+  <!--Space quests-->
+  <quest id="spq000" type="space" name="spq000_name" start_text="spq000_start" complete_text="spq000_complete" index="0" prev_quests="">
+    <stage id="0" text="spq000_0" event="eRotateCamera" hint="rotate_camera" />
+    <stage id="1" text="spq000_1" event="eZoomCamera" hint="zoom_camera" />
+  </quest>
+  
+  <quest id="spq001" type="space" name="spq001_name" start_text="" complete_text="" index="1" prev_quests="">
+    <stage id="0" text="spq001_0" event="eShipMoveStart"        hint="ship_move_start" />
+    <stage id="1" text="spq001_1" event="eChangeDirection"      hint="change_direction" />
+    <stage id="2" text="spq001_2" event="eAccelerateStart"      hint="accelerate_start" />
+    <stage id="3" text="spq001_3" event="eAccelerationStop"     hint="accelerate_stop" />
+    <stage id="4" text="spq001_4" event="eShipMoveStop"         hint="ship_move_stop" />
+  </quest>
+
+  <quest id="spq002" type="space" name="spq002_name" start_text="spq002_start" complete_text="spq002_complete" index="2" prev_quests="">
+    <stage id="0" text="spq002_0" event="eOpenObjectScanner"            hint="open_object_scanner" />
+    <stage id="1" text="spq002_1" event="eObjScannerSelectBeacons"      hint="obj_scanner_select_beacons" />
+    <stage id="2" text="spq002_2" event="eObjScannerSelectWhiteBeacon"  hint="obj_scanner_select_white_beacon" />
+    <stage id="3" text="spq002_3" event="eObjJumpToBeacon"              hint="jump_beacon_button" />
+  </quest>
+
+  <quest id="spq003" type="space" name="spq003_name" start_text="spq003_start" complete_text="spq003_complete" index="3" prev_quests="">
+    <stage id="0" text="spq003_0" event="eSelectNPC"    hint="select_npc"   />
+    <stage id="1" text="spq003_1" event="eGotoToNPCOD"  hint="goto_npc_od"  />
+    <stage id="2" text="spq003_2" event="eUseSkill"     hint="use_skill"    />
+  </quest>
+
+  <quest id="spq004" type="space" name="spq004_name" start_text="spq004_start" complete_text="spq004_complete" index="4" prev_quests="">
+    <stage id="0" text="spq004_0" event="eOpenObjectScanner"          hint="open_object_scanner" />
+    <stage id="1" text="spq004_1" event="eObjScannerSelectAsteroids"  hint="obj_scanner_select_asteroids" />
+    <stage id="2" text="spq004_2" event="eObjScannerSelectAsteroid"   hint="obj_scanner_select_asteroid" />
+    <stage id="3" text="spq004_3" event="eGotoToNPCOD"                hint="goto_npc_od" />
+    <stage id="4" text="spq004_4" event="eCollectAsteroid"            hint="collect_asteroid" />
+  </quest>
+
+  <quest id="spq005" type="space" name="spq005_name" start_text="spq005_start" complete_text="spq005_complete" index="5" prev_quests="">
+    <stage id="0" text="spq005_0" event="eOpenObjectScanner" hint="open_object_scanner" />
+    <stage id="1" text="spq005_1" event="eObjScannerSelectBeacons" hint="obj_scanner_select_beacons" />
+    <stage id="2" text="spq005_2" event="eObjScannerSelectStationBeacon" hint="obj_scanner_select_station_beacon" />
+    <stage id="3" text="spq005_3" event="eObjJumpToStationBeacon"  hint="jump_station_beacon_button" />
+    <stage id="4" text="spq005_4" event="eEnterStation"     hint="enter_station_button" />
+  </quest>
+
+  <quest id="spq006" type="space" name="stq002_name" start_text="spq006_start" complete_text="stq002_complete" index="6" prev_quests="stq002">
+    <stage id="0" text="spq006_0" event="eOpenMap"                 hint="open_map" />
+    <stage id="1" text="spq006_1" event="eOpenGlobalMapTab"        hint="open_global_map" />
+    <stage id="2" text="spq006_2" event="eJumpToSystemFromMap"     hint="jump_to_system_on_map" />
+    <stage id="3" text="spq006_3" event="eEnterStation"            hint="enter_station_button" />        
+  </quest>
+
+  <quest id="spq007" type="space" name="spq007_name" start_text="spq007_start" complete_text="spq007_complete" index="7" prev_quests="">
+    <stage id="0" text="spq007_0" event="eInventoryUpdated" hint="inventory_updated" />
+    <stage id="1" text="spq007_1" event="eInventoryUpdated" hint="inventory_updated" />
+    <stage id="2" text="spq007_2" event="eInventoryUpdated" hint="inventory_updated" />
+    <stage id="3" text="spq007_3" event="eInventoryUpdated" hint="inventory_updated" />
+    <stage id="4" text="spq007_4" event="eInventoryUpdated" hint="inventory_updated" />
+  </quest>
+  
+</quests>

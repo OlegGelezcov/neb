@@ -1,4 +1,5 @@
 ﻿using Common;
+using Nebula.Drop;
 using Nebula.Engine;
 using Nebula.Game.Components;
 using Space.Game;
@@ -51,8 +52,10 @@ namespace Nebula.Game.Skills {
                 }
 
                 if(targetItem) {
-                    float dmg = sourceWeapon.GetDamage(false) * dmg2Mult;
-                    InputDamage inpDamage = new InputDamage(source, dmg);
+                    float dmg = sourceWeapon.GetDamage(false).totalDamage * dmg2Mult;
+                    WeaponDamage sInpWeapDmg = new WeaponDamage(sourceWeapon.myWeaponBaseType);
+                    sInpWeapDmg.SetBaseTypeDamage(dmg);
+                    InputDamage inpDamage = new InputDamage(source, sInpWeapDmg);
                     targetItem.GetComponent<DamagableObject>().ReceiveDamage(inpDamage);
                 }
 

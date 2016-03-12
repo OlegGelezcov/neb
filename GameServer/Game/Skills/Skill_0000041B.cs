@@ -13,7 +13,7 @@ namespace Nebula.Game.Skills {
 
             float dmgMult = skill.GetFloatInput("dmg_mult");
             var weapon = source.Weapon();
-            float damage = weapon.GetDamage(false);
+            float damage = weapon.GetDamage(false).totalDamage;
             float absorbedDamage = dmgMult * damage;
 
             NebulaObject target = null;

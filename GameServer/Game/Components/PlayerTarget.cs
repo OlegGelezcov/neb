@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System;
 using ServerClientCommon;
+using Nebula.Drop;
 
 namespace Nebula.Game.Components {
     public class PlayerTarget : NebulaBehaviour, IInfoSource, IDatabaseObject
@@ -346,9 +347,9 @@ namespace Nebula.Game.Components {
             ClearSubscribers();
         }
 
-        public float MoveDamageToSubscriber(float inputDamage) {
+        public WeaponDamage MoveDamageToSubscriber(WeaponDamage inputDamage) {
 
-            float movedDamage = inputDamage;
+            float movedDamage = inputDamage.totalDamage;
             
 
             if (nebulaObject.IsPlayer()) {
@@ -357,8 +358,10 @@ namespace Nebula.Game.Components {
                     if (subscriber.Value) {
                         if (subscriber.Value.IsPlayer()) {
                             if (subscriber.Value.Raceable().race == meRaceable.race) {
-                                if (subscriber.Value.Skills().MoveDamageFromAlly(inputDamage, ref movedDamage)) {
-                                    return movedDamage;
+                                if (subscriber.Value.Skills().MoveDamageFromAlly(inputDamage.totalDamage, ref movedDamage)) {
+                                    inputDamage.ClearAllDamages();
+                                    inputDamage.SetBaseTypeDamage(movedDamage);
+                                    return inputDamage;
                                 }
                             }
                         }

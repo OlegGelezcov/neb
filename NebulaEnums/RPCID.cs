@@ -13,5 +13,8 @@
         public const int rpc_sc_SetRaceStatus = 10;
 
         public const int rpc_SetPlayerMark = 11;
+        public const int rpc_ResetNew = 12;
+        public const int rpc_TestKill = 13;
+        public const int rpc_UnlockLore = 14;
     }
 }

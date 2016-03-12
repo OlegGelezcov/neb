@@ -12,6 +12,7 @@ namespace Nebula.Inventory.Objects {
         private float m_Value;
         private int m_Interval;
         private int m_Tag;
+        private bool m_IsNew;
 
         public ExpBoostObject(Hashtable hash) { ParseInfo(hash); }
 
@@ -20,7 +21,10 @@ namespace Nebula.Inventory.Objects {
             m_Value = value;
             m_Interval = interval;
             m_Tag = tag;
+            m_IsNew = true;
+
             m_Raw = GetInfo();
+
         }
 
         #region Interface IInventoryObject
@@ -67,6 +71,18 @@ namespace Nebula.Inventory.Objects {
 
         public void Bind() { }
 
+        public bool isNew {
+            get {
+                return m_IsNew;
+            }
+        }
+
+        public void ResetNew() {
+            m_IsNew = false;
+        }
+        public void SetNew(bool val) {
+            m_IsNew = val;
+        }
         public Hashtable GetInfo() {
             return new Hashtable {
                 { (int)SPC.Id, Id },
@@ -78,7 +94,8 @@ namespace Nebula.Inventory.Objects {
                 { (int)SPC.Splittable, splittable },
                 { (int)SPC.Value, value },
                 { (int)SPC.Interval, interval },
-                { (int)SPC.Tag, tag }
+                { (int)SPC.Tag, tag },
+                { (int)SPC.IsNew, isNew }
             };
         }
 
@@ -88,6 +105,7 @@ namespace Nebula.Inventory.Objects {
             m_Value = info.GetValue<float>((int)SPC.Value, 0f);
             m_Interval = info.GetValue<int>((int)SPC.Interval, 0);
             m_Tag = info.GetValue<int>((int)SPC.Tag, 0);
+            m_IsNew = info.GetValue<bool>((int)SPC.IsNew, false);
         } 
         #endregion
 

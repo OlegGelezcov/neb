@@ -1,6 +1,7 @@
 ﻿using Common;
 using ExitGames.Logging;
 using GameMath;
+using Nebula.Drop;
 using Nebula.Engine;
 using ServerClientCommon;
 using Space.Game;
@@ -25,6 +26,7 @@ namespace Nebula.Game.Components {
         protected DamagableObject cachedDamagable { get; private set; }
         private AchievmentComponent m_Achievments;
 
+        public abstract WeaponBaseType myWeaponBaseType { get; }
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -66,7 +68,7 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public abstract float GetDamage(bool isCrit);
+        public abstract WeaponDamage GetDamage(bool isCrit);
 
         public override int behaviourId {
             get {
@@ -149,9 +151,9 @@ namespace Nebula.Game.Components {
         public virtual Hashtable Heal(NebulaObject targetObject, float healValue, int skillID = -1) {
             MakeMeVisible();
 
-            float notCritDmg = GetDamage(false);
-            float critDmg = GetDamage(true);
-            float ratio = critDmg / notCritDmg;
+            WeaponDamage notCritDmg = GetDamage(false);
+            WeaponDamage critDmg = GetDamage(true);
+            float ratio = critDmg.totalDamage / notCritDmg.totalDamage;
 
             healValue = Mathf.ClampLess( healValue * (1.0f + cachedBonuses.healingPcBonus) + cachedBonuses.healingCntBonus, 0f);
 
@@ -320,8 +322,11 @@ namespace Nebula.Game.Components {
                 return;
             }
 
+
             if(!hit.isHitted) {
-                hit.SetActualDamage(0);
+                var zeroDamage = GetDamage(false);
+                zeroDamage.ClearAllDamages();
+                hit.SetActualDamage(zeroDamage);
                 return;
             }
             hit.SetGunsOverheatted(overheated);
@@ -330,11 +335,14 @@ namespace Nebula.Game.Components {
         }
 
 
-
         private void ApplyDamage(ref WeaponHitInfo hit, DamagableObject target, float damageMult, bool useDamageMultSelfAsDamage) {
-            float inputDamage = GetDamage(hit.isCritical) * damageMult * Rand.NormalNumber(0.8f, 1.2f);
+            WeaponDamage inputDamage = GetDamage(hit.isCritical); // * damageMult * Rand.NormalNumber(0.8f, 1.2f);
+            inputDamage.Mult(damageMult * Rand.NormalNumber(0.8f, 1.2f));
+
             if(useDamageMultSelfAsDamage) {
-                inputDamage = damageMult;
+                WeaponDamage dmg = new WeaponDamage(inputDamage.baseType, 0, 0, 0);
+                dmg.SetBaseTypeDamage(damageMult);
+                inputDamage.SetFromDamage(dmg);
             }
 
             if (cachedSkills) {
@@ -351,7 +359,7 @@ namespace Nebula.Game.Components {
             if (raceable) {
                 race = raceable.race;
             }
-            float actualDamage = 0f;
+            WeaponDamage actualDamage = inputDamage;
 
             if (false == ReflectDamage(target, ref hit, inputDamage)) {
                 InputDamage inpDamage = new InputDamage(nebulaObject, inputDamage);
@@ -366,10 +374,36 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private void StartDamageDron(DamagableObject targetObject, float inputDamage, byte workshop, int level, byte race) {
+        //private WeaponBaseType myDronBaseType {
+        //    get {
+        //        if(cachedCharacter != null ) {
+        //            byte iWorkshop = cachedCharacter.workshop;
+        //            Workshop workshop = (Workshop)iWorkshop;
+        //            Race race = CommonUtils.RaceForWorkshop(workshop);
+        //            switch(race) {
+        //                case Race.Humans:
+        //                    return WeaponBaseType.Rocket;
+        //                case Race.Criptizoids:
+        //                    return WeaponBaseType.Laser;
+        //                case Race.Borguzands:
+        //                    return WeaponBaseType.Acid;
+        //                default:
+        //                    return WeaponBaseType.Rocket;
+        //            }
+        //        }
+        //        return WeaponBaseType.Rocket;
+        //    }
+        //}
+
+        private void StartDamageDron(DamagableObject targetObject, WeaponDamage inputDamage, byte workshop, int level, byte race) {
+
             if (nebulaObject.IsPlayer()) {
+
                 if (mPassiveBonuses != null && mPassiveBonuses.damageDronTier > 0) {
-                    float dronDamage = inputDamage * mPassiveBonuses.damageDronBonus;
+
+                    WeaponDamage dronDamage = new WeaponDamage();
+                    dronDamage.SetFromDamage(inputDamage);
+                    dronDamage.Mult(mPassiveBonuses.damageDronBonus);
 
                     InputDamage inpDamage = new InputDamage(nebulaObject, dronDamage);
                     targetObject.ReceiveDamage(inpDamage);
@@ -377,14 +411,14 @@ namespace Nebula.Game.Components {
                     Hashtable dronInfo = new Hashtable {
                         { (int)SPC.Target, targetObject.nebulaObject.Id },
                         { (int)SPC.TargetType, targetObject.nebulaObject.Type },
-                        { (int)SPC.Damage, dronDamage }
+                        { (int)SPC.Damage, dronDamage.totalDamage  }
                     };
                     mMessage.SendDamageDron(dronInfo);
                 }
             }
         }
 
-        private bool ReflectDamage(DamagableObject targetDamagable, ref WeaponHitInfo hit, float damage) {
+        private bool ReflectDamage(DamagableObject targetDamagable, ref WeaponHitInfo hit, WeaponDamage damage) {
             bool reflected = targetDamagable.TryReflectDamage();
             if(reflected) {
                 //var targetCharacter = targetDamagable.nebulaObject.Character();
@@ -413,7 +447,7 @@ namespace Nebula.Game.Components {
             return GameBalance.ComputeHitProb(optimalDistance, transform.DistanceTo(nebObject.transform), nebObject.size);
         }
 
-        public float GenerateDamage() {
+        public WeaponDamage GenerateDamage() {
             if (Rand.Float01() < criticalChance) {
                 return GetDamage(true);
             } else {

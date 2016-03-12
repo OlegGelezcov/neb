@@ -10,6 +10,11 @@ namespace Nebula.Client.Inventory.Objects {
             ParseInfo(info);
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+
         public int race { get; private set; }
         public bool binded {
             get;
@@ -55,6 +60,7 @@ namespace Nebula.Client.Inventory.Objects {
             Id = info.GetValueString((int)SPC.Id);
             binded = info.GetValueBool((int)SPC.Binded);
             race = info.GetValueInt((int)SPC.Race, (int)(byte)Race.None);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
     }
 }

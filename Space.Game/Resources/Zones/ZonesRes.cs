@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Linq;
+using Nebula.Resources.Zones;
 
 namespace Space.Game.Resources.Zones {
     public class ZonesRes
@@ -83,6 +84,9 @@ namespace Space.Game.Resources.Zones {
                 Dictionary<string, ZoneNpcInfo> npcs = LoadNpcs(e.Element("npcs"));
                 List<string> npcGroups = this.LoadNpcGroups(e.Element("npc_groups"));
                 List<ZonePlanetInfo> planets = LoadPlanets(e.Element("planets"));
+                List<PlanetCell> planetCells = new List<PlanetCell>();
+
+
 
                 ConcurrentDictionary<string, NebulaObjectData> nebulaObjectCollection;
                 if(e.Element("nebula_objects") != null ) {
@@ -103,6 +107,14 @@ namespace Space.Game.Resources.Zones {
                     worldType = (WorldType)Enum.Parse(typeof(WorldType), e.GetString("world_type"));
                 }
 
+                if(worldType == WorldType.instance) {
+                    if(e.Element("cells") != null ) {
+                        planetCells = e.Element("cells").Elements("cell").Select(cellElement => {
+                            return PlanetCell.FromXml(cellElement);
+                        }).ToList();
+                    }
+                }
+
                 Vector3 hsp = new Vector3(0, 0, 0);
                 Vector3 csp = new Vector3(0, 0, 0);
                 Vector3 bsp = new Vector3(0, 0, 0);
@@ -116,8 +128,7 @@ namespace Space.Game.Resources.Zones {
                     csp = e.GetFloatArray("c_sp").ToVector3();
                 }
 
-                return new ZoneData
-                {
+                return new ZoneData {
                     Id = e.Attribute("id").Value,
                     Level = int.Parse(e.Attribute("level").Value),
                     Name = e.Attribute("name").Value,
@@ -133,8 +144,9 @@ namespace Space.Game.Resources.Zones {
                     nebulaObjects = nebulaObjectCollection,
                     worldType = worldType,
                     humanSP = hsp,
-                     borguzandSP = bsp,
-                      criptizidSP = csp
+                    borguzandSP = bsp,
+                    criptizidSP = csp,
+                    planetCells = planetCells
                 };
 
             }).ToList();
@@ -234,6 +246,10 @@ namespace Space.Game.Resources.Zones {
                                         componentCollection.Add(ComponentID.Activator, data);
                                         break;
                                 }
+                            }
+                            break;
+                        case ComponentID.LoreBox: {
+                                componentCollection.Add(ComponentID.LoreBox, new LoreBoxComponentData(ce));
                             }
                             break;
                         case ComponentID.CombatAI:

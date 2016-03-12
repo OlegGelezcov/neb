@@ -21,8 +21,19 @@ namespace Nebula.Inventory.Objects {
             maxLevel = inMaxLevel;
             binded = inBinded;
             race = (int)(byte)inrace;
+            isNew = true;
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+        public void ResetNew() {
+            isNew = false;
+        }
+        public void SetNew(bool val) {
+            isNew = val;
+        }
         public bool binded {
             get; private set;
         }
@@ -78,7 +89,8 @@ namespace Nebula.Inventory.Objects {
                 { (int)SPC.MinLevel, minLevel },
                 { (int)SPC.MaxLevel, maxLevel },
                 { (int)SPC.Race, race },
-                { (int)SPC.Splittable, splittable}
+                { (int)SPC.Splittable, splittable},
+                { (int)SPC.IsNew, isNew }
             };
         }
 
@@ -89,6 +101,7 @@ namespace Nebula.Inventory.Objects {
             maxLevel = info.GetValue<int>((int)SPC.MaxLevel, 0);
             race = info.GetValue<int>((int)SPC.Race, (int)(byte)Race.None);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
+            isNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
     }
 }

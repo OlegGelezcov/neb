@@ -16,6 +16,10 @@ namespace Nebula.Client {
         public float damage { get; private set; }
         public bool isCritical { get; private set; }
         public string errorMessage { get; private set; }
+        public float rocketDamage { get; private set; }
+        public float acidDamage { get; private set; }
+        public float laserDamage { get; private set; }
+        public WeaponBaseType weaponBaseType { get; private set; }
 
         public void ParseInfo(Hashtable info) {
             sourceID = info.GetValueString((int)SPC.Source);
@@ -29,6 +33,10 @@ namespace Nebula.Client {
             damage = info.GetValueFloat((int)SPC.ActualDamage, 0f);
             isCritical = info.GetValueBool((int)SPC.IsCritical, false);
             errorMessage = info.GetValueString((int)SPC.ErrorMessageId, string.Empty);
+            rocketDamage = info.GetValueFloat((int)SPC.RocketDamage);
+            acidDamage = info.GetValueFloat((int)SPC.AcidDamage);
+            laserDamage = info.GetValueFloat((int)SPC.LaserDamage);
+            weaponBaseType = (WeaponBaseType)info.GetValueInt((int)SPC.WeaponBaseType, (int)WeaponBaseType.Rocket);
         }
 
         public FireShotEventInfo(Hashtable info) {

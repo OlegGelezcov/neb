@@ -32,8 +32,8 @@ namespace Nebula.Game.Skills {
 
             var targetDamagable = targetObject.Damagable();
 
-            float damage = sourceWeapon.GenerateDamage() * dmgPc;
-            targetDamagable.SetTimedDamage(speedTime, damage);
+            float damage = sourceWeapon.GenerateDamage().totalDamage * dmgPc;
+            targetDamagable.SetTimedDamage(speedTime, damage, sourceWeapon.myWeaponBaseType);
             info.Add((int)SPC.Damage, damage);
 
             source.SetInvisibility(false);

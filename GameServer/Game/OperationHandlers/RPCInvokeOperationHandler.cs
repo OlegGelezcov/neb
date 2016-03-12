@@ -1,4 +1,6 @@
 ﻿using Common;
+using Nebula.Drop;
+using Nebula.Engine;
 using Nebula.Game.Components;
 using Nebula.Server.Operations;
 using Photon.SocketServer;
@@ -8,6 +10,8 @@ using System.Collections;
 
 namespace Nebula.Game.OperationHandlers {
     public class RPCInvokeOperationHandler : BasePlayerOperationHandler {
+
+        private const float LORE_BOX_ACTION_DISTANCE = 70;
 
         public override OperationResponse Handle(MmoActor actor, OperationRequest request, SendParameters sendParameters) {
             var operation = new RPCInvokeOperation(actor.Peer.Protocol, request);
@@ -39,12 +43,110 @@ namespace Nebula.Game.OperationHandlers {
                     return CallGetParamDetail(actor, request, operation);
                 case RPCID.rpc_SetPlayerMark:
                     return CallSetPlayerMark(actor, request, operation);
+                case RPCID.rpc_ResetNew:
+                    return CallResetNew(actor, request, operation);
+                case RPCID.rpc_TestKill:
+                    return CallTestKill(actor, request, operation);
+                case RPCID.rpc_UnlockLore:
+                    return CallUnlockLore(actor, request, operation);
                 default:
                     return new OperationResponse(request.OperationCode) {
                         ReturnCode = (int)ReturnCode.InvalidRPCID,
                         DebugMessage = string.Format("not found rpc with id = {0}", operation.rpcId)
                     };
             }
+        }
+
+        private OperationResponse CallUnlockLore(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+
+            if(op.parameters != null && op.parameters.Length >= 1) {
+
+                string loreBoxId = (string)op.parameters[0];
+                NebulaObject loreBoxObject;
+                RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId
+                };
+
+                if(player.nebulaObject.mmoWorld().TryGetObject((byte)ItemType.Bot, loreBoxId, out loreBoxObject)) {
+
+                    float distance = player.transform.DistanceTo(loreBoxObject.transform);
+                    if(distance <= LORE_BOX_ACTION_DISTANCE ) {
+
+                        var loreBoxComponent = loreBoxObject.GetComponent<LoreBoxComponent>();
+
+                        if(loreBoxComponent != null ) {
+                            if (player.GetComponent<AchievmentComponent>().FoundLoreRecord(loreBoxComponent.recordId)) {
+
+                                (loreBoxObject as GameObject).Destroy();
+
+                                responseInstance.result = new Hashtable {
+                                    { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+                                };
+
+                            } else {
+                                responseInstance.result = new Hashtable {
+                                    { (int)SPC.ReturnCode, (int)RPCErrorCode.LoreRecordAlreadyUnlocked }
+                                };
+                            }
+                        } else {
+                            responseInstance.result = new Hashtable {
+                                { (int)SPC.ReturnCode, (int)RPCErrorCode.ComponentNotFound }
+                            };
+                        }
+                    } else {
+                        responseInstance.result = new Hashtable {
+                            { (int)SPC.ReturnCode, (int)RPCErrorCode.DistanceIsFar }
+                        };
+                    }
+                } else {
+                    responseInstance.result = new Hashtable {
+                        { (int)SPC.ReturnCode, (int)RPCErrorCode.ItemNotFound },
+                    };
+                }
+
+                return new OperationResponse(request.OperationCode, responseInstance);
+            } else {
+                return InvalidOperationParameter(request);
+            }
+        }
+
+        private OperationResponse CallTestKill(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+
+            bool success = false;
+            var targetComponent = player.GetComponent<PlayerTarget>();
+            if(targetComponent.targetObject != null ) {
+                var targetDamagableComponent = targetComponent.targetObject.GetComponent<DamagableObject>();
+                if(targetDamagableComponent != null ) {
+                    WeaponDamage weaponDamage = new WeaponDamage(WeaponBaseType.Rocket, 100000, 0, 0);
+                    targetDamagableComponent.ReceiveDamage(new InputDamage(player.nebulaObject, weaponDamage, new DamageParams { reflected = true }));
+                    success = true;
+                }
+            }
+            RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = success
+            };
+            return new OperationResponse(request.OperationCode, responseInstance);
+        }
+
+        private OperationResponse CallResetNew(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length >= 1) {
+                InventoryType inventoryType = (InventoryType)(byte)op.parameters[0];
+                bool success = true;
+                if(inventoryType == InventoryType.ship) {
+                    player.Inventory.ResetNew();
+                } else if(inventoryType == InventoryType.station) {
+                    player.Station.StationInventory.ResetNew();
+                } else {
+                    success = false;
+                }
+                RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = success
+                };
+                return new OperationResponse(request.OperationCode, responseInstance);
+            }
+            return InvalidOperationParameter(request);
         }
 
         private OperationResponse CallSetPlayerMark(MmoActor player, OperationRequest request, RPCInvokeOperation op) {

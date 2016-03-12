@@ -21,7 +21,7 @@ namespace Nebula.Game.Skills {
             float healAreaMult = skill.GetFloatInput("area_heal");
             float radius = skill.GetFloatInput("radius");
 
-            float damage = source.Weapon().GetDamage(false);
+            float damage = source.Weapon().GetDamage(false).totalDamage;
             float targetHeal = damage * healMult;
             float areaHeal = damage * healAreaMult;
 

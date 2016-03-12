@@ -1,4 +1,5 @@
 ﻿using ExitGames.Logging;
+using Nebula.Drop;
 using Nebula.Game.Components;
 
 namespace Nebula.Game.Pets {
@@ -41,7 +42,7 @@ namespace Nebula.Game.Pets {
             base.Update(deltaTime);
         }
 
-        protected override float ModifyDamage(float damage) {
+        protected override WeaponDamage ModifyDamage(WeaponDamage damage) {
             return base.ModifyDamage(damage);
         }
 
@@ -49,7 +50,7 @@ namespace Nebula.Game.Pets {
             return base.ReceiveDamage(inputDamage);
         }
 
-        protected override float AbsorbDamage(float inputDamage) {
+        protected override WeaponDamage AbsorbDamage(WeaponDamage inputDamage) {
             return base.AbsorbDamage(inputDamage);
         }
 

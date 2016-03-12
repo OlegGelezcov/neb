@@ -16,9 +16,20 @@ namespace Nebula.Inventory.Objects {
             Id = inID;
             value = inValue;
             binded = inBinded;
+            isNew = true;
         }
 
         #region IInventoryObject interface
+        public bool isNew {
+            get;
+            private set;
+        }
+        public void ResetNew() {
+            isNew = false;
+        }
+        public void SetNew(bool val) {
+            isNew = val;
+        }
         public bool binded {
             get;
             private set;
@@ -71,7 +82,8 @@ namespace Nebula.Inventory.Objects {
                     { (int)SPC.PlacingType, placingType },
                     { (int)SPC.Binded, binded },
                     { (int)SPC.Value, value },
-                { (int)SPC.Splittable, splittable }
+                { (int)SPC.Splittable, splittable },
+                { (int)SPC.IsNew, isNew }
                 };
             return mRaw;
         }
@@ -81,6 +93,7 @@ namespace Nebula.Inventory.Objects {
             Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             value = info.GetValue<float>((int)SPC.Value, 0f);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
+            isNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
         #endregion
     }

@@ -44,7 +44,9 @@ namespace Nebula.Game.Skills {
             if(hit.hitAllowed ) {
                 sourceMessage.SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
 
-                InputDamage inpDamage = new InputDamage(source, sourceWeapon.GenerateDamage() * dmgAreaMult);
+                var genDmg = sourceWeapon.GenerateDamage();
+                genDmg.Mult(dmgAreaMult);
+                InputDamage inpDamage = new InputDamage(source, genDmg);
 
                 foreach(var pTarget in GetTargets(source, source.Target().targetObject, radius)) {
 

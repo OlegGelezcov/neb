@@ -6,9 +6,9 @@ using ServerClientCommon;
 namespace Space.Game.Inventory
 {
     public class ServerInventoryItem : InventoryItem<IInventoryObject> {
-
         public ServerInventoryItem(IInventoryObject obj, int count)
-            : base(obj, count) { }
+            : base(obj, count) {
+        }
 
         public ServerInventoryItem() : base() { }
 
@@ -22,6 +22,14 @@ namespace Space.Game.Inventory
             return objectInfo;
         }
 
-       
+       public bool isNew {
+            get {
+                return Object.isNew;
+            }
+        }
+
+        public void ResetNew() {
+            Object.ResetNew();
+        }
     }
 }

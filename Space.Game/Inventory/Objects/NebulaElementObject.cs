@@ -13,6 +13,7 @@ namespace Nebula.Inventory.Objects {
         public NebulaElementObject(string inID, string templateID) {
             Id = inID;
             templateId = templateID;
+            isNew = true;
         }
 
         public NebulaElementObject(Hashtable itemInfo) {
@@ -24,6 +25,17 @@ namespace Nebula.Inventory.Objects {
             private set;
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+
+        public void ResetNew() {
+            isNew = false;
+        }
+        public void SetNew(bool val) {
+            isNew = val;
+        }
         public string Id {
             get;
             private set;
@@ -81,6 +93,7 @@ namespace Nebula.Inventory.Objects {
             hash.Add((int)SPC.PlacingType, placingType);
             hash.Add((int)SPC.Binded, binded);
             hash.Add((int)SPC.Splittable, splittable);
+            hash.Add((int)SPC.IsNew, isNew);
             return hash;
         }
 
@@ -89,6 +102,7 @@ namespace Nebula.Inventory.Objects {
             Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             templateId = info.GetValue<string>((int)SPC.Template, string.Empty);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
+            isNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
     }
 }

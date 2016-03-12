@@ -13,7 +13,12 @@ namespace Nebula.Client.Inventory.Objects {
         public CraftResourceInventoryObjectInfo(Hashtable hash) {
             m_Raw = hash;
             ParseInfo(hash);
-        } 
+        }
+
+        public bool isNew {
+            get;
+            private set;
+        }
 
         public bool binded {
             get {
@@ -54,6 +59,7 @@ namespace Nebula.Client.Inventory.Objects {
             m_Id = info.GetValueString((int)SPC.Id);
             m_Binded = info.GetValueBool((int)SPC.Binded);
             m_Color = (ObjectColor)(byte)info.GetValueInt((int)SPC.Color);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
 
         public bool HasColor() {

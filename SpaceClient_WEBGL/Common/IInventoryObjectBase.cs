@@ -6,5 +6,6 @@ namespace Common {
         string Id { get; }
         InventoryObjectType Type { get; }
         Hashtable rawHash { get; }
+        bool isNew { get; }
     }
 }

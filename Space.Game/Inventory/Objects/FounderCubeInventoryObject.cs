@@ -13,11 +13,12 @@ namespace Nebula.Inventory.Objects {
 
         private Hashtable m_Raw;
         private float m_UseTime;
-
+        private bool m_IsNew;
 
         public FounderCubeInventoryObject() {
             Id = Guid.NewGuid().ToString();
             m_UseTime = 0;
+            m_IsNew = true;
         }
 
         public FounderCubeInventoryObject(Hashtable hash) {
@@ -96,6 +97,18 @@ namespace Nebula.Inventory.Objects {
         public void Bind() {
         }
 
+        public bool isNew {
+            get {
+                return m_IsNew;
+            }
+        }
+        public void ResetNew() {
+            m_IsNew = false;
+        }
+        public void SetNew(bool val) {
+            m_IsNew = val;
+        }
+
         /// <summary>
         /// Get dictionary for network transfer this object
         /// </summary>
@@ -103,6 +116,7 @@ namespace Nebula.Inventory.Objects {
         public Hashtable GetInfo() {
             m_Raw = InventoryUtils.ItemHash(Id, Level, ObjectColor.white, Type, (PlacingType)placingType, binded, splittable);
             m_Raw.Add((int)SPC.UseTime, m_UseTime);
+            m_Raw.Add((int)SPC.IsNew, isNew);
 
             return m_Raw;
         }
@@ -115,6 +129,7 @@ namespace Nebula.Inventory.Objects {
             m_Raw = info;
             Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             m_UseTime = info.GetValue<float>((int)SPC.UseTime, 0f);
+            m_IsNew = info.GetValue<bool>((int)SPC.IsNew, false);
         } 
         #endregion
 

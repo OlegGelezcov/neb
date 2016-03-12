@@ -24,6 +24,10 @@ namespace Nebula.Client.Inventory.Objects {
         public SchemeInventoryObjectInfo(Hashtable info) {
             this.ParseInfo(info);
         }
+        public bool isNew {
+            get;
+            private set;
+        }
 
         public void ParseInfo(Hashtable info) {
             rawHash = info;
@@ -44,6 +48,7 @@ namespace Nebula.Client.Inventory.Objects {
             Hashtable craftMaterialsHash = info.GetValueHash((int)SPC.CraftMaterials);
             this.craftMaterials = craftMaterialsHash.toDict<string, int>();
             binded = info.GetValueBool((int)SPC.Binded);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
 
 

@@ -7,6 +7,7 @@ using Nebula.Game.Components;
 using Common;
 using Space.Game;
 using System.Collections;
+using Nebula.Drop;
 
 namespace Nebula.Game.Skills {
     public class Skill_000003EF : SkillExecutor {
@@ -50,11 +51,13 @@ namespace Nebula.Game.Skills {
                     return false;
                 });
 
-                float damage = sourceWeapon.GetDamage(false) * dmgMultArea;
+                float damage = sourceWeapon.GetDamage(false).totalDamage * dmgMultArea;
 
-                InputDamage inpDamage = new InputDamage(source, damage);
+                WeaponDamage sInpWeapDmg = new WeaponDamage(sourceWeapon.myWeaponBaseType);
+                sInpWeapDmg.SetBaseTypeDamage(damage);
+                InputDamage inpDamage = new InputDamage(source, sInpWeapDmg);
                 if(mastery) {
-                    inpDamage.SetDamage(inpDamage.damage * 2);
+                    inpDamage.damage.Mult(2);
                 }
                 foreach (var p in items) {
                     

@@ -65,6 +65,7 @@ namespace Common {
         UnableProposeContract = 1054,
         ProposedContractNotFound = 1055,
         ErrorOfAcceptContract = 1056,
+        LoreRecordAlreadyUnlocked = 1057,
 
         UnknownError = 10002,
         

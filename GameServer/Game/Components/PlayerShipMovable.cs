@@ -38,7 +38,12 @@ namespace Nebula.Game.Components {
         }
 
         protected override void UpdateDetail() {
-            base.UpdateDetail();
+
+            m_SpeedDetail.Reset();
+            m_SpeedDetail.SetStopMult(stopped);
+            m_SpeedDetail.SetModelSpeed(normalSpeed);
+            m_SpeedDetail.SetBonusAdd(GetSpeedWithBonuses(m_SpeedDetail.modelSpeed) - m_SpeedDetail.modelSpeed);
+
             m_SpeedDetail.SetControlMult(mAI.controlState);
             m_SpeedDetail.SetPassiveAbilitiesAdd(GetSpeedWithPassiveBonus(m_SpeedDetail.total) - m_SpeedDetail.total);
             m_SpeedDetail.SetAccelerationEffect(GetShiftSpeed(m_SpeedDetail.total) - m_SpeedDetail.total);
@@ -47,10 +52,16 @@ namespace Nebula.Game.Components {
         public override float speed {
             get {
                 var total =  base.speed;
-                if (nebulaObject.IsPlayer()) {
-                    UpdateSpeedProperties(total);
-                }
+                props.SetProperty((byte)PS.CurrentLinearSpeed, total);
                 return total;
+            }
+        }
+
+        public override float maximumSpeed {
+            get {
+                float val =  base.maximumSpeed;
+                props.SetProperty((byte)PS.MaxLinearSpeed, val);
+                return val;
             }
         }
 

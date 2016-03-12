@@ -1,4 +1,6 @@
 ﻿using Common;
+using System.Collections.Generic;
+using System.Linq;
 #if UP
 using Nebula.Client.UP;
 #else
@@ -51,6 +53,12 @@ namespace Nebula.Client {
             }
 #endif
             return false;
+        }
+
+        public List<UniXMLElement> Elements(string name) {
+            return element.Elements(name).Select(e => {
+                return new UniXMLElement(e);
+            }).ToList();
         }
     }
 }

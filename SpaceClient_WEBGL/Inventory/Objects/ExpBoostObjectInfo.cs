@@ -1,5 +1,6 @@
 ﻿using Common;
 using ExitGames.Client.Photon;
+using Nebula.Client.Utils;
 using ServerClientCommon;
 
 
@@ -7,6 +8,11 @@ namespace Nebula.Client.Inventory.Objects {
     public class ExpBoostObjectInfo : IInventoryObjectInfo{
 
         public ExpBoostObjectInfo(Hashtable hash) { ParseInfo(hash); }
+
+        public bool isNew {
+            get;
+            private set;
+        }
 
         public int tag {
             get;
@@ -76,6 +82,7 @@ namespace Nebula.Client.Inventory.Objects {
             value = info.GetValue<float>((int)SPC.Value, 0f);
             interval = info.GetValue<int>((int)SPC.Interval, interval);
             tag = info.GetValue<int>((int)SPC.Tag, 0);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         } 
         #endregion
     }

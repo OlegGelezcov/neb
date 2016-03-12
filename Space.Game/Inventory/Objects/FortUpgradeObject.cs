@@ -13,6 +13,7 @@ namespace Nebula.Inventory.Objects {
         public int minLevel { get; private set; }
         public int maxLevel { get; private set; }
         public int race { get; private set; }
+        private bool m_IsNew;
 
         private Hashtable mRaw;
         public FortUpgradeObject(Hashtable info) {
@@ -24,6 +25,7 @@ namespace Nebula.Inventory.Objects {
             maxLevel = inMaxLevel;
             binded = inBinded;
             race = (int)(byte)inrace;
+            m_IsNew = true;
         }
 
         public bool binded {
@@ -69,7 +71,17 @@ namespace Nebula.Inventory.Objects {
         public void Bind() {
             binded = true;
         }
-
+        public bool isNew {
+            get {
+                return m_IsNew;
+            }
+        }
+        public void ResetNew() {
+            m_IsNew = false;
+        }
+        public void SetNew(bool val) {
+            m_IsNew = val;
+        }
         public Hashtable GetInfo() {
             return new Hashtable {
                 { (int)SPC.Id, Id },
@@ -81,7 +93,8 @@ namespace Nebula.Inventory.Objects {
                 { (int)SPC.MinLevel, minLevel },
                 { (int)SPC.MaxLevel, maxLevel },
                 { (int)SPC.Race, race },
-                { (int)SPC.Splittable, splittable}
+                { (int)SPC.Splittable, splittable},
+                { (int)SPC.IsNew, isNew }
             };
         }
 
@@ -92,6 +105,7 @@ namespace Nebula.Inventory.Objects {
             maxLevel = info.GetValue<int>((int)SPC.MaxLevel, 0);
             race = info.GetValue<int>((int)SPC.Race, (int)(byte)Race.None);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
+            m_IsNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
     }
 }

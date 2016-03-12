@@ -131,6 +131,7 @@
     <Compile Include="Game\Components\FixedInputDamageDamagableObject.cs" />
     <Compile Include="Game\Components\InputDamage.cs" />
     <Compile Include="Game\Components\InputHeal.cs" />
+    <Compile Include="Game\Components\LoreBoxComponent.cs" />
     <Compile Include="Game\Components\MainOutpost.cs" />
     <Compile Include="Game\Components\MiningStation.cs" />
     <Compile Include="Game\Components\MmoItemPropertyUpdater.cs" />
@@ -630,7 +631,9 @@
     </Content>
     <Content Include="Docs\message_table.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Game\PlanetBuildings\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

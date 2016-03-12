@@ -13,6 +13,7 @@ using System;
 using Nebula.Server.Components;
 using System.Collections.Concurrent;
 using Nebula.Database;
+using Nebula.Drop;
 
 namespace Nebula.Game.Components {
 
@@ -34,6 +35,17 @@ namespace Nebula.Game.Components {
         private ShipEnergyBlock mEnergy;
         #endregion
 
+        public override WeaponBaseType myWeaponBaseType {
+            get {
+                if(weaponObject != null ) {
+                    return weaponObject.baseType;
+                }
+                if(mRace != null ) {
+                    return CommonUtils.Race2WeaponBaseType((Race)mRace.race);
+                }
+                return WeaponBaseType.Rocket;
+            }
+        }
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -52,8 +64,8 @@ namespace Nebula.Game.Components {
             hash["is_initialized"] = mInitialized.ToString();
             hash["weapon_difficulty"] = weaponDifficulty.ToString();
             hash["additional_damage_targets_count"] = mAdditionalDamageReceivers.Count.ToString();
-            hash["Get_Damage(true)"] = GetDamage(true).ToString();
-            hash["Get_Damage(false)"] = GetDamage(false).ToString();
+            hash["Get_Damage(true)"] = GetDamage(true).totalDamage.ToString();
+            hash["Get_Damage(false)"] = GetDamage(false).totalDamage.ToString();
             return hash;
         }
         private float lightTimer = 0f;
@@ -94,30 +106,29 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public float critDamage {
+        public WeaponDamage critDamage {
             get {
-                float result = damage;
+                WeaponDamage result = damage;
                 if (mShip) {
                     float cr = mShip.shipModel.critDamageBonus;
                     cr = cr * (1.0f + cachedBonuses.critDamagePcBonus) + cachedBonuses.critDamageCntBonus;
-                    result *= cr;
+                    result.Mult(cr);
                 }
                 result = ApplyCriticalDamagePassiveBonus(result);
                 return result;
             }
         }
 
-        private float damage {
+        private WeaponDamage damage {
             get {
-                float dmg = 0;
+                WeaponDamage dmg = new WeaponDamage();
                 if (weaponObject != null) {
-                    dmg = weaponObject.damage;
+                    dmg.SetFromDamage(weaponObject.damage);
                 }
                 if (mShip) {
-                    dmg *= mShip.shipModel.damageBonus;
+                    dmg.Mult(mShip.shipModel.damageBonus);
                 }
                 dmg = ApplyDamagePassiveBonus(dmg);
-
                 return dmg;
             }
         }
@@ -179,18 +190,21 @@ namespace Nebula.Game.Components {
             return criticalInput;
         }
 
-        private float ApplyCriticalDamagePassiveBonus(float inputCriticalDamage) {
+        private WeaponDamage ApplyCriticalDamagePassiveBonus(WeaponDamage inputCriticalDamage) {
             if(nebulaObject.IsPlayer()) {
                 if(mPassiveBonuses != null && mPassiveBonuses.criticalDamageTier > 0 ) {
-                    return inputCriticalDamage * (1.0f + mPassiveBonuses.critDamageBonus);
+                    inputCriticalDamage.Mult(1.0f + mPassiveBonuses.critDamageBonus);
+                    return inputCriticalDamage;
                 }
             }
             return inputCriticalDamage;
         }
 
-        public override float GetDamage(bool isCritical) {
-            float result = (isCritical) ? critDamage : damage;
-            result = Mathf.ClampLess(result * (1.0f + cachedBonuses.damagePcBonus) + cachedBonuses.damageCntBonus, 0f);
+        public override WeaponDamage GetDamage(bool isCritical) {
+            WeaponDamage result = (isCritical) ? critDamage : damage;
+            result.Mult(1.0f + cachedBonuses.damagePcBonus);
+            result.AddToBase(cachedBonuses.damageCntBonus);
+            result.ClampLess(0f);
             return result;
         }
 
@@ -336,10 +350,11 @@ namespace Nebula.Game.Components {
             return result;
         }
 
-        private float ApplyDamagePassiveBonus(float inputDamage) {
+        private WeaponDamage ApplyDamagePassiveBonus(WeaponDamage inputDamage) {
             if(nebulaObject.IsPlayer()) {
                 if(mPassiveBonuses != null && mPassiveBonuses.damageBonusTier > 0 ) {
-                    return inputDamage * (1.0f + mPassiveBonuses.damageBonus);
+                    inputDamage.Mult(1.0f + mPassiveBonuses.damageBonus);
+                    return inputDamage;
                 }
             }
             return inputDamage;
@@ -368,8 +383,8 @@ namespace Nebula.Game.Components {
         {
             Hashtable result = new Hashtable();
             result.Add((int)SPC.HasWeapon, hasWeapon);
-            result.Add((int)SPC.Damage, GetDamage(false));
-            result.Add((int)SPC.CritDamage, GetDamage(true));
+            result.Add((int)SPC.Damage, GetDamage(false).totalDamage);
+            result.Add((int)SPC.CritDamage, GetDamage(true).totalDamage);
             result.Add((int)SPC.Source, hasWeapon ? this.weaponObject.GetInfo() : new Hashtable());
             result.Add((int)SPC.OptimalDistance, optimalDistance);
             return result;

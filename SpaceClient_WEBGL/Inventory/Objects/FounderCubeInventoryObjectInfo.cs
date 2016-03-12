@@ -20,6 +20,11 @@ namespace Nebula.Client.Inventory.Objects {
             ParseInfo(hash);
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+
         #region IInventoryObjectInfo interface
         public bool binded {
             get {
@@ -74,6 +79,7 @@ namespace Nebula.Client.Inventory.Objects {
             m_Id = info.GetValueString((int)SPC.Id);
             m_Binded = info.GetValueBool((int)SPC.Binded);
             m_UseTime = info.GetValueFloat((int)SPC.UseTime);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         } 
         #endregion
 

@@ -13,6 +13,11 @@ namespace Nebula.Client.Inventory.Objects {
             ParseInfo(hash);
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+
         public bool binded {
             get {
                 return true;
@@ -64,6 +69,7 @@ namespace Nebula.Client.Inventory.Objects {
             rawHash = info;
             m_Id = info.GetValueString((int)SPC.Id);
             m_ContractId = info.GetValueString((int)SPC.Contract);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
     }
 }

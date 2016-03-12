@@ -1,15 +1,13 @@
 ﻿
-namespace Space.Game.Drop
-{
-    using System;
+namespace Space.Game.Drop {
     using Common;
-    using Space.Game.Inventory.Objects;
-    using System.Collections.Generic;
-    using Space.Game.Ship;
-    using Space.Game.Resources;
     using GameMath;
     using Nebula.Balance;
-
+    using Nebula.Drop;
+    using Space.Game.Inventory.Objects;
+    using Space.Game.Resources;
+    using System;
+    using System.Collections.Generic;
     public class WeaponDropper : Dropper
     {
         private Dictionary<Difficulty, float> mDmgDiff = new Dictionary<Difficulty, float> {
@@ -83,8 +81,38 @@ namespace Space.Game.Drop
             //    critChance = colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10);
             //}
 
-            return new WeaponObject(Guid.NewGuid().ToString(),
-                data.Id, dropParams.level, damage, distance, colorInfo.color, dropParams.damageType, critChance, (int)(byte)dropParams.workshop);
+            Race weaponRace = CommonUtils.RaceForWorkshop(dropParams.workshop);
+            WeaponDamage weaponDamage = null;
+            switch(weaponRace) {
+                case Race.Humans: {
+                        weaponDamage = new WeaponDamage( WeaponBaseType.Rocket, damage, 0f, 0f);
+                    }
+                    break;
+                case Race.Borguzands: {
+                        weaponDamage = new WeaponDamage( WeaponBaseType.Acid, 0f, 0f, damage);
+                    }
+                    break;
+                case Race.Criptizoids: {
+                        weaponDamage = new WeaponDamage( WeaponBaseType.Laser, 0f, damage, 0f);
+                    }
+                    break;
+                default: {
+                        weaponDamage = new WeaponDamage( WeaponBaseType.Rocket, 0.3f * damage, 0.3f * damage, 0.3f * damage);
+                    }
+                    break;
+            }
+
+            return new WeaponObject(
+                Guid.NewGuid().ToString(),
+                data.Id, 
+                dropParams.level, 
+                weaponDamage, 
+                distance, 
+                colorInfo.color, 
+                dropParams.damageType, 
+                critChance, 
+                (int)(byte)dropParams.workshop
+                );
         }
 
         public WeaponObject DropWeapon() {

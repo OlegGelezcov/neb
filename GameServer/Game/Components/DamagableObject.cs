@@ -9,6 +9,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections;
 using Nebula.Game.Events;
+using Nebula.Drop;
 
 namespace Nebula.Game.Components {
     public abstract class DamagableObject  : NebulaBehaviour{
@@ -174,20 +175,20 @@ namespace Nebula.Game.Components {
             mAbsorbedDamage = absorb;
         }
 
-        protected virtual float AbsorbDamage(float inputDamage) {
+        protected virtual WeaponDamage AbsorbDamage(WeaponDamage inputDamage) {
             float absorbed = 0;
-            float ret = inputDamage;
+            float ret = inputDamage.totalDamage;
 
             if(mAbsorbedDamage > 0) {
-                mAbsorbedDamage -= inputDamage;
+                mAbsorbedDamage -= inputDamage.totalDamage;
                 if(mAbsorbedDamage >= 0f ) {
-                    absorbed = inputDamage;
+                    absorbed = inputDamage.totalDamage;
                     ret = 0f;
 
                 } else {
                     float result = Mathf.Abs(mAbsorbedDamage);
                     mAbsorbedDamage = NO_ABSORB;
-                    absorbed = Mathf.Abs(inputDamage - result);
+                    absorbed = Mathf.Abs(inputDamage.totalDamage - result);
                     ret = result;
 
                 }
@@ -205,7 +206,9 @@ namespace Nebula.Game.Components {
                 }
             }
 
-            return ret;
+            inputDamage.ClearAllDamages();
+            inputDamage.SetBaseTypeDamage(ret);
+            return inputDamage;
         }
 
         /// <summary>
@@ -386,9 +389,9 @@ namespace Nebula.Game.Components {
         //}
 
 
-        public void SetTimedDamage(float interval, float damagePerSecond) {
+        public void SetTimedDamage(float interval, float damagePerSecond, WeaponBaseType wbt) {
             if(timedDamage != null ) {
-                timedDamage.StartDamage(interval, damagePerSecond);
+                timedDamage.StartDamage(interval, damagePerSecond, wbt);
             }
         }
 
@@ -404,14 +407,15 @@ namespace Nebula.Game.Components {
         public virtual InputDamage ReceiveDamage(InputDamage inputDamage) {
             nebulaObject.SetInvisibility(false);
             if(mBonuses) {
-                inputDamage.SetDamage(inputDamage.damage * (1.0f + mBonuses.inputDamagePcBonus));
+                inputDamage.damage.Mult((1.0f + mBonuses.inputDamagePcBonus));
+                //inputDamage.SetDamage(inputDamage.damage * (1.0f + mBonuses.inputDamagePcBonus));
                 ApplyReflection(inputDamage);
             }
             if(inputDamage.hasDamager) {
                 var damagerBons = inputDamage.source.Bonuses();
                 if(damagerBons) {
                     float vampPc = damagerBons.vampirismPcBonus;
-                    float hp = inputDamage.damage * vampPc;
+                    float hp = inputDamage.damage.totalDamage * vampPc;
                     var dDamagable = inputDamage.source.Damagable();
                     if(dDamagable) {
                         dDamagable.Heal(new InputHeal(hp));
@@ -425,8 +429,10 @@ namespace Nebula.Game.Components {
             if ( (false == inputDamage.reflected) && inputDamage.hasDamager) {
                 var reflectValue = mBonuses.reflectionPc;
                 if (false == Mathf.Approximately(reflectValue, 0f)) {
-                    float reflectedDamage = inputDamage.damage * reflectValue;
+                    float reflectedDamageVal = inputDamage.damage.totalDamage * reflectValue;
                     var attackerDamagable = inputDamage.source.Damagable();
+                    WeaponDamage reflectedDamage = new WeaponDamage(inputDamage.damage.baseType);
+                    reflectedDamage.SetBaseTypeDamage(reflectedDamageVal);
                     if (attackerDamagable) {
                         attackerDamagable.ReceiveDamage(new InputDamage(nebulaObject, reflectedDamage, new DamageParams { reflected = true }));
                     }
@@ -474,17 +480,21 @@ namespace Nebula.Game.Components {
             public float damagePerSecond { get; private set; }
 
             private float mTimer;
+            private WeaponBaseType m_TimedDamageType = WeaponBaseType.Rocket;
 
-            public void StartDamage(float interval, float dmgPerSec) {
+            public void StartDamage(float interval, float dmgPerSec, WeaponBaseType wbt) {
                 damagePerSecond = dmgPerSec;
                 mTimer = interval;
+                m_TimedDamageType = wbt;
                 active = true;
             }
 
 
             public void Update(float deltaTime) {
                 if(active) {
-                    InputDamage inpDamage = new InputDamage(null, damagePerSecond * deltaTime);
+                    WeaponDamage dmgPerSec = new WeaponDamage(m_TimedDamageType);
+                    dmgPerSec.SetBaseTypeDamage(damagePerSecond * deltaTime);
+                    InputDamage inpDamage = new InputDamage(null, dmgPerSec);
                     mTarget.ReceiveDamage(inpDamage);
                     mTimer -= deltaTime;
                     if(mTimer <= 0f ) {

@@ -4,6 +4,7 @@ namespace Space.Game {
     using ExitGames.Concurrency.Fibers;
     using ExitGames.Logging;
     using GameMath;
+    using Nebula.Drop;
     using Nebula.Engine;
     using Nebula.Game;
     using Nebula.Game.Bonuses;
@@ -1185,9 +1186,9 @@ namespace Space.Game {
                 {(int)SPC.MaxHealth, damagable.maximumHealth },
                 {(int)SPC.Resist, ship.damageResistance },
                 {(int)SPC.Energy, energy.maximumEnergy  },
-                {(int)SPC.Damage, weapon.GetDamage(false) },
+                {(int)SPC.Damage, weapon.GetDamage(false).totalDamage },
                 {(int)SPC.CritChance, weapon.criticalChance },
-                {(int)SPC.CritDamage, weapon.GetDamage(true)},
+                {(int)SPC.CritDamage, weapon.GetDamage(true).totalDamage },
                 {(int)SPC.Speed, movable.maximumSpeed }
             };
             return result;
@@ -2273,7 +2274,10 @@ namespace Space.Game {
         } 
 
         public Hashtable ReceiveDamage(float dmg) {
-            float actual = Player.nebulaObject.Damagable().ReceiveDamage(new InputDamage(null, dmg)).damage;
+            WeaponDamage weaponDamage = new WeaponDamage(WeaponBaseType.Rocket);
+            weaponDamage.SetBaseTypeDamage(dmg);
+
+            float actual = Player.nebulaObject.Damagable().ReceiveDamage(new InputDamage(null, weaponDamage)).damage.totalDamage;
             return new Hashtable {
                 {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
                 {(int)SPC.Damage, dmg },

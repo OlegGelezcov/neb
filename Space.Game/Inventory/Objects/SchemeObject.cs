@@ -59,6 +59,7 @@ namespace Space.Game.Inventory.Objects
             this.color = schemeInitData.Color;
             this.craftingMaterials = schemeInitData.CraftingMaterials;
             setID = schemeInitData.setID;
+            isNew = true;
             mRaw = GetInfo();
         }
 
@@ -98,7 +99,16 @@ namespace Space.Game.Inventory.Objects
             this.ParseInfo(info);
         }
 
-
+        public bool isNew {
+            get;
+            private set;
+        }
+        public void ResetNew() {
+            isNew = false;
+        }
+        public void SetNew(bool val) {
+            isNew = val;
+        }
         public string Name
         {
             get { return this.name; }
@@ -119,6 +129,7 @@ namespace Space.Game.Inventory.Objects
             result.Add((int)SPC.Set, setID);
             result.Add((int)SPC.Binded, binded);
             result.Add((int)SPC.Splittable, splittable);
+            result.Add((int)SPC.IsNew, isNew);
 
             return result;
         }
@@ -142,6 +153,7 @@ namespace Space.Game.Inventory.Objects
                 setID = string.Empty;
             }
             binded = info.GetValue<bool>((int)SPC.Binded, false);
+            isNew = info.GetValue<bool>((int)SPC.IsNew, false);
         } 
 
         public int Level

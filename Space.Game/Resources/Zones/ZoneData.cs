@@ -5,6 +5,7 @@ using ServerClientCommon;
 using System.Collections.Concurrent;
 using Nebula.Server.Components;
 using GameMath;
+using Nebula.Resources.Zones;
 
 namespace Space.Game.Resources.Zones
 {
@@ -60,6 +61,7 @@ namespace Space.Game.Resources.Zones
         public Vector3 criptizidSP;
         public Vector3 borguzandSP;
 
+        public List<PlanetCell> planetCells { get; set; }
 
         public Hashtable GetInfo()
         {

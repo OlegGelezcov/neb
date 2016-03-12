@@ -9,10 +9,12 @@ namespace Nebula.Inventory.Objects {
         private string m_Id;
         private string m_ContractId;
         private Hashtable m_Raw;
+        private bool m_IsNew;
 
         public ContractItemObject(string id, string contractId) {
             m_Id = id;
             m_ContractId = contractId;
+            m_IsNew = true;
         }
 
         public ContractItemObject(Hashtable hash) {
@@ -71,9 +73,20 @@ namespace Nebula.Inventory.Objects {
             
         }
 
+        public bool isNew {
+            get {
+                return m_IsNew;
+            }
+        }
+
+        public void SetNew(bool val) {
+            m_IsNew = val;
+        }
+
         public Hashtable GetInfo() {
             m_Raw = InventoryUtils.ItemHash(Id, Level, ObjectColor.white, Type, (PlacingType)placingType, binded, splittable);
             m_Raw.Add((int)SPC.Contract, contractId);
+            m_Raw.Add((int)SPC.IsNew, isNew);
             return m_Raw;
         }
 
@@ -81,6 +94,11 @@ namespace Nebula.Inventory.Objects {
             m_Raw = info;
             m_Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             m_ContractId = info.GetValue<string>((int)SPC.Contract, string.Empty);
+            m_IsNew = info.GetValue<bool>((int)SPC.IsNew, false);
+        }
+
+        public void ResetNew() {
+            m_IsNew = false;
         }
     }
 }

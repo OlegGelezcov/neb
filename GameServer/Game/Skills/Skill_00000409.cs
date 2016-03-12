@@ -1,4 +1,5 @@
-﻿using Nebula.Engine;
+﻿using Nebula.Drop;
+using Nebula.Engine;
 using Nebula.Game.Components;
 using Space.Game;
 using System.Collections;
@@ -21,7 +22,7 @@ namespace Nebula.Game.Skills {
             WeaponHitInfo hit;
 
             var sourceWeapon = source.Weapon();
-            float baseDamage = sourceWeapon.GetDamage(false);
+            float baseDamage = sourceWeapon.GetDamage(false).totalDamage;
             float secondDamage = baseDamage * dmgAreaMult;
 
             bool mastery = RollMastery(source);
@@ -33,9 +34,12 @@ namespace Nebula.Game.Skills {
             if(hit.hitAllowed) {
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
 
-                InputDamage inpDamage = new InputDamage(source, secondDamage);
+                WeaponDamage sInpWeapDmg = new WeaponDamage(sourceWeapon.myWeaponBaseType);
+                sInpWeapDmg.SetBaseTypeDamage(secondDamage);
+                InputDamage inpDamage = new InputDamage(source, sInpWeapDmg);
                 if(mastery) {
-                    inpDamage.SetDamage(inpDamage.damage * 2);
+                    inpDamage.damage.Mult(2);
+                    //inpDamage.SetDamage(inpDamage.damage * 2);
                 }
                 foreach(var pitem in GetTargets(source, source.Target().targetObject, radius)) {
                     pitem.Value.Damagable().ReceiveDamage(inpDamage);

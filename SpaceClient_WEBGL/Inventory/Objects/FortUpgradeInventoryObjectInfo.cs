@@ -14,6 +14,11 @@ namespace Nebula.Client.Inventory.Objects {
         public int maxLevel { get; private set; }
         public int race { get; private set; }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+
         public bool binded {
             get;
             private set;
@@ -60,6 +65,7 @@ namespace Nebula.Client.Inventory.Objects {
             maxLevel = info.GetValueInt((int)SPC.MaxLevel);
             race = info.GetValueInt((int)SPC.Race, (int)(byte)Race.None);
             binded = info.GetValueBool((int)SPC.Binded);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
     }
 }

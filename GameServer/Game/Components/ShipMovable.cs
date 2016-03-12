@@ -43,9 +43,6 @@ namespace Nebula.Game.Components {
         public override float maximumSpeed {
             get {
                 float s = ship.shipModel.speed;
-                if (nebulaObject.IsPlayer()) {
-                    UpdateSpeedProperties(s);
-                }
                 return s;
             }
         }

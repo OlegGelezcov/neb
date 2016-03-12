@@ -19,6 +19,7 @@ namespace Login {
     /// </summary>
     public class DbReader {
 
+        public const int NEBULA_CREDITS_AT_START = 1000;
         /// <summary>
         /// Client
         /// </summary>
@@ -179,7 +180,7 @@ namespace Login {
                 password = auth.password,
                 facebookId = fbId.value,
                 vkontakteId = vkId.value,
-                nebulaCredits = 0
+                nebulaCredits = NEBULA_CREDITS_AT_START
             };
 
             var result = UserLogins.Save(dbUser);

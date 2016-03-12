@@ -147,7 +147,8 @@ namespace Nebula.Game.Components {
             inputDamage = base.ReceiveDamage(inputDamage);
 
             if (!nebulaObject) {
-                inputDamage.SetDamage(0.0f);
+                inputDamage.damage.ClearAllDamages();
+                //inputDamage.SetDamage(0.0f);
                 return inputDamage;
             }
 
@@ -158,7 +159,8 @@ namespace Nebula.Game.Components {
                 //    log.Info("player damage ignored");
                 //}
                 //return 0f;
-                inputDamage.SetDamage(0.0f);
+                inputDamage.damage.ClearAllDamages();
+                //inputDamage.SetDamage(0.0f);
                 return inputDamage;
             }
             //if(god) {
@@ -175,24 +177,26 @@ namespace Nebula.Game.Components {
             }
             //resist = ApplyResistPassiveBonus(resist);
 
-            inputDamage.SetDamage(inputDamage.damage * (1.0f - Mathf.Clamp01(resist)));
+            inputDamage.damage.Mult(1.0f - Mathf.Clamp01(resist));
+            //inputDamage.SetDamage(inputDamage.damage * (1.0f - Mathf.Clamp01(resist)));
             inputDamage.SetDamage(AbsorbDamage(inputDamage.damage));
 
             if (!god) {
                 if(mBonuses) {
                     if(mBonuses.isImmuneToDamage) {
-                        inputDamage.SetDamage(0f);
+                        inputDamage.damage.ClearAllDamages();
+                        //inputDamage.SetDamage(0f);
                     }
                 }
 
                 if(nebulaObject.IsPlayer()) {
                     inputDamage.SetDamage(mTarget.MoveDamageToSubscriber(inputDamage.damage));
                 }
-                SubHealth(inputDamage.damage);
+                SubHealth(inputDamage.damage.totalDamage);
             }
 
             if (inputDamage.hasDamager) {
-                AddDamager(inputDamage.sourceId, inputDamage.sourceType, inputDamage.damage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race);
+                AddDamager(inputDamage.sourceId, inputDamage.sourceType, inputDamage.damage.totalDamage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race);
             }
 
             //if(mEventedObject != null && inputDamage.hasDamager) {

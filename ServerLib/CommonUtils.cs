@@ -31,6 +31,19 @@ namespace Common
             }
             return Race.None;
         }
+
+        public static WeaponBaseType Race2WeaponBaseType(Race race) {
+            switch(race) {
+                case Race.Borguzands:
+                    return WeaponBaseType.Acid;
+                case Race.Criptizoids:
+                    return WeaponBaseType.Laser;
+                case Race.Humans:
+                    return WeaponBaseType.Rocket;
+                default:
+                    return WeaponBaseType.Rocket;
+            }
+        }
        
         public static int[] GenerateNumbers(int numberCount, int numberSum)
         {

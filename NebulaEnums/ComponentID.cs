@@ -57,6 +57,8 @@ namespace Common {
         ContractObject = 49,
         ContractMark = 50,
         Trigger = 51,
-        Achievments = 52
+        Achievments = 52,
+        PlanetBuilding = 53,
+        LoreBox = 54
     }
 }

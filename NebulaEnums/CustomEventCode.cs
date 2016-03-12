@@ -52,6 +52,7 @@ namespace Common
         ItemsAdded = 49,
         AchievmentUnlocked = 50,
         ReceivePlayerMark = 51,
+        FoundLoreRecord = 52
 
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19

@@ -11,6 +11,7 @@ namespace Nebula.Inventory.Objects {
         public int speed { get; private set; }
         public int capacity { get; private set; }
         public int race { get; private set; }
+        private bool m_IsNew;
 
         public MiningStationInventoryObject(Hashtable info) {
             ParseInfo(info);
@@ -22,6 +23,7 @@ namespace Nebula.Inventory.Objects {
             speed = inSpeed;
             capacity = inCapacity;
             binded = inBinded;
+            m_IsNew = true;
         }
 
         public bool binded {
@@ -69,6 +71,18 @@ namespace Nebula.Inventory.Objects {
             binded = true;
         }
 
+        public bool isNew {
+            get {
+                return m_IsNew;
+            }
+        }
+
+        public void ResetNew() {
+            m_IsNew = false;
+        }
+        public void SetNew(bool val) {
+            m_IsNew = val;
+        }
         public Hashtable GetInfo() {
             return new Hashtable {
                 { (int)SPC.Id, Id },
@@ -80,7 +94,8 @@ namespace Nebula.Inventory.Objects {
                 { (int)SPC.Race, race },
                 { (int)SPC.Speed, speed },
                 { (int)SPC.Capacity, capacity },
-                { (int)SPC.Splittable, splittable }
+                { (int)SPC.Splittable, splittable },
+                { (int)SPC.IsNew, isNew }
             };
         }
 
@@ -91,6 +106,7 @@ namespace Nebula.Inventory.Objects {
             race = info.GetValue<int>((int)SPC.Race, (int)(byte)Race.None);
             speed = info.GetValue<int>((int)SPC.Speed, 0);
             capacity = info.GetValue<int>((int)SPC.Capacity, 0);
+            m_IsNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
     }
 }

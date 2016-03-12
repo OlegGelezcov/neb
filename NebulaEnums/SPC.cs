@@ -324,6 +324,12 @@ namespace ServerClientCommon {
 
         ShipParamName = 310,
         PrevId = 311,
-        PrevType = 312
+        PrevType = 312,
+        IsNew = 313,
+        LoreRecords = 314,
+        RocketDamage = 315,
+        LaserDamage = 316,
+        AcidDamage = 317,
+        WeaponBaseType = 318,
     }
 }

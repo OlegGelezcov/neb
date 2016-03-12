@@ -8,6 +8,7 @@ namespace Nebula.Client.Achievments {
     public class PlayerAchievmentObject : IInfoParser {
         private readonly Dictionary<string, int> m_Variables = new Dictionary<string, int>();
         public int points { get; private set; }
+        public List<string> foundedLoreRecords { get; private set; }
 
         public void ParseInfo(Hashtable inputHash) {
 
@@ -21,6 +22,12 @@ namespace Nebula.Client.Achievments {
                         int varCount = (int)entry.Value;
                         m_Variables.Add(varName, varCount);
                     }
+                }
+
+                string[] recordArr = inputHash.GetValueStringArray((int)SPC.LoreRecords);
+                foundedLoreRecords = new List<string>();
+                if(recordArr != null ) {
+                    foundedLoreRecords.AddRange(recordArr);
                 }
             }
         }

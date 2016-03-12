@@ -1,4 +1,5 @@
-﻿using Nebula.Server.Components;
+﻿using Nebula.Drop;
+using Nebula.Server.Components;
 
 namespace Nebula.Game.Components {
     public class FixedInputDamageDamagableObject : NotShipDamagableObject {
@@ -10,12 +11,16 @@ namespace Nebula.Game.Components {
             mFixedDamage = data.fixedInputDamage;
         }
 
-        protected override float ModifyDamage(float damage) {
-            return mFixedDamage;
+        protected override WeaponDamage ModifyDamage(WeaponDamage damage) {
+            damage.ClearAllDamages();
+            damage.SetBaseTypeDamage(mFixedDamage);
+            return damage;
         }
 
-        protected override float AbsorbDamage(float inputDamage) {
-            return mFixedDamage;
+        protected override WeaponDamage AbsorbDamage(WeaponDamage inputDamage) {
+            inputDamage.ClearAllDamages();
+            inputDamage.SetBaseTypeDamage(mFixedDamage);
+            return inputDamage;
         }
     }
 }

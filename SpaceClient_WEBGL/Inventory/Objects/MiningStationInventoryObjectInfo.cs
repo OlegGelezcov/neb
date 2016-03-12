@@ -52,6 +52,10 @@ namespace Nebula.Client.Inventory.Objects {
         public ObjectColor MyColor() {
             return ObjectColor.white;
         }
+        public bool isNew {
+            get;
+            private set;
+        }
 
         public void ParseInfo(Hashtable info) {
             rawHash = info;
@@ -60,6 +64,7 @@ namespace Nebula.Client.Inventory.Objects {
             race = info.GetValueInt((int)SPC.Race, (int)(byte)Race.None);
             speed = info.GetValueInt((int)SPC.Speed);
             capacity = info.GetValueInt((int)SPC.Capacity);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         }
     }
 }

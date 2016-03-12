@@ -16,7 +16,9 @@
         Pet,
         FounderCube,
         ContractMark,
-        Trigger
+        Trigger,
+        PlanetBuilding,
+        LoreBox
     }
 }
 

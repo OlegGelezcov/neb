@@ -82,7 +82,7 @@
             info.Add((int)SPC.Set, set);
             info.Add((int)SPC.Binded, binded);
             info.Add((int)SPC.Splittable, splittable);
-                                
+            info.Add((int)SPC.IsNew, isNew);                    
 
             return info;
         }
@@ -119,9 +119,19 @@
             this.skillId = info.GetValue<int>((int)SPC.Skill, -1);
             this.set = info.GetValue<string>((int)SPC.Set, string.Empty);
             binded = info.GetValue<bool>((int)SPC.Binded, binded);
+            isNew = info.GetValue<bool>((int)SPC.IsNew, isNew);
         }
 
-
+        public bool isNew {
+            get;
+            private set;
+        }
+        public void ResetNew() {
+            isNew = false;
+        }
+        public void SetNew(bool val) {
+            isNew = val;
+        }
         public float EnergyBonus {
             get {
                 return energyBonus;
@@ -156,6 +166,7 @@
             this.templateModuleId = templateModuleId;
             this.craftMaterials = craftMaterials;
             this.difficulty = difficulty;
+            isNew = true;
         }
 
         public static ShipModule Null()

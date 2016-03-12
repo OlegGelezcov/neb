@@ -35,7 +35,7 @@ namespace Nebula.Game.Components {
             return hash;
         }
 
-        public void UpdateSpeedProperties(float val) {
+        public virtual void UpdateSpeedProperties(float val) {
             if (props != null ) {
                 props.SetProperty((byte)PS.CurrentLinearSpeed, val);
                 props.SetProperty((byte)PS.MaxLinearSpeed, val);

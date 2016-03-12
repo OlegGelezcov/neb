@@ -45,23 +45,23 @@ namespace Nebula.Game.Skills {
 
                 Buff buff = new Buff(skill.data.Id.ToString() + "0", null, BonusType.increase_damage_on_pc, dmgTime, dmgMultMult);
                 sourceBonuses.SetBuff(buff);
-                var dmg = sourceWeapon.GetDamage(false) * dmgMult;
+                var dmg = sourceWeapon.GetDamage(false).totalDamage * dmgMult;
                 float dmgPerSec = dmg / dmgTime;
-                targetDamagable.SetTimedDamage(dmgTime, dmgPerSec);
+                targetDamagable.SetTimedDamage(dmgTime, dmgPerSec, sourceWeapon.myWeaponBaseType);
                 info.Add((int)SPC.Damage, dmg);
             } else if(sourceSkills.lastSkill == skill.data.Id && sourceSkills.sequenceSkillCounter == 1) {
                 Buff buff = new Buff(skill.data.Id.ToString() + "1", null, BonusType.increase_damage_on_pc, dmgTime, dmgMultMult);
                 sourceBonuses.SetBuff(buff);
-                var dmg = sourceWeapon.GetDamage(false) * dmgMult;
+                var dmg = sourceWeapon.GetDamage(false).totalDamage * dmgMult;
                 float dmgPerSec = dmg / dmgTime;
-                targetDamagable.SetTimedDamage(dmgTime, dmgPerSec);
+                targetDamagable.SetTimedDamage(dmgTime, dmgPerSec, sourceWeapon.myWeaponBaseType);
                 info.Add((int)SPC.Damage, dmg);
             } else if(sourceSkills.lastSkill == skill.data.Id && sourceSkills.sequenceSkillCounter >= 2 ) {
                 Buff buff = new Buff(skill.data.Id.ToString() + "2", null, BonusType.increase_damage_on_pc, dmgTime, dmgMultMult);
                 sourceBonuses.SetBuff(buff);
-                var dmg = sourceWeapon.GetDamage(false) * dmgMult;
+                var dmg = sourceWeapon.GetDamage(false).totalDamage * dmgMult;
                 float dmgPerSec = dmg / dmgTime;
-                targetDamagable.SetTimedDamage(dmgTime, dmgPerSec);
+                targetDamagable.SetTimedDamage(dmgTime, dmgPerSec, sourceWeapon.myWeaponBaseType);
                 sourceSkills.SetSkillCounter(0);
                 info.Add((int)SPC.Damage, dmg);
             }

@@ -25,7 +25,7 @@ namespace Nebula.Game.Skills {
 
         public void Make(NebulaObject source, PlayerSkill skill, float hpPc) {
             var items = GetHealTargets(source, source, skill.GetFloatInput("radius"));
-            float restoredHp = hpPc * source.Weapon().GetDamage(false);
+            float restoredHp = hpPc * source.Weapon().GetDamage(false).totalDamage;
 
             foreach(var pItem in items) {
                 pItem.Value.Damagable().RestoreHealth(source, restoredHp);

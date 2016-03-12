@@ -27,8 +27,19 @@ namespace Nebula.Inventory.Objects {
             Id = inID;
             interval = inInterval;
             binded = inBinded;
+            isNew = true;
         }
 
+        public bool isNew {
+            get;
+            private set;
+        }
+        public void ResetNew() {
+            isNew = false;
+        }
+        public void SetNew(bool val) {
+            isNew = val;
+        }
         public int Level {
             get { return 1; }
         }
@@ -73,7 +84,8 @@ namespace Nebula.Inventory.Objects {
                     { (int)SPC.PlacingType, placingType },
                     { (int)SPC.Binded, binded },
                     { (int)SPC.Interval, interval },
-                    { (int)SPC.Splittable, splittable }
+                    { (int)SPC.Splittable, splittable },
+                { (int)SPC.IsNew, isNew }
                 };
             return mRaw;
         }
@@ -83,6 +95,7 @@ namespace Nebula.Inventory.Objects {
             Id = info.GetValue<string>((int)SPC.Id, string.Empty);
             interval = info.GetValue<int>((int)SPC.Interval, 0);
             binded = info.GetValue<bool>((int)SPC.Binded, false);
+            isNew = info.GetValue<bool>((int)SPC.IsNew, false);
         }
     }
 }

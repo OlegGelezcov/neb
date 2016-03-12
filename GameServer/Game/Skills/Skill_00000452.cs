@@ -22,7 +22,7 @@ namespace Nebula.Game.Skills {
             WeaponHitInfo hit;
             var shot = source.Weapon().Fire(out hit, skill.data.Id, dmgMult);
             if(hit.hitAllowed) {
-                float hp = hit.ActualDamage * hpMult;
+                float hp = hit.actualDamage.totalDamage * hpMult;
                 source.Damagable().RestoreHealth(source, hp);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
                 return true;

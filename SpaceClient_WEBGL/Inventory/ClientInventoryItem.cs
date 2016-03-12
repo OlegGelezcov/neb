@@ -1,5 +1,4 @@
-﻿using System;
-using Common;
+﻿using Common;
 
 namespace Nebula.Client.Inventory {
     public class ClientInventoryItem : InventoryItem<IInventoryObjectInfo> {
@@ -9,5 +8,11 @@ namespace Nebula.Client.Inventory {
         }
 
         public ClientInventoryItem() : base() { }
+
+        public bool isNew {
+            get {
+                return Object.isNew;
+            }
+        }
     }
 }

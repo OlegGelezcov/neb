@@ -750,6 +750,21 @@ namespace Nebula.Game.Components {
             var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
             ReceiveEvent(eventData, sendParameters);
         }
+
+        public void FoundLoreRecord(string id) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.FoundLoreRecord,
+                EventData = id
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            var eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
         //===================================================================
         public override int behaviourId {
             get {

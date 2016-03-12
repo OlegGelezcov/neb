@@ -8,6 +8,7 @@ using Nebula.Game.Components;
 using System.Collections.Concurrent;
 using Space.Server;
 using Space.Game;
+using Nebula.Drop;
 
 namespace Nebula.Game.Skills {
     public class Skill_0000044D : SkillExecutor {
@@ -52,7 +53,9 @@ namespace Nebula.Game.Skills {
 
                     var nearItems = GetTargets(source, target, radius);
 
-                    InputDamage inpDamage = new InputDamage(source, weapon.GenerateDamage() * dmgAreaMult);
+                    WeaponDamage wd = weapon.GenerateDamage();
+                    wd.Mult(dmgAreaMult);
+                    InputDamage inpDamage = new InputDamage(source, wd);
                     foreach(var pNear in nearItems) {
                         if(NoId(filteredTargets, pNear.Key)) {
                             pNear.Value.Damagable().ReceiveDamage(inpDamage);

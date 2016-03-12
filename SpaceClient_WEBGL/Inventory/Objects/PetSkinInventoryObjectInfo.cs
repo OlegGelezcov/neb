@@ -57,12 +57,17 @@ namespace Nebula.Client.Inventory.Objects {
         public ObjectColor MyColor() {
             return ObjectColor.white;
         }
+        public bool isNew {
+            get;
+            private set;
+        }
 
         public void ParseInfo(Hashtable info) {
             m_Raw = info;
             m_Id = info.GetValueString((int)SPC.Id);
             m_Binded = info.GetValueBool((int)SPC.Binded);
             m_Skin = info.GetValueString((int)SPC.Skin);
+            isNew = info.GetValueBool((int)SPC.IsNew);
         } 
         #endregion
 
