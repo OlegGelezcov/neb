@@ -213,7 +213,7 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
     }
 
     private void HandlePUTInventoryItemStart(IEventData eventData, SendParameters sendParameters) {
-        log.Info("HandlePUTInventoryItemStart: PUT inventory item event received");
+        //log.Info("HandlePUTInventoryItemStart: PUT inventory item event received");
         PUTInventoryItemTransactionStart start = new PUTInventoryItemTransactionStart(eventData);
 
         try {

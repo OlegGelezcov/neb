@@ -118,7 +118,10 @@ namespace Nebula.Game.OperationHandlers {
                 var targetDamagableComponent = targetComponent.targetObject.GetComponent<DamagableObject>();
                 if(targetDamagableComponent != null ) {
                     WeaponDamage weaponDamage = new WeaponDamage(WeaponBaseType.Rocket, 100000, 0, 0);
-                    targetDamagableComponent.ReceiveDamage(new InputDamage(player.nebulaObject, weaponDamage, new DamageParams { reflected = true }));
+                    DamageParams damageParams = new DamageParams();
+                    damageParams.SetReflrected(false);
+                    damageParams.SetIgnoreFixedDamage(true);
+                    targetDamagableComponent.ReceiveDamage(new InputDamage(player.nebulaObject, weaponDamage, damageParams));
                     success = true;
                 }
             }

@@ -19,16 +19,16 @@ namespace Space.Game.Drop
     {
 
 
-        private Dictionary<Difficulty, float> mHPDiff = new Dictionary<Difficulty, float> {
-            {  Difficulty.starter, 0.2f },
-            {  Difficulty.easy, 0.5f },
-            {  Difficulty.easy2, 0.7f },
-            {  Difficulty.medium, 1f },
-            {  Difficulty.none, 1f },
-            {  Difficulty.hard, 2.2f },
-            {  Difficulty.boss, 2.5f },
-            {  Difficulty.boss2, 2f }
-        };
+        //private Dictionary<Difficulty, float> mHPDiff = new Dictionary<Difficulty, float> {
+        //    {  Difficulty.starter, 0.2f },
+        //    {  Difficulty.easy, 0.5f },
+        //    {  Difficulty.easy2, 0.7f },
+        //    {  Difficulty.medium, 1f },
+        //    {  Difficulty.none, 1f },
+        //    {  Difficulty.hard, 2.2f },
+        //    {  Difficulty.boss, 2.5f },
+        //    {  Difficulty.boss2, 2f }
+        //};
 
         public class ModuleDropParams
         {
@@ -129,19 +129,21 @@ namespace Space.Game.Drop
                 dropParams.difficulty);
 
             ColorInfo colorInfo = dropParams.resource.ColorRes.Color(ColoredObjectType.Module, dropParams.color); //SelectColor(dropParams.resource);
-            int[] basePoints = Rand.GenerateNumbers(3, 10);
+            int[] basePoints = Rand.GenerateNumbers(3, dropParams.resource.ModuleSettings.hpSpeedCargoPtMax);
 
             module.SetColor(colorInfo.color);
             module.SetPrefab(moduleData.Model);
-            
-            
-            module.SetHP(BalanceFormulas.ComputeHP(colorInfo.factor, moduleSetting.base_hp, moduleSetting.base_hp_factor, dropParams.level, basePoints[0], slotSetting.hp_points_value, slotSetting.hp_points_factor) * mHPDiff[dropParams.difficulty]);
-            module.SetSpeed(BalanceFormulas.ComputeSPEED(colorInfo.factor, moduleSetting.base_speed, moduleSetting.base_speed_factor, dropParams.level, basePoints[1], slotSetting.speed_points_value, slotSetting.speed_points_factor));
-            module.SetHold(BalanceFormulas.ComputeCARGO(colorInfo.factor, moduleSetting.base_cargo, moduleSetting.base_cargo_factor, dropParams.level, basePoints[2], slotSetting.cargo_points_value));
 
+
+            //module.SetHP(BalanceFormulas.ComputeHP(colorInfo.factor, moduleSetting.base_hp, moduleSetting.base_hp_factor, dropParams.level, basePoints[0], slotSetting.hp_points_value, slotSetting.hp_points_factor) * mHPDiff[dropParams.difficulty]);
+            //module.SetSpeed(BalanceFormulas.ComputeSPEED(colorInfo.factor, moduleSetting.base_speed, moduleSetting.base_speed_factor, dropParams.level, basePoints[1], slotSetting.speed_points_value, slotSetting.speed_points_factor));
+            //module.SetHold(BalanceFormulas.ComputeCARGO(colorInfo.factor, moduleSetting.base_cargo, moduleSetting.base_cargo_factor, dropParams.level, basePoints[2], slotSetting.cargo_points_value));
+            module.SetHP(BalanceFormulas.Hp(dropParams.resource.ModuleSettings, slotSetting.hp, dropParams.level, basePoints[0], colorInfo) * dropParams.resource.difficulty[dropParams.difficulty] );
+            module.SetSpeed(BalanceFormulas.Speed(dropParams.resource.ModuleSettings, slotSetting.speed, dropParams.level, basePoints[1], colorInfo));
+            module.SetHold((int)BalanceFormulas.Cargo(dropParams.resource.ModuleSettings, slotSetting.cargo, dropParams.level, basePoints[2], colorInfo));
            
             foreach(AdditionalParameter prm in GenerateAdditionalParameters(colorInfo)) {
-                SetAddionalParameter(ref module, slotSetting, prm, colorInfo);
+                SetAddionalParameter(ref module, dropParams.resource.ModuleSettings, slotSetting, prm, colorInfo);
             }
 
             int[] skills = dropParams.resource.skillDropping.AllowedSkills(dropParams.workshop, dropParams.slotType, dropParams.level);
@@ -193,31 +195,38 @@ namespace Space.Game.Drop
             return result;
         }
 
-        private void SetAddionalParameter(ref ShipModule module, ModuleSlotSettingData slotSetting,  AdditionalParameter prm, ColorInfo color) {
+        private void SetAddionalParameter(ref ShipModule module, ModuleSettingsRes res, ModuleSlotSettingData slotSetting,  AdditionalParameter prm, ColorInfo color) {
             int pointsMax = 10;
 
             
             switch(prm) {
                 case AdditionalParameter.resist:
-                    module.SetResist(BalanceFormulas.ComputeRESISTANCE(Rand.Int(1, pointsMax), pointsMax, dropParams.level, dropParams.resource.Leveling.CapLevel(), slotSetting.resist_max, color.factor));
+                    //module.SetResist(BalanceFormulas.ComputeRESISTANCE(Rand.Int(1, pointsMax), pointsMax, dropParams.level, dropParams.resource.Leveling.CapLevel(), slotSetting.resist_max, color.factor));
+                    module.SetCommonResist(BalanceFormulas.Resistance(res, slotSetting.resist, dropParams.level, Rand.Int(1, res.addPointMax), color));
                     break;
                 case AdditionalParameter.damage_bonus:
-                    module.SetDamageBonus(BalanceFormulas.ComputeDAMAGEBONUS(Rand.Int(1, pointsMax), slotSetting.damage_bonus_points_value, slotSetting.damage_bonus_points_factor, dropParams.level));
+                    //module.SetDamageBonus(BalanceFormulas.ComputeDAMAGEBONUS(Rand.Int(1, pointsMax), slotSetting.damage_bonus_points_value, slotSetting.damage_bonus_points_factor, dropParams.level));
+                    module.SetDamageBonus(BalanceFormulas.DamageBonus(res, slotSetting.damageBonus, dropParams.level, Rand.Int(1, res.addPointMax), color));
                     break;
                 case AdditionalParameter.energy_bonus:
-                    module.SetEnergyBonus(BalanceFormulas.ComputeENERGYBONUS(Rand.Int(1, pointsMax), slotSetting.energy_bonus_points_value, slotSetting.energy_bonus_points_factor, dropParams.level));
+                    //module.SetEnergyBonus(BalanceFormulas.ComputeENERGYBONUS(Rand.Int(1, pointsMax), slotSetting.energy_bonus_points_value, slotSetting.energy_bonus_points_factor, dropParams.level));
+                    module.SetEnergyBonus(BalanceFormulas.EnergyBonus(res, slotSetting.energyBonus, dropParams.level, Rand.Int(1, res.addPointMax), color));
                     break;
                 case AdditionalParameter.crit_chance:
-                    module.SetCritChance(BalanceFormulas.ComputeCRITCHANCE(Rand.Int(1, pointsMax), slotSetting.critical_chance_points_value, slotSetting.critical_chance_points_factor, dropParams.level));
+                    //module.SetCritChance(BalanceFormulas.ComputeCRITCHANCE(Rand.Int(1, pointsMax), slotSetting.critical_chance_points_value, slotSetting.critical_chance_points_factor, dropParams.level));
+                    module.SetCritChance(BalanceFormulas.CritChance(res, slotSetting.critChanceBonus, dropParams.level, Rand.Int(1, res.addPointMax), color));
                     break;
                 case AdditionalParameter.crit_damage:
-                    module.SetCritDamage(BalanceFormulas.ComputeCRITDAMAGEBONUS(Rand.Int(1, pointsMax), slotSetting.critical_damage_points_value, slotSetting.critical_damage_points_factor, dropParams.level));
+                    //module.SetCritDamage(BalanceFormulas.ComputeCRITDAMAGEBONUS(Rand.Int(1, pointsMax), slotSetting.critical_damage_points_value, slotSetting.critical_damage_points_factor, dropParams.level));
+                    module.SetCritDamage(BalanceFormulas.CritDamageBonus(res, slotSetting.critDamageBonus, dropParams.level, Rand.Int(1, res.addPointMax), color));
                     break;
                 case AdditionalParameter.speed_bonus:
-                    module.SetSpeedBonus(BalanceFormulas.ComputeSPEEDBONUS(Rand.Int(1, pointsMax), slotSetting.speed_bonus_points_value, slotSetting.speed_bonus_points_factor, dropParams.level));
+                    //module.SetSpeedBonus(BalanceFormulas.ComputeSPEEDBONUS(Rand.Int(1, pointsMax), slotSetting.speed_bonus_points_value, slotSetting.speed_bonus_points_factor, dropParams.level));
+                    module.SetSpeedBonus(BalanceFormulas.SpeedBonus(res, slotSetting.speedBonus, dropParams.level, Rand.Int(1, res.addPointMax), color));
                     break;
                 case AdditionalParameter.hold_bonus:
-                    module.SetHoldBonus(BalanceFormulas.ComputeCARGOBONUS(Rand.Int(1, pointsMax), slotSetting.cargo_bonus_points_value, slotSetting.cargo_bonus_points_factor, dropParams.level));
+                    //module.SetHoldBonus(BalanceFormulas.ComputeCARGOBONUS(Rand.Int(1, pointsMax), slotSetting.cargo_bonus_points_value, slotSetting.cargo_bonus_points_factor, dropParams.level));
+                    module.SetHoldBonus(BalanceFormulas.CargoBonus(res, slotSetting.cargoBonus, dropParams.level, Rand.Int(1, res.addPointMax), color));
                     break;
             }
         }

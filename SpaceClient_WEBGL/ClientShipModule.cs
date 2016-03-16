@@ -20,6 +20,10 @@ namespace Nebula.Client {
         public int hold;
 
         public float resist;
+        public float acidResist { get; private set; }
+        public float laserResist { get; private set; }
+        public float rocketResist { get; private set; }
+
         public float damageBonus;
         public float energyBonus;
         public float critChance;
@@ -85,6 +89,11 @@ namespace Nebula.Client {
             hp = info.GetValueFloat((int)SPC.Health);                                                              //9
             speed = info.GetValueFloat((int)SPC.Speed);                                                        //10
             resist = info.GetValueFloat((int)SPC.Resist);                                                      //11
+
+            acidResist = info.GetValueFloat((int)SPC.AcidResist);
+            laserResist = info.GetValueFloat((int)SPC.LaserResist);
+            rocketResist = info.GetValueFloat((int)SPC.RocketResist);
+
             hold = info.GetValueInt((int)SPC.Hold);                                                               //12
             damageBonus = info.GetValueFloat((int)SPC.DamageBonus);                                           //13
             color = info.GetValueByte((int)SPC.Color, (byte)ObjectColor.white).toEnum<ObjectColor>();                //16

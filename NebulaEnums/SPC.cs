@@ -331,5 +331,8 @@ namespace ServerClientCommon {
         LaserDamage = 316,
         AcidDamage = 317,
         WeaponBaseType = 318,
+        RocketResist = 319,
+        AcidResist = 320,
+        LaserResist = 321
     }
 }

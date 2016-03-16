@@ -1184,7 +1184,10 @@ namespace Space.Game {
 
             Hashtable result = new Hashtable {
                 {(int)SPC.MaxHealth, damagable.maximumHealth },
-                {(int)SPC.Resist, ship.damageResistance },
+                {(int)SPC.Resist, ship.commonResist },
+                {(int)SPC.AcidResist, ship.acidResist },
+                {(int)SPC.LaserResist, ship.laserResist},
+                {(int)SPC.RocketResist, ship.rocketResist},
                 {(int)SPC.Energy, energy.maximumEnergy  },
                 {(int)SPC.Damage, weapon.GetDamage(false).totalDamage },
                 {(int)SPC.CritChance, weapon.criticalChance },
@@ -2277,7 +2280,7 @@ namespace Space.Game {
             WeaponDamage weaponDamage = new WeaponDamage(WeaponBaseType.Rocket);
             weaponDamage.SetBaseTypeDamage(dmg);
 
-            float actual = Player.nebulaObject.Damagable().ReceiveDamage(new InputDamage(null, weaponDamage)).damage.totalDamage;
+            float actual = Player.nebulaObject.Damagable().ReceiveDamage(new InputDamage(null, weaponDamage)).totalDamage;
             return new Hashtable {
                 {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
                 {(int)SPC.Damage, dmg },

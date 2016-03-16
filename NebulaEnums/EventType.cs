@@ -7,6 +7,7 @@
         TriggerStay = 5,
         EnterStation = 6,
         InventoryItemsAdded = 7,
-        PlayerKilled = 8
+        PlayerKilled = 8,
+        ConstructionKilled = 9
     }
 }

@@ -13,9 +13,22 @@ namespace Space.Game.Resources
     public class WeaponDropSettings : IResourceLoader
     {
         private bool loaded;
+        private int m_MaxLevel;
+        private int m_DamageOdPtMax;
 
         private ConcurrentDictionary<Workshop, WeaponWorkshopSetting> settings;
 
+        public int maxLevel {
+            get {
+                return m_MaxLevel;
+            }
+        }
+
+        public int damageOdPtMax {
+            get {
+                return m_DamageOdPtMax;
+            }
+        }
 
         public bool TryGetSetting(Workshop workshop, out WeaponWorkshopSetting setting) {
             return settings.TryGetValue(workshop, out setting);
@@ -32,6 +45,24 @@ namespace Space.Game.Resources
             XDocument document = XDocument.Load(fullPath);
             settings = new ConcurrentDictionary<Workshop, WeaponWorkshopSetting>();
 
+            var dmp1 = document.Element("settings").Elements("param").Select(pe => {
+                switch(pe.GetString("name")) {
+                    case "max_level":
+                        m_MaxLevel = pe.GetInt("value");
+                        break;
+                    case "damage_od_pt_max":
+                        m_DamageOdPtMax = pe.GetInt("value");
+                        break;
+                }
+                return pe;
+            }).ToList();
+
+            var dump = document.Element("settings").Elements("workshop").Select(we => {
+                WeaponWorkshopSetting wset = new WeaponWorkshopSetting(we);
+                settings.TryAdd(wset.workshop, wset);
+                return we;
+            }).ToList();
+            /*
             var lst = document.Element("settings").Elements("workshop").Select(e => {
                 Workshop workshop = (Workshop)Enum.Parse(typeof(Workshop), e.GetString("name"));
                 WeaponWorkshopSetting set = new WeaponWorkshopSetting {
@@ -51,7 +82,7 @@ namespace Space.Game.Resources
                 }
                 return workshop;
             }).ToList();
-
+            */
 
             this.loaded = true;
             return this.loaded;
@@ -66,6 +97,7 @@ namespace Space.Game.Resources
 
 
     public class WeaponWorkshopSetting {
+        /*
         public Workshop workshop;
         public float base_damage;
         public float base_optimal_distance;
@@ -75,6 +107,42 @@ namespace Space.Game.Resources
         public float base_optimal_distance_factor;
         public float damage_points_factor;
         public float optimal_distance_points_factor;
-        public float base_crit_chance;
+        public float base_crit_chance;*/
+
+        private Workshop m_Workshop;
+        private BaseParam m_Damage;
+        private BaseParam m_OptimalDistance;
+        private AddParam m_CritChance;
+
+        public WeaponWorkshopSetting(XElement element) {
+            m_Workshop = (Workshop)System.Enum.Parse(typeof(Workshop), element.GetString("name"));
+            m_Damage = new BaseParam(element.Element("damage"));
+            m_OptimalDistance = new BaseParam(element.Element("od"));
+            m_CritChance = new AddParam(element.Element("cc"));
+        }
+
+        public Workshop workshop {
+            get {
+                return m_Workshop;
+            }
+        }
+
+        public BaseParam damage {
+            get {
+                return m_Damage;
+            }
+        }
+
+        public BaseParam optimalDistance {
+            get {
+                return m_OptimalDistance;
+            }
+        }
+
+        public AddParam critChance {
+            get {
+                return m_CritChance;
+            }
+        }
     }
 }

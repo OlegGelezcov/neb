@@ -54,6 +54,12 @@ namespace Space.Game {
         public void SetWeaponBlocked(bool weaponBlocked)
         {
             this.weaponBlocked = weaponBlocked;
+            if(weaponBlocked) {
+                hitAllowed = false;
+                SetErrorMessageId("EM0004");
+            } else {
+                hitAllowed = true;
+            }
         }
 
         public WeaponDamage actualDamage

@@ -177,7 +177,7 @@ namespace Nebula.Game.Components {
                 float energyBonus = mBonuses.maxEnergyCntBonus;
 
 
-                float result = modelEnergy * mShip.shipModel.energyBonus  + energyBonus;
+                float result = modelEnergy * (1.0f + mShip.shipModel.energyBonus)  + energyBonus;
                 if(result < 0f ) {
                     result = 0;
                 }

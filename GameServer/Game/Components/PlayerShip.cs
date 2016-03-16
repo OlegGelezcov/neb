@@ -85,7 +85,7 @@ namespace Nebula.Game.Components {
 
         public override Hashtable DumpHash() {
             var hash =  base.DumpHash();
-            hash["damage_resistance"] = damageResistance.ToString();
+            hash["damage_resistance"] = commonResist.ToString();
             hash["capacity"] = holdCapacity.ToString();
             return hash;
         }
@@ -148,11 +148,11 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public override float damageResistance {
+        public override float commonResist {
             get {
                 m_ResistDetail.Reset();
                 m_ResistDetail.SetBlocked(blockResist.blocked);
-                m_ResistDetail.SetModelValue(shipModel.resistance);
+                m_ResistDetail.SetModelValue(shipModel.commonResist);
                 m_ResistDetail.SetBonusesAdd(m_ResistDetail.total * (1.0f + mBonuses.resistPcBonus) + mBonuses.resistCntBonus - m_ResistDetail.total);
 
                 if(m_PassiveBonuses != null && m_PassiveBonuses.resistTier > 0 ) {
@@ -161,6 +161,22 @@ namespace Nebula.Game.Components {
                     m_ResistDetail.SetPassiveAbiltiesAdd(0);
                 }
                 return m_ResistDetail.total;
+            }
+        }
+
+        public override float acidResist {
+            get {
+                return shipModel.acidResist;
+            }
+        }
+        public override float laserResist {
+            get {
+                return shipModel.laserResist;
+            }
+        }
+        public override float rocketResist {
+            get {
+                return shipModel.rocketResist;
             }
         }
 
@@ -356,7 +372,7 @@ namespace Nebula.Game.Components {
         #endregion
 
         public Hashtable GetResistanceDetail() {
-            float dump = damageResistance;
+            float dump = commonResist;
             return m_ResistDetail.GetInfo();
         }
 

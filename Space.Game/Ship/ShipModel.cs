@@ -309,7 +309,7 @@ namespace Space.Game.Ship
         /// <returns></returns>
         public int cargo {
             get {
-                return (int)(cargoSum * CargoBonus(bonus_aux_number));
+                return (int)(cargoSum * (1.0f + cargoBonus));
             }
         }
 
@@ -320,21 +320,57 @@ namespace Space.Game.Ship
         /// <returns></returns>
         public float speed {
             get {
-                return speedSum * SpeedBonus(bonus_aux_number);
+                return speedSum * (1.0f + speedBonus);
             }
         }
 
 
-        public float resistance {
+        public float commonResist {
             get {
                 float sum = 0f;
                 foreach (var s in Slots) {
                     if (s.HasModule) {
-                        sum += s.Module.Resist;
+                        sum += s.Module.commonResist;
                     }
                 }
                 if(sum > 0.8f ) {
                     sum = 0.8f;
+                }
+                return sum;
+            }
+        }
+
+        public float rocketResist {
+            get {
+                float sum = 0.0f;
+                foreach(var s in Slots) {
+                    if(s.HasModule) {
+                        sum += s.Module.rocketResist;
+                    }
+                }
+                return sum;
+            }
+        }
+
+        public float acidResist {
+            get {
+                float sum = 0.0f;
+                foreach(var s in Slots) {
+                    if(s.HasModule) {
+                        sum += s.Module.acidResist;
+                    }
+                }
+                return sum;
+            }
+        }
+
+        public float laserResist {
+            get {
+                float sum = 0.0f;
+                foreach(var s in Slots ) {
+                    if(s.HasModule) {
+                        sum += s.Module.laserResist;
+                    }
                 }
                 return sum;
             }
@@ -348,7 +384,7 @@ namespace Space.Game.Ship
                         sum += s.Module.DamageBonus;
                     }
                 }
-                return (1f + sum / (sum + bonus_aux_number));
+                return sum;
             }
         }
 
@@ -360,7 +396,7 @@ namespace Space.Game.Ship
                         sum += s.Module.EnergyBonus;
                     }
                 }
-                return (1.0f + sum / (sum + bonus_aux_number));
+                return sum;
             }
         }
 
@@ -372,7 +408,7 @@ namespace Space.Game.Ship
                         sum += s.Module.CritChance;
                     }
                 }
-                return sum / (sum + critical_chance_aux_number);
+                return sum;
             }
         }
 
@@ -384,7 +420,7 @@ namespace Space.Game.Ship
                         sum += s.Module.CritDamage;
                     }
                 }
-                return (2f + sum * 0.0001F);
+                return sum;
             }
         }
         #endregion
@@ -399,6 +435,7 @@ namespace Space.Game.Ship
             }
         }
 
+        /*
         private float CargoBonus(float bonus_aux_number) {
             float sum = 0f;
             foreach(var s in Slots) {
@@ -407,6 +444,18 @@ namespace Space.Game.Ship
                 }
             }
             return (1.0f + sum / (sum + bonus_aux_number));
+        }*/
+
+        private float cargoBonus {
+            get {
+                float sum = 0.0f;
+                foreach(var s in Slots) {
+                    if(s.HasModule) {
+                        sum += s.Module.HoldBonus;
+                    }
+                }
+                return sum;
+            }
         }
 
         private float speedSum {
@@ -419,6 +468,7 @@ namespace Space.Game.Ship
             }
         }
 
+        /*
         private float SpeedBonus(float bonus_aux_number) {
             float sum = 0f;
             foreach(var s in Slots) {
@@ -427,6 +477,18 @@ namespace Space.Game.Ship
                 }
             }
             return (1.0f + sum / (sum + bonus_aux_number));
+        }*/
+
+        private float speedBonus {
+            get {
+                float sum = 0f;
+                foreach(var s in Slots ) {
+                    if(s.HasModule ) {
+                        sum += s.Module.SpeedBonus;
+                    }
+                }
+                return sum;
+            }
         }
 
 

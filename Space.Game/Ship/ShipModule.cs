@@ -8,7 +8,7 @@
     using ServerClientCommon;
     using System;
     using Space.Game.Inventory;
-
+    using Nebula.Ship;
     public class ShipModule : IDroppable, IInventoryObject, IInfo
     {
         private  string id;                                     //1
@@ -25,7 +25,7 @@
         private int hold;                                       //9
 
 
-        private float resist;                                   //10      
+        //private float resist;                                   //10      
         private float damageBonus;                              //12
         private float energyBonus;       
         private float critChance;                               //17
@@ -37,6 +37,8 @@
         private Difficulty difficulty;                          //22
         private string prefab = "";                             //23
 
+
+        private readonly ModuleResist m_Resist = new ModuleResist();
 
         private int skillId;                                    //15
         private string set;                                     //16
@@ -67,7 +69,12 @@
             info.Add((int)SPC.Hold, hold);                                                             //11
 
 
-            info.Add((int)SPC.Resist, resist);                                                         //10           
+            //info.Add((int)SPC.Resist, resist);                                                         //10 
+            info.Add((int)SPC.Resist, commonResist);
+            info.Add((int)SPC.RocketResist, rocketResist);
+            info.Add((int)SPC.LaserResist, laserResist);
+            info.Add((int)SPC.AcidResist, acidResist);
+                      
             info.Add((int)SPC.DamageBonus, damageBonus);                                              //12
             info.Add((int)SPC.EnergyBonus, energyBonus);
             info.Add((int)SPC.CritChance, this.critChance);                                           //18
@@ -103,7 +110,13 @@
             this.speed = info.GetValue<float>((int)SPC.Speed, 0);
             this.hold = info.GetValue<int>((int)SPC.Hold, 0);
 
-            this.resist = info.GetValue<float>((int)SPC.Resist, 0);
+            //this.resist = info.GetValue<float>((int)SPC.Resist, 0);
+
+            m_Resist.SetCommonResist(info.GetValue<float>((int)SPC.Resist, 0.0f));
+            m_Resist.SetAcidResist(info.GetValue<float>((int)SPC.AcidResist, 0.0f));
+            m_Resist.SetLaserResist(info.GetValue<float>((int)SPC.LaserResist, 0.0f));
+            m_Resist.SetRocketResist(info.GetValue<float>((int)SPC.RocketResist, 0.0f));
+
             this.damageBonus = info.GetValue<float>((int)SPC.DamageBonus, 0);
             energyBonus = info.GetValue<float>((int)SPC.EnergyBonus, 0);
             this.critChance = info.GetValue<float>((int)SPC.CritChance, 0);
@@ -205,9 +218,20 @@
         public void SetHold(int hold) {
             this.hold = hold;
         }
-        public void SetResist(float resist) {
-            this.resist = resist;
+        public void SetCommonResist(float resist) {
+            //this.resist = resist;
+            m_Resist.SetCommonResist(resist);
         }
+        public void SetAcidResist(float val) {
+            m_Resist.SetAcidResist(val);
+        }
+        public void SetRocketResist(float val) {
+            m_Resist.SetRocketResist(val);
+        }
+        public void SetLaserResist(float val) {
+            m_Resist.SetLaserResist(val);
+        }
+
         public void SetSpeed(float speed) {
             this.speed = speed;
         }
@@ -279,9 +303,30 @@
             }
         }
 
-        public float Resist {
+        //public float Resist {
+        //    get {
+        //        return resist;
+        //    }
+        //}
+
+            public float commonResist {
             get {
-                return resist;
+                return m_Resist.commonResist;
+            }
+        }
+        public float rocketResist {
+            get {
+                return m_Resist.rocketResist;
+            }
+        }
+        public float acidResist {
+            get {
+                return m_Resist.acidResist;
+            }
+        }
+        public float laserResist {
+            get {
+                return m_Resist.laserResist;
             }
         }
 

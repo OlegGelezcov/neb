@@ -174,9 +174,11 @@
     <Compile Include="Game\Contracts\ContractManager.cs" />
     <Compile Include="Game\Contracts\ContractObject.cs" />
     <Compile Include="Game\Contracts\ContractRewardExecutor.cs" />
+    <Compile Include="Game\Contracts\DestroyConstructionContract.cs" />
     <Compile Include="Game\Contracts\ExploreLocationContract.cs" />
     <Compile Include="Game\Contracts\FoundItemContract.cs" />
     <Compile Include="Game\Contracts\Generators\ContractGenerator.cs" />
+    <Compile Include="Game\Contracts\Generators\DestroyConstructionContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\ExploreLocationContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\FoundItemContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\ItemDeliveryContractGenerator.cs" />
@@ -197,6 +199,7 @@
     <Compile Include="Game\DebugActionExecutor.cs" />
     <Compile Include="Game\EventConnectionManager.cs" />
     <Compile Include="Game\Events\BaseEvent.cs" />
+    <Compile Include="Game\Events\ConstructionKilledEvent.cs" />
     <Compile Include="Game\Events\ContractEvent.cs" />
     <Compile Include="Game\Events\DestroyPirateStationEvent.cs" />
     <Compile Include="Game\Events\EnterStationEvent.cs" />

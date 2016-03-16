@@ -1,9 +1,6 @@
 ﻿using Common;
 using Space.Game.Ship;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Space.Database {
     public class ShipModuleDocumentElement {
@@ -33,6 +30,10 @@ namespace Space.Database {
         public float holdBonus { get; set; }//
         public int difficulty { get; set; }
 
+        public float rocketResist { get; set; }
+        public float acidResist { get; set; }
+        public float laserResist { get; set; }
+
         public Dictionary<string, int> CraftMaterials { get; set; }//
 
         public void Set(ShipModule baseModule) {
@@ -49,7 +50,11 @@ namespace Space.Database {
             this.Prefab = baseModule.Prefab;
             this.HP = baseModule.HP;
             this.Hold = baseModule.Hold;
-            this.Resist = baseModule.Resist;
+            this.Resist = baseModule.commonResist;
+            this.rocketResist = baseModule.rocketResist;
+            this.acidResist = baseModule.acidResist;
+            this.laserResist = baseModule.laserResist;
+
             this.Speed = baseModule.Speed;
             this.DamageBonus = baseModule.DamageBonus;
             this.Color = baseModule.Color.toByte();
@@ -82,7 +87,10 @@ namespace Space.Database {
             result.SetPrefab(this.Prefab);
             result.SetHP(this.HP);
             result.SetHold(this.Hold);
-            result.SetResist(this.Resist);
+            result.SetCommonResist(this.Resist);
+            result.SetAcidResist(this.acidResist);
+            result.SetLaserResist(this.laserResist);
+            result.SetRocketResist(this.rocketResist);
             result.SetSpeed(this.Speed);
             result.SetDamageBonus(this.DamageBonus);
             result.SetColor((ObjectColor)this.Color);

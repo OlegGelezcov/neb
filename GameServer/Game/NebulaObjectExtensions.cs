@@ -14,6 +14,9 @@ namespace Nebula.Game {
         public static bool IsPlayer(this NebulaObject nebulaObject) {
             return (nebulaObject.Type == (byte)ItemType.Avatar);
         }
+        public static bool IsBot(this NebulaObject nebulaObject) {
+            return (nebulaObject.Type == (byte)ItemType.Bot);
+        }
         public static PlayerSkills Skills(this NebulaObject nebulaObject) {
             return nebulaObject.GetComponent<PlayerSkills>();
         }

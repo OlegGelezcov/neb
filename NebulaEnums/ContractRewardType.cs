@@ -6,6 +6,7 @@
         weapon = 4,
         scheme = 5,
         nebula_element = 6,
-        craft_resource = 7
+        craft_resource = 7,
+        turret = 8
     }
 }

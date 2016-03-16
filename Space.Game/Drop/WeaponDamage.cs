@@ -33,10 +33,14 @@ namespace Nebula.Drop {
             this(bt, 0, 0, 0) { } 
 
         public void SetFromDamage(WeaponDamage other) {
+            CopyDamageValues(other);
+            SetBaseType(other.baseType);
+        }
+
+        public void CopyDamageValues(WeaponDamage other) {
             SetRocketDamage(other.rocketDamage);
             SetLaserDamage(other.laserDamage);
             SetAcidDamage(other.acidDamage);
-            SetBaseType(other.baseType);
         }
 
         public void SetRocketDamage(float dmg) {
@@ -81,6 +85,23 @@ namespace Nebula.Drop {
             m_RocketDamage *= val;
             m_LaserDamage *= val;
             m_AcidDamage *= val;
+        }
+
+        public void Mult(WeaponBaseType bt, float val) {
+            switch(bt) {
+                case WeaponBaseType.Acid: {
+                        m_AcidDamage *= val;
+                    }
+                    break;
+                case WeaponBaseType.Laser: {
+                        m_LaserDamage *= val;
+                    }
+                    break;
+                case WeaponBaseType.Rocket: {
+                        m_RocketDamage *= val;
+                    }
+                    break;
+            }
         }
 
         public void ClampLess(float val) {

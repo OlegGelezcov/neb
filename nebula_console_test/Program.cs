@@ -1,4 +1,5 @@
 ﻿using nebula_console_test.Contracts;
+using Space.Game.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,19 @@ namespace nebula_console_test {
             //tests.TestKillNPCGroupContractServerClientCompativility();
             //tests.TestExploreLocationParsing();
             //new RemapWeightsTest().CollectStatistics(new float[] { 0, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f });
+            /*
             StringHashFuncTest hashTest = new StringHashFuncTest();
             hashTest.Load("DataClient/Strings");
             hashTest.FindMaxCharAtKey();
-            hashTest.TestSimpleSum();
+            hashTest.TestSimpleSum();*/
+            PrintModuleSettings();
+        }
+
+        static void PrintModuleSettings() {
+            Console.WriteLine("START");
+            ModuleSettingsRes res = new ModuleSettingsRes();
+            res.Load(string.Empty);
+            Console.WriteLine(res.ToString());
         }
     }
 }

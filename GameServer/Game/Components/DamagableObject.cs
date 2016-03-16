@@ -167,6 +167,16 @@ namespace Nebula.Game.Components {
                 if(nebulaObject.IsPlayer()) {
                     log.InfoFormat("player was killed, send PlayerKilledEvent to world");
                     nebulaObject.mmoWorld().OnEvent(new PlayerKilledEvent(nebulaObject));
+                } else if(nebulaObject.IsBot()) {
+                    var botComponent = nebulaObject.GetComponent<BotObject>();
+                    if(botComponent != null ) {
+                        if(botComponent.botSubType == (byte)BotItemSubType.Outpost ||
+                            botComponent.botSubType == (byte)BotItemSubType.MainOutpost ||
+                            botComponent.botSubType == (byte)BotItemSubType.Turret ) {
+                            log.InfoFormat("construction was killed, send ConstructionKilledEvent to world");
+                            nebulaObject.mmoWorld().OnEvent(new ConstructionKilledEvent(nebulaObject));
+                        }
+                    }
                 }
             }
         }
@@ -175,7 +185,7 @@ namespace Nebula.Game.Components {
             mAbsorbedDamage = absorb;
         }
 
-        protected virtual WeaponDamage AbsorbDamage(WeaponDamage inputDamage) {
+        protected virtual void AbsorbDamage(InputDamage inputDamage) {
             float absorbed = 0;
             float ret = inputDamage.totalDamage;
 
@@ -207,8 +217,8 @@ namespace Nebula.Game.Components {
             }
 
             inputDamage.ClearAllDamages();
-            inputDamage.SetBaseTypeDamage(ret);
-            return inputDamage;
+            inputDamage.SetBaseDamage(ret);
+            //return inputDamage;
         }
 
         /// <summary>
@@ -407,7 +417,7 @@ namespace Nebula.Game.Components {
         public virtual InputDamage ReceiveDamage(InputDamage inputDamage) {
             nebulaObject.SetInvisibility(false);
             if(mBonuses) {
-                inputDamage.damage.Mult((1.0f + mBonuses.inputDamagePcBonus));
+                inputDamage.Mult((1.0f + mBonuses.inputDamagePcBonus));
                 //inputDamage.SetDamage(inputDamage.damage * (1.0f + mBonuses.inputDamagePcBonus));
                 ApplyReflection(inputDamage);
             }
@@ -415,7 +425,7 @@ namespace Nebula.Game.Components {
                 var damagerBons = inputDamage.source.Bonuses();
                 if(damagerBons) {
                     float vampPc = damagerBons.vampirismPcBonus;
-                    float hp = inputDamage.damage.totalDamage * vampPc;
+                    float hp = inputDamage.totalDamage * vampPc;
                     var dDamagable = inputDamage.source.Damagable();
                     if(dDamagable) {
                         dDamagable.Heal(new InputHeal(hp));
@@ -429,12 +439,14 @@ namespace Nebula.Game.Components {
             if ( (false == inputDamage.reflected) && inputDamage.hasDamager) {
                 var reflectValue = mBonuses.reflectionPc;
                 if (false == Mathf.Approximately(reflectValue, 0f)) {
-                    float reflectedDamageVal = inputDamage.damage.totalDamage * reflectValue;
+                    float reflectedDamageVal = inputDamage.totalDamage * reflectValue;
                     var attackerDamagable = inputDamage.source.Damagable();
-                    WeaponDamage reflectedDamage = new WeaponDamage(inputDamage.damage.baseType);
+                    WeaponDamage reflectedDamage = new WeaponDamage(inputDamage.weaponBaseType);
                     reflectedDamage.SetBaseTypeDamage(reflectedDamageVal);
                     if (attackerDamagable) {
-                        attackerDamagable.ReceiveDamage(new InputDamage(nebulaObject, reflectedDamage, new DamageParams { reflected = true }));
+                        DamageParams damageParams = new DamageParams();
+                        damageParams.SetReflrected(true);
+                        attackerDamagable.ReceiveDamage(new InputDamage(nebulaObject, reflectedDamage, damageParams));
                     }
                 }
             }

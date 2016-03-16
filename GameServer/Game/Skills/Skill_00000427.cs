@@ -41,7 +41,7 @@ namespace Nebula.Game.Skills {
                 InputDamage inpDamage = new InputDamage(source, genWeapDmg);
                 if(mastery) {
                     //inpDamage.SetDamage(inpDamage.damage * 2);
-                    inpDamage.damage.Mult(2);
+                    inpDamage.Mult(2);
                 }
                 foreach(var pTarget in targets ) {
                     pTarget.Value.Damagable().ReceiveDamage(inpDamage);

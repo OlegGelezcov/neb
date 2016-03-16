@@ -113,6 +113,20 @@ namespace Nebula.Client.UP {
             return mLstResult;
         }
 
+        public List<UPXElement> Elements() {
+            List<UPXElement> result = new List<UPXElement>();
+            foreach(XmlNode element in mElement.ChildNodes) {
+                result.Add(new UPXElement(element));
+            }
+            return result;
+        }
+
+        public string name {
+            get {
+                return mElement.Name;
+            }
+        }
+
         public UPXElement Element(string name) {
             UPXElement mResult = null;
             foreach(XmlNode element in mElement.ChildNodes) {

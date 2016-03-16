@@ -1,21 +1,30 @@
 ﻿using Common;
 using Nebula.Drop;
 using Nebula.Engine;
+using Space.Game;
 
 namespace Nebula.Game.Components {
 
     public class DamageParams {
-        public bool reflected { get; set; } = false;
+        public bool reflected { get; private set; } = false;
+        public bool ignoreFixedDamage { get; private set; } = false;
+
+        public void SetReflrected(bool refl) {
+            reflected = refl;
+        }
+        public void SetIgnoreFixedDamage(bool ignore) {
+            ignoreFixedDamage = ignore;
+        }
     }
 
-    public struct InputDamage {
+    public class InputDamage {
         private NebulaObject m_Damager;
-        private WeaponDamage m_Damage;
+        private readonly WeaponDamage m_Damage;
 
         private Workshop m_Workshop;
         private int m_Level;
         private Race m_Race;
-        private DamageParams m_DamageParams;
+        private  DamageParams m_DamageParams;
 
 
         public InputDamage(NebulaObject source, WeaponDamage damage, DamageParams damageParams = null) {
@@ -44,8 +53,34 @@ namespace Nebula.Game.Components {
             m_DamageParams = damageParams;
         }
 
-        public void SetDamage(WeaponDamage dmg) {
-            m_Damage = dmg;
+        //public void SetDamage(WeaponDamage dmg) {
+        //    m_Damage = dmg;
+        //}
+
+        public void ClearAllDamages() {
+            m_Damage.ClearAllDamages();
+        }
+
+        public void CopyValues(WeaponDamage other) {
+            m_Damage.CopyDamageValues(other);
+        }
+
+        public void Mult(float val) {
+            m_Damage.Mult(val);
+        }
+
+        public void Mult(WeaponBaseType bt, float val) {
+            m_Damage.Mult(bt, val);
+        }
+
+        public void SetBaseDamage(float val) {
+            m_Damage.SetBaseTypeDamage(val);
+        }
+
+        public WeaponBaseType weaponBaseType {
+            get {
+                return m_Damage.baseType;
+            }
         }
 
         public NebulaObject source {
@@ -54,11 +89,24 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public WeaponDamage damage {
+        public float totalDamage {
             get {
-                return m_Damage;
+                return m_Damage.totalDamage;
             }
         }
+
+        public WeaponDamage CreateCopy() {
+            return new WeaponDamage(m_Damage.baseType, m_Damage.rocketDamage, m_Damage.laserDamage, m_Damage.acidDamage);
+        }
+
+        public void SetHitInfo(WeaponHitInfo hit) {
+            hit.SetActualDamage(m_Damage);
+        }
+        //public WeaponDamage damage {
+        //    get {
+        //        return m_Damage;
+        //    }
+        //}
 
         public bool hasDamager {
             get {
@@ -106,6 +154,15 @@ namespace Nebula.Game.Components {
             get {
                 if(m_DamageParams != null ) {
                     return m_DamageParams.reflected;
+                }
+                return false;
+            }
+        }
+
+        public bool ignoreFixedDamage {
+            get {
+                if(m_DamageParams != null ) {
+                    return m_DamageParams.ignoreFixedDamage;
                 }
                 return false;
             }

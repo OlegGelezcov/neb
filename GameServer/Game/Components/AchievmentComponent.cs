@@ -142,7 +142,7 @@ namespace Nebula.Game.Components {
                     int oc;
                     if(m_Variables.TryRemove(variableName, out oc)) {
                         if(m_Variables.TryAdd(variableName, count)) {
-                            s_Log.InfoFormat("set achievment variable {0} = {1}".Color(LogColor.orange), variableName, count);
+                            //s_Log.InfoFormat("set achievment variable {0} = {1}".Color(LogColor.orange), variableName, count);
                             NotifyUnlockedTiers(variableName, oldCount, count);
                         }
                     }
@@ -159,13 +159,13 @@ namespace Nebula.Game.Components {
                 if (m_Variables.ContainsKey(variableName)) {
                     int oldCount = 0;
                     if (m_Variables.TryRemove(variableName, out oldCount)) {
-                        s_Log.InfoFormat("to variable: {0} added: {1}".Color(LogColor.yellow), variableName, count);
+                        //s_Log.InfoFormat("to variable: {0} added: {1}".Color(LogColor.yellow), variableName, count);
                         int newCount = oldCount + count;
                         m_Variables.TryAdd(variableName, newCount);
                         NotifyUnlockedTiers(variableName, oldCount, newCount);
                     }
                 } else {
-                    s_Log.InfoFormat("to variable: {0} added: {1}".Color(LogColor.yellow), variableName, count);
+                    //s_Log.InfoFormat("to variable: {0} added: {1}".Color(LogColor.yellow), variableName, count);
                     m_Variables.TryAdd(variableName, count);
                     NotifyUnlockedTiers(variableName, 0, count);
                 }

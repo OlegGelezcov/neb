@@ -42,16 +42,16 @@ namespace Nebula.Game.Pets {
             base.Update(deltaTime);
         }
 
-        protected override WeaponDamage ModifyDamage(WeaponDamage damage) {
-            return base.ModifyDamage(damage);
+        protected override void ModifyDamage(InputDamage damage) {
+            base.ModifyDamage(damage);
         }
 
         public override InputDamage ReceiveDamage(InputDamage inputDamage) {
             return base.ReceiveDamage(inputDamage);
         }
 
-        protected override WeaponDamage AbsorbDamage(WeaponDamage inputDamage) {
-            return base.AbsorbDamage(inputDamage);
+        protected override void AbsorbDamage(InputDamage inputDamage) {
+            base.AbsorbDamage(inputDamage);
         }
 
         public override void Death() {

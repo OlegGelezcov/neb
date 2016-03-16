@@ -39,6 +39,8 @@ namespace Nebula.Contracts {
                     return new FoundItemContractData(element);
                 case ContractCategory.killPlayer:
                     return new KillPlayerContractData(element);
+                case ContractCategory.destroyConstruction:
+                    return new DestroyConstructionContractData(element);
                 default:
                     return null;
             }

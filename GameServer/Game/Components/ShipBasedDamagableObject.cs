@@ -147,7 +147,7 @@ namespace Nebula.Game.Components {
             inputDamage = base.ReceiveDamage(inputDamage);
 
             if (!nebulaObject) {
-                inputDamage.damage.ClearAllDamages();
+                inputDamage.ClearAllDamages();
                 //inputDamage.SetDamage(0.0f);
                 return inputDamage;
             }
@@ -159,7 +159,7 @@ namespace Nebula.Game.Components {
                 //    log.Info("player damage ignored");
                 //}
                 //return 0f;
-                inputDamage.damage.ClearAllDamages();
+                inputDamage.ClearAllDamages();
                 //inputDamage.SetDamage(0.0f);
                 return inputDamage;
             }
@@ -172,31 +172,43 @@ namespace Nebula.Game.Components {
                 mShip = GetComponent<BaseShip>();
             }
             float resist = 0f;
+            float acidResist = 0.0f;
+            float laserResist = 0.0f;
+            float rocketResist = 0.0f;
             if (mShip != null) {
-                resist = mShip.damageResistance;
+                resist = mShip.commonResist;
+                acidResist = mShip.acidResist;
+                laserResist = mShip.laserResist;
+                rocketResist = mShip.rocketResist;
             }
             //resist = ApplyResistPassiveBonus(resist);
 
-            inputDamage.damage.Mult(1.0f - Mathf.Clamp01(resist));
+            inputDamage.Mult(1.0f - Mathf.Clamp01(resist));
+
+            inputDamage.Mult(WeaponBaseType.Acid, 1.0f - Mathf.Clamp01(acidResist));
+            inputDamage.Mult(WeaponBaseType.Laser, 1.0f - Mathf.Clamp01(laserResist));
+            inputDamage.Mult(WeaponBaseType.Rocket, 1.0f - Mathf.Clamp01(rocketResist));
+
             //inputDamage.SetDamage(inputDamage.damage * (1.0f - Mathf.Clamp01(resist)));
-            inputDamage.SetDamage(AbsorbDamage(inputDamage.damage));
+            AbsorbDamage(inputDamage);
+            //inputDamage.CopyValues(AbsorbDamage(inputDamage.damage));
 
             if (!god) {
                 if(mBonuses) {
                     if(mBonuses.isImmuneToDamage) {
-                        inputDamage.damage.ClearAllDamages();
+                        inputDamage.ClearAllDamages();
                         //inputDamage.SetDamage(0f);
                     }
                 }
 
                 if(nebulaObject.IsPlayer()) {
-                    inputDamage.SetDamage(mTarget.MoveDamageToSubscriber(inputDamage.damage));
+                    mTarget.MoveDamageToSubscriber(inputDamage);
                 }
-                SubHealth(inputDamage.damage.totalDamage);
+                SubHealth(inputDamage.totalDamage);
             }
 
             if (inputDamage.hasDamager) {
-                AddDamager(inputDamage.sourceId, inputDamage.sourceType, inputDamage.damage.totalDamage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race);
+                AddDamager(inputDamage.sourceId, inputDamage.sourceType, inputDamage.totalDamage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race);
             }
 
             //if(mEventedObject != null && inputDamage.hasDamager) {

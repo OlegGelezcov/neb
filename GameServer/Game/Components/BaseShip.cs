@@ -14,7 +14,11 @@ namespace Nebula.Game.Components {
 
         protected readonly BlockResistState blockResist = new BlockResistState();
 
-        public abstract float damageResistance { get; }
+        public abstract float commonResist { get; }
+        public abstract float acidResist { get; }
+        public abstract float rocketResist { get; }
+        public abstract float laserResist { get; }
+
         public abstract int holdCapacity { get; }
 
         public override Hashtable DumpHash() {
@@ -25,7 +29,10 @@ namespace Nebula.Game.Components {
                 hash["model_hp"] = shipModel.hp.ToString();
                 hash["model_capacity"] = shipModel.cargo.ToString();
                 hash["model_speed"] = shipModel.speed.ToString();
-                hash["model_resist"] = shipModel.resistance.ToString();
+                hash["common_resist"] = shipModel.commonResist.ToString();
+                hash["rocket_resist"] = shipModel.rocketResist.ToString();
+                hash["acid_resist"] = shipModel.acidResist.ToString();
+                hash["laser_resist"] = shipModel.laserResist.ToString();
                 hash["model_damage_bonus"] = shipModel.damageBonus.ToString();
                 hash["model_energy_bonus"] = shipModel.energyBonus.ToString();
                 hash["model_crit_chance"] = shipModel.critChance.ToString();

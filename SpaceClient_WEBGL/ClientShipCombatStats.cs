@@ -6,10 +6,9 @@
 //
 namespace Nebula.Client {
     using Common;
-    using ServerClientCommon;
     using ExitGames.Client.Photon;
+    using ServerClientCommon;
     using Utils;
-    using global::Common;
 
     public class ClientShipCombatStats : IInfoParser {
         public float maxHealth { get; private set; }
@@ -19,6 +18,9 @@ namespace Nebula.Client {
         public float critChance { get; private set; }
         public float critDamage { get; private set; }
         public float speed { get; private set; }
+        public float rocketResist { get; private set; }
+        public float acidResist { get; private set; }
+        public float laserResist { get; private set; }
 
         public void ParseInfo(Hashtable info) {
             maxHealth = info.GetValueFloat((int)SPC.MaxHealth);
@@ -28,6 +30,9 @@ namespace Nebula.Client {
             critChance = info.GetValueFloat((int)SPC.CritChance);
             critDamage = info.GetValueFloat((int)SPC.CritDamage);
             speed = info.GetValueFloat((int)SPC.Speed);
+            rocketResist = info.GetValueFloat((int)SPC.RocketResist);
+            acidResist = info.GetValueFloat((int)SPC.AcidResist);
+            laserResist = info.GetValueFloat((int)SPC.LaserResist);
         }
 
 

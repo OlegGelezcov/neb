@@ -42,6 +42,16 @@ namespace Nebula.Client {
             return element.GetFloat(key);
         }
 
+        public string innerValue {
+            get {
+#if UP
+                return element.value;
+#else
+                return element.Value;
+#endif
+            }
+        }
+
         public bool HasAttribute(string name) {
 #if UP
             if(element.HasAtt(name)) {
@@ -53,6 +63,22 @@ namespace Nebula.Client {
             }
 #endif
             return false;
+        }
+
+        public List<UniXMLElement> Elements() {
+            return element.Elements().Select(e => {
+                return new UniXMLElement(e);
+            }).ToList();
+        }
+
+        public string name {
+            get {
+#if UP
+                return element.name;  
+#else
+                return element.Name.ToString();
+#endif
+            }
         }
 
         public List<UniXMLElement> Elements(string name) {

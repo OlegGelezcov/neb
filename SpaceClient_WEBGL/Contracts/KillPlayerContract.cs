@@ -1,10 +1,6 @@
 ﻿using ExitGames.Client.Photon;
 using Nebula.Client.Utils;
 using ServerClientCommon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Nebula.Client.Contracts {
     public class KillPlayerContract : BaseContract {

@@ -22,6 +22,8 @@ namespace Nebula.Game.Contracts.Generators {
                     return new FoundItemContractGenerator();
                 case ContractCategory.killPlayer:
                     return new KillPlayerContractGenerator();
+                case ContractCategory.destroyConstruction:
+                    return new DestroyConstructionContractGenerator();
                 default:
                     s_Log.ErrorFormat("contract generator for category: {0} don't exists", category);
                     return null;

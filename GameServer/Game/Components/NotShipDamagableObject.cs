@@ -68,14 +68,14 @@ namespace Nebula.Game.Components {
             base.Update(deltaTime);
         }
 
-        protected virtual WeaponDamage ModifyDamage(WeaponDamage damage) {
-            return damage;
+        protected virtual void ModifyDamage(InputDamage damage) {
+            
         }
 
         public override InputDamage ReceiveDamage(InputDamage inputDamage) {
             InputDamage damageFromBase = base.ReceiveDamage(inputDamage);
             if (!nebulaObject ) {
-                damageFromBase.damage.ClearAllDamages();
+                damageFromBase.ClearAllDamages();
                 //damageFromBase.SetDamage(0f);
                 return damageFromBase;
             }
@@ -86,13 +86,13 @@ namespace Nebula.Game.Components {
                     log.InfoFormat("fortification ignored damage at start [blue]");
                 }
                 //damageFromBase.SetDamage(0f);
-                damageFromBase.damage.ClearAllDamages();
+                damageFromBase.ClearAllDamages();
                 return damageFromBase;
             }
             if (god) {
                 log.InfoFormat("[{0}]: Bot if GOD, damage ignored [blue]", (nebulaObject.world as MmoWorld).Zone.Id);
                 //damageFromBase.SetDamage(0f);
-                damageFromBase.damage.ClearAllDamages();
+                damageFromBase.ClearAllDamages();
                 return damageFromBase;
             }
 
@@ -100,17 +100,17 @@ namespace Nebula.Game.Components {
                 if(mBonuses.isImmuneToDamage) {
                     log.InfoFormat("Has bonus to ignore damage... [blue]");
                     //damageFromBase.SetDamage(0.0f);
-                    damageFromBase.damage.ClearAllDamages();
+                    damageFromBase.ClearAllDamages();
                 }
             }
 
-            damageFromBase.SetDamage(ModifyDamage(damageFromBase.damage));
-            damageFromBase.SetDamage(AbsorbDamage(damageFromBase.damage));
+            ModifyDamage(damageFromBase);
+            AbsorbDamage(damageFromBase);
 
-            SubHealth(damageFromBase.damage.totalDamage);
+            SubHealth(damageFromBase.totalDamage);
 
             if (damageFromBase.hasDamager) {
-                AddDamager(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.damage.totalDamage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race);
+                AddDamager(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.totalDamage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race);
             }
 
             //if (mEventedObject != null) {

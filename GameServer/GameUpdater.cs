@@ -160,7 +160,7 @@ namespace Nebula {
                         Start();
                         log.InfoFormat("NO RESPONSE = {0} seconds!!!!".Color(LogColor.red), delta);
                     } else {
-                        log.InfoFormat("check passed success with interval: {0}".Color(LogColor.cyan), delta);
+                        //log.InfoFormat("check passed success with interval: {0}".Color(LogColor.cyan), delta);
                     }
                 }
             } catch(Exception exception ) {

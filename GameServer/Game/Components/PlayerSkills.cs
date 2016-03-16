@@ -666,7 +666,7 @@ namespace Nebula.Game.Components {
             return false;
         }
 
-        public WeaponDamage ModifyDamage(DamagableObject target, WeaponDamage inputDamage) {
+        public void ModifyDamage(DamagableObject target, InputDamage inputDamage) {
 
             if(nebulaObject.Type == (byte)ItemType.Avatar) {
                 if(HasSkill(m43AID)) {
@@ -677,14 +677,14 @@ namespace Nebula.Game.Components {
                             if(false == Mathf.Approximately(m43a.dmgMult, 0f)) {
                                 log.InfoFormat("modify damage on {0}% with skill 43A", m43a.dmgMult);
                                 inputDamage.Mult(m43a.dmgMult);
-                                return inputDamage;
+                                //return inputDamage;
                             }
                         }
                     }
                 }
             }
 
-            return inputDamage;
+            //return inputDamage;
         }
 
 

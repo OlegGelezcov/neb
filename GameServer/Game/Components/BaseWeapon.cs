@@ -121,8 +121,11 @@ namespace Nebula.Game.Components {
         public virtual Hashtable Fire(NebulaObject targetObject, out WeaponHitInfo hit, int skillID = -1, float damageMult = 1.0f, bool forceShot = false, bool useDamageMultSelfAsDamage = false) {
             m_NotResettableShotCounter++;
             MakeMeVisible();
+
             hit = new WeaponHitInfo();
+            
             if (CheckWeaponTarget(targetObject)) {
+
                 Hashtable result = new Hashtable();
                 result.Add((int)SPC.Source, nebulaObject.Id);
                 result.Add((int)SPC.SourceType, nebulaObject.Type);
@@ -131,10 +134,49 @@ namespace Nebula.Game.Components {
                 result.Add((int)SPC.Workshop, cachedCharacter.workshop);
                 result.Add((int)SPC.Skill, skillID);
 
+                //InputDamage inputDamage = new InputDamage(nebulaObject, GetDamage())
                 if (forceShot) {
-                    CompleteForceShot(targetObject, ref hit, damageMult, useDamageMultSelfAsDamage);
+                    InputDamage inputDamage = new InputDamage(nebulaObject, GetDamage(false));
+                    CompleteForceShot(targetObject, ref hit, damageMult, useDamageMultSelfAsDamage, inputDamage);
+                    inputDamage.SetHitInfo(hit);
+
                 } else {
-                    CompleteShot(targetObject, ref hit, targetObject.Damagable(), damageMult, useDamageMultSelfAsDamage);
+
+                    //CompleteShot(targetObject, ref hit, targetObject.Damagable(), damageMult, useDamageMultSelfAsDamage);
+                    if(IsWeaponNotBlocked(ref hit)) {
+                        WeaponDamage damage = null;
+                        if(IsCritical(ref hit)) {
+                            damage = GetDamage(true);
+                        } else {
+                            damage = GetDamage(false);
+                        }
+                        InputDamage inputDamage = new InputDamage(nebulaObject, damage);
+                        if(IsHitted(targetObject, ref hit)) {
+
+                            if (hit.isCritical) {
+                                if (nebulaObject.IsPlayer()) {
+                                    nebulaObject.SendMessage(ComponentMessages.OnCriticalHit);
+                                }
+                            }
+                            shotCounter++;
+
+                            ApplyDamage(ref hit, targetObject.Damagable(), damageMult, useDamageMultSelfAsDamage, inputDamage);
+                            
+
+
+                        } else {
+                            damage.ClearAllDamages();
+                        }
+                        inputDamage.SetHitInfo(hit);
+                        hit.SetGunsOverheatted(overheated);
+
+                    } else {
+                        UnblockSingleShot();
+                        WeaponDamage dmg = GetDamage(false);
+                        dmg.ClearAllDamages();
+                        InputDamage inputDamage = new InputDamage(nebulaObject, dmg);
+                        inputDamage.SetHitInfo(hit);
+                    }
                 }
 
                 foreach (DictionaryEntry entry in hit.GetInfo()) {
@@ -261,7 +303,7 @@ namespace Nebula.Game.Components {
             return 0.6f;
         }
 
-        protected void CompleteForceShot(NebulaObject obj, ref WeaponHitInfo hit, float damageMult, bool useDamageMultSelfAsDamage) {
+        protected void CompleteForceShot(NebulaObject obj, ref WeaponHitInfo hit, float damageMult, bool useDamageMultSelfAsDamage, InputDamage inputDamage) {
             hit.hitAllowed = true;
             hit.hitProb = 1;
             hit.isHitted = true;
@@ -276,77 +318,59 @@ namespace Nebula.Game.Components {
             UnblockSingleShot();
 
             hit.SetGunsOverheatted(false);
-            ApplyDamage(ref hit, obj.Damagable(), damageMult, useDamageMultSelfAsDamage);
+            ApplyDamage(ref hit, obj.Damagable(), damageMult, useDamageMultSelfAsDamage, inputDamage);
         }
 
 
-        protected void CompleteShot(NebulaObject targetObject, ref WeaponHitInfo hit, DamagableObject target, float damageMult, bool useDamageMultSelfAsDamage) {
-            float hp = HitProbTo(targetObject);
-            if(hp <= 0.01f) {
+
+
+        private bool IsHitted(NebulaObject target, ref WeaponHitInfo hit) {
+            float hitProb = HitProbTo(target);
+            if(Mathf.Approximately(hitProb, 0.0f) ) {
                 hit.SetErrorMessageId("EM0002");
-                return;
+                return false;
             }
-
-            //If hp 100% exists small chance to hit miss!
-            if(Mathf.Approximately(hp, 1f)) {
-                hp -= 0.05f;
+            if(Mathf.Approximately(hitProb, 1.0f)) {
+                hitProb -= 0.05f;
             }
-
-            hp -= ComputeMissProb(targetObject);
-            hp = Mathf.ClampLess(hp, 0f);
-
-            if(Rand.Float01() < hp) {
+            hitProb -= ComputeMissProb(target);
+            hitProb = Mathf.ClampLess(hitProb, 0.0f);
+            if(Rand.Float01() <= hitProb ) {
                 hit.isHitted = true;
-                float myCritChance = criticalChance;
-                if(cachedSkills) {
-                    myCritChance = cachedSkills.ModifyCritChance(targetObject.Damagable(), myCritChance);
-                }
-
-                if(Rand.Float01() < criticalChance) {
-                    hit.isCritical = true;
-                    if (nebulaObject.IsPlayer()) {
-                        nebulaObject.SendMessage(ComponentMessages.OnCriticalHit);
-                    }
-                }
             } else {
                 hit.isHitted = false;
             }
-            hit.hitAllowed = true;
-            hit.hitProb = hp;
+            //hit.hitAllowed = true;
+            hit.hitProb = hitProb;
+            return hit.isHitted;
+        }
+
+        private bool IsWeaponNotBlocked(ref WeaponHitInfo hit) {
             hit.SetWeaponBlocked(blocked);
-            UnblockSingleShot();
+            return (false == hit.IsWeaponBlocked);
+        }
 
-            if(hit.IsWeaponBlocked) {
-                hit.hitAllowed = false;
-                hit.SetErrorMessageId("EM0004");
-                return;
+        private bool IsCritical(ref WeaponHitInfo hit) {
+            if(Rand.Float01() <= criticalChance ) {
+                hit.isCritical = true;
+            } else {
+                hit.isCritical = false;
             }
-
-
-            if(!hit.isHitted) {
-                var zeroDamage = GetDamage(false);
-                zeroDamage.ClearAllDamages();
-                hit.SetActualDamage(zeroDamage);
-                return;
-            }
-            hit.SetGunsOverheatted(overheated);
-            shotCounter++;
-            ApplyDamage(ref hit, target, damageMult, useDamageMultSelfAsDamage);
+            return hit.isCritical;
         }
 
 
-        private void ApplyDamage(ref WeaponHitInfo hit, DamagableObject target, float damageMult, bool useDamageMultSelfAsDamage) {
-            WeaponDamage inputDamage = GetDamage(hit.isCritical); // * damageMult * Rand.NormalNumber(0.8f, 1.2f);
+        private void ApplyDamage(ref WeaponHitInfo hit, DamagableObject target, float damageMult, bool useDamageMultSelfAsDamage, InputDamage inputDamage) {
             inputDamage.Mult(damageMult * Rand.NormalNumber(0.8f, 1.2f));
 
             if(useDamageMultSelfAsDamage) {
-                WeaponDamage dmg = new WeaponDamage(inputDamage.baseType, 0, 0, 0);
+                WeaponDamage dmg = new WeaponDamage(inputDamage.weaponBaseType, 0, 0, 0);
                 dmg.SetBaseTypeDamage(damageMult);
-                inputDamage.SetFromDamage(dmg);
+                inputDamage.CopyValues(dmg);
             }
 
             if (cachedSkills) {
-                inputDamage = cachedSkills.ModifyDamage(target, inputDamage);
+                cachedSkills.ModifyDamage(target, inputDamage);
             }
 
             int level = 1;
@@ -355,45 +379,23 @@ namespace Nebula.Game.Components {
             level = cachedCharacter.level;
             workshop = cachedCharacter.workshop;
 
-            RaceableObject raceable= nebulaObject.Raceable();
+            RaceableObject raceable = nebulaObject.Raceable();
             if (raceable) {
                 race = raceable.race;
             }
-            WeaponDamage actualDamage = inputDamage;
 
+            var copy = inputDamage.CreateCopy();
             if (false == ReflectDamage(target, ref hit, inputDamage)) {
-                InputDamage inpDamage = new InputDamage(nebulaObject, inputDamage);
-                actualDamage = target.ReceiveDamage(inpDamage).damage;
-                StartDamageDron(target, inputDamage, workshop, level, race);
+                target.ReceiveDamage(inputDamage);
+                StartDamageDron(target, inputDamage.CreateCopy(), workshop, level, race);
             }
-            hit.SetActualDamage(actualDamage);
             hit.SetRemainTargetHp(target.health);
 
             if(m_Achievments != null ) {
-                m_Achievments.OnMakeDamage(actualDamage);
+                m_Achievments.OnMakeDamage(copy);
             }
         }
 
-        //private WeaponBaseType myDronBaseType {
-        //    get {
-        //        if(cachedCharacter != null ) {
-        //            byte iWorkshop = cachedCharacter.workshop;
-        //            Workshop workshop = (Workshop)iWorkshop;
-        //            Race race = CommonUtils.RaceForWorkshop(workshop);
-        //            switch(race) {
-        //                case Race.Humans:
-        //                    return WeaponBaseType.Rocket;
-        //                case Race.Criptizoids:
-        //                    return WeaponBaseType.Laser;
-        //                case Race.Borguzands:
-        //                    return WeaponBaseType.Acid;
-        //                default:
-        //                    return WeaponBaseType.Rocket;
-        //            }
-        //        }
-        //        return WeaponBaseType.Rocket;
-        //    }
-        //}
 
         private void StartDamageDron(DamagableObject targetObject, WeaponDamage inputDamage, byte workshop, int level, byte race) {
 
@@ -418,24 +420,13 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private bool ReflectDamage(DamagableObject targetDamagable, ref WeaponHitInfo hit, WeaponDamage damage) {
+        private bool ReflectDamage(DamagableObject targetDamagable, ref WeaponHitInfo hit, InputDamage inputDamage) {
             bool reflected = targetDamagable.TryReflectDamage();
             if(reflected) {
-                //var targetCharacter = targetDamagable.nebulaObject.Character();
-                //var targetRaceable = targetDamagable.nebulaObject.Raceable();
-                //byte targetWorkshop = (byte)Workshop.Arlen;
-                //int targetLevel = 1;
-                //if(targetCharacter) {
-                    //targetWorkshop = targetCharacter.workshop;
-                    //targetLevel = targetCharacter.level;
-                //}
-                //byte targetRace = (byte)Race.None;
-                //if(targetRaceable) {
-                    //targetRace = targetRaceable.race;
-                //}
-
                 if(hit.notBlocked && hit.hitAllowed) {
-                    InputDamage inpDamage = new InputDamage(targetDamagable.nebulaObject, damage, new DamageParams { reflected = true });
+                    DamageParams damageParams = new DamageParams();
+                    damageParams.SetReflrected(true);
+                    InputDamage inpDamage = new InputDamage(targetDamagable.nebulaObject, inputDamage.CreateCopy(), damageParams);
                     cachedDamagable.ReceiveDamage(inpDamage);
                 }
             }

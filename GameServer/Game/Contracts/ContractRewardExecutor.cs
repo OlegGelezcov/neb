@@ -70,6 +70,13 @@ namespace Nebula.Game.Contracts {
                                 }
                             }
                             break;
+                        case ContractRewardType.turret: {
+                                var item = GiveTurretReward(player, reward as ContractTurretDataReward);
+                                if(item != null ) {
+                                    items.Add(item);
+                                }
+                            }
+                            break;
                     }
                 }
             }
@@ -93,6 +100,15 @@ namespace Nebula.Game.Contracts {
         private void GiveExpReward(MmoActor player, ContractExpDataReward expReward ) {
             player.GetComponent<PlayerCharacterObject>().AddExp(expReward.count);
             s_Log.InfoFormat("exp reward complete: {0} added".Color(LogColor.orange), expReward.count);
+        }
+
+        private ServerInventoryItem GiveTurretReward(MmoActor player, ContractTurretDataReward turretReward ) {
+            RaceableObject raceableComponent = player.GetComponent<RaceableObject>();
+            if (raceableComponent != null) {
+                TurretInventoryObject turretInventoryObject = new TurretInventoryObject("turret", raceableComponent.race);
+                return new ServerInventoryItem(turretInventoryObject, turretReward.count);
+            }
+            return null;
         }
 
         private ServerInventoryItem GiveOreReward(MmoActor player, ContractOreDataReward oreReward) {

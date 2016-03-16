@@ -347,7 +347,7 @@ namespace Nebula.Game.Components {
             ClearSubscribers();
         }
 
-        public WeaponDamage MoveDamageToSubscriber(WeaponDamage inputDamage) {
+        public void MoveDamageToSubscriber(InputDamage inputDamage) {
 
             float movedDamage = inputDamage.totalDamage;
             
@@ -360,8 +360,8 @@ namespace Nebula.Game.Components {
                             if (subscriber.Value.Raceable().race == meRaceable.race) {
                                 if (subscriber.Value.Skills().MoveDamageFromAlly(inputDamage.totalDamage, ref movedDamage)) {
                                     inputDamage.ClearAllDamages();
-                                    inputDamage.SetBaseTypeDamage(movedDamage);
-                                    return inputDamage;
+                                    inputDamage.SetBaseDamage(movedDamage);
+                     
                                 }
                             }
                         }
@@ -369,7 +369,6 @@ namespace Nebula.Game.Components {
                 }
             }
 
-            return inputDamage;
         }
 
         public void OnInvisibilityChanged(bool value) {

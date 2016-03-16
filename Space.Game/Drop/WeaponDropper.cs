@@ -10,16 +10,16 @@ namespace Space.Game.Drop {
     using System.Collections.Generic;
     public class WeaponDropper : Dropper
     {
-        private Dictionary<Difficulty, float> mDmgDiff = new Dictionary<Difficulty, float> {
-            { Difficulty.starter, 0.5f },
-            {  Difficulty.easy, 0.8f },
-            {  Difficulty.easy2, 1f },
-            {  Difficulty.medium, 1.5f },
-            {  Difficulty.none, 1f },
-            {  Difficulty.hard, 1.2f },
-            {  Difficulty.boss, 1.5f },
-            {  Difficulty.boss2, 2f }
-        };
+        //private Dictionary<Difficulty, float> mDmgDiff = new Dictionary<Difficulty, float> {
+        //    {  Difficulty.starter, 0.2f },
+        //    {  Difficulty.easy, 0.4f },
+        //    {  Difficulty.easy2, 0.6f },
+        //    {  Difficulty.medium, 0.8f },
+        //    {  Difficulty.none, 1f },
+        //    {  Difficulty.hard, 1.2f },
+        //    {  Difficulty.boss, 1.5f },
+        //    {  Difficulty.boss2, 2f }
+        //};
 
         public class WeaponDropParams
         {
@@ -67,6 +67,7 @@ namespace Space.Game.Drop {
 
             int[] points = Rand.GenerateNumbers(2, 10);
 
+            /*
             float damage = BalanceFormulas.ComputeWeaponDAMAGE(colorInfo.factor, setting.base_damage, setting.base_damage_factor,
                 dropParams.level, points[0], setting.damage_points_value, setting.damage_points_factor) * mDmgDiff[dropParams.difficulty];
 
@@ -75,7 +76,11 @@ namespace Space.Game.Drop {
 
             //float critChance = 0; // 
             float critChance = colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10) * (((float)dropParams.level / 60.0f + 1));
+            */
 
+            float damage = BalanceFormulas.WeaponDamage(dropParams.resource.WeaponSettings, setting.damage, dropParams.level, points[0], colorInfo) * dropParams.resource.difficulty[dropParams.difficulty];
+            float distance = BalanceFormulas.WeaponOptimalDistance(dropParams.resource.WeaponSettings, setting.optimalDistance, dropParams.level, points[1], colorInfo);
+            float critChance = BalanceFormulas.WeaponCriticalChance(dropParams.resource.WeaponSettings, setting.critChance, dropParams.level, Rand.Int(1, 10), colorInfo);
 
             //if (colorInfo.isBetterThanWhite) {
             //    critChance = colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10);

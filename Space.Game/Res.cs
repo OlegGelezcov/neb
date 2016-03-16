@@ -175,8 +175,15 @@
 
             achievments = new AchievmentDataCollection();
             achievments.Load(Path.Combine(basePath, "Data/achievments.xml"));
+
+            difficulty = new DifficultyTable();
+            difficulty.LoadFile(Path.Combine(basePath, "Data/Drop/difficulty.xml"));
         }
 
+        public DifficultyTable difficulty {
+            get;
+            private set;
+        }
 
         public ContractDataCollection contracts {
             get {

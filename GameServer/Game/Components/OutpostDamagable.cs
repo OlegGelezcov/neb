@@ -57,9 +57,11 @@ namespace Nebula.Game.Components {
         }
 
         public override InputDamage ReceiveDamage(InputDamage inputDamage) {
+            float beforeDamage = inputDamage.totalDamage;
             InputDamage dmg =  base.ReceiveDamage(inputDamage);
+            float afterDamage = dmg.totalDamage;
             if(mOutpost) {
-                log.InfoFormat("outpost receive damage input = {0} output = {1} [blue]", inputDamage.damage, dmg.damage);
+                log.InfoFormat("outpost receive damage input = {0} output = {1} [blue]", beforeDamage, afterDamage);
             }
             return dmg;
         }

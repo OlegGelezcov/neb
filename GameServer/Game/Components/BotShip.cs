@@ -6,6 +6,7 @@ using Space.Game.Drop;
 using Space.Game.Ship;
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 namespace Nebula.Game.Components {
 
@@ -29,7 +30,10 @@ namespace Nebula.Game.Components {
             hash["exists_model?"] = modelExist.ToString();
             hash["initialized?"] = initialized.ToString();
             hash["difficulty"] = mDifficulty.ToString();
-            hash["damage_resistance"] = damageResistance.ToString();
+            hash["common_resistance"] = commonResist.ToString();
+            hash["laser_resistance"] = laserResist.ToString();
+            hash["acid_resistance"] = acidResist.ToString();
+            hash["rocket_resistance"] = rocketResist.ToString();
             hash["capacity"] = holdCapacity.ToString();
             return hash;
         }
@@ -65,14 +69,14 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public override float damageResistance {
+        public override float  commonResist {
             get {
                 //check if resist blocked
                 if(blockResist.blocked) {
                     return 0f;
                 }
                 if(shipModel != null ) {
-                    float val = shipModel.resistance;
+                    float val = shipModel.commonResist;
                     if(mBonuses) {
                         val *= Mathf.Clamp01((1f + Mathf.Clamp(mBonuses.resistPcBonus, -1, 1)));
                         val += mBonuses.resistCntBonus;
@@ -82,6 +86,33 @@ namespace Nebula.Game.Components {
                 } else {
                     return 0f;
                 }
+            }
+        }
+
+        public override float acidResist {
+            get {
+                if(shipModel == null ) {
+                    return 0.0f;
+                }
+                return shipModel.acidResist;
+            }
+        }
+
+        public override float laserResist {
+            get {
+                if(shipModel == null ) {
+                    return 0.0f;
+                }
+                return shipModel.laserResist;
+            }
+        }
+
+        public override float rocketResist {
+            get {
+                if(shipModel == null ) {
+                    return 0.0f;
+                }
+                return shipModel.rocketResist;
             }
         }
 

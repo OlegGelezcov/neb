@@ -81,7 +81,7 @@ namespace Nebula.Game.Components {
 
         public override void Update(float deltaTime) {
             base.Update(deltaTime);
-            log.InfoFormat("linear speed after update = {0}", props.GetProperty((byte)PS.CurrentLinearSpeed));
+            //log.InfoFormat("linear speed after update = {0}", props.GetProperty((byte)PS.CurrentLinearSpeed));
         }
 
         public Hashtable GetSpeedDetail() {

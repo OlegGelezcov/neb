@@ -91,15 +91,15 @@ namespace Nebula.Game.Components {
         public override float criticalChance {
             get {
                 float result = 0;
+                if (weaponObject != null) {
+                    result = weaponObject.baseCritChance;
+                }
+
                 var ship = GetComponent<BaseShip>();
                 if (ship) {
-                    float cr = ship.shipModel.critChance;
-                    cr = cr * (1.0f + cachedBonuses.critChancePcBonus) + cachedBonuses.critChanceCntBonus;
-                    cr = Mathf.ClampLess(cr, 0f);
-                    result = cr;
-                    if (weaponObject != null) {
-                        result += weaponObject.baseCritChance;
-                    }
+                    result += ship.shipModel.critChance;
+                    result = result * (1.0f + cachedBonuses.critChancePcBonus) + cachedBonuses.critChanceCntBonus;
+                    result = Mathf.ClampLess(result, 0.0f);
                 }
                 result = ApplyCriticalChancePassiveBonus(result);
                 return result;
@@ -110,8 +110,7 @@ namespace Nebula.Game.Components {
             get {
                 WeaponDamage result = damage;
                 if (mShip) {
-                    float cr = mShip.shipModel.critDamageBonus;
-                    cr = cr * (1.0f + cachedBonuses.critDamagePcBonus) + cachedBonuses.critDamageCntBonus;
+                    float  cr = (1 + mShip.shipModel.critDamageBonus) * (1.0f + cachedBonuses.critDamagePcBonus) + cachedBonuses.critDamageCntBonus;
                     result.Mult(cr);
                 }
                 result = ApplyCriticalDamagePassiveBonus(result);
@@ -126,7 +125,7 @@ namespace Nebula.Game.Components {
                     dmg.SetFromDamage(weaponObject.damage);
                 }
                 if (mShip) {
-                    dmg.Mult(mShip.shipModel.damageBonus);
+                    dmg.Mult(1.0f + mShip.shipModel.damageBonus);
                 }
                 dmg = ApplyDamagePassiveBonus(dmg);
                 return dmg;

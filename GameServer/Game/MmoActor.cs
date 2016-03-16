@@ -158,6 +158,8 @@ namespace Space.Game {
 
             //create chest on killing when player die
             mDamagable.SetCreateChestOnKilling(true);
+            mDamagable.SetIgnoreDamageInterval(30);
+            mDamagable.SetIgnoreDamageAtStart(true);
         }
 
 
