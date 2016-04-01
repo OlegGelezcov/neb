@@ -8,6 +8,7 @@ using System.Collections.Concurrent;
 using System;
 using ServerClientCommon;
 using Nebula.Drop;
+using GameMath;
 
 namespace Nebula.Game.Components {
     public class PlayerTarget : NebulaBehaviour, IInfoSource, IDatabaseObject
@@ -201,6 +202,14 @@ namespace Nebula.Game.Components {
                     SetTarget(string.Empty, (byte)ItemType.Avatar);
                 }
             }
+
+            /*
+            if(nebulaObject.IsPlayer()) {
+                if(targetObject != null ) {
+                    float ang = transform.angleWithDirection(targetObject.transform.position - transform.position) * Mathf.RAD2DEG;
+                    log.InfoFormat("angle between us is: {0} degrees", ((int)ang));
+                }
+            }*/
         }
 
         private void SaveProperties() {

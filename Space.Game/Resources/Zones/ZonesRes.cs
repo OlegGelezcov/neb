@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 using Nebula.Resources.Zones;
+using Nebula.Resources.Zones.Planets;
 
 namespace Space.Game.Resources.Zones {
     public class ZonesRes
@@ -84,7 +85,7 @@ namespace Space.Game.Resources.Zones {
                 Dictionary<string, ZoneNpcInfo> npcs = LoadNpcs(e.Element("npcs"));
                 List<string> npcGroups = this.LoadNpcGroups(e.Element("npc_groups"));
                 List<ZonePlanetInfo> planets = LoadPlanets(e.Element("planets"));
-                List<PlanetCell> planetCells = new List<PlanetCell>();
+                //List<PlanetCell> planetCells = new List<PlanetCell>();
 
 
 
@@ -107,13 +108,13 @@ namespace Space.Game.Resources.Zones {
                     worldType = (WorldType)Enum.Parse(typeof(WorldType), e.GetString("world_type"));
                 }
 
-                if(worldType == WorldType.instance) {
-                    if(e.Element("cells") != null ) {
-                        planetCells = e.Element("cells").Elements("cell").Select(cellElement => {
-                            return PlanetCell.FromXml(cellElement);
-                        }).ToList();
-                    }
-                }
+                //if(worldType == WorldType.instance) {
+                //    if(e.Element("cells") != null ) {
+                //        planetCells = e.Element("cells").Elements("cell").Select(cellElement => {
+                //            return PlanetCell.FromXml(cellElement);
+                //        }).ToList();
+                //    }
+                //}
 
                 Vector3 hsp = new Vector3(0, 0, 0);
                 Vector3 csp = new Vector3(0, 0, 0);
@@ -146,7 +147,7 @@ namespace Space.Game.Resources.Zones {
                     humanSP = hsp,
                     borguzandSP = bsp,
                     criptizidSP = csp,
-                    planetCells = planetCells
+                    celss = new PlanetCellCollection(e.Element("cells"))
                 };
 
             }).ToList();

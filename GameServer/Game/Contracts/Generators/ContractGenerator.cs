@@ -24,6 +24,10 @@ namespace Nebula.Game.Contracts.Generators {
                     return new KillPlayerContractGenerator();
                 case ContractCategory.destroyConstruction:
                     return new DestroyConstructionContractGenerator();
+                case ContractCategory.upgradeCompanion:
+                    return new UpgradePetContractGenerator();
+                case ContractCategory.worldCapture:
+                    return new WorldCaptureContractGenerator();
                 default:
                     s_Log.ErrorFormat("contract generator for category: {0} don't exists", category);
                     return null;

@@ -7,6 +7,8 @@ using System.Collections;
 namespace Nebula.Game.Contracts {
     public abstract class BaseContract : IInfo {
 
+        private const int DECLINE_COOLDOWN = 2 * 60 * 60;
+
         private string m_Id;
         private ContractState m_State;
         private int m_Stage;
@@ -135,7 +137,7 @@ namespace Nebula.Game.Contracts {
             if(state != ContractState.declined) {
                 if(SetState(ContractState.declined)) {
                     m_DeclineStartTime = CommonUtils.SecondsFrom1970();
-                    m_DeclineEndTime = m_DeclineStartTime + 2 * 60;
+                    m_DeclineEndTime = m_DeclineStartTime + DECLINE_COOLDOWN;
                     if(oldState == ContractState.accepted) {
                         OnDeclined();
                     }

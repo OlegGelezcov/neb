@@ -7,6 +7,8 @@
         itemDelivery = 5,
         foundItem = 6,
         killPlayer = 7,
-        destroyConstruction = 8
+        destroyConstruction = 8,
+        upgradeCompanion = 9,
+        worldCapture = 10
     }
 }

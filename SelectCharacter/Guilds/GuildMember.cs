@@ -15,10 +15,16 @@ namespace SelectCharacter.Guilds {
 
         public int lastCacheTime = 0;
 
+        /// <summary>
+        /// Is user moderator or owner
+        /// </summary>
         public bool IsAddMemberGranted() {
             return (guildStatus == (int)GuildMemberStatus.Moderator) || (guildStatus == (int)GuildMemberStatus.Owner);
         }
 
+        /// <summary>
+        /// Is user moderator or owner
+        /// </summary>
         public bool IsSetGuildDescriptionGranted() {
             return (guildStatus == (int)GuildMemberStatus.Moderator) || (guildStatus == (int)GuildMemberStatus.Owner);
         }

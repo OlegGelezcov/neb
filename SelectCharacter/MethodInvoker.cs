@@ -152,7 +152,7 @@ namespace SelectCharacter {
             return linkedObjects;
         }
 
-        public object SendChatMessageToCharacterName(string msgId, string sourceLogin, string sourceCharId, string msg, string sourceCharacterName, string targCharacterName, Hashtable linkHash) {
+        public object SendChatMessageToCharacterName(int senderIconId, string msgId, string sourceLogin, string sourceCharId, string msg, string sourceCharacterName, string targCharacterName, Hashtable linkHash) {
             List<ChatLinkedObject> linkedObjects = ExtractChatLinkedObjects(linkHash);
             log.InfoFormat("set message {0}=>{1}: {2}", sourceCharacterName, targCharacterName, msg);
             ChatMessage messageObj = new ChatMessage {
@@ -166,6 +166,8 @@ namespace SelectCharacter {
                 targetLogin = string.Empty,
                 sourceCharacterName = sourceCharacterName,
                 targetCharacterName = targCharacterName,
+                senderIconId = senderIconId,
+                time = CommonUtils.SecondsFrom1970()
             };
             application.Chat.SendMessage(messageObj);
             return (int)ReturnCode.Ok;
@@ -173,6 +175,7 @@ namespace SelectCharacter {
 
 
         public object SendChatMessage( 
+            int senderIconId,
             string messageID, 
             string sourceLogin, 
             string sourceCharacterID,
@@ -197,7 +200,9 @@ namespace SelectCharacter {
                 sourceLogin = sourceLogin,
                 targetCharacterID = targetCharacterID,
                 targetLogin = targetLogin,
-                sourceCharacterName = sourceCharacterName
+                sourceCharacterName = sourceCharacterName,
+                senderIconId = senderIconId,
+                time = CommonUtils.SecondsFrom1970()
             };
 
             application.Chat.SendMessage(m);

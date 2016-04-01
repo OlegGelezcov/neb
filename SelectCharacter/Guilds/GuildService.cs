@@ -123,6 +123,8 @@ namespace SelectCharacter.Guilds {
                 description = description,
                 guildRace = playerCharacter.Race,
                 name = name,
+                depositedPvpPoints = 0,
+                depositedCredits = 0
             };
             mCache.SetGuild(newGuild);
             mApplication.Players.SetGuild(owner.gameRefId, owner.characterId, newGuild.ownerCharacterId);
@@ -663,5 +665,127 @@ namespace SelectCharacter.Guilds {
             return result;
         }
 
+        public ActionResult DepositCredits(string characterId, string guildId, int count) {
+            var guildObject = GetGuild(guildId);
+            if(guildObject == null ) {
+                return new ActionResult(ReturnCode.GuildNotFound);
+            }
+            GuildMember member;
+            if(false == guildObject.TryGetMember(characterId, out member)) {
+                return new ActionResult(ReturnCode.GuildMemberNotFound);
+            }
+
+            var store = mApplication.Stores.GetOnlyPlayerStore(characterId);
+            if(store == null ) {
+                return new ActionResult(ReturnCode.PlayerStoreNotFounded);
+            }
+
+            if(store.credits < count ) {
+                return new ActionResult(ReturnCode.NotEnoughCredits);
+            }
+
+            if(false == store.RemoveCredits(count)) {
+                return new ActionResult(ReturnCode.CreditsRemoveFromStoreError);
+            }
+
+            guildObject.AddCredits(count);
+            MarkModified(guildId);
+
+            SendGuildUpdateEvent(characterId, guildObject.GetInfo(mApplication));
+            return new ActionResult(ReturnCode.Ok, new Hashtable { { (int)SPC.Count, count } });
+        }
+
+        public ActionResult WithdrawCredits(string characterId, string guildId, int count) {
+            var guildObject = GetGuild(guildId);
+            if (guildObject == null) {
+                return new ActionResult(ReturnCode.GuildNotFound);
+            }
+            GuildMember member;
+            if (false == guildObject.TryGetMember(characterId, out member)) {
+                return new ActionResult(ReturnCode.GuildMemberNotFound);
+            }
+
+            if(false == member.IsAddMemberGranted()) {
+                return new ActionResult(ReturnCode.GuildPrivilegeNotEnough);
+            }
+
+            if(guildObject.depositedCredits < count ) {
+                return new ActionResult(ReturnCode.DepositedCreditsDontEnough);
+            }
+
+            var store = mApplication.Stores.GetOnlyPlayerStore(characterId);
+            if (store == null) {
+                return new ActionResult(ReturnCode.PlayerStoreNotFounded);
+            }
+
+            if(false == guildObject.RemoveCredits(count)) {
+                return new ActionResult(ReturnCode.WithdrawCreditsError);
+            }
+
+            MarkModified(guildId);
+
+            store.AddCredits(count);
+            SendGuildUpdateEvent(characterId, guildObject.GetInfo(mApplication));
+            return new ActionResult(ReturnCode.Ok, new Hashtable { { (int)SPC.Count, count } });
+        }
+
+        public ActionResult DepositPvpPoints(string characterId, string guildId, int count) {
+            var guildObject = GetGuild(guildId);
+            if (guildObject == null) {
+                return new ActionResult(ReturnCode.GuildNotFound);
+            }
+            GuildMember member;
+            if (false == guildObject.TryGetMember(characterId, out member)) {
+                return new ActionResult(ReturnCode.GuildMemberNotFound);
+            }
+
+            var store = mApplication.Stores.GetOnlyPlayerStore(characterId);
+            if (store == null) {
+                return new ActionResult(ReturnCode.PlayerStoreNotFounded);
+            }
+
+            if (store.pvpPoints < count) {
+                return new ActionResult(ReturnCode.NotEnoughPvpPoints);
+            }
+
+            if (false == store.RemovePvpPoints(count)) {
+                return new ActionResult(ReturnCode.PvpPointsRemoveFromStoreError);
+            }
+
+            guildObject.AddPvpPoints(count);
+            MarkModified(guildId);
+
+            SendGuildUpdateEvent(characterId, guildObject.GetInfo(mApplication));
+            return new ActionResult(ReturnCode.Ok, new Hashtable { { (int)SPC.Count, count } });
+        }
+
+        public ActionResult WithdrawPvpPoints(string characterId, string guildId, int count ) {
+            var guildObject = GetGuild(guildId);
+            if (guildObject == null) {
+                return new ActionResult(ReturnCode.GuildNotFound);
+            }
+            GuildMember member;
+            if (false == guildObject.TryGetMember(characterId, out member)) {
+                return new ActionResult(ReturnCode.GuildMemberNotFound);
+            }
+
+            if (false == member.IsAddMemberGranted()) {
+                return new ActionResult(ReturnCode.GuildPrivilegeNotEnough);
+            }
+            if (guildObject.depositedPvpPoints < count) {
+                return new ActionResult(ReturnCode.DepositedPvpPointsDontEnough);
+            }
+            var store = mApplication.Stores.GetOnlyPlayerStore(characterId);
+            if (store == null) {
+                return new ActionResult(ReturnCode.PlayerStoreNotFounded);
+            }
+            if(false == guildObject.RemovePvpPoints(count)) {
+                return new ActionResult(ReturnCode.WithdrawPvpPointsError);
+            }
+            MarkModified(guildId);
+            store.AddPvpPoints(count);
+            SendGuildUpdateEvent(characterId, guildObject.GetInfo(mApplication));
+            return new ActionResult(ReturnCode.Ok, new Hashtable { { (int)SPC.Count, count } });
+        }
     }
 }

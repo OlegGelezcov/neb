@@ -77,6 +77,13 @@ namespace Nebula.Game.Contracts {
                                 }
                             }
                             break;
+                        case ContractRewardType.craft_resource_special: {
+                                var item = GiveCraftResourceSpecial(player, reward as ContractCraftResourceSpecialReward);
+                                if(item != null ) {
+                                    items.Add(item);
+                                }
+                            }
+                            break;
                     }
                 }
             }
@@ -130,6 +137,18 @@ namespace Nebula.Game.Contracts {
                 }
             }
             return null;
+        }
+
+        private ServerInventoryItem GiveCraftResourceSpecial(MmoActor player, ContractCraftResourceSpecialReward reward) {
+            if(reward == null ) {
+                return null;
+            }
+            var data = player.resource.craftObjects[reward.id];
+            if(data == null ) {
+                return null;
+            }
+            CraftResourceObject obj = new CraftResourceObject(data.id, data.color);
+            return new ServerInventoryItem(obj, reward.count);
         }
 
         private ServerInventoryItem GiveCraftResource(MmoActor player, ContractCraftResourceDataReward reward ) {

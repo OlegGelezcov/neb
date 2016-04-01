@@ -19,6 +19,22 @@ namespace SelectCharacter.OperationHandlers {
                         response = CallSetRaceStatus(request, operation);
                     }
                     break;
+                case RPCID.rpc_sc_DepositCreditsToCoalition: {
+                        response = DepositCreditsToCoalition(request, operation);
+                    }
+                    break;
+                case RPCID.rpc_sc_DepositPvpPointsToCoalition: {
+                        response = DepositPvpPointsToCoalition(request, operation);
+                    }
+                    break;
+                case RPCID.rpc_sc_WithdrawCreditsFromCoalition: {
+                        response = WithdrawCreditsFromCoalition(request, operation);
+                    }
+                    break;
+                case RPCID.rpc_sc_WithdrawPvpPointsFromCoalition: {
+                        response = WithdrawPvpPointsFromCoalition(request, operation);
+                    }
+                    break;
                 default:
                     response = new OperationResponse(request.OperationCode) {
                         ReturnCode = (short)ReturnCode.InvalidRPCID,
@@ -42,6 +58,70 @@ namespace SelectCharacter.OperationHandlers {
                 };
                 return new OperationResponse(request.OperationCode, responseInstance);
             }
+            return DefaultError();
+        }
+
+        private OperationResponse DepositCreditsToCoalition(OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length >= 3 ) {
+                string cid = (string)op.parameters[0];
+                string gid = (string)op.parameters[1];
+                int count = (int)op.parameters[2];
+                ActionResult actionResult = application.Guilds.DepositCredits(cid, gid, count);
+                RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = actionResult.GetInfo()
+                };
+                return new OperationResponse(request.OperationCode, responseInstance);
+            }
+            return DefaultError();
+        }
+
+        private OperationResponse DepositPvpPointsToCoalition(OperationRequest request, RPCInvokeOperation op) {
+            if (op.parameters != null && op.parameters.Length >= 3) {
+                string cid = (string)op.parameters[0];
+                string gid = (string)op.parameters[1];
+                int count = (int)op.parameters[2];
+                ActionResult actionResult = application.Guilds.DepositPvpPoints(cid, gid, count);
+                RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = actionResult.GetInfo()
+                };
+                return new OperationResponse(request.OperationCode, responseInstance);
+            }
+            return DefaultError();
+        }
+
+        private OperationResponse WithdrawCreditsFromCoalition(OperationRequest request, RPCInvokeOperation op) {
+            if (op.parameters != null && op.parameters.Length >= 3) {
+                string cid = (string)op.parameters[0];
+                string gid = (string)op.parameters[1];
+                int count = (int)op.parameters[2];
+                ActionResult actionResult = application.Guilds.WithdrawCredits(cid, gid, count);
+                RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = actionResult.GetInfo()
+                };
+                return new OperationResponse(request.OperationCode, responseInstance);
+            }
+            return DefaultError();
+        }
+
+        private OperationResponse WithdrawPvpPointsFromCoalition(OperationRequest request, RPCInvokeOperation op) {
+            if (op.parameters != null && op.parameters.Length >= 3) {
+                string cid = (string)op.parameters[0];
+                string gid = (string)op.parameters[1];
+                int count = (int)op.parameters[2];
+                ActionResult actionResult = application.Guilds.WithdrawPvpPoints(cid, gid, count);
+                RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = actionResult.GetInfo()
+                };
+                return new OperationResponse(request.OperationCode, responseInstance);
+            }
+            return DefaultError();
+        }
+
+        private OperationResponse DefaultError() {
             return InvalidParametersOperationResponse(SelectCharacterOperationCode.RPCInvokeMethod);
         }
     }

@@ -55,6 +55,22 @@ namespace Nebula.Engine {
             rotation = Quat.Slerp(Quat.Euler(rotation), Quat.LookRotation(direction), rotationValue).eulerAngles;
         }
 
+        public float angleBetweenForwards(NebulaTransform other) {
+            Vector3 myForward = Quat.Euler(rotation) * new Vector3(0, 0, 1);
+            Vector3 otherForward = Quat.Euler(other.rotation) * new Vector3(0, 0, 1);
+            var crossLen = myForward.Cross(otherForward).Length;
+            var dotVal = myForward.Dot(otherForward);
+            return Mathf.Atan2(crossLen, dotVal);
+        }
+
+        public float angleWithDirection(Vector3 direction) {
+            Vector3 myForward = Quat.Euler(rotation) * new Vector3(0, 0, 1);
+            Vector3 otherForward = direction;
+            var crossLen = myForward.Cross(otherForward).Length;
+            var dotVal = myForward.Dot(otherForward);
+            return Mathf.Atan2(crossLen, dotVal);
+        }
+
         public override int behaviourId {
             get {
                 return (int)ComponentID.Transform;

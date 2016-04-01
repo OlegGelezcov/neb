@@ -146,6 +146,7 @@
     <Compile Include="Game\Components\PersonalBeacon.cs" />
     <Compile Include="Game\Components\PirateStationObject.cs" />
     <Compile Include="Game\Components\PlanetObject.cs" />
+    <Compile Include="Game\Components\PlanetObjects\PlanetObjectBase.cs" />
     <Compile Include="Game\Components\PlayerBonuses.cs" />
     <Compile Include="Game\Components\PlayerCharacterObject.cs" />
     <Compile Include="Game\Components\PlayerLoaderObject.cs" />
@@ -185,6 +186,8 @@
     <Compile Include="Game\Contracts\Generators\KillNPCContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\KillNPCGroupContractGenerator.cs" />
     <Compile Include="Game\Contracts\Generators\KillPlayerContractGenerator.cs" />
+    <Compile Include="Game\Contracts\Generators\UpgradePetContractGenerator.cs" />
+    <Compile Include="Game\Contracts\Generators\WorldCaptureContractGenerator.cs" />
     <Compile Include="Game\Contracts\ItemDeliveryContract.cs" />
     <Compile Include="Game\Contracts\KillNPCContract.cs" />
     <Compile Include="Game\Contracts\KillNPCGroupContract.cs" />
@@ -194,6 +197,8 @@
     <Compile Include="Game\Contracts\Marks\FoundItemContractMark.cs" />
     <Compile Include="Game\Contracts\Marks\KillNPCContractMark.cs" />
     <Compile Include="Game\Contracts\Marks\KillNPCGroupContractMark.cs" />
+    <Compile Include="Game\Contracts\UpgradePetContract.cs" />
+    <Compile Include="Game\Contracts\WorldCaptureContract.cs" />
     <Compile Include="Game\DamageInfo.cs" />
     <Compile Include="Game\DamagerCollection.cs" />
     <Compile Include="Game\DebugActionExecutor.cs" />
@@ -211,6 +216,8 @@
     <Compile Include="Game\Events\PlayerEventSubscriber.cs" />
     <Compile Include="Game\Events\PlayerKilledEvent.cs" />
     <Compile Include="Game\Events\TriggerEvent.cs" />
+    <Compile Include="Game\Events\UpgradePetEvent.cs" />
+    <Compile Include="Game\Events\WorldCapturedEvent.cs" />
     <Compile Include="Game\ExitWorkshopSavedInfo.cs" />
     <Compile Include="Game\Extensions.cs" />
     <Compile Include="Game\ConsoleLogging.cs" />
@@ -473,6 +480,7 @@
     <Compile Include="Game\WorldNpcManager.cs" />
     <Compile Include="NebulaLogger.cs" />
     <Compile Include="OutgoingMasterServerPeer.cs" />
+    <Compile Include="PlanetWorldCellBoard.cs" />
     <Compile Include="S2SMethodInvoker.cs" />
     <Compile Include="Saving\MailBoxSaveObject.cs" />
     <Compile Include="Saving\MailMessageChannel.cs" />
@@ -578,6 +586,7 @@
     <Compile Include="MmoPeer.cs" />
     <Compile Include="Game\MmoWorld.cs" />
     <Compile Include="GameApplication.cs" />
+    <Compile Include="PlanetWorldCell.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -628,6 +637,7 @@
     </Content>
     <Content Include="assets\connection_config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="assets\database.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

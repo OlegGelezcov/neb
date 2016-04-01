@@ -138,11 +138,18 @@ namespace Space.Game.Drop
             //module.SetHP(BalanceFormulas.ComputeHP(colorInfo.factor, moduleSetting.base_hp, moduleSetting.base_hp_factor, dropParams.level, basePoints[0], slotSetting.hp_points_value, slotSetting.hp_points_factor) * mHPDiff[dropParams.difficulty]);
             //module.SetSpeed(BalanceFormulas.ComputeSPEED(colorInfo.factor, moduleSetting.base_speed, moduleSetting.base_speed_factor, dropParams.level, basePoints[1], slotSetting.speed_points_value, slotSetting.speed_points_factor));
             //module.SetHold(BalanceFormulas.ComputeCARGO(colorInfo.factor, moduleSetting.base_cargo, moduleSetting.base_cargo_factor, dropParams.level, basePoints[2], slotSetting.cargo_points_value));
-            module.SetHP(BalanceFormulas.Hp(dropParams.resource.ModuleSettings, slotSetting.hp, dropParams.level, basePoints[0], colorInfo) * dropParams.resource.difficulty[dropParams.difficulty] );
+            module.SetHP(BalanceFormulas.Hp(dropParams.resource.ModuleSettings, slotSetting.hp, dropParams.level, basePoints[0], colorInfo) * dropParams.resource.difficulty.module[dropParams.difficulty] );
             module.SetSpeed(BalanceFormulas.Speed(dropParams.resource.ModuleSettings, slotSetting.speed, dropParams.level, basePoints[1], colorInfo));
             module.SetHold((int)BalanceFormulas.Cargo(dropParams.resource.ModuleSettings, slotSetting.cargo, dropParams.level, basePoints[2], colorInfo));
-           
-            foreach(AdditionalParameter prm in GenerateAdditionalParameters(colorInfo)) {
+
+            module.SetCritDamage(BalanceFormulas.CritDamageBonus(dropParams.resource.ModuleSettings, 
+                slotSetting.critDamageBonus, 
+                dropParams.level, 
+                Rand.Int(1, dropParams.resource.ModuleSettings.addPointMax), 
+                colorInfo)
+                );
+
+            foreach (AdditionalParameter prm in GenerateAdditionalParameters(colorInfo)) {
                 SetAddionalParameter(ref module, dropParams.resource.ModuleSettings, slotSetting, prm, colorInfo);
             }
 

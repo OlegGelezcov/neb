@@ -82,8 +82,8 @@ namespace SelectCharacter.Characters {
                     character.WorldId = worldId;
                     character.Exp = exp;
                     //log.InfoFormat("set world = {0} for character = {1}", character.WorldId, character.CharacterId);
-                    log.InfoFormat("update character occured from GameServer: ID={0}, WORLD={1},EXP={2},MODEL={3}",
-                        characterId, worldId, exp, model.toHash().ToStringBuilder().ToString());
+                    //log.InfoFormat("update character occured from GameServer: ID={0}, WORLD={1},EXP={2},MODEL={3}",
+                        //characterId, worldId, exp, model.toHash().ToStringBuilder().ToString());
                     break;
                 }
             }

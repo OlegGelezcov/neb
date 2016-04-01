@@ -23,6 +23,8 @@ namespace Nebula.Client.Contracts {
                     return new CraftResourceContractReward(element);
                 case ContractRewardType.turret:
                     return new TurretContractReward(element);
+                case ContractRewardType.craft_resource_special:
+                    return new CraftResourceSpecialReward(element);
                 default:
                     return null;
             }

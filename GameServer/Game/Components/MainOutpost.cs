@@ -106,7 +106,8 @@ namespace Nebula.Game.Components {
         public void OnWasKilled() {
             log.InfoFormat("change race ow world at outpost when is killed [{0}:{1}] [red]", 
                 nebulaObject.mmoWorld().Zone.Id, (Race)mRaceable.race);
-            nebulaObject.mmoWorld().SetCurrentRace(Race.None);
+            nebulaObject.mmoWorld().SetCurrentRace(Race.None, true);
+
         }
 
         public void Death() {

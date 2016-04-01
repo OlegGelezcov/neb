@@ -11,6 +11,8 @@ namespace SelectCharacter.Chat {
         /// </summary>
         public ObjectId Id { get; set; }
 
+        public int senderIconId { get; set; }
+
         public string messageID { get; set; }
         /// <summary>
         /// Login of sender
@@ -44,5 +46,7 @@ namespace SelectCharacter.Chat {
         public List<ChatLinkedObject> links { get; set; }
 
         public string targetCharacterName { get; set; }
+
+        public int time { get; set; }
     }
 }

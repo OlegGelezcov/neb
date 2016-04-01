@@ -89,6 +89,18 @@ namespace Nebula.Game.Components {
             return hash;
         }
 
+        public int GetSlotBySkillId(int skill) {
+            foreach(var kvp in Skills ) {
+                if(kvp.Value != null ) {
+                    if(kvp.Value.data != null ) {
+                        if(kvp.Value.data.Id == skill ) {
+                            return kvp.Key;
+                        }
+                    }
+                }
+            }
+            return -1;
+        }
 
         public void Init(SkillsComponentData data) {
 

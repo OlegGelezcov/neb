@@ -22,6 +22,8 @@ namespace SelectCharacter.Guilds {
         public string description { get; set; }
         public string name { get; set; }
         public bool opened { get; set; } = true;
+        public int depositedCredits { get; set; } = 0;
+        public int depositedPvpPoints { get; set; } = 0;
 
         private int mPage = 0;
 
@@ -75,6 +77,7 @@ namespace SelectCharacter.Guilds {
             }
             return privilegedMembers;
         }
+
 
         public bool AddMember(GuildMember member) {
             lock(syncRoot) {
@@ -148,7 +151,9 @@ namespace SelectCharacter.Guilds {
                 { (int)SPC.Name, ( name != null ) ? name : string.Empty  },
                 { (int)SPC.Opened, opened },
                 { (int)SPC.ModerCount, moderatorCount },
-                { (int)SPC.MaxModerCount, MAX_NUMBER_OF_MODERATORS }
+                { (int)SPC.MaxModerCount, MAX_NUMBER_OF_MODERATORS },
+                { (int)SPC.Credits, depositedCredits },
+                { (int)SPC.PvpPoints, depositedPvpPoints }
             };
 
             Hashtable membersHash = new Hashtable();
@@ -186,5 +191,53 @@ namespace SelectCharacter.Guilds {
 
 
         public bool IsOwner(string characterID) { return characterID == ownerCharacterId; }
+
+
+
+        /// <summary>
+        /// Add credits to guild
+        /// </summary>
+        /// <param name="cnt">Credits to add</param>
+        public void AddCredits(int cnt) {
+            if(cnt > 0 ) {
+                depositedCredits += cnt;
+            }
+        }
+
+        /// <summary>
+        /// Add pvp points to guild
+        /// </summary>
+        /// <param name="cnt">Pvp points to add</param>
+        public void AddPvpPoints(int cnt) {
+            if(cnt > 0 ) {
+                depositedPvpPoints += cnt;
+            }
+        }
+
+        /// <summary>
+        /// Remove credits from guild. Removed value must be less than guild has
+        /// </summary>
+        /// <param name="cnt">Count credits to remove</param>
+        /// <returns>True if remove success, else false</returns>
+        public bool RemoveCredits(int cnt) {
+            if(depositedCredits >= cnt ) {
+                depositedCredits -= cnt;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Remove pvp points from guild deposit. Removed value must be less or equal than guild has
+        /// </summary>
+        /// <param name="cnt">Count of pvp points to remove</param>
+        /// <returns>True if removed successfully else false</returns>
+        public bool RemovePvpPoints(int cnt) {
+            if(depositedPvpPoints >= cnt) {
+                depositedPvpPoints -= cnt;
+                return true;
+            }
+            return false;
+        }
     }
 }

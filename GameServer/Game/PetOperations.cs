@@ -2,6 +2,8 @@
 using ExitGames.Logging;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using Nebula.Game.Contracts;
+using Nebula.Game.Events;
 using Nebula.Game.Pets;
 using Nebula.Game.Utils;
 using Nebula.Inventory.Objects;
@@ -299,6 +301,11 @@ namespace Nebula.Game{
 
             var achievments = player.GetComponent<AchievmentComponent>();
             achievments.SetVariable("max_pet_color", (int)petData.color);
+
+            var contractMgr = player.GetComponent<ContractManager>();
+            if(contractMgr != null ) {
+                contractMgr.OnEvent(new UpgradePetEvent(player.nebulaObject));
+            }
 
             return CreateResponse(RPCErrorCode.Ok);
         }

@@ -80,7 +80,7 @@ namespace Space.Game {
         ConstructionDataResource playerConstructions { get; }
         PredefinedDropLists predefinedDropLists { get; }
         NpcClassSkillsResource npcSkills { get;  }
-        DifficultyTable difficulty { get; }
+        DifficultyRes difficulty { get; }
     }
 
 }

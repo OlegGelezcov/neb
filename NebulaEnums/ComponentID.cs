@@ -59,6 +59,7 @@ namespace Common {
         Trigger = 51,
         Achievments = 52,
         PlanetBuilding = 53,
-        LoreBox = 54
+        LoreBox = 54,
+        PlanetBasedObject = 55
     }
 }

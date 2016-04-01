@@ -33,5 +33,11 @@ namespace SelectCharacter.Events {
 
         [DataMember(Code = (byte)ParameterCode.DisplayName)]
         public string sourceCharacterName { get; set; }
+
+        [DataMember(Code = (byte)ParameterCode.Icon)]
+        public int senderIconId { get; set; }
+
+        [DataMember(Code = (byte)ParameterCode.CurrentTime) ]
+        public int time { get; set; }
     }
 }

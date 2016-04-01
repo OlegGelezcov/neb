@@ -7,6 +7,7 @@
         scheme = 5,
         nebula_element = 6,
         craft_resource = 7,
-        turret = 8
+        turret = 8,
+        craft_resource_special = 9
     }
 }

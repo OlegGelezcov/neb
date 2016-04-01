@@ -16,5 +16,10 @@
         public const int rpc_ResetNew = 12;
         public const int rpc_TestKill = 13;
         public const int rpc_UnlockLore = 14;
+
+        public const int rpc_sc_DepositCreditsToCoalition = 15;
+        public const int rpc_sc_DepositPvpPointsToCoalition = 16;
+        public const int rpc_sc_WithdrawCreditsFromCoalition = 17;
+        public const int rpc_sc_WithdrawPvpPointsFromCoalition = 18;
     }
 }

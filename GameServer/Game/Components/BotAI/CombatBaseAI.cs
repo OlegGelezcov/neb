@@ -50,7 +50,7 @@ namespace Nebula.Game.Components.BotAI {
         private Vector3 mStartPosition;
         private bool mReturningToStartPosition = false;
         private bool mUseHitProbForAgro = false;
-        private List<int> m_SlotsWithSkills;
+        //private List<int> m_SlotsWithSkills;
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -120,6 +120,8 @@ namespace Nebula.Game.Components.BotAI {
         }
 
 
+        private List<int> m_CurrentSkills = null;
+
         private void SetupSkills() {
             var ship = GetComponent<BaseShip>();
             if(ship) {
@@ -152,6 +154,7 @@ namespace Nebula.Game.Components.BotAI {
                     maxSkillsCount = colorMap.skills.Count;
                 }
                 List<int> filtered = colorMap.skills.Take(maxSkillsCount).ToList();
+                m_CurrentSkills = filtered;
 
                 for(int i = 0; i < filtered.Count; i++) {
                     int skill = colorMap.skills[i];
@@ -182,13 +185,15 @@ namespace Nebula.Game.Components.BotAI {
 
                 if(m_Skills ) {
                     m_Skills.UpdateSkills(ship.shipModel);
-                    m_SlotsWithSkills = m_Skills.slotsWithSkill;
+                    //m_SlotsWithSkills = m_Skills.slotsWithSkill;
                 }
             }
 
-            if (m_SlotsWithSkills == null) {
-                m_SlotsWithSkills = new List<int>();
-            }
+            //if (m_SlotsWithSkills == null) {
+            //    m_SlotsWithSkills = new List<int>();
+            //}
+
+            
         }
 
         private bool isTurret {
@@ -339,17 +344,26 @@ namespace Nebula.Game.Components.BotAI {
             if(skillCD > 0 ) {
                 return false;
             }
-            if(m_Skills && m_SlotsWithSkills.Count > 0) {
-                int slot = m_SlotsWithSkills.AnyElement();
-                var skillObj = m_Skills.GetSkillByPosition(slot);
-                if (skillObj != null) {
-                    if (skillObj.ready && skillObj.energyOk) {
-                        if (m_Skills.UseSkill(slot, mTarget.targetObject)) {
-                            skillCD = skillObj.data.Cooldown;
-                            //log.InfoFormat("npc successfully used skill  at slot = {0}, energy = {1}".Color(LogColor.orange), slot, GetComponent<ShipEnergyBlock>().currentEnergy);
-                            return true;
+            if(m_Skills && m_CurrentSkills != null) {
+                if (m_CurrentSkills.Count > 0) {
+                    //int slot = m_SlotsWithSkills.AnyElement();
+                    int skill = m_CurrentSkills.AnyElement();
+                    int slot = m_Skills.GetSlotBySkillId(skill);
+
+                    if (slot >= 0) {
+                        var skillObj = m_Skills.GetSkillById(skill);
+                        if (skillObj != null) {
+                            if (skillObj.ready && skillObj.energyOk) {
+                                if (m_Skills.UseSkill(slot, mTarget.targetObject)) {
+                                    skillCD = skillObj.data.Cooldown;
+                                    //log.InfoFormat("NPC used skill = {0}".Color(LogColor.orange), skillObj.data.Id.ToString("X8"));
+                                    //log.InfoFormat("npc successfully used skill  at slot = {0}, energy = {1}".Color(LogColor.orange), slot, GetComponent<ShipEnergyBlock>().currentEnergy);
+                                    return true;
+                                }
+                            }
                         }
                     }
+
                 }
             }
             return false;

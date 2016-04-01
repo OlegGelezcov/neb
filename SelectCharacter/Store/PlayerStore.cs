@@ -80,17 +80,21 @@ namespace SelectCharacter.Store {
             };
             lock(syncRoot) {
                 storeItems.Add(storeItem.storeItemID, storeItem);
-                SelectCharacterApplication.Instance.Stores.SendStoreUpdate(this);
+                SendUpdateEvent();
                 mChaged = true;
                 return storeItem;
             }
+        }
+
+        public void SendUpdateEvent() {
+            SelectCharacterApplication.Instance.Stores.SendStoreUpdate(this);
         }
 
 
         public bool RemoveFromStore(string storeItemID ) {
             lock(syncRoot) {
                 bool result = storeItems.Remove(storeItemID);
-                SelectCharacterApplication.Instance.Stores.SendStoreUpdate(this);
+                SendUpdateEvent();
                 mChaged = true;
                 return result;
             }
@@ -130,7 +134,7 @@ namespace SelectCharacter.Store {
                 }
                 credits += creds;
                 mChaged = true;
-                SelectCharacterApplication.Instance.Stores.SendStoreUpdate(this);
+                SendUpdateEvent();
                 return creds;
             }
         }
@@ -145,7 +149,7 @@ namespace SelectCharacter.Store {
                 if(credits >= creds) {
                     credits -= creds;
                     mChaged = true;
-                    SelectCharacterApplication.Instance.Stores.SendStoreUpdate(this);
+                    SendUpdateEvent();
                     return true;
                 }
                 return false;

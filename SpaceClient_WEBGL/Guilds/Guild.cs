@@ -16,6 +16,8 @@ namespace Nebula.Client.Guilds {
         public bool opened { get; private set; }
         public int moderCount { get; private set; }
         public int maxModerCount { get; private set; }
+        public int depositedCredits { get; private set; }
+        public int depositedPvpPoints { get; private set; }
 
         public Guild() { }
 
@@ -59,6 +61,11 @@ namespace Nebula.Client.Guilds {
 
                 lastParameter = SPC.MaxModerCount;
                 maxModerCount = info.GetValueInt((int)SPC.MaxModerCount);
+
+                depositedCredits = info.GetValueInt((int)SPC.Credits);
+
+                depositedPvpPoints = info.GetValueInt((int)SPC.PvpPoints);
+
             } catch (Exception exception) {
                 throw new NebulaException(string.Format("last not handled key = {0}", lastParameter));
             }

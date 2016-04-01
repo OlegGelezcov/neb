@@ -2,6 +2,7 @@
     using Common;
     using ExitGames.Logging;
     using GameMath;
+    using Nebula;
     using Nebula.Database;
     using Nebula.DSL;
     using Nebula.Engine;
@@ -55,6 +56,8 @@
         private readonly SaveWorldTimer mSaveWorldTimer = new SaveWorldTimer();
         private readonly EventManager m_EventManager = new EventManager();
 
+        private readonly PlanetWorldCellBoard m_Cells = new PlanetWorldCellBoard();
+
         private GameApplication m_App;
 
         public MmoWorld(string name, Vector minCorner, Vector maxCorner, Vector tileDimensions, Res resource, GameApplication app)
@@ -78,6 +81,8 @@
 
                 log.InfoFormat("base init completed");
 
+                m_Cells.Setup(this);
+
                 //load world info from database
                 LoadWorldInfo();
                 LoadWorldState();
@@ -89,6 +94,14 @@
                 CL.Out(eee.Message);
                 CL.Out(eee.StackTrace);
             }
+        }
+
+        public bool SetCellObject(int row, int column, NebulaObject obj) {
+            return m_Cells.SetCellObject(row, column, obj);
+        }
+
+        public bool UnsetCellObject(int row, int column ) {
+            return m_Cells.UnsetCellObject(row, column);
         }
 
         public GameApplication application {
@@ -276,7 +289,7 @@
             }
         }
 
-        public void SetCurrentRace(Race race) {
+        public void SetCurrentRace(Race race, bool wasCapturedByDestroyingOutpost = false) {
 
             //dont allow change source worlds to neutral owners
             if(race == Race.None && Zone.worldType == WorldType.source ) {
@@ -293,6 +306,10 @@
 
             if(race != Race.None) {
                 GivePvpPointsForSystemCapture(race);
+            }
+
+            if(wasCapturedByDestroyingOutpost) {
+                OnEvent(new WorldCapturedEvent(previousRace, GetID()));
             }
         }
 

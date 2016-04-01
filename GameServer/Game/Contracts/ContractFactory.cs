@@ -24,6 +24,10 @@ namespace Nebula.Game.Contracts {
                     return new KillPlayerContract(hash, owner);
                 case ContractCategory.destroyConstruction:
                     return new DestroyConstructionContract(hash, owner);
+                case ContractCategory.upgradeCompanion:
+                    return new UpgradePetContract(hash, owner);
+                case ContractCategory.worldCapture:
+                    return new WorldCaptureContract(hash, owner);
                 default: {
                         s_Log.ErrorFormat("not exist contract catgeory: {0}", category);
                         return null;

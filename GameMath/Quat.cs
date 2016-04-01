@@ -182,5 +182,25 @@ namespace GameMath {
 
             return result;
         }
+
+        public static Vector3 operator*(Quat quat, Vector3 vec) {
+            float num = quat.x * 2f;
+            float num2 = quat.y * 2f;
+            float num3 = quat.z * 2f;
+            float num4 = quat.x * num;
+            float num5 = quat.y * num2;
+            float num6 = quat.z * num3;
+            float num7 = quat.x * num2;
+            float num8 = quat.x * num3;
+            float num9 = quat.y * num3;
+            float num10 = quat.w * num;
+            float num11 = quat.w * num2;
+            float num12 = quat.w * num3;
+            Vector3 result = new Vector3();
+            result.X = (1f - (num5 + num6)) * vec.X + (num7 - num12) * vec.Y + (num8 + num11) * vec.Z;
+            result.Y = (num7 + num12) * vec.X + (1f - (num4 + num6)) * vec.Y + (num9 - num10) * vec.Z;
+            result.Z = (num8 - num11) * vec.X + (num9 + num10) * vec.Y + (1f - (num4 + num5)) * vec.Z;
+            return result;
+        }
     }
 }

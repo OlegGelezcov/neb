@@ -41,6 +41,10 @@ namespace Nebula.Contracts {
                     return new KillPlayerContractData(element);
                 case ContractCategory.destroyConstruction:
                     return new DestroyConstructionContractData(element);
+                case ContractCategory.upgradeCompanion:
+                    return new UpgradePetContractData(element);
+                case ContractCategory.worldCapture:
+                    return new WorldCaptureContractData(element);
                 default:
                     return null;
             }

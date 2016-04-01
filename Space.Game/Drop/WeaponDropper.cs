@@ -78,7 +78,7 @@ namespace Space.Game.Drop {
             float critChance = colorInfo.factor * setting.base_crit_chance * Rand.Int(1, 10) * (((float)dropParams.level / 60.0f + 1));
             */
 
-            float damage = BalanceFormulas.WeaponDamage(dropParams.resource.WeaponSettings, setting.damage, dropParams.level, points[0], colorInfo) * dropParams.resource.difficulty[dropParams.difficulty];
+            float damage = BalanceFormulas.WeaponDamage(dropParams.resource.WeaponSettings, setting.damage, dropParams.level, points[0], colorInfo) * dropParams.resource.difficulty.weapon[dropParams.difficulty];
             float distance = BalanceFormulas.WeaponOptimalDistance(dropParams.resource.WeaponSettings, setting.optimalDistance, dropParams.level, points[1], colorInfo);
             float critChance = BalanceFormulas.WeaponCriticalChance(dropParams.resource.WeaponSettings, setting.critChance, dropParams.level, Rand.Int(1, 10), colorInfo);
 
