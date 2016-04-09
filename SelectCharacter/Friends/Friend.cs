@@ -15,6 +15,7 @@ namespace SelectCharacter.Friends {
         public string characterName { get; set; } = string.Empty;
         public string worldID { get; set; } = string.Empty;
         public int lastCacheTime { get; set; } = 0;
+        public int characterIcon { get; set; } = -1;
 
         public Hashtable GetInfo(SelectCharacterApplication app) {
             var currentTime = CommonUtils.SecondsFrom1970();
@@ -28,12 +29,14 @@ namespace SelectCharacter.Friends {
                         characterName = character.Name;
                         worldID = character.WorldId;
                         characterID = character.CharacterId;
+                        characterIcon = character.characterIcon;
                         if(characterName == null) {
                             characterName = string.Empty;
                         }
                         if(worldID == null ) {
                             worldID = string.Empty;
                         }
+                        
                     }
                 }
             }
@@ -44,7 +47,8 @@ namespace SelectCharacter.Friends {
                 {(int)SPC.Exp, exp },
                 {(int)SPC.CharacterName, characterName },
                 {(int)SPC.WorldId, worldID },
-                {(int)SPC.CharacterId, characterID }
+                {(int)SPC.CharacterId, characterID },
+                {(int)SPC.Icon, characterIcon }
             };
         }
     }

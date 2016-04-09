@@ -18,6 +18,8 @@ namespace Nebula.Client.Guilds {
         public int maxModerCount { get; private set; }
         public int depositedCredits { get; private set; }
         public int depositedPvpPoints { get; private set; }
+        public string poster { get; private set; } = string.Empty;
+        public List<CoalitionTransaction> transactions { get; private set; } = new List<CoalitionTransaction>();
 
         public Guild() { }
 
@@ -81,6 +83,21 @@ namespace Nebula.Client.Guilds {
                 string memberCharacterID = entry.Key.ToString();
                 Hashtable memberCharacterInfo = entry.Value as Hashtable;
                 members.Add(memberCharacterID, new GuildMember(memberCharacterInfo));
+            }
+
+            poster = info.GetValueString((int)SPC.DayPoster);
+            
+            if(info.ContainsKey((int)SPC.Transactions) ) {
+                Hashtable[] arr = info[(int)SPC.Transactions] as Hashtable[];
+                if(arr != null ) {
+                    transactions = new List<CoalitionTransaction>();
+                    foreach(Hashtable h in arr ) {
+                        var transaction = CoalitionTransaction.Parse(h);
+                        if(transaction != null ) {
+                            transactions.Add(transaction);
+                        }
+                    }
+                }
             }
         }
 

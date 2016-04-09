@@ -1278,6 +1278,11 @@
               The HTTP protocol
             </summary>
         </member>
+        <member name="F:Photon.SocketServer.NetworkProtocolType.SecureWebSocket">
+            <summary>
+              The secure websocket protocol
+            </summary>
+        </member>
         <member name="T:Photon.SocketServer.PeerBase">
             <summary>
               This class is a base class for server connections.
@@ -2134,6 +2139,20 @@
               Gets the type of the protocol.
             </summary>
             <value>The type of the protocol.</value>
+        </member>
+        <member name="M:Photon.SocketServer.Rpc.Protocols.Amf3.Amf3Serializer.TryParseOperationRequest(ExitGames.IO.IBinaryReader,Photon.SocketServer.OperationRequest@)">
+            <summary>
+              Tries to parse an <see cref="T:Photon.SocketServer.OperationRequest"/>.
+            </summary>
+            <param name="binaryReader">
+              The <see cref="T:ExitGames.IO.IBinaryReader"/> to read from.
+            </param>
+            <param name="operationRequest">
+              The operation request.
+            </param>
+            <returns>
+              True if request was parsed successfully.
+            </returns>
         </member>
         <member name="T:Photon.SocketServer.Rpc.Protocols.GpBinaryV17.GpBinaryProtocolV17">
             <summary>

@@ -333,6 +333,10 @@ namespace ServerClientCommon {
         WeaponBaseType = 318,
         RocketResist = 319,
         AcidResist = 320,
-        LaserResist = 321
+        LaserResist = 321,
+        DayPoster = 322,
+        Transactions = 323,
+        TargetCharacterId = 324,
+        TargetCharacterName = 325
     }
 }

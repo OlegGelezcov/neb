@@ -26,12 +26,24 @@ namespace SelectCharacter.OperationHandlers {
                 return new OperationResponse(request.OperationCode) { ReturnCode = (short)ReturnCode.AlreadyMatched };
             }
 
+            string characterName = string.Empty;
+            int characterIcon = -1;
+            var player = application.Players.GetExistingPlayer(operation.GameRefId);
+            if(player != null ) {
+                var character = player.Data.GetCharacter(operation.CharacterId);
+                if(character != null ) {
+                    characterName = character.Name;
+                    characterIcon = character.characterIcon;
+                }
+            }
             GuildMember member = new GuildMember {
                 characterId = operation.CharacterId,
                 gameRefId = operation.GameRefId,
                 guildStatus = (int)GuildMemberStatus.Owner,
                 exp = operation.Exp,
-                login = operation.Login
+                login = operation.Login,
+                characterName = characterName,
+                characterIcon = characterIcon
             };
 
             Guild newGuild = null;

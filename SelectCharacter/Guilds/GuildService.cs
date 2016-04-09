@@ -200,6 +200,12 @@ namespace SelectCharacter.Guilds {
             }
 
             player.Data.SetGuild(characterID, string.Empty);
+
+            var character = player.Data.GetCharacter(characterID);
+
+            if(character != null ) {
+                guild.Data.AddTransaction(CoalitionTransaction.MakeTransaction(CoalitionTransactionType.member_removed, string.Empty, string.Empty, character.Name, characterID));
+            }
             SendGuildUpdateEvent(characterID, new Hashtable());
             SendGuildUpdateEvent(guildID, guild.Data.GetInfo(mApplication));
 
@@ -300,7 +306,9 @@ namespace SelectCharacter.Guilds {
                 gameRefId = player.Data.GameRefId,
                 guildStatus = (int)GuildMemberStatus.Member,
                 exp = character.Exp,
-                login = player.Data.Login.ToLower()
+                login = player.Data.Login.ToLower(),
+                characterName = character.Name,
+                characterIcon = character.characterIcon
             };
 
             if(!AddMember(guildID, member)) {
@@ -308,12 +316,16 @@ namespace SelectCharacter.Guilds {
                 return false;
             }
 
+
             mApplication.Players.SetGuild(player.Data.GameRefId, memberCharacterID, guildID);
 
             var guild = GetGuild(guildID);
             if (guild != null) {
+                guild.AddTransaction(CoalitionTransaction.MakeTransaction(CoalitionTransactionType.member_added, string.Empty, string.Empty, member.characterName, member.characterId));
                 SendGuildUpdateEvent(memberCharacterID, guild.GetInfo(mApplication));
             }
+
+            
             mApplication.AddAchievmentVariable(member.gameRefId, "coalition_member", 1);
             return true;
         }
@@ -371,13 +383,17 @@ namespace SelectCharacter.Guilds {
                 gameRefId = player.Data.GameRefId,
                 guildStatus = (int)GuildMemberStatus.Member,
                 exp = playerCharacter.Exp,
-                login = targetLogin
+                login = targetLogin,
+                characterName = playerCharacter.Name,
+                characterIcon = playerCharacter.characterIcon
             };
 
             if (!AddMember(requestedGuildID, member)) {
                 log.Info("HandleRequestToGuildNotification: some error adding member to guild [green]");
                 return false;
             }
+
+
 
             mApplication.Players.SetGuild(player.Data.GameRefId, targetCharacterID, requestedGuildID);
 
@@ -609,6 +625,11 @@ namespace SelectCharacter.Guilds {
 
             targetMember.guildStatus = status;
             guild.Changed = true;
+
+            if(status == (int)GuildMemberStatus.Moderator) {
+                guild.Data.AddTransaction(CoalitionTransaction.MakeTransaction(CoalitionTransactionType.make_officier, string.Empty, string.Empty, targetMember.characterName, targetMember.characterId));
+            }
+
             SendGuildUpdateEvent(sourceMember.characterId, guild.Data.GetInfo(mApplication));
             SendGuildUpdateEvent(targetMember.characterId, guild.Data.GetInfo(mApplication));
 
@@ -642,9 +663,9 @@ namespace SelectCharacter.Guilds {
 
 
             if (time - mLastUpdateSearchResultTime > UPDATE_SEARCH_GUILD_CACHE_INTERVAL) {
-                log.Info("make update search result");
+                //log.Info("make update search result");
                 mLastUpdateSearchResultTime = time;
-                log.InfoFormat("update serach guild result cache [yellow]");
+                //log.InfoFormat("update serach guild result cache [yellow]");
                 var keys = mSearchCachedGuilds.Keys;
                 foreach (var race in keys) {
                     log.InfoFormat("update search guild cache for race = {0} [yellow]", race);
@@ -689,6 +710,7 @@ namespace SelectCharacter.Guilds {
             }
 
             guildObject.AddCredits(count);
+            guildObject.AddTransaction(CoalitionTransaction.MakeTransaction(CoalitionTransactionType.deposit, member.characterName, characterId, count));
             MarkModified(guildId);
 
             SendGuildUpdateEvent(characterId, guildObject.GetInfo(mApplication));
@@ -722,6 +744,7 @@ namespace SelectCharacter.Guilds {
                 return new ActionResult(ReturnCode.WithdrawCreditsError);
             }
 
+            guildObject.AddTransaction(CoalitionTransaction.MakeTransaction(CoalitionTransactionType.withdraw, member.characterName, characterId, count));
             MarkModified(guildId);
 
             store.AddCredits(count);
@@ -786,6 +809,34 @@ namespace SelectCharacter.Guilds {
             store.AddPvpPoints(count);
             SendGuildUpdateEvent(characterId, guildObject.GetInfo(mApplication));
             return new ActionResult(ReturnCode.Ok, new Hashtable { { (int)SPC.Count, count } });
+        }
+
+        public ActionResult SetPoster(string characterId, string guildId, string message ) {
+            //find guild
+            var guildObject = GetGuild(guildId);
+            if (guildObject == null) {
+                return new ActionResult(ReturnCode.GuildNotFound);
+            }
+
+            //find member
+            GuildMember member = null;
+            if(!guildObject.TryGetMember(characterId, out member)) {
+                return new ActionResult(ReturnCode.GuildMemberNotFound);
+            }
+
+            //check privilegies
+            if(!member.IsAddMemberGranted()) {
+                return new ActionResult(ReturnCode.GuildPrivilegeNotEnough);
+            }
+
+            guildObject.SetPoster(message);
+            guildObject.AddTransaction(CoalitionTransaction.MakeTransaction(CoalitionTransactionType.set_poster, member.characterName, characterId, 0));
+            MarkModified(guildId);
+            SendGuildUpdateEvent(characterId, guildObject.GetInfo(mApplication));
+
+            return new ActionResult(ReturnCode.Ok, new Hashtable {
+                { (int)SPC.DayPoster, message }
+            });
         }
     }
 }

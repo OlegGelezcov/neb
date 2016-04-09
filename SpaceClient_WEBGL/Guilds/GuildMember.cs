@@ -10,6 +10,9 @@ namespace Nebula.Client.Guilds {
         public string characterID { get; private set; }
         public int guildStatus { get; private set; }
         public int exp { get; private set; }
+        public string characterName { get; private set; } = string.Empty;
+        public int characterIcon { get; private set; } = -1;
+
 
         public GuildMember(Hashtable info) { ParseInfo(info); }
 
@@ -19,6 +22,26 @@ namespace Nebula.Client.Guilds {
             characterID = info.GetValueString((int)SPC.CharacterId);
             guildStatus = info.GetValueInt((int)SPC.Status);
             exp = info.GetValueInt((int)SPC.Exp);
+            characterName = info.GetValueString((int)SPC.CharacterName);
+            characterIcon = info.GetValueInt((int)SPC.Icon);
+        }
+
+        public bool isOwner {
+            get {
+                return (guildStatus == (int)GuildMemberStatus.Owner);
+            }
+        }
+
+        public bool isModerator {
+            get {
+                return (guildStatus == (int)GuildMemberStatus.Moderator);
+            }
+        }
+
+        public bool isMember {
+            get {
+                return (guildStatus == (int)GuildMemberStatus.Member);
+            }
         }
 
         public bool GrantedAddMember() {
@@ -27,6 +50,12 @@ namespace Nebula.Client.Guilds {
 
         public bool GrantedSetDescription() {
             return (guildStatus == (int)GuildMemberStatus.Moderator) || (guildStatus == (int)GuildMemberStatus.Owner);
+        }
+
+        public bool hasIcon {
+            get {
+                return (characterIcon >= 0);
+            }
         }
 
         public bool GrantedChangeStatusFromTo(GuildMemberStatus fromStatus, GuildMemberStatus toStatus) {

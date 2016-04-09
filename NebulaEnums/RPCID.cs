@@ -21,5 +21,6 @@
         public const int rpc_sc_DepositPvpPointsToCoalition = 16;
         public const int rpc_sc_WithdrawCreditsFromCoalition = 17;
         public const int rpc_sc_WithdrawPvpPointsFromCoalition = 18;
+        public const int rpc_sc_SetCoalitionPoster = 19;
     }
 }

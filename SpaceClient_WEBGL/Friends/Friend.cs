@@ -11,6 +11,7 @@ namespace Nebula.Client.Friends {
         public string characterName { get; private set; }
         public string characterID { get; private set; }
         public string worldID { get; private set; }
+        public int characterIcon { get; private set; }
 
         public Friend(Hashtable info) {
             ParseInfo(info);
@@ -23,6 +24,7 @@ namespace Nebula.Client.Friends {
             characterName = info.GetValueString((int)SPC.CharacterName);
             worldID = info.GetValueString((int)SPC.WorldId);
             characterID = info.GetValueString((int)SPC.CharacterId);
+            characterIcon = info.GetValueInt((int)SPC.Icon);
         }
 
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ServerClientCommon;
 using ExitGames.Client.Photon;
 using Nebula.Client.Utils;
+using System.Linq;
 
 namespace Nebula.Client.Mail {
     public class MailMessage : IInfoParser {
@@ -49,6 +50,37 @@ namespace Nebula.Client.Mail {
 
         public MailMessage(Hashtable mailMessageHash) {
             ParseInfo(mailMessageHash);
+        }
+
+        public MailAttachment firstAttachment {
+            get {
+                if(attachments != null && attachments.Count > 0 ) {
+                    var keys = attachments.Keys.OrderBy(key => key).ToList();
+                    return attachments[keys[0]];
+                }
+                return null;
+            }
+        }
+
+        public int attachmentCount {
+            get {
+                if(attachments != null ) {
+                    return attachments.Count;
+                }
+                return 0;
+            }
+        }
+
+        public List<MailAttachment> attachmentList {
+            get {
+                List<MailAttachment> list = new List<MailAttachment>();
+                if(attachments != null ) {
+                    foreach(var a in attachments.Values ) {
+                        list.Add(a);
+                    }
+                }
+                return list;
+            }
         }
 
     }

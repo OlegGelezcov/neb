@@ -35,6 +35,10 @@ namespace SelectCharacter.OperationHandlers {
                         response = WithdrawPvpPointsFromCoalition(request, operation);
                     }
                     break;
+                case RPCID.rpc_sc_SetCoalitionPoster: {
+                        response = SetCoalitionPoster(request, operation);
+                    }
+                    break;
                 default:
                     response = new OperationResponse(request.OperationCode) {
                         ReturnCode = (short)ReturnCode.InvalidRPCID,
@@ -55,6 +59,21 @@ namespace SelectCharacter.OperationHandlers {
                 RPCInvokeResponse responseInstance = new RPCInvokeResponse {
                     rpcId = op.rpcId,
                     result = success
+                };
+                return new OperationResponse(request.OperationCode, responseInstance);
+            }
+            return DefaultError();
+        }
+
+        private OperationResponse SetCoalitionPoster(OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length >= 3 ) {
+                string cid = (string)op.parameters[0];
+                string gid = (string)op.parameters[1];
+                string poster = (string)op.parameters[2];
+                ActionResult actionResult = application.Guilds.SetPoster(cid, gid, poster);
+                RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = actionResult.GetInfo()
                 };
                 return new OperationResponse(request.OperationCode, responseInstance);
             }

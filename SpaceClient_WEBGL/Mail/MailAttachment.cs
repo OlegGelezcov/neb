@@ -25,5 +25,15 @@ namespace Nebula.Client.Mail {
         public IPlacingType ParseAttachedObject() {
             return InventoryObjectInfoFactory.GetAttachment(objectHash) as IPlacingType;
         }
+
+        public ClientInventoryItem ToItem() {
+            if(objectHash != null ) {
+                var inventoryObject = InventoryObjectInfoFactory.Get(objectHash);
+                if(inventoryObject != null ) {
+                    return new ClientInventoryItem(inventoryObject, count);
+                }
+            }
+            return null;
+        }
     }
 }

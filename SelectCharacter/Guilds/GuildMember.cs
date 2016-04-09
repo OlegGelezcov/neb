@@ -7,6 +7,8 @@ namespace SelectCharacter.Guilds {
         public string login { get; set; }
         public string gameRefId { get; set; }
         public string characterId { get; set; }
+        public string characterName { get; set; } = string.Empty;
+        public int characterIcon { get; set; } = -1;
 
 
         public int guildStatus { get; set; }
@@ -39,6 +41,21 @@ namespace SelectCharacter.Guilds {
                     var character = player.Data.GetCharacter(characterId);
                     if(character != null ) {
                         exp = character.Exp;
+                        characterIcon = character.characterIcon;
+                        if(string.IsNullOrEmpty(characterName)) {
+                            characterName = character.Name;
+                        }
+                    }
+                }
+            }
+
+            //if empty name force get name
+            if(string.IsNullOrEmpty(characterName)) {
+                var player = app.Players.GetExistingPlayer(gameRefId);
+                if(player != null ) {
+                    var character = player.Data.GetCharacter(characterId);
+                    if(character != null ) {
+                        characterName = character.Name;
                     }
                 }
             }
@@ -48,7 +65,9 @@ namespace SelectCharacter.Guilds {
                 { (int)SPC.GameRefId, gameRefId },
                 { (int)SPC.CharacterId, characterId },
                 { (int)SPC.Status, guildStatus },
-                { (int)SPC.Exp, exp }
+                { (int)SPC.Exp, exp },
+                { (int)SPC.CharacterName, characterName },
+                { (int)SPC.Icon, characterIcon }
             };
         }
     }

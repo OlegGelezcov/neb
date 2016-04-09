@@ -12,6 +12,7 @@ namespace SelectCharacter.Guilds {
 
         private const int MAX_MEMBERS_ON_PAGE = 300;
         private const int MAX_NUMBER_OF_MODERATORS = 3;
+        private const int kMaxTransactionHistoryCount = 100;
 
         public ObjectId Id { get; set; }
 
@@ -24,6 +25,8 @@ namespace SelectCharacter.Guilds {
         public bool opened { get; set; } = true;
         public int depositedCredits { get; set; } = 0;
         public int depositedPvpPoints { get; set; } = 0;
+        public string dayPoster { get; set; } = string.Empty;
+        public List<Hashtable> transactions { get; set; } = new List<Hashtable>();
 
         private int mPage = 0;
 
@@ -89,6 +92,10 @@ namespace SelectCharacter.Guilds {
             }
         }
 
+        public void SetPoster(string txt) {
+            dayPoster = txt;
+        }
+
         public List<string> guildCharacters {
             get {
                 List<string> ids = new List<string>();
@@ -142,6 +149,12 @@ namespace SelectCharacter.Guilds {
             if(description == null) {
                 description = string.Empty;
             }
+            if(dayPoster == null ) {
+                dayPoster = string.Empty;
+            }
+            if(transactions == null ) {
+                transactions = new List<Hashtable>();
+            }
 
             Hashtable hash = new Hashtable {
                 { (int)SPC.Id, ownerCharacterId },
@@ -153,7 +166,9 @@ namespace SelectCharacter.Guilds {
                 { (int)SPC.ModerCount, moderatorCount },
                 { (int)SPC.MaxModerCount, MAX_NUMBER_OF_MODERATORS },
                 { (int)SPC.Credits, depositedCredits },
-                { (int)SPC.PvpPoints, depositedPvpPoints }
+                { (int)SPC.PvpPoints, depositedPvpPoints },
+                { (int)SPC.DayPoster, dayPoster },
+                { (int)SPC.Transactions, transactions.ToArray() }
             };
 
             Hashtable membersHash = new Hashtable();
@@ -238,6 +253,23 @@ namespace SelectCharacter.Guilds {
                 return true;
             }
             return false;
+        }
+
+
+        public void AddTransaction(CoalitionTransaction transaction) {
+            if(transactions == null ) {
+                transactions = new List<Hashtable>();
+            }
+
+            if(transaction == null ) {
+                return;
+            }
+
+            int cnt = transactions.Count;
+            if(cnt > kMaxTransactionHistoryCount ) {
+                transactions.RemoveRange(kMaxTransactionHistoryCount - 1, cnt - kMaxTransactionHistoryCount + 1);
+            }
+            transactions.Insert(0, transaction.GetInfo());
         }
     }
 }

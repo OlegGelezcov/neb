@@ -12,5 +12,7 @@ namespace SelectCharacter.Achievments {
         public Hashtable variables { get; set; }
         public List<string> visitedZones { get; set; }
         public bool isNewDocument { get; set; }
+        public int points { get; set; }
+        public List<string> loreRecords { get; set; }
     }
 }

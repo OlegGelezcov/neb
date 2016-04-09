@@ -3,6 +3,7 @@
     {
         ship = 0,
         station = 1,
-        bank = 2
+        bank = 2,
+        custom = 3
     }
 }
