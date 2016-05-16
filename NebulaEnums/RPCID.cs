@@ -22,5 +22,12 @@
         public const int rpc_sc_WithdrawCreditsFromCoalition = 17;
         public const int rpc_sc_WithdrawPvpPointsFromCoalition = 18;
         public const int rpc_sc_SetCoalitionPoster = 19;
+
+        /// <summary>
+        /// Unlock all lore records instantly
+        /// </summary>
+        public const int rpc_TestUnlockFullLore = 20;
+
+        public const int rpc_StartAsteroidCollecting = 21;
     }
 }

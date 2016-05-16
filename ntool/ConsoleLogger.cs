@@ -11,6 +11,12 @@ namespace ntool {
             m_Colors = new Stack<System.ConsoleColor>();
         }
 
+        public void Log(string message, ConsoleColor color) {
+            PushColor(color);
+            Log(message);
+            PopColor();
+        }
+
         public void Log(string message ) {
             Log("{0}", message);
         }

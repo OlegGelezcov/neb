@@ -35,5 +35,14 @@ namespace Nebula.Client.Res {
             }
             return null;
         }
+
+        public ShipModelSlotType GetSlotForSkill(int skillId) {
+            foreach(var ps in moduleSkills ) {
+                if(ps.Value.ContainsSkill(skillId)) {
+                    return ps.Key;
+                }
+            }
+            return ShipModelSlotType.CB;
+        }
     }
 }

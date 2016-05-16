@@ -139,6 +139,13 @@ namespace SelectCharacter.Chat {
             mCache.AddMessage(message);
         }
 
+        public void SendBroadcast(ChatMessage message) {
+            mApplication.Clients.SendChatMessageToRace(Race.Humans, message);
+            mApplication.Clients.SendChatMessageToRace(Race.Criptizoids, message);
+            mApplication.Clients.SendChatMessageToRace(Race.Borguzands, message);
+            mCache.AddMessage(message);
+        }
+
         private void SendChatMessageToRace(ChatMessage message) {
             SelectCharacterClientPeer sourcePeer = null;
             if (!mApplication.Clients.TryGetPeerForCharacterId(message.sourceCharacterID, out sourcePeer)) {

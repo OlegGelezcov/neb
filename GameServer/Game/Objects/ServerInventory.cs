@@ -163,7 +163,7 @@ namespace Space.Game.Inventory {
         {
             this._maxSlots = info.GetValue<int>((int)SPC.MaxSlots, 0);
             object[] items = info.GetValue<object[]>((int)SPC.Items, new object[] { });
-            this._items = new Dictionary<InventoryObjectType, Dictionary<string, ServerInventoryItem>>();
+            this._items = new ConcurrentDictionary<InventoryObjectType, ConcurrentDictionary<string, ServerInventoryItem>>();
 
             if(items != null )
             {
@@ -262,7 +262,7 @@ namespace Space.Game.Inventory {
 
         public void SetItems(List<Hashtable> items)
         {
-            this._items = new Dictionary<InventoryObjectType, Dictionary<string, ServerInventoryItem>>();
+            this._items = new ConcurrentDictionary<InventoryObjectType, ConcurrentDictionary<string, ServerInventoryItem>>();
             foreach (var item in items)
             {
                 int count =  item.GetValue<int>((int)SPC.Count, 0);

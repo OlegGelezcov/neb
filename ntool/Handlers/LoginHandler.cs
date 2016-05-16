@@ -20,12 +20,20 @@ namespace ntool.Handlers {
                 if (loginCode == LoginReturnCode.Ok) {
                     string login = response.Parameters[(byte)ParameterCode.Login] as string;
                     string gameRef = response.Parameters[(byte)ParameterCode.GameRefId] as string;
-                    app.player.SetLogin(login);
-                    app.player.SetGameRef(gameRef);
+
+                    Events.EventLoginSuccess(login, gameRef);
+
+                    //app.player.SetLogin(login);
+                    //app.player.SetGameRef(gameRef);
 
                     app.logger.PushColor(ConsoleColor.Gray);
                     app.logger.Log("{0}->{1} successfully logged in", app.player.login, app.player.gameRef);
                     app.logger.PopColor();
+                } else {
+                    app.logger.PushColor(ConsoleColor.Red);
+                    app.logger.Log(response.ToStringFull());
+                    app.logger.PopColor();
+                    Events.EventLoginFailed(response.GetLoginReturnCodeParameter(ParameterCode.Status));
                 }
 
             }

@@ -129,43 +129,56 @@ namespace Space.Game {
             
         }
 
+        private bool m_StartCalled = false;
+
         public override void Start() {
-            mShip = RequireComponent<PlayerShip>();
-            mTarget = RequireComponent<PlayerTarget>();
-            mCharacter = RequireComponent<PlayerCharacterObject>();
-            mAI = RequireComponent<AIState>();
-            mRace = RequireComponent<RaceableObject>();
-            mMessage = RequireComponent<MmoMessageComponent>();
-            mDamagable = RequireComponent<ShipBasedDamagableObject>();
-            mWeapon = RequireComponent<ShipWeapon>();
-            mSkills = RequireComponent<PlayerSkills>();
-            mBonuses = RequireComponent<PlayerBonuses>();
-            mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
+            if (!m_StartCalled) {
+                m_StartCalled = true;
+                mShip = RequireComponent<PlayerShip>();
+                mTarget = RequireComponent<PlayerTarget>();
+                mCharacter = RequireComponent<PlayerCharacterObject>();
+                mAI = RequireComponent<AIState>();
+                mRace = RequireComponent<RaceableObject>();
+                mMessage = RequireComponent<MmoMessageComponent>();
+                mDamagable = RequireComponent<ShipBasedDamagableObject>();
+                mWeapon = RequireComponent<ShipWeapon>();
+                mSkills = RequireComponent<PlayerSkills>();
+                mBonuses = RequireComponent<PlayerBonuses>();
+                mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
 
-            mCharacter.SetCharacterId((string)nebulaObject.Tag((byte)PlayerTags.CharacterId));
-            mCharacter.SetCharacterName((string)nebulaObject.Tag((byte)PlayerTags.Name));
-            printPropertiesTimer = printPropertiesInterval;
+                mCharacter.SetCharacterId((string)nebulaObject.Tag((byte)PlayerTags.CharacterId));
+                mCharacter.SetCharacterName((string)nebulaObject.Tag((byte)PlayerTags.Name));
+                printPropertiesTimer = printPropertiesInterval;
 
-            if(application.serverActors.ContainsKey(nebulaObject.Id)) {
-                MmoActor old;
-                if( application.serverActors.TryRemove(nebulaObject.Id, out old)) {
-                    log.Info("successfully remove actor before replacing with new [red]");
+                if (application.serverActors.ContainsKey(nebulaObject.Id)) {
+                    MmoActor old;
+                    if (application.serverActors.TryRemove(nebulaObject.Id, out old)) {
+                        log.Info("successfully remove actor before replacing with new [red]");
+                    }
                 }
-            }
-            if( application.serverActors.TryAdd(nebulaObject.Id, this) ) {
-                log.Info("successfully added actor to server actors [red]");
-            }
+                if (application.serverActors.TryAdd(nebulaObject.Id, this)) {
+                    log.Info("successfully added actor to server actors [red]");
+                }
 
-            //create chest on killing when player die
-            mDamagable.SetCreateChestOnKilling(true);
-            mDamagable.SetIgnoreDamageInterval(30);
-            mDamagable.SetIgnoreDamageAtStart(true);
+                //create chest on killing when player die
+                mDamagable.SetCreateChestOnKilling(true);
+                mDamagable.SetIgnoreDamageInterval(30);
+                mDamagable.SetIgnoreDamageAtStart(true);
+            }
         }
 
 
-
         public void Load() {
+            Start();
+
             log.InfoFormat("MmoActor Load() [dy]");
+
+            if(mCharacter == null ) {
+                mCharacter = GetComponent<PlayerCharacterObject>();
+            }
+            if(mCharacter != null && mCharacter.characterId == null ) {
+                mCharacter.SetCharacterId((string)nebulaObject.Tag((byte)PlayerTags.CharacterId));
+            }
 
             bool isNew = false;
             PlayerCharacter dbCharacter = CharacterDatabase.instance(application).LoadCharacter(mCharacter.characterId, resource as Res, out isNew);
@@ -210,7 +223,7 @@ namespace Space.Game {
         }
 
         public void LoadOther() {
-
+            Start();
             try {
                 log.InfoFormat("mmoActor LoadOther() [dy]");
                 var dbInventory = InventoryDatabase.instance(application).LoadInventory(mCharacter.characterId, resource as Res);
@@ -240,8 +253,10 @@ namespace Space.Game {
             }
             Race race = (Race)mRace.race;
             string petModel = resource.petParameters.defaultModels[race];
-            var petScheme = new PetSchemeObject(petModel, PetColor.gray);
-            Station.StationInventory.Add(petScheme, 1);
+            if (petModel != null) {
+                var petScheme = new PetSchemeObject(petModel, PetColor.gray);
+                Station.StationInventory.Add(petScheme, 1);
+            }
             EventOnStationHoldUpdated();
         }
 
@@ -270,14 +285,25 @@ namespace Space.Game {
         }
 
         public PlayerCharacter GetPlayerCharacter() {
-            return new PlayerCharacter {
-                CharacterId = mCharacter.characterId,
-                Exp = mCharacter.exp,
-                Model = mShip.shipModel.ModelHash(),
-                Name = name,
-                Race = mRace.race,
-                Workshop = mCharacter.workshop
-            };
+            if (mShip != null && mShip.shipModel != null) {
+                return new PlayerCharacter {
+                    CharacterId = mCharacter.characterId,
+                    Exp = mCharacter.exp,
+                    Model = mShip.shipModel.ModelHash(),
+                    Name = name,
+                    Race = mRace.race,
+                    Workshop = mCharacter.workshop
+                };
+            } else {
+                return new PlayerCharacter {
+                    CharacterId = mCharacter.characterId,
+                    Exp = mCharacter.exp,
+                    Model = (nebulaObject.Tag((byte)PlayerTags.Model) as Hashtable),
+                    Name = name,
+                    Race = mRace.race,
+                    Workshop = mCharacter.workshop
+                };
+            }
         }
 
         public WorkhouseStation Station {
@@ -539,6 +565,10 @@ namespace Space.Game {
         /// </summary>
         public void EventOnShipModelUpdated() {
 
+            if(mShip == null || mShip.shipModel == null ) {
+                return;
+            }
+
             Hashtable eventData = new Hashtable();
 
             //get array of all model slots state
@@ -642,6 +672,12 @@ namespace Space.Game {
 
         public void EventOnSkillsUpdated()
         {
+            if(mSkills == null ) {
+                mSkills = GetComponent<PlayerSkills>();
+            }
+            if(mCharacter == null ) {
+
+            }
 
             var eventInstance = new ItemGeneric {
                 ItemId = nebulaObject.Id,

@@ -53,6 +53,10 @@ namespace Nebula.Client.Inaps {
             return filteredList;
         }
 
+        public List<InapObject> Filtered(List<InapObjectType> types) {
+            return Filtered(types.ToArray());
+        }
+
         public InapObject GetExpBoostObject(int tag) {
             foreach(var kvp in inaps ) {
                 if(kvp.Value.type == InapObjectType.exp_boost) {

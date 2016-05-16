@@ -119,23 +119,31 @@ namespace Nebula.Game.Components {
 
         private bool started { get; set; } = false;
 
-        public override void Start() {
-            mPlayerShip = GetComponent<BaseShip>();
-            bonuses = GetComponent<PlayerBonuses>();
-            mDamagable = GetComponent<DamagableObject>();
-            message = GetComponent<MmoMessageComponent>();
-            energy = GetComponent<ShipEnergyBlock>();
+        private bool m_StartCalled = false;
 
-            m439ID = SkillExecutor.SkilIDFromHexString("00000439");
-            m43AID = SkillExecutor.SkilIDFromHexString("0000043A");
-            m451ID = SkillExecutor.SkilIDFromHexString("00000451");
-            m456ID = SkillExecutor.SkilIDFromHexString("00000456");
-            m45CID = SkillExecutor.SkilIDFromHexString("0000045C");
+        public override void Start() {
+            if (!m_StartCalled) {
+                m_StartCalled = true;
+
+                mPlayerShip = GetComponent<BaseShip>();
+                bonuses = GetComponent<PlayerBonuses>();
+                mDamagable = GetComponent<DamagableObject>();
+                message = GetComponent<MmoMessageComponent>();
+                energy = GetComponent<ShipEnergyBlock>();
+
+                m439ID = SkillExecutor.SkilIDFromHexString("00000439");
+                m43AID = SkillExecutor.SkilIDFromHexString("0000043A");
+                m451ID = SkillExecutor.SkilIDFromHexString("00000451");
+                m456ID = SkillExecutor.SkilIDFromHexString("00000456");
+                m45CID = SkillExecutor.SkilIDFromHexString("0000045C");
+
+            }
             started = true;
         }
 
         public void Load() {
             log.InfoFormat("PlayerSkills Load() [dy]");
+            Start();
 
             if (GetComponent<MmoActor>()) {
                 string characterID = (string)nebulaObject.Tag((byte)PlayerTags.CharacterId);

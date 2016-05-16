@@ -218,9 +218,14 @@ namespace Nebula.Game.Components {
             Startup();
         }
 
+        private bool m_StartCalled = false;
+
         public override void Start() {
-            base.Start();
-            Startup();
+            if (!m_StartCalled) {
+                m_StartCalled = true;
+                base.Start();
+                Startup();
+            }
         }
 
         private void Startup() {
@@ -248,6 +253,7 @@ namespace Nebula.Game.Components {
         }
 
         public void Load() {
+            Start();
             log.InfoFormat("ShipWeapon Load() [dy]");
 
             var character = GetComponent<CharacterObject>();

@@ -26,6 +26,10 @@ namespace Nebula.Engine {
 
         public byte Type { get; private set; }
 
+        public ItemType getItemType() {
+            return (ItemType)Type;
+        }
+
         public string badge { get; private set; } = string.Empty;
 
         public int subZone { get; private set; }
@@ -136,11 +140,9 @@ namespace Nebula.Engine {
       
 
         private void UpdateNebulaObject() {
-            lock(behaviours.syncRoot) {
-                foreach(var b in behaviours) {
-                    MethodInfo method = typeof(NebulaBehaviour).GetMethod("SetNebulaObject", BindingFlags.NonPublic | BindingFlags.Instance);
-                    method.Invoke(b.Value, new object[] { this });
-                }
+            foreach (var b in behaviours) {
+                MethodInfo method = typeof(NebulaBehaviour).GetMethod("SetNebulaObject", BindingFlags.NonPublic | BindingFlags.Instance);
+                method.Invoke(b.Value, new object[] { this });
             }
         }
 

@@ -30,6 +30,8 @@ namespace Nebula.Game.Components {
         private PetManager m_PetManager;
         private AchievmentComponent m_Achivments;
 
+        private BroadcastChatMessageComposer m_ChatComposer = new BroadcastChatMessageComposer();
+
         public override Hashtable DumpHash() {
             var hash =  base.DumpHash();
             hash["group"] = (group != null) ? group.GetInfo() : new Hashtable();
@@ -67,6 +69,9 @@ namespace Nebula.Game.Components {
 
         public string guildName { get; private set; } = string.Empty;
 
+        private int m_Icon = 0;
+
+       
         private bool isCommanderOrAdmiral() {
             return ((RaceStatus)raceStatus == RaceStatus.Commander || (RaceStatus)raceStatus == RaceStatus.Admiral);
         }
@@ -109,6 +114,86 @@ namespace Nebula.Game.Components {
             nebulaObject.properties.SetProperty((byte)PS.GuildName, guildName);
             log.InfoFormat("guild name setted = {0}", guildName);
         }
+
+        /// <summary>
+        /// When enemy death we are send chat message to all player about this event if
+        /// 1) enemy is orange NPC
+        /// 2) i kill other player
+        /// </summary>
+        /// <param name="enemy">Enemy who was killed</param>
+        public void OnEnemyDeath(NebulaObject enemy) {
+
+            log.InfoFormat(string.Format("PlayerCharacter:OnEnemyDeath()->{0}", enemy.Id));
+
+            switch (enemy.getItemType()) {
+                case ItemType.Bot: {
+                        BotObject botObject = enemy.GetComponent<BotObject>();
+                        if(botObject != null ) {
+
+                            switch(botObject.getSubType()) {
+                                case BotItemSubType.Drill:
+                                case BotItemSubType.Outpost:
+                                case BotItemSubType.MainOutpost: {
+                                        mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillStandardNPCMessage(this, enemy));
+                                        break;
+                                    }
+                                case BotItemSubType.StandardCombatNpc: {
+                                        ShipWeapon enemyWeapon = enemy.GetComponent<ShipWeapon>();
+                                        BotShip enemyShip = enemy.GetComponent<BotShip>();
+                                        
+                                        if(enemyWeapon != null && enemyShip != null) {
+                                            if( enemyWeapon.weaponDifficulty == Difficulty.boss || enemyWeapon.weaponDifficulty == Difficulty.boss2 ||
+                                                enemyShip.difficulty == Difficulty.boss || enemyShip.difficulty == Difficulty.boss2) {
+                                                mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillStandardNPCMessage(this, enemy));
+                                            }
+                                        }
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+                case ItemType.Avatar: {
+                        mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillStandardNPCMessage(this, enemy));
+                    }
+                    break;
+            }          
+        }
+
+        /// <summary>
+        /// Sended to my object fron enemy, when my object first start attacking enemy
+        /// </summary>
+        /// <param name="enemy">Attacking object</param>
+        public void OnStartAttack(NebulaObject enemy) {
+            switch(enemy.getItemType()) {
+                case ItemType.Bot: {
+                        BotObject botObject = enemy.GetComponent<BotObject>();
+                        if(botObject != null ) {
+                            switch(botObject.getSubType()) {
+                                case BotItemSubType.Drill:
+                                case BotItemSubType.Outpost:
+                                case BotItemSubType.MainOutpost:
+                                    mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetStartAttackMessage(this, enemy));
+                                    break;
+                            }
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public void OnSetMiningStation() {
+            mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetSetMiningStationMessage(this));
+        }
+
+        public void OnSetFortification() {
+            mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetSetFortificationMessage(this));
+        }
+
+        public void OnSetOutpost() {
+            mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetSetOutpostMessage(this));
+        }
+
 
         public void AddExp(int e) {
             float bonusAddition = 0f;
@@ -168,6 +253,11 @@ namespace Nebula.Game.Components {
             mPlayer.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "RequestRaceStatus", new object[] { nebulaObject.Id, characterId });
         }
 
+        public void SetIcon(int icon) {
+            m_Icon = icon;
+            props.SetProperty((byte)PS.Icon, m_Icon);
+            log.InfoFormat("icon for player {0} => {1}", characterName, m_Icon);
+        }
         public override void Update(float deltaTime) {
             base.Update(deltaTime);
 
@@ -175,6 +265,7 @@ namespace Nebula.Game.Components {
                 if(mLoader.loaded) {
                     mRaceStatusRequested = true;
                     mPlayer.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "RequestRaceStatus", new object[] { nebulaObject.Id, characterId });
+                    mPlayer.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "RequestIcon", new object[] { nebulaObject.Id, characterId });
                     log.InfoFormat("requested race status of player {0}:{1}", nebulaObject.Id, characterId);
                 }
             }

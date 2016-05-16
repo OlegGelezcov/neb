@@ -24,6 +24,10 @@ namespace Nebula.Game.Components {
             SetRace(data.race);
         }
 
+        public Race getRace() {
+            return (Race)race;
+        }
+
         public void SetRace(byte r) {
             race = r;
             UpdateProperty();

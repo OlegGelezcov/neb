@@ -154,6 +154,7 @@ namespace Nebula.Game.Components {
 
         public void SetBuff(BonusType type, Buff buff)
         {
+            InitVariables();
             if(mSpeedDebuffs.Contains(type)) {
                 if (BuffNotZero(BonusType.speed_debuff_immunity)) {
                     log.InfoFormat("exist speed debuff immunity, ignore speed debuff, yellow");

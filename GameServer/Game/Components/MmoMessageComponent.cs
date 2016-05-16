@@ -84,6 +84,28 @@ namespace Nebula.Game.Components {
 
         }
 
+        /// <summary>
+        /// Send to subscribers message about collecting asteroid
+        /// </summary>
+        /// <param name="containerType">Container(asteroid) type</param>
+        /// <param name="containerId">Container(asteroid) ID</param>
+        public void PublishStartAsteroidCollecting(byte containerType, string containerId) {
+            Hashtable data = new Hashtable {
+                { (int)SPC.ContainerType, containerType },
+                { (int)SPC.ContainerId, containerId }
+            };
+            ItemGeneric eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.StartAsteroidCollecting,
+                EventData = data
+            };
+            SendParameters sendParameters = new SendParameters { Unreliable = false, ChannelId = Settings.ItemEventChannel };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ItemEventMessage message = new ItemEventMessage(nebulaObject as Item, eventData, sendParameters);
+            (nebulaObject as Item).EventChannel.Publish(message);
+        }
+
         public void ReceiveServiceMessage(ServiceMessageType messageType, string message) {
             if(nebulaObject) {
                 var eventInstance = new ItemGeneric {

@@ -1,10 +1,6 @@
 ﻿using Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections;
 using ServerClientCommon;
+using System.Collections;
 
 namespace NebulaCommon.Group {
     public class GroupMember : IInfo {
@@ -15,6 +11,8 @@ namespace NebulaCommon.Group {
         public string worldID { get; set; }
         public int workshop { get; set; }
         public int exp { get; set; }
+        public string characterName { get; set; } = string.Empty;
+        public int characterIcon { get; set; } = -1;
 
         public Hashtable GetInfo() {
             return new Hashtable {
@@ -24,7 +22,9 @@ namespace NebulaCommon.Group {
                 { (int)SPC.IsLeader, isLeader },
                 { (int)SPC.WorldId, worldID },
                 { (int)SPC.Workshop, workshop },
-                { (int)SPC.Exp, exp }
+                { (int)SPC.Exp, exp },
+                { (int)SPC.CharacterName, characterName },
+                { (int)SPC.Icon, characterIcon }
             };
         }
 
@@ -36,6 +36,8 @@ namespace NebulaCommon.Group {
             worldID = info.Value<string>((int)SPC.WorldId);
             workshop = info.GetValue<int>((int)SPC.Workshop, (int)(byte)Workshop.Arlen);
             exp = info.GetValue<int>((int)SPC.Exp, 0);
+            characterName = info.GetValue<string>((int)SPC.CharacterName, string.Empty);
+            characterIcon = info.GetValue<int>((int)SPC.Icon, -1);
         }
     }
 }

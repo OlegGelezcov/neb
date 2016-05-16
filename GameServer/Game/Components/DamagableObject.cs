@@ -20,6 +20,7 @@ namespace Nebula.Game.Components {
         private PlayerBonuses mBonuses;
         private PlayerSkills m_Skills;
         private AchievmentComponent m_Achievments;
+        private BotObject m_Bot;
 
         public override Hashtable DumpHash() {
             var hash =  base.DumpHash();
@@ -248,6 +249,7 @@ namespace Nebula.Game.Components {
             timedDamage = new TimedDamage(this);
             m_Skills = GetComponent<PlayerSkills>();
             m_Achievments = GetComponent<AchievmentComponent>();
+            m_Bot = GetComponent<BotObject>();
         }
 
         public override void Update(float deltaTime) {
@@ -285,9 +287,13 @@ namespace Nebula.Game.Components {
 
             }
 
-            //restore health only when heal not blocked
-            if (!healBlocked) {
-                RestoreHealthPerSec(deltaTime);
+            if (m_Bot != null && m_Bot.isConstruction) {
+
+            } else {
+                //restore health only when heal not blocked
+                if (!healBlocked) {
+                    RestoreHealthPerSec(deltaTime);
+                }
             }
 
             if(mReflectDamageTimer > 0f ) {
@@ -332,6 +338,9 @@ namespace Nebula.Game.Components {
         }
 
         public void Heal(InputHeal heal) {
+            if(m_Bot != null && m_Bot.isConstruction ) {
+                return;
+            }
             if (!healBlocked && (!killed)) {
                 float mult = 1.0f;
                 if(mBonuses) {
@@ -376,11 +385,28 @@ namespace Nebula.Game.Components {
             }
         }
 
-        
-        public void AddDamager(string damagerID, byte damagerType, float damage, byte workshop, int level, byte race) {
+        /// <summary>
+        /// Add new damager item to damagers collection list
+        /// </summary>
+        /// <param name="damagerID">ID of damager</param>
+        /// <param name="damagerType">Type of damager item</param>
+        /// <param name="damage">Damage value</param>
+        /// <param name="workshop">Workshop of damager if has workshop</param>
+        /// <param name="level">Level of damager if has level</param>
+        /// <param name="race">Race of damager if has race</param>
+        /// <param name="source">Source damager object (may be null)</param>
+        public void AddDamager(string damagerID, byte damagerType, float damage, byte workshop, int level, byte race, NebulaObject source) {
+
+            //send message to damager when he is start attacking
+            if(source != null && source ) {
+                if(!m_Damagers.Has(source.Id)) {
+                    source.SendMessage(ComponentMessages.OnStartAttack, nebulaObject);
+                }
+            }
 
             var damageInfo = m_Damagers.Add(damagerID, damagerType, damage, workshop, level, race);
             if(damageInfo != null ) {
+                //send message to self object when receive new damage
                 nebulaObject.SendMessage(ComponentMessages.OnNewDamage, damageInfo);
             }
         }

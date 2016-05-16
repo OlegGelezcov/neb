@@ -56,11 +56,16 @@ namespace Nebula.Game.Components {
             return false;
         }
 
+        private bool m_StartCalled = false;
+
         public override void Start() {
-            base.Start();
-            m_Message = GetComponent<MmoMessageComponent>();
-            m_Raceable = GetComponent<RaceableObject>();
-            OnZoneVisited(nebulaObject.mmoWorld().GetID());
+            if (!m_StartCalled) {
+                m_StartCalled = true;
+                base.Start();
+                m_Message = GetComponent<MmoMessageComponent>();
+                m_Raceable = GetComponent<RaceableObject>();
+                OnZoneVisited(nebulaObject.mmoWorld().GetID());
+            }
         }
 
         public override void Update(float deltaTime) {
@@ -77,6 +82,7 @@ namespace Nebula.Game.Components {
         }
 
         public void Load() {
+            Start();
             m_Variables.Clear();
             bool isNew = false;
             var character = GetComponent<PlayerCharacterObject>();

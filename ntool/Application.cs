@@ -27,6 +27,7 @@ using ExitGames.Client.Photon;
 using NebulaCommon;
 using ntool.Commands;
 using ntool.Listeners;
+using ServerClientCommon;
 using System;
 using System.Collections.Generic;
 
@@ -46,6 +47,19 @@ namespace ntool {
         private Application() {
             m_Logger = new ConsoleLogger();
             m_CommandManager = new CommandManager(this);
+            Events.e_LoginFailed += Events_e_LoginFailed;
+            Events.e_LoginSuccess += Events_e_LoginSuccess;
+        }
+
+        private void Events_e_LoginSuccess(string login, string gameRef) {
+            player.SetLogin(login);
+            player.SetGameRef(gameRef);
+        }
+
+        private void Events_e_LoginFailed(LoginReturnCode code) {
+            if(code == LoginReturnCode.UserNotFound ) {
+                Command("register buratino 87e898AA vasvav@gmail.com");
+            }
         }
 
         public Player player {
@@ -79,7 +93,7 @@ namespace ntool {
                         foreach (var listener in m_Listeners) {
                             listener.peer.Service();
                         }
-                        System.Threading.Thread.Sleep(500);
+                        System.Threading.Thread.Sleep(17);
                     } catch(Exception ex) {
                         logger.Log(ex.Message);
                         Stop();
@@ -98,7 +112,7 @@ namespace ntool {
         }
 
         public void Command(string command) {
-            if(command == "exit" ) {
+            if(command.ToLower() == "exit" ) {
                 m_CommandManager.Stop();
                 Stop();
                 foreach(var listener in m_Listeners) {
@@ -152,7 +166,7 @@ namespace ntool {
         }
 
 
-        public void Operation(ServerType serverType, byte code, Dictionary<byte, object> parameters, bool reliable = true) {
+        public void Operation(NebulaCommon.ServerType serverType, byte code, Dictionary<byte, object> parameters, bool reliable = true) {
             var peer = FindPeer(serverType);
             if(peer != null ) {
 
@@ -176,7 +190,7 @@ namespace ntool {
             }
         }
 
-        private PhotonPeer FindPeer(ServerType serverType) {
+        private PhotonPeer FindPeer(NebulaCommon.ServerType serverType) {
             var lst =  m_Listeners.Find(listener => listener.serverInfo.type == serverType);
             if(lst != null ) {
                 return lst.peer;

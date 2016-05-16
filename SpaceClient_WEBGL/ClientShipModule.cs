@@ -79,6 +79,10 @@ namespace Nebula.Client {
         public void ParseInfo(Hashtable info) {
             mRaw = info;
 
+            if(mRaw == null ) {
+                return;
+            }
+
             id = info.GetValueString((int)SPC.Id);                                                     //1
             type = info.GetValueByte((int)SPC.Type, (byte)ShipModelSlotType.CB).toEnum<ShipModelSlotType>();         //2
             level = info.GetValueInt((int)SPC.Level, 0);                                                             //3

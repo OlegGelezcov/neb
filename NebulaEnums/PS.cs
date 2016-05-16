@@ -113,6 +113,7 @@ namespace Common
         BotGroup = 91,
         ContractId = 92,
         Mark = 93,
-        Group = 94
+        Group = 94,
+        Icon = 95
     }
 }

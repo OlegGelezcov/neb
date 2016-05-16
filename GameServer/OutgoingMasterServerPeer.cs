@@ -188,6 +188,18 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                             HandleRequestGuildInfo(result);
                         }
                         break;
+                    case "RequestIcon": {
+                            HandleRequestIcon(result);
+                        }
+                        break;
+                    case "SendChatBroadcast": {
+                            Hashtable hash = result as Hashtable;
+                            if(hash != null ) {
+                                RPCErrorCode code = (RPCErrorCode)hash.GetValue<int>((int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError);
+                                log.InfoFormat("send chat broadcast response: {0}", code);
+                            }
+                        }
+                        break;
                 }
             }
         } else {
@@ -209,6 +221,32 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                     }
                 }
             }
+        }
+    }
+
+    private void HandleRequestIcon(object result) {
+        Hashtable hash = result as Hashtable;
+        if(hash != null ) {
+            RPCErrorCode code = (RPCErrorCode)hash.GetValue<int>((int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError);
+
+            if (code == RPCErrorCode.Ok) {
+                string gameRef = hash.GetValue<string>((int)SPC.GameRefId, string.Empty);
+                int icon = hash.GetValue<int>((int)SPC.Icon, 0);
+                if (!string.IsNullOrEmpty(gameRef)) {
+                    MmoActor player;
+                    if (m_App.serverActors.TryGetValue(gameRef, out player)) {
+                        if (player) {
+                            var character = player.GetComponent<PlayerCharacterObject>();
+                            if (character) {
+                                character.SetIcon(icon);
+                            }
+                        }
+                    }
+                }
+            } else {
+                log.InfoFormat("RPC:RequestIcon error: {0}", code);
+            }
+
         }
     }
 

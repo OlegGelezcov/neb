@@ -275,7 +275,9 @@ namespace SelectCharacter.Group {
                     login = login,
                     worldID = character.WorldId,
                     exp = character.Exp,
-                    workshop = character.Workshop});
+                    workshop = character.Workshop,
+                    characterName = character.Name,
+                    characterIcon = character.characterIcon } );
                 if(result) {
                     SetGroupOnPeer(characterID, group.groupID);
                 }

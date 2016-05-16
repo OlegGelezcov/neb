@@ -125,7 +125,7 @@ namespace Nebula.Game.Components {
                     world.SetAttackRace((Race)mLastDamage.race);
                 }
 
-                log.InfoFormat("OnNewDamage(): receive damage from race = {0}", (Race)mLastDamage.race);
+                //log.InfoFormat("OnNewDamage(): receive damage from race = {0}", (Race)mLastDamage.race);
             } else {
                 log.Info("OnNewDamage() error: invalid damage parameter");
             }

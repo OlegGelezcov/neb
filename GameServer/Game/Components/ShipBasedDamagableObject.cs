@@ -48,7 +48,12 @@ namespace Nebula.Game.Components {
         }
         public override float baseMaximumHealth {
             get {
-
+                if(!mShip) {
+                    return 1000f;
+                }
+                if(mShip.shipModel == null ) {
+                    return 1000f;
+                }
                 return mShip.shipModel.hp;
             }
         }
@@ -68,6 +73,9 @@ namespace Nebula.Game.Components {
             }
 
             float initHealth = maximumHealth;
+            if(initHealth <= 0.0f ) {
+                initHealth = 1000000;
+            }
             //log.InfoFormat("Set health at start to {0}", initHealth);
             ForceSetHealth(initHealth);
             mpcHPRegenNonCombatPerSec = nebulaObject.resource.ServerInputs.GetValue<float>("hp_regen_non_combat");
@@ -208,7 +216,14 @@ namespace Nebula.Game.Components {
             }
 
             if (inputDamage.hasDamager) {
-                AddDamager(inputDamage.sourceId, inputDamage.sourceType, inputDamage.totalDamage, (byte)inputDamage.workshop, inputDamage.level, (byte)inputDamage.race);
+                AddDamager(
+                    inputDamage.sourceId, 
+                    inputDamage.sourceType, 
+                    inputDamage.totalDamage, 
+                    (byte)inputDamage.workshop, 
+                    inputDamage.level, 
+                    (byte)inputDamage.race,
+                    inputDamage.source);
             }
 
             //if(mEventedObject != null && inputDamage.hasDamager) {

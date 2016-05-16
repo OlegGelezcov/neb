@@ -533,7 +533,13 @@
                 nebulaObjectManager.Update(deltaTime);
 
                 if (mSaveWorldTimer.Update(deltaTime)) {
-                    application.DatabaseManager.SetWorld(this);
+                    try {
+                        application.DatabaseManager.SetWorld(this);
+                    } catch (Exception exc) {
+                        log.InfoFormat("catched exception when saving worlds");
+                        log.InfoFormat(exc.Message);
+                        log.InfoFormat(exc.StackTrace);
+                    }
                 }
 
                 //restore saved objects

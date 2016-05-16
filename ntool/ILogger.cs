@@ -9,6 +9,7 @@ namespace ntool {
         void PushColor(ConsoleColor color);
         void PopColor();
 
+        void Log(string message, ConsoleColor color);
         void Log(string message);
         void Log(string messageFormat, params object[] args);
     }

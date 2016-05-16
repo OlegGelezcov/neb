@@ -6,6 +6,7 @@ using Nebula.Game.Contracts;
 using Nebula.Game.Pets;
 using Nebula.Game.Utils;
 using Space.Game;
+using System;
 
 namespace Nebula.Game.Components {
 
@@ -35,6 +36,7 @@ namespace Nebula.Game.Components {
             if (!mLoaded) {
                 mLoaded = true;
                 log.InfoFormat("PlayerLoader Object Load() [dy]");
+                
                 GetComponent<MmoActor>().Load();
                 GetComponent<PlayerShip>().Load();
                 GetComponent<PlayerSkills>().Load();
@@ -58,18 +60,24 @@ namespace Nebula.Game.Components {
                     return;
                 }
 
-                var app = nebulaObject.mmoWorld().application;
-                InventoryDatabase.instance(app).SaveInventory(character.characterId, player.Inventory);
-                StationDatabase.instance(app).SaveStation(character.characterId, player.Station);
-                CharacterDatabase.instance(app).SaveCharacter(character.characterId, player.GetPlayerCharacter());
-                ShipModelDatabase.instance(app).SaveShipModel(character.characterId, GetComponent<PlayerShip>().shipModel);
-                SkillDatabase.instance(app).SaveSkills(character.characterId, GetComponent<PlayerSkills>().GetSave());
-                WeaponDatabase.instance(app).SaveWeapon(character.characterId, player.GetComponent<ShipWeapon>().GetSave());
-                PassiveBonusesDatabase.instance(app).SavePassiveBonuses(character.characterId, player.GetComponent<PassiveBonusesComponent>().GetSave());
-                TimedEffectsDatabase.instance(app).SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
-                PetDatabase.instance(app).SavePets(character.characterId, player.GetComponent<PetManager>().pets);
-                ContractDatabase.instance(app).SaveContracts(character.characterId, player.GetComponent<ContractManager>().GetSave());
-                AchievmentDatabase.instance(app).SaveAchievment(character.characterId, player.GetComponent<AchievmentComponent>().GetSave());
+                try {
+                    var app = nebulaObject.mmoWorld().application;
+                    InventoryDatabase.instance(app).SaveInventory(character.characterId, player.Inventory);
+                    StationDatabase.instance(app).SaveStation(character.characterId, player.Station);
+                    CharacterDatabase.instance(app).SaveCharacter(character.characterId, player.GetPlayerCharacter());
+                    ShipModelDatabase.instance(app).SaveShipModel(character.characterId, GetComponent<PlayerShip>().shipModel);
+                    SkillDatabase.instance(app).SaveSkills(character.characterId, GetComponent<PlayerSkills>().GetSave());
+                    WeaponDatabase.instance(app).SaveWeapon(character.characterId, player.GetComponent<ShipWeapon>().GetSave());
+                    PassiveBonusesDatabase.instance(app).SavePassiveBonuses(character.characterId, player.GetComponent<PassiveBonusesComponent>().GetSave());
+                    TimedEffectsDatabase.instance(app).SaveTimedEffects(character.characterId, player.GetComponent<PlayerTimedEffects>().GetInfo());
+                    PetDatabase.instance(app).SavePets(character.characterId, player.GetComponent<PetManager>().pets);
+                    ContractDatabase.instance(app).SaveContracts(character.characterId, player.GetComponent<ContractManager>().GetSave());
+                    AchievmentDatabase.instance(app).SaveAchievment(character.characterId, player.GetComponent<AchievmentComponent>().GetSave());
+                } catch(Exception exception) {
+                    log.Error("handled exception at Player Loaded Object");
+                    log.Error(exception.Message);
+                    log.Error(exception.StackTrace);
+                }
             }
         }
 

@@ -120,16 +120,19 @@ namespace Nebula.Engine {
             return ((bool)behaviour.nebulaObject);
         }
 
+        private readonly object syncObj = new object();
+
         public void SendMessage(string message, object arg = null) {
-            foreach(var method in GetType().GetMethods( BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
-                if(method.Name == message) {
-                    if(arg != null ) {
-                        method.Invoke(this, new object[] { arg });
-                    } else {
-                        method.Invoke(this, null);
+                foreach (var method in GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
+                    if (method.Name == message) {
+                        if (arg != null) {
+                            method.Invoke(this, new object[] { arg });
+                        } else {
+                            method.Invoke(this, null);
+                        }
                     }
                 }
-            }
+
         }
 
         public object RequireProperty(byte key) {

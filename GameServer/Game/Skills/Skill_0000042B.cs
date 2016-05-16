@@ -51,7 +51,7 @@ namespace Nebula.Game.Skills {
                     }
                 }
 
-                if(targetItem) {
+                if(targetItem && (minDist < radius)) {
                     float dmg = sourceWeapon.GetDamage(false).totalDamage * dmg2Mult;
                     WeaponDamage sInpWeapDmg = new WeaponDamage(sourceWeapon.myWeaponBaseType);
                     sInpWeapDmg.SetBaseTypeDamage(dmg);

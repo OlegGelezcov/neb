@@ -6,11 +6,11 @@ namespace ntool.Listeners {
             : base(name,  app, serverInfo ){ }
 
         public override void OnEvent(EventData eventData) {
-            
+            app.logger.Log(eventData.ToStringFull());
         }
 
         public override void OnOperationResponse(OperationResponse operationResponse) {
-            
+            app.logger.Log(operationResponse.ToStringFull());
         }
     }
 }

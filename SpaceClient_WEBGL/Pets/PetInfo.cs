@@ -167,5 +167,18 @@ namespace Nebula.Client.Pets {
                 return 6;
             }  
         }
+
+        public PetActiveSkill GetActiveSkill(int skillId ) {
+            if(activeSkills == null ) {
+                return null;
+            }
+
+            foreach(var s in activeSkills) {
+                if(s.id == skillId ) {
+                    return s;
+                }
+            }
+            return null;
+        }
     }
 }

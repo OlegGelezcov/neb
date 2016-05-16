@@ -1,7 +1,7 @@
 ﻿namespace Nebula.Client.UI {
     public enum ComposeTextSize : int {
-        small = 25,
-        medium = 30,
-        large = 35
+        small = 30,
+        medium = 42,
+        large = 57
     }
 }

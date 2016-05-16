@@ -174,10 +174,17 @@ namespace Nebula.Game.Components {
                 float modelEnergy = mMaxEnergyFromResource;//100; //mShip.shipModel.BaseEnergyCount();
                 modelEnergy = ApplyMaximumEnergyPassiveBonus(modelEnergy);
 
-                float energyBonus = mBonuses.maxEnergyCntBonus;
+                float energyBonus = 0f;
+                if (mBonuses != null) {
+                    energyBonus = mBonuses.maxEnergyCntBonus;
+                }
 
+                float shipModelBonus = 0;
+                if(mShip != null && mShip.shipModel != null ) {
+                    shipModelBonus = mShip.shipModel.energyBonus;
+                }
 
-                float result = modelEnergy * (1.0f + mShip.shipModel.energyBonus)  + energyBonus;
+                float result = modelEnergy * (1.0f + shipModelBonus)  + energyBonus;
                 if(result < 0f ) {
                     result = 0;
                 }

@@ -59,5 +59,10 @@ namespace Nebula.Engine {
         public const string OnEnterStation = "OnEnterStation";
 
         public const string OnStationExited = "OnStationExited";
+
+        /// <summary>
+        /// OnStartAttack message sended to damager from receiver (parameter is receiver nebula object)
+        /// </summary>
+        public const string OnStartAttack = "OnStartAttack";
     }
 }

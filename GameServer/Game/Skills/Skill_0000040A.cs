@@ -16,6 +16,17 @@ namespace Nebula.Game.Skills {
             var sourceTarget = source.Target();
 
             var targetBonuses = sourceTarget.targetObject.Bonuses();
+            if(!sourceTarget) {
+                return false;
+            }
+            if(!sourceTarget.targetObject) {
+                return false;
+            }
+            var targetShip = sourceTarget.targetObject.GetComponent<BaseShip>();
+            if(!targetShip) {
+                return false;
+            }
+
             float targetResistance = sourceTarget.targetObject.GetComponent<BaseShip>().commonResist;
             float dmgMult = skill.GetFloatInput("dmg_mult");
             float resistTime = skill.GetFloatInput("resist_time");

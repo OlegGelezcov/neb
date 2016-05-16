@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,16 +12,19 @@ namespace Common
         where U : IInventoryObjectBase
     {
         protected int _maxSlots;
-        protected Dictionary<InventoryObjectType, Dictionary<string, T>> _items;
+
+        protected ConcurrentDictionary<InventoryObjectType, ConcurrentDictionary<string, T>> _items;
+        
+        //protected Dictionary<InventoryObjectType, Dictionary<string, T>> _items;
 
         public Inventory()
         {
             _maxSlots = 0;
-            _items = new Dictionary<InventoryObjectType, Dictionary<string, T>>();
+            _items = new ConcurrentDictionary<InventoryObjectType, ConcurrentDictionary<string, T>>();
         }
         public Inventory(int maxSlots) {
             _maxSlots = maxSlots;
-            _items = new Dictionary<InventoryObjectType, Dictionary<string, T>>();
+            _items = new ConcurrentDictionary<InventoryObjectType, ConcurrentDictionary<string, T>>();
         }
 
         public int MaxSlots
@@ -42,7 +46,7 @@ namespace Common
         /// <summary>
         /// Return all items dictionary in inventory
         /// </summary>
-        public Dictionary<InventoryObjectType, Dictionary<string, T>> Items {
+        public ConcurrentDictionary<InventoryObjectType, ConcurrentDictionary<string, T>> Items {
             get {
                 return _items;
             }
@@ -58,7 +62,7 @@ namespace Common
 
         public bool TryGetItem(InventoryObjectType type, string id, out T item) {
             item = default(T);
-            Dictionary<string, T> typedItems;
+            ConcurrentDictionary<string, T> typedItems;
             if (_items.TryGetValue(type, out typedItems)) {
                 return typedItems.TryGetValue(id, out item);
             }
@@ -89,14 +93,19 @@ namespace Common
                     {
                         T nItem = new T();
                         nItem.Set(obj, count);
-                        _items[obj.Type].Add(obj.Id, nItem);
+                        _items[obj.Type].TryAdd(obj.Id, nItem);
                         nItem.Object.SetNew(true);
                     }
                     else {
                         T nItem = new T();
                         nItem.Set(obj, count);
                         nItem.Object.SetNew(true);
-                        _items.Add(obj.Type, new Dictionary<string, T> { { obj.Id, nItem } });
+
+                        var ncd = new ConcurrentDictionary<string, T>();
+                        if (!string.IsNullOrEmpty(obj.Id)) {
+                            ncd.TryAdd(obj.Id, nItem);
+                        }
+                        _items.TryAdd(obj.Type, ncd);
                     }
                     return true;
                 }
@@ -111,7 +120,8 @@ namespace Common
                 item.Remove(count);
                 item.Object.ResetNew();
                 if (false == item.Has) {
-                    _items[type].Remove(item.Object.Id);
+                    T oldVal;
+                    _items[type].TryRemove(item.Object.Id, out oldVal);
                 }
             }
         }
@@ -193,9 +203,9 @@ namespace Common
                 foreach (var pair2 in pair.Value) {
                     if (_items.ContainsKey(pair.Key) == false)
                     {
-                        _items.Add(pair.Key, new Dictionary<string, T>());
+                        _items.TryAdd(pair.Key, new ConcurrentDictionary<string, T>());
                     }
-                    _items[pair.Key].Add(pair2.Key, pair2.Value);
+                    _items[pair.Key].TryAdd(pair2.Key, pair2.Value);
                 }
             }
         }
@@ -207,11 +217,11 @@ namespace Common
         public void ReplaceItem(T item) {
             //add typed items if needed
             if (_items.ContainsKey(item.Object.Type) == false) {
-                _items.Add(item.Object.Type, new Dictionary<string, T>());
+                _items.TryAdd(item.Object.Type, new ConcurrentDictionary<string, T>());
             }
 
             //find typed items
-            Dictionary<string, T> typedItems = _items[item.Object.Type];
+            ConcurrentDictionary<string, T> typedItems = _items[item.Object.Type];
 
             //if item already present replace it, else add as new item
             if (typedItems.ContainsKey(item.Object.Id))
@@ -220,7 +230,7 @@ namespace Common
             }
             else 
             {
-                typedItems.Add(item.Object.Id, item);
+                typedItems.TryAdd(item.Object.Id, item);
             }
         }
     }

@@ -236,22 +236,26 @@ namespace Nebula {
 
         public void CallS2SMethod(NebulaCommon.ServerType serverType, string method, object[] arguments) {
             lock(fiberLock) {
-                mFiber.Enqueue(() => {
-                    try {
-                        S2SInvokeMethodStart start = new S2SInvokeMethodStart {
-                            arguments = arguments,
-                            method = method,
-                            sourceServerID = GameApplication.ServerId.ToString(),
-                            targetServerType = (byte)serverType
-                        };
-                        EventData evt = new EventData((byte)S2SEventCode.InvokeMethodStart, start);
-                        application.MasterPeer.SendEvent(evt, new SendParameters());
-                    } catch (Exception ex) {
-                        log.Info("exception");
-                        log.Info(ex.Message);
-                        log.Info(ex.StackTrace);
-                    }
-                });
+                if (mFiber != null) {
+                    mFiber.Enqueue(() => {
+                        try {
+                            S2SInvokeMethodStart start = new S2SInvokeMethodStart {
+                                arguments = arguments,
+                                method = method,
+                                sourceServerID = GameApplication.ServerId.ToString(),
+                                targetServerType = (byte)serverType
+                            };
+                            EventData evt = new EventData((byte)S2SEventCode.InvokeMethodStart, start);
+                            if (application != null && application.MasterPeer != null) {
+                                application.MasterPeer.SendEvent(evt, new SendParameters());
+                            }
+                        } catch (Exception ex) {
+                            log.Info("exception");
+                            log.Info(ex.Message);
+                            log.Info(ex.StackTrace);
+                        }
+                    });
+                }
             }
         }
 
@@ -265,6 +269,10 @@ namespace Nebula {
 
         public void SetCreditsBonus(string characterId, float bonus ) {
             CallS2SMethod(ServerType.SelectCharacter, "SetCreditsBonus", new object[] { characterId, bonus }); 
+        }
+
+        public void SendChatBroadcast(string message) {
+            CallS2SMethod(ServerType.SelectCharacter, "SendChatBroadcast", new object[] { message });
         }
 
         //public void SetCreditsBonus(string )

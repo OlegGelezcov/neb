@@ -11,7 +11,7 @@ namespace ntool.Commands {
         private Application m_Application;
 
         public BaseCommand(string source, Application app) {
-            m_Source = source.ToLower().Trim();
+            m_Source = source.Trim();
             m_Application = app;
         }
 

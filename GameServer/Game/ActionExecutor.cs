@@ -162,6 +162,8 @@ namespace Space.Game {
             return _actor.Inventory.GetInfo();
         }
 
+
+
         public Hashtable AddFromContainer(string containerId, byte containerType, string objId) 
         {
             Player.nebulaObject.SetInvisibility(false);
@@ -567,10 +569,14 @@ namespace Space.Game {
         /// <returns></returns>
         public Hashtable RequestShipModel() {
             var ship = Player.GetComponent<PlayerShip>();
-            if(ship.shipModel == null ) {
+            /*
+            if(ship.shipModel == null || ship.shipModel.GetInfo().Count != 5) {
               //  log.Info("RequestShipModel(): shipModel is null");
-                return new Hashtable { { (int)SPC.Info, new Hashtable() }};
-            }
+                return new Hashtable {
+                    { (int)SPC.Info, new Hashtable() }
+                };
+            }*/
+            ship.Load();
             return new Hashtable{
                 {(int)SPC.Info, Player.GetComponent<PlayerShip>().shipModel.GetInfo() }
             };
@@ -1446,6 +1452,12 @@ namespace Space.Game {
                 };
             }
 
+            if(miningStationComponent.currentCount == 0 ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.IsEmpty }
+                };
+            }
+
             if(Player.Inventory.SlotsForItems(
                 new Dictionary<string, InventoryObjectType> {
                     { miningStationComponent.nebulaElementID, InventoryObjectType.nebula_element }
@@ -1469,7 +1481,8 @@ namespace Space.Game {
             }
 
             return new Hashtable {
-                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                { (int)SPC.Count, count }
             };
 
         }
@@ -1617,7 +1630,12 @@ namespace Space.Game {
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
+        /// <summary>
+        /// Apply repair patch to player
+        /// </summary>
         public Hashtable ApplyRepairPatch(string itemID) {
+            float interval = 30.0f;
+
             int itemCount = Player.Inventory.ItemCount(InventoryObjectType.repair_patch, itemID);
             if(itemCount == 0) {
                 return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.ObjectNotFound } };
@@ -1629,13 +1647,20 @@ namespace Space.Game {
 
             RepairPatchObject repairPatchObject = invItem.Object as RepairPatchObject;
             var shipDamagable = Player.GetComponent<ShipBasedDamagableObject>();
-            shipDamagable.SetIncreaseRegenMultiplier(repairPatchObject.value, 30);
+            shipDamagable.SetIncreaseRegenMultiplier(repairPatchObject.value, interval);
             Player.Inventory.Remove(InventoryObjectType.repair_patch, itemID, 1);
             Player.EventOnInventoryUpdated();
 
-            return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                { (int)SPC.Interval, interval},
+                { (int)SPC.Count, (int)repairPatchObject.value}
+            };
         }
 
+        /// <summary>
+        /// Applied restore kit to player
+        /// </summary>
         public Hashtable ApplyRepairKit(string itemID) {
             int itemCount = Player.Inventory.ItemCount(InventoryObjectType.repair_kit, itemID);
             if(itemCount == 0) {
@@ -1652,7 +1677,10 @@ namespace Space.Game {
             damagable.ForceSetHealth(damagable.health + restoreHealth);
             Player.Inventory.Remove(InventoryObjectType.repair_kit, itemID, 1);
             Player.EventOnInventoryUpdated();
-            return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                { (int)SPC.Count, (int)restoreHealth }
+            };
         }
 
         public Hashtable CreateMiningStation(string planetID, string inventoryItemID, int slotNumber) {
@@ -1746,6 +1774,9 @@ namespace Space.Game {
             Player.Inventory.Remove(InventoryObjectType.mining_station, inventoryItemID, 1);
             Player.EventOnInventoryUpdated();
             Player.nebulaObject.mmoWorld().SaveWorldState();
+
+            Player.GetComponent<PlayerCharacterObject>().OnSetMiningStation();
+
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
             };
@@ -1911,6 +1942,8 @@ namespace Space.Game {
             var achievments = Player.GetComponent<AchievmentComponent>();
             achievments.OnFortificationCreated();
 
+            Player.GetComponent<PlayerCharacterObject>().OnSetFortification();
+
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
@@ -1977,6 +2010,8 @@ namespace Space.Game {
 
             var achievments = Player.GetComponent<AchievmentComponent>();
             achievments.OnOutpostCreated();
+
+            Player.GetComponent<PlayerCharacterObject>().OnSetOutpost();
 
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }

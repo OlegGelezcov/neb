@@ -15,7 +15,7 @@ namespace Nebula {
         }
 
         public int AddAchievmentVariable(string gameRef, string variableName, int count ) {
-            s_Log.InfoFormat("S2S: AddAchievmentVariable({0}, {1}, {2})".Color(LogColor.white), gameRef, variableName, count);
+            //s_Log.InfoFormat("S2S: AddAchievmentVariable({0}, {1}, {2})".Color(LogColor.white), gameRef, variableName, count);
             var player = m_App.GetServerActor(gameRef);
             if(player != null ) {
                 var achievments = player.GetComponent<AchievmentComponent>();

@@ -21,6 +21,14 @@ namespace Nebula.Game.Components {
             UpdateBotGroupProperty();
         }
 
+        public bool isConstruction {
+            get {
+                return (mBotSubType == (byte)BotItemSubType.Outpost) ||
+                    (mBotSubType == (byte)BotItemSubType.MainOutpost) ||
+                    (mBotSubType == (byte)BotItemSubType.Turret);
+            }
+        }
+
         private void UpdateBotGroupProperty() {
             if (props != null && mInitData != null) {
                 if (mInitData.botGroup != null) {
@@ -36,6 +44,10 @@ namespace Nebula.Game.Components {
             } private set {
                 mBotSubType = value;
             }
+        }
+
+        public BotItemSubType getSubType() {
+            return (BotItemSubType)botSubType;
         }
 
         public void SetSubType(byte subType) {

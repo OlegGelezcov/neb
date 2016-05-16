@@ -61,7 +61,7 @@ namespace Nebula.Game.Components {
             InputDamage dmg =  base.ReceiveDamage(inputDamage);
             float afterDamage = dmg.totalDamage;
             if(mOutpost) {
-                log.InfoFormat("outpost receive damage input = {0} output = {1} [blue]", beforeDamage, afterDamage);
+                //log.InfoFormat("outpost receive damage input = {0} output = {1} [blue]", beforeDamage, afterDamage);
             }
             return dmg;
         }
@@ -93,6 +93,7 @@ namespace Nebula.Game.Components {
                     float finalExp = expToNextLevel * expPC;
 
                     playerCharacter.AddExp((int)finalExp);
+                    playerCharacter.nebulaObject.SendMessage(ComponentMessages.OnEnemyDeath, nebulaObject);
 
                     damagerCollection.GivePvpPoints(player, nebulaObject, npcLevel, playerLevel);
 
@@ -103,7 +104,7 @@ namespace Nebula.Game.Components {
             (nebulaObject as GameObject).Destroy();
         }
 
-        public Hashtable GetDatabaseSave() {
+        public override Hashtable GetDatabaseSave() {
             if(mInitData != null) {
                 return mInitData.AsHash();
             }

@@ -37,47 +37,73 @@ namespace Nebula.Game.Components {
         private PassiveBonusesComponent m_PassiveBonuses;
         private float m_InvisTimer = -1;
 
+        private bool m_StartCalled = false;
+
         public override void Start() {
-            mWeapon = RequireComponent<ShipWeapon>();
-            player = RequireComponent<MmoActor>();
-            RequireComponent<PlayerSkills>();
-            mAI = RequireComponent<AIState>();
-            mBonuses = RequireComponent<PlayerBonuses>();
-            mCharacter = RequireComponent<PlayerCharacterObject>();
+            if (!m_StartCalled) {
+                m_StartCalled = true;
+                mWeapon = RequireComponent<ShipWeapon>();
+                player = RequireComponent<MmoActor>();
+                RequireComponent<PlayerSkills>();
+                mAI = RequireComponent<AIState>();
+                mBonuses = RequireComponent<PlayerBonuses>();
+                mCharacter = RequireComponent<PlayerCharacterObject>();
 
-            m_PassiveBonuses = GetComponent<PassiveBonusesComponent>();
+                m_PassiveBonuses = GetComponent<PassiveBonusesComponent>();
 
-            SetModel(new ShipModel(resource));
-            m_ResistDetail.Reset();
+                if (shipModel == null) {
+                    SetModel(new ShipModel(resource));
+                }
 
-            log.Info("PlayerShip.Start() completed");
-        }
+                m_ResistDetail.Reset();
 
-
-
-        public void Load() {
-            log.InfoFormat("PlayerShip LOad() [dy]");
-            var workshop = (Workshop)GetComponent<CharacterObject>().workshop;
-            var dropMgr = DropManager.Get(nebulaObject.world.Resource());
-
-
-            //ShipModelDocument document = GameApplication.Instance.Load(player.nebulaObject.Id, mCharacter.characterId, DatabaseDocumentType.ShipModel) as ShipModelDocument;
-
-            var app = nebulaObject.mmoWorld().application;
-            bool isNew = false;
-            var dbModel = ShipModelDatabase.instance(app).LoadShipModel(mCharacter.characterId, resource as Res, out isNew);
-
-            if (isNew) {
-                GenerateNewShipModel(dropMgr);
-                ShipModelDatabase.instance(app).SaveShipModel(mCharacter.characterId, shipModel);
-            } else {
-                shipModel.Replace(dbModel);
+                log.Info("PlayerShip.Start() completed");
             }
-
-            shipModel.Update();
-            GetComponent<MmoActor>().EventOnShipModelUpdated();
-            log.Info("PlayerShip.Load() completed");
         }
+
+
+        private bool m_Loaded = false;
+       
+        public void Load() {
+            if (!m_Loaded) {
+                m_Loaded = true;
+                Start();
+                log.InfoFormat("PlayerShip LOad() [dy]");
+                var workshop = (Workshop)GetComponent<CharacterObject>().workshop;
+                var dropMgr = DropManager.Get(nebulaObject.world.Resource());
+
+
+                //ShipModelDocument document = GameApplication.Instance.Load(player.nebulaObject.Id, mCharacter.characterId, DatabaseDocumentType.ShipModel) as ShipModelDocument;
+
+                var app = nebulaObject.mmoWorld().application;
+                bool isNew = false;
+
+                if (mCharacter == null) {
+                    mCharacter = GetComponent<PlayerCharacterObject>();
+                }
+                if (string.IsNullOrEmpty(mCharacter.characterId)) {
+                    mCharacter.SetCharacterId((string)nebulaObject.Tag((byte)PlayerTags.CharacterId));
+                }
+                var dbModel = ShipModelDatabase.instance(app).LoadShipModel(mCharacter.characterId, resource as Res, out isNew);
+
+                if (shipModel == null) {
+                    SetModel(new ShipModel(resource));
+                }
+
+                if (isNew) {
+                    GenerateNewShipModel(dropMgr);
+                    ShipModelDatabase.instance(app).SaveShipModel(mCharacter.characterId, shipModel);
+                } else {
+                    shipModel.Replace(dbModel);
+                }
+
+                shipModel.Update();
+                GetComponent<MmoActor>().EventOnShipModelUpdated();
+                log.Info("PlayerShip.Load() completed");
+            }
+        }
+
+
 
         public void SetStartModel(Hashtable inStartModel) {
             StartModel = inStartModel;
@@ -313,6 +339,11 @@ namespace Nebula.Game.Components {
 
         #region PRIVATE METHODS
         private void GenerateNewShipModel(DropManager dropManager) {
+
+            if(StartModel == null ) {
+                SetStartModel(nebulaObject.Tag((byte)PlayerTags.Model) as Hashtable);
+            }
+
             ShipModule prevModule = null;
             var character = GetComponent<CharacterObject>();
 

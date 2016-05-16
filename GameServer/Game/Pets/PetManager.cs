@@ -40,6 +40,7 @@ namespace Nebula.Game.Pets {
         private bool m_Initialized = false;
 
         public void Load() {
+            Start();
             if (m_Character == null) {
                 m_Character = GetComponent<PlayerCharacterObject>();
             }
@@ -48,12 +49,17 @@ namespace Nebula.Game.Pets {
             Reinitialize();
         }
 
+        private bool m_StartCalled = false;
+
         public override void Start() {
-            base.Start();
-            m_Character = GetComponent<PlayerCharacterObject>();
-            m_Player = GetComponent<MmoActor>();
-            m_PlayerTarget = GetComponent<PlayerTarget>();
-            m_Bonuses = GetComponent<PlayerBonuses>();
+            if (!m_StartCalled) {
+                m_StartCalled = true;
+                base.Start();
+                m_Character = GetComponent<PlayerCharacterObject>();
+                m_Player = GetComponent<MmoActor>();
+                m_PlayerTarget = GetComponent<PlayerTarget>();
+                m_Bonuses = GetComponent<PlayerBonuses>();
+            }
         }
 
         public override void Update(float deltaTime) {
@@ -454,7 +460,13 @@ namespace Nebula.Game.Pets {
         /// </summary>
         public void Death() {
             //s_Log.InfoFormat("Owner Death() and pets destroyed".Color(LogColor.orange));
-            DestroyPets();
+            try {
+                DestroyPets();
+            } catch(Exception exception) {
+                s_Log.InfoFormat("handled exception");
+                s_Log.Error(exception.Message);
+                s_Log.Error(exception.StackTrace);
+            }
         }
 
         public void RemovePet(string id) {

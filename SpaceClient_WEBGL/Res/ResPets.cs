@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using Common;
 
 namespace Nebula.Client.Res {
     public class ResPets {
@@ -76,6 +76,16 @@ namespace Nebula.Client.Res {
                 }
                 return min.minLevel;
             }
+        }
+
+        public List<PetData> GetPets(Race race) {
+            List<PetData> list = new List<PetData>();
+            foreach(var pp in m_Pets ) {
+                if(pp.Value.race == race ) {
+                    list.Add(pp.Value);
+                }
+            }
+            return list;
         }
     }
 }

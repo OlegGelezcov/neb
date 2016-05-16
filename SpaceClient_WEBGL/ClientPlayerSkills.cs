@@ -60,6 +60,17 @@ namespace Nebula.Client {
             return ClientPlayerSkill.Empty;
         }
 
+        public bool HasSkill(int skillId ) {
+            foreach(var pSkill in Skills ) {
+                if(pSkill.Value != null ) {
+                    if(pSkill.Value.Id == skillId ) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         public Dictionary<int, ClientPlayerSkill> Skills {
             get {
                 return this.skills;

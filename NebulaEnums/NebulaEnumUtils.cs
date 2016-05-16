@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Common {
+﻿namespace Common {
     public static class NebulaEnumUtils {
         public static NpcClass GetNpcClassForWorkshop(Workshop workshop) {
             switch(workshop) {
@@ -27,6 +22,63 @@ namespace Common {
                     return NpcClass.none;
             }
         }
+
+        public static Workshop GetWorkshopForRaceAndClass(Race race, NpcClass npcClass ) {
+            switch(race) {
+                case Race.Humans: {
+                        switch(npcClass) {
+                            case NpcClass.rdd: {
+                                    return Workshop.DarthTribe;
+                                }
+                            case NpcClass.healer: {
+                                    return Workshop.Equilibrium;
+                                }
+                            case NpcClass.sdd: {
+                                    return Workshop.BigBang;
+                                }
+                            case NpcClass.tank: {
+                                    return Workshop.RedEye;
+                                }
+                        }
+                    }
+                    break;
+                case Race.Borguzands: {
+                        switch(npcClass) {
+                            case NpcClass.rdd: {
+                                    return Workshop.Phelpars;
+                                }
+                            case NpcClass.healer: {
+                                    return Workshop.Zoards;
+                                }
+                            case NpcClass.sdd: {
+                                    return Workshop.Rakhgals;
+                                }
+                            case NpcClass.tank: {
+                                    return Workshop.Lerjees;
+                                }
+                        }
+                    }
+                    break;
+                case Race.Criptizoids: {
+                        switch(npcClass) {
+                            case NpcClass.rdd: {
+                                    return Workshop.Yshuar;
+                                }
+                            case NpcClass.healer: {
+                                    return Workshop.Arlen;
+                                }
+                            case NpcClass.sdd: {
+                                    return Workshop.Dyneira;
+                                }
+                            case NpcClass.tank: {
+                                    return Workshop.KrolRo;
+                                }
+                        }
+                    }
+                    break;
+            }
+            return Workshop.Arlen;
+        } 
 
         public static ObjectColor GetColorForDifficulty(Difficulty difficulty) {
             switch(difficulty) {

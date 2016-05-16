@@ -82,5 +82,47 @@ namespace Nebula.Client {
             }
             return prefabs;
         }
+
+        private int countOfGreenModules {
+            get {
+                int counter = 0;
+                foreach(var slot in slots) {
+                    if(slot.HasModule ) {
+                        if(slot.Module.MyColor() == ObjectColor.green ) {
+                            counter++;
+                        }
+                    }
+                }
+                return counter;
+            }
+        }
+
+        public bool hasFullSet {
+            get {
+                List<string> setId = new List<string>();
+                if(countOfGreenModules == 5 ) {
+                    foreach(var slot in slots ) {
+                        if (slot.Module.IsBelongToSet) {
+                            if (!setId.Contains(slot.Module.set)) {
+                                setId.Add(slot.Module.set);
+                            }
+                        }
+                    }
+                }
+
+                return (setId.Count == 1);
+            }
+        }
+
+        public string fullSetId {
+            get {
+                if(hasFullSet) {
+                    foreach(var slot in slots) {
+                        return slot.Module.set;
+                    }
+                }
+                return string.Empty;
+            }
+        }
     }
 }

@@ -71,6 +71,10 @@ namespace Nebula.Client {
             }).ToList();
         }
 
+        public UniXMLElement Element(string name) {
+            return new UniXMLElement(element.Element(name));
+        }
+
         public string name {
             get {
 #if UP

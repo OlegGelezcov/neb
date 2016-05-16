@@ -40,5 +40,23 @@ namespace Nebula.Client.Res {
             }
             return -1;
         }
+
+        public int GetLevel(int skillId ) {
+            foreach(var p in levelSkillList) {
+                if(p.skill == skillId ) {
+                    return p.level;
+                }
+            }
+            return 0;
+        }
+
+        public bool ContainsSkill(int skillId ) {
+            foreach(var psl in levelSkillList ) {
+                if(psl.skill == skillId ) {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

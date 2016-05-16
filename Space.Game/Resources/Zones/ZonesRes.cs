@@ -16,6 +16,7 @@ namespace Space.Game.Resources.Zones {
     public class ZonesRes
     {
         public List<ZoneData> Zones { get; private set; }
+        private ConcurrentDictionary<string, string> zoneNames { get; set; }
 
         public void Load(string basePath) {
             string baseDirectory = Path.Combine(basePath, "Data/Zones");
@@ -23,6 +24,40 @@ namespace Space.Game.Resources.Zones {
             Zones = new List<ZoneData>();
             foreach (string file in files) {
                 Zones.AddRange(LoadFile(file));
+            }
+
+            LoadZoneNames(Path.Combine(basePath, "Data/zone_names.xml"));
+        }
+
+        private void LoadZoneNames(string file) {
+            zoneNames = new ConcurrentDictionary<string, string>();
+            XDocument document = XDocument.Load(file);
+            var dmp = document.Element("strings").Elements("string").Select(e => {
+                string id = e.GetString("key");
+                string nm = e.GetString("en");
+                zoneNames.TryAdd(id, nm);
+                return id;
+            }).ToList();
+        }
+
+        public string GetZoneName(string zoneId ) {
+            string nmId = zoneId + "_NAME";
+            if(zoneNames.ContainsKey(nmId)) {
+                return zoneNames[nmId];
+            }
+            return string.Empty;
+        }
+
+        public string GetRaceName(Race race) {
+            switch(race) {
+                case Race.Humans:
+                    return "Humans";
+                case Race.Criptizoids:
+                    return "Kriptizids";
+                case Race.Borguzands:
+                    return "Borguzands";
+                default:
+                    return string.Empty;
             }
         }
 

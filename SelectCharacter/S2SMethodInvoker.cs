@@ -1,5 +1,6 @@
 ﻿using Common;
 using ExitGames.Logging;
+using SelectCharacter.Chat;
 using ServerClientCommon;
 using System.Collections;
 
@@ -63,6 +64,21 @@ namespace SelectCharacter {
             };
         }
 
+        public object RequestIcon(string gameRef, string characterId ) {
+            var character = mApplication.Players.GetCharacter(gameRef, characterId);
+            if(character != null ) {
+                return new Hashtable {
+                    {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                    {(int)SPC.GameRefId, gameRef  },
+                    {(int)SPC.Icon, character.characterIcon  }
+                };
+            } else {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.CharacterNotFound }
+                };
+            }
+        }
+
         public object RequestRaceStatus(string gameRefID, string characterID) {
             var player = mApplication.Players.GetExistingPlayer(gameRefID);
             if(player != null ) {
@@ -88,6 +104,25 @@ namespace SelectCharacter {
                 data, NotficationRespondAction.Delete, NotificationSourceServiceType.Server,
                  NotificationSubType.MiningStationAttack);
             mApplication.Notifications.SetNotificationToCharacter(characterID, notification);
+            return (int)ReturnCode.Ok;
+        }
+
+        public object SendChatBroadcast(string message) {
+            ChatMessage msg = new ChatMessage {
+                chatGroup = (int)ChatGroup.race,
+                links = new System.Collections.Generic.List<ChatLinkedObject>(),
+                message = message,
+                messageID = System.Guid.NewGuid().ToString(),
+                senderIconId = 1,
+                sourceCharacterID = string.Empty,
+                sourceCharacterName = "system",
+                sourceLogin = string.Empty,
+                targetCharacterID = string.Empty,
+                targetCharacterName = string.Empty,
+                targetLogin = string.Empty,
+                time = CommonUtils.SecondsFrom1970()
+            };
+            mApplication.Chat.SendBroadcast(msg);
             return (int)ReturnCode.Ok;
         }
     }

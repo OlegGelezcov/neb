@@ -35,7 +35,7 @@ namespace ntool {
                         app.logger.PushColor(ConsoleColor.DarkYellow);
                         app.logger.Log("command: " + buffer.ToString().Trim());
                         app.logger.PopColor();
-                        app.Command(buffer.ToString().Trim().ToLower());
+                        app.Command(buffer.ToString().Trim());
                         buffer.Clear();
                     }
                 }

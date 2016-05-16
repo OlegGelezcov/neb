@@ -110,7 +110,14 @@ namespace Nebula.Game.Components {
             SubHealth(damageFromBase.totalDamage);
 
             if (damageFromBase.hasDamager) {
-                AddDamager(damageFromBase.sourceId, damageFromBase.sourceType, damageFromBase.totalDamage, (byte)damageFromBase.workshop, damageFromBase.level, (byte)damageFromBase.race);
+                AddDamager(
+                    damageFromBase.sourceId, 
+                    damageFromBase.sourceType, 
+                    damageFromBase.totalDamage, 
+                    (byte)damageFromBase.workshop, 
+                    damageFromBase.level, 
+                    (byte)damageFromBase.race,
+                    damageFromBase.source);
             }
 
             //if (mEventedObject != null) {
@@ -122,6 +129,8 @@ namespace Nebula.Game.Components {
                 nebulaObject.SendMessage(ComponentMessages.OnWasKilled);
             }
 
+
+
             return damageFromBase;
         }
 
@@ -130,7 +139,7 @@ namespace Nebula.Game.Components {
             (nebulaObject as GameObject).Destroy();
         }
 
-        public Hashtable GetDatabaseSave() {
+        public virtual Hashtable GetDatabaseSave() {
             if(m_InitData != null ) {
                 return m_InitData.AsHash();
             }

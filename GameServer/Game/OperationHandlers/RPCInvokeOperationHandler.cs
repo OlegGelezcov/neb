@@ -49,12 +49,72 @@ namespace Nebula.Game.OperationHandlers {
                     return CallTestKill(actor, request, operation);
                 case RPCID.rpc_UnlockLore:
                     return CallUnlockLore(actor, request, operation);
+                case RPCID.rpc_TestUnlockFullLore:
+                    return CallUnlockAllLore(actor, request, operation);
+                case RPCID.rpc_StartAsteroidCollecting:
+                    return CallStartAsteroidCollecting(actor, request, operation);
                 default:
                     return new OperationResponse(request.OperationCode) {
                         ReturnCode = (int)ReturnCode.InvalidRPCID,
                         DebugMessage = string.Format("not found rpc with id = {0}", operation.rpcId)
                     };
             }
+        }
+
+        /// <summary>
+        /// Handle start collecting asteroid action. Receive request from client and send StartCollectAsteroid generic event to all subscribers
+        /// </summary>
+        private OperationResponse CallStartAsteroidCollecting(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null || op.parameters.Length >= 2 ) {
+                byte containerType = (byte)op.parameters[0];
+                string containerId = (string)op.parameters[1];
+                var mmoComponent = player.GetComponent<MmoMessageComponent>();
+                if(mmoComponent ) {
+                    mmoComponent.PublishStartAsteroidCollecting(containerType, containerId);
+                }
+                RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = new Hashtable {
+                        { (int)SPC.ReturnCode, RPCErrorCode.Ok }
+                    }
+                };
+                return new OperationResponse(request.OperationCode, responseInstance);
+            } else {
+                return InvalidOperationParameter(request);
+            }
+        }
+
+        /// <summary>
+        /// Unlock all existing lore operation
+        /// </summary>
+        private OperationResponse CallUnlockAllLore(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            string[] humanStory = new string[] { "st_0_rec_0", "st_0_rec_1", "st_0_rec_2", "st_0_rec_3", "st_0_rec_4", "st_0_rec_5",
+                "st_0_rec_6", "st_0_rec_7", "st_0_rec_8", "st_0_rec_9", "st_0_rec_10", "st_0_rec_11", "st_0_rec_12", "st_0_rec_13",
+                "st_0_rec_14", "st_0_rec_15", "st_0_rec_16", "st_0_rec_17", "st_0_rec_18", "st_0_rec_19"};
+            string[] criptizidStory = new string[] { "st_1_rec_0", "st_1_rec_1", "st_1_rec_2", "st_1_rec_3", "st_1_rec_4", "st_1_rec_5", "st_1_rec_6",
+                "st_1_rec_7", "st_1_rec_8", "st_1_rec_9", "st_1_rec_10", "st_1_rec_11", "st_1_rec_12", "st_1_rec_13", "st_1_rec_14",
+                "st_1_rec_15", "st_1_rec_16", "st_1_rec_17", "st_1_rec_18", "st_1_rec_19" };
+            string[] borgStory = new string[] { "st_2_rec_0", "st_2_rec_1", "st_2_rec_2", "st_2_rec_3", "st_2_rec_4",
+                "st_2_rec_5", "st_2_rec_6", "st_2_rec_7", "st_2_rec_8", "st_2_rec_9"};
+
+            var achievmentComponent = player.GetComponent<AchievmentComponent>();
+            foreach(string id in humanStory ) {
+                achievmentComponent.FoundLoreRecord(id);
+            }
+            foreach(string id in criptizidStory ) {
+                achievmentComponent.FoundLoreRecord(id);
+            }
+            foreach(string id in borgStory ) {
+                achievmentComponent.FoundLoreRecord(id);
+            }
+            RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId
+            };
+
+            responseInstance.result = new Hashtable {
+                                    { (int)SPC.ReturnCode, (int)RPCErrorCode.LoreRecordAlreadyUnlocked }
+                                };
+            return new OperationResponse(request.OperationCode, responseInstance);
         }
 
         private OperationResponse CallUnlockLore(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {

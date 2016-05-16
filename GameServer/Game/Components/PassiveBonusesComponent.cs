@@ -40,9 +40,13 @@ namespace Nebula.Game.Components {
         private float mUpdateTimer = BONUSES_UPDATE_INTERVAL;
         private bool mLoaded = false;
 
+        private bool m_StartCalled = false;
 
         public override void Start() {
-            mMessage = GetComponent<MmoMessageComponent>();
+            if (!m_StartCalled) {
+                m_StartCalled = true;
+                mMessage = GetComponent<MmoMessageComponent>();
+            }
         }
 
         public override void Update(float deltaTime) {
@@ -136,6 +140,7 @@ namespace Nebula.Game.Components {
         }
 
         public void Load() {
+            Start();
             var characterID = GetComponent<PlayerCharacterObject>().characterId;
             log.InfoFormat("load passive bonuses = {0} [red]", characterID);
             var app = nebulaObject.mmoWorld().application;
