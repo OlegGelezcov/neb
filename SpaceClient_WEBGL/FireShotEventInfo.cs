@@ -42,5 +42,26 @@ namespace Nebula.Client {
         public FireShotEventInfo(Hashtable info) {
             ParseInfo(info);
         }
+
+        public static FireShotEventInfo CreateTest(int skillId) {
+            Hashtable hash = new Hashtable {
+                { (int)SPC.Source, System.Guid.NewGuid().ToString() },
+                { (int)SPC.SourceType, (byte)ItemType.Avatar },
+                { (int)SPC.Target, System.Guid.NewGuid().ToString() },
+                { (int)SPC.TargetType, (byte)ItemType.Avatar },
+                { (int)SPC.Workshop, (byte)Workshop.DarthTribe },
+                { (int)SPC.Skill, skillId },
+                { (int)SPC.FireAllowed, true },
+                { (int)SPC.IsHitted, true },
+                { (int)SPC.ActualDamage, 100.0f },
+                { (int)SPC.IsCritical, false },
+                { (int)SPC.ErrorMessageId, string.Empty },
+                { (int)SPC.RocketDamage, 100.0f },
+                { (int)SPC.AcidDamage, 0.0f },
+                { (int)SPC.LaserDamage, 0.0f },
+                { (int)SPC.WeaponBaseType, (int)WeaponBaseType.Rocket }
+            };
+            return new FireShotEventInfo(hash);
+        }
     }
 }

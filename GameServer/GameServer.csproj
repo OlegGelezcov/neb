@@ -31,16 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ExitGames.Logging.Log4Net, Version=1.0.0.8, Culture=neutral, PublicKeyToken=eac0edd9746a4aa0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ExitGames.Logging.Log4Net">
       <HintPath>..\..\..\photon_server\lib\ExitGames.Logging.Log4Net.dll</HintPath>
     </Reference>
-    <Reference Include="ExitGamesLibs, Version=1.0.0.8, Culture=neutral, PublicKeyToken=eac0edd9746a4aa0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="ExitGamesLibs">
       <HintPath>..\..\..\photon_server\lib\ExitGamesLibs.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.1, Culture=neutral, PublicKeyToken=2bb32138a3ceff71, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="log4net">
       <HintPath>..\..\..\photon_server\lib\log4net.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Bson">
@@ -49,14 +46,12 @@
     <Reference Include="MongoDB.Driver">
       <HintPath>..\packages\mongocsharpdriver.1.9.2\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
-    <Reference Include="Photon.SocketServer, Version=3.4.13.5874, Culture=neutral, PublicKeyToken=48c2fa3b6988090e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Photon.SocketServer">
       <HintPath>..\..\..\photon_server\lib\Photon.SocketServer.dll</HintPath>
     </Reference>
-    <Reference Include="PhotonHostRuntimeInterfaces, Version=3.52.0.0, Culture=neutral, PublicKeyToken=6cb1467adaa73020, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+    <Reference Include="PhotonHostRuntimeInterfaces">
       <HintPath>..\..\..\photon_server\lib\PhotonHostRuntimeInterfaces.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -110,6 +105,7 @@
     <Compile Include="Game\Components\Activators\ActivatorObject.cs" />
     <Compile Include="Game\Components\Activators\SpawnPiratesActivator.cs" />
     <Compile Include="Game\Components\AsteroidComponent.cs" />
+    <Compile Include="Game\Components\BotAI\StayNonCombatAI.cs" />
     <Compile Include="Game\Components\ContractDropListComponent.cs" />
     <Compile Include="Game\Components\DatabaseObject.cs" />
     <Compile Include="Game\Components\DropListComponent.cs" />
@@ -151,8 +147,14 @@
     <Compile Include="Game\Components\PassiveBonusesComponent.cs" />
     <Compile Include="Game\Components\PersonalBeacon.cs" />
     <Compile Include="Game\Components\PirateStationObject.cs" />
+    <Compile Include="Game\Components\PlanetLandingTeleport.cs" />
     <Compile Include="Game\Components\PlanetObject.cs" />
+    <Compile Include="Game\Components\PlanetObjects\CommanderCenterPlanetObject.cs" />
+    <Compile Include="Game\Components\PlanetObjects\PlanetMiningStationObject.cs" />
     <Compile Include="Game\Components\PlanetObjects\PlanetObjectBase.cs" />
+    <Compile Include="Game\Components\PlanetObjects\PlanetResourceAcceleratorObject.cs" />
+    <Compile Include="Game\Components\PlanetObjects\PlanetResourceHangarObject.cs" />
+    <Compile Include="Game\Components\PlanetObjects\PlanetTurretObject.cs" />
     <Compile Include="Game\Components\PlayerBonuses.cs" />
     <Compile Include="Game\Components\PlayerCharacterObject.cs" />
     <Compile Include="Game\Components\PlayerLoaderObject.cs" />
@@ -595,7 +597,9 @@
     <Compile Include="PlanetWorldCell.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="ClassDiagram1.cd" />
     <None Include="MmoWorld.cd" />
     <None Include="MmoActor.cd" />

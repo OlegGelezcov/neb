@@ -123,41 +123,46 @@ namespace Nebula.Game.Components {
         /// <param name="enemy">Enemy who was killed</param>
         public void OnEnemyDeath(NebulaObject enemy) {
 
-            log.InfoFormat(string.Format("PlayerCharacter:OnEnemyDeath()->{0}", enemy.Id));
+            try {
+                log.InfoFormat(string.Format("PlayerCharacter:OnEnemyDeath()->{0}", enemy.Id));
 
-            switch (enemy.getItemType()) {
-                case ItemType.Bot: {
-                        BotObject botObject = enemy.GetComponent<BotObject>();
-                        if(botObject != null ) {
+                switch (enemy.getItemType()) {
+                    case ItemType.Bot: {
+                            BotObject botObject = enemy.GetComponent<BotObject>();
+                            if (botObject != null) {
 
-                            switch(botObject.getSubType()) {
-                                case BotItemSubType.Drill:
-                                case BotItemSubType.Outpost:
-                                case BotItemSubType.MainOutpost: {
-                                        mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillStandardNPCMessage(this, enemy));
-                                        break;
-                                    }
-                                case BotItemSubType.StandardCombatNpc: {
-                                        ShipWeapon enemyWeapon = enemy.GetComponent<ShipWeapon>();
-                                        BotShip enemyShip = enemy.GetComponent<BotShip>();
-                                        
-                                        if(enemyWeapon != null && enemyShip != null) {
-                                            if( enemyWeapon.weaponDifficulty == Difficulty.boss || enemyWeapon.weaponDifficulty == Difficulty.boss2 ||
-                                                enemyShip.difficulty == Difficulty.boss || enemyShip.difficulty == Difficulty.boss2) {
-                                                mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillStandardNPCMessage(this, enemy));
+                                switch (botObject.getSubType()) {
+                                    case BotItemSubType.Drill:
+                                    case BotItemSubType.Outpost:
+                                    case BotItemSubType.MainOutpost: {
+                                            mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillStandardNPCMessage(this, enemy));
+                                            break;
+                                        }
+                                    case BotItemSubType.StandardCombatNpc: {
+                                            ShipWeapon enemyWeapon = enemy.GetComponent<ShipWeapon>();
+                                            BotShip enemyShip = enemy.GetComponent<BotShip>();
+
+                                            if (enemyWeapon != null && enemyShip != null) {
+                                                if (enemyWeapon.weaponDifficulty == Difficulty.boss || enemyWeapon.weaponDifficulty == Difficulty.boss2 ||
+                                                    enemyShip.difficulty == Difficulty.boss || enemyShip.difficulty == Difficulty.boss2) {
+                                                    mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillStandardNPCMessage(this, enemy));
+                                                }
                                             }
                                         }
-                                    }
-                                    break;
+                                        break;
+                                }
                             }
                         }
-                    }
-                    break;
-                case ItemType.Avatar: {
-                        mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillStandardNPCMessage(this, enemy));
-                    }
-                    break;
-            }          
+                        break;
+                    case ItemType.Avatar: {
+                            mPlayer.application.updater.SendChatBroadcast(m_ChatComposer.GetKillOtherPlayerMessage(this, enemy));
+                        }
+                        break;
+                }
+            } catch(System.Exception exception ) {
+                log.InfoFormat("PlayerCharacter.OnEnemyDeath() exception: {0}", exception.Message);
+                log.InfoFormat(exception.StackTrace);
+            }     
         }
 
         /// <summary>

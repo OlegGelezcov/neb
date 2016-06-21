@@ -54,6 +54,16 @@ namespace Login {
 
         public int nebulaCredits { get; set; } = 0;
 
+        /// <summary>
+        /// Session counter for login
+        /// </summary>
+        public int sessionCount { get; set; } = 0;
+
+        /// <summary>
+        /// Last session time
+        /// </summary>
+        public int lastSessionTime { get; set; } = 0;
+
         //All info about passes and game time don't applyable now
         /*
         public int passes { get; set; }
@@ -78,6 +88,14 @@ namespace Login {
         public void ForceExpire() {
             expireTime = CommonUtils.SecondsFrom1970();
         }*/
+
+        public void IncrementSessionCount() {
+            this.sessionCount++;
+        }
+
+        public void UpdateLastSessionTime() {
+            this.lastSessionTime = Common.CommonUtils.SecondsFrom1970();
+        }
 
         public void RemoveNebulaCredits(int count) {
             nebulaCredits -= count;

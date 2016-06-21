@@ -32,6 +32,8 @@ namespace Master {
                         int index = server.GetInt("index");
                         string app = server.GetString("application");
                         string[] locations = new string[] { };
+                        string ipv6Address = server.GetString("ipv6");
+
                         if(server.Element("locations") != null ) {
                             locations = server.Element("locations").Value.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                         }
@@ -43,7 +45,8 @@ namespace Master {
                             Protocol = protocol,
                             ServerType = serverType,
                             Application = app,
-                            Locations = locations
+                            Locations = locations,
+                            Ipv6Address = ipv6Address
                         };
                         this.Add(serverInfo);
                         return serverInfo;

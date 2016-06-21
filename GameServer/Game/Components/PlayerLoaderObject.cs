@@ -36,17 +36,23 @@ namespace Nebula.Game.Components {
             if (!mLoaded) {
                 mLoaded = true;
                 log.InfoFormat("PlayerLoader Object Load() [dy]");
-                
-                GetComponent<MmoActor>().Load();
-                GetComponent<PlayerShip>().Load();
-                GetComponent<PlayerSkills>().Load();
-                GetComponent<MmoActor>().LoadOther();
-                GetComponent<ShipWeapon>().Load();
-                GetComponent<PassiveBonusesComponent>().Load();
-                GetComponent<PlayerTimedEffects>().Load();
-                GetComponent<PetManager>().Load();
-                GetComponent<ContractManager>().Load();
-                GetComponent<AchievmentComponent>().Load();
+
+                try {
+                    GetComponent<MmoActor>().Load();
+                    GetComponent<PlayerShip>().Load();
+                    GetComponent<PlayerSkills>().Load();
+                    GetComponent<MmoActor>().LoadOther();
+                    GetComponent<ShipWeapon>().Load();
+                    GetComponent<PassiveBonusesComponent>().Load();
+                    GetComponent<PlayerTimedEffects>().Load();
+                    GetComponent<PetManager>().Load();
+                    GetComponent<ContractManager>().Load();
+                    GetComponent<AchievmentComponent>().Load();
+                } catch(Exception ex) {
+                    log.InfoFormat("error: handled exception");
+                    log.InfoFormat(ex.Message);
+                    log.InfoFormat(ex.StackTrace);
+                }
             }
         }
 

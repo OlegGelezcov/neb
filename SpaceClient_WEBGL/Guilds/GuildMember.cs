@@ -12,6 +12,7 @@ namespace Nebula.Client.Guilds {
         public int exp { get; private set; }
         public string characterName { get; private set; } = string.Empty;
         public int characterIcon { get; private set; } = -1;
+        public int depositedCount { get; private set; } = 0;
 
 
         public GuildMember(Hashtable info) { ParseInfo(info); }
@@ -24,6 +25,7 @@ namespace Nebula.Client.Guilds {
             exp = info.GetValueInt((int)SPC.Exp);
             characterName = info.GetValueString((int)SPC.CharacterName);
             characterIcon = info.GetValueInt((int)SPC.Icon);
+            depositedCount = info.GetValueInt((int)SPC.DepositedCount, 0);
         }
 
         public bool isOwner {

@@ -29,5 +29,25 @@
         public const int rpc_TestUnlockFullLore = 20;
 
         public const int rpc_StartAsteroidCollecting = 21;
+
+        /// <summary>
+        /// Set force dispose flag ( for don't waiting 10 seconds disconnect from world)
+        /// </summary>
+        public const int rpc_ForceDispose = 22;
+
+        /// <summary>
+        /// Use single credits bag from station
+        /// </summary>
+        public const int rpc_UseCreditsBag = 23;
+
+        public const int rpc_CreateCommandCenter = 24;
+
+        public const int rpc_GetCells = 25;
+
+        public const int rpc_CreatePlanetObjectTurret = 26;
+        public const int rpc_CreatePlanetObjectResourceHangar = 27;
+        public const int rpc_CreatePlanetObjectResourceAccelerator = 28;
+        public const int rpc_CreatePlanetObjectMiningStation = 29;
+        public const int rpc_resetSystemToNeutral = 30;
     }
 }

@@ -123,6 +123,12 @@ namespace Login.OperationHandlers {
         private void AddUserToCollection(DbUserLogin user) {
             FullUserAuth fullAuth = new FullUserAuth(user.login, user.gameRef, user.facebookId, user.vkontakteId);
             application.LogedInUsers.OnUserLoggedIn(fullAuth, peer as LoginClientPeer);
+            if (user != null) {
+                user.IncrementSessionCount();
+                user.UpdateLastSessionTime();
+                application.SaveUser(user);
+            }
+
         }
     }
 }

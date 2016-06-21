@@ -4,6 +4,7 @@
         loot_box,
         pet_scheme,
         pet_skin,
-        founder_cube
+        founder_cube,
+        credits_bag
     }
 }

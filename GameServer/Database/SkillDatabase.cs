@@ -16,6 +16,7 @@ namespace Nebula.Database {
         //private MongoDatabase Database { get; set; }
 
         private MongoCollection<SkillsDocument> SkillsDocuments { get; set; }
+        private static readonly object sync = new object();
         private GameApplication m_App;
 
         private static SkillDatabase s_Instance;
@@ -36,31 +37,41 @@ namespace Nebula.Database {
         }
 
         public void SaveSkills(string characterID, PlayerSkillsSave skillSave ) {
-            log.InfoFormat("save skills for character = {0} [red]", characterID);
-            var document = SkillsDocuments.FindOne(Query<SkillsDocument>.EQ(d => d.CharacterId, characterID));
-            if(document == null ) {
-                document = new SkillsDocument { CharacterId = characterID };
+            lock (sync) {
+                try {
+                    log.InfoFormat("save skills for character = {0} [red]", characterID);
+                    var document = SkillsDocuments.FindOne(Query<SkillsDocument>.EQ(d => d.CharacterId, characterID));
+                    if (document == null) {
+                        document = new SkillsDocument { CharacterId = characterID };
+                    }
+                    document.IsNewDocument = false;
+                    document.Set(skillSave);
+                    SkillsDocuments.Save(document);
+                } catch (Exception ex) {
+                    log.InfoFormat("error: handled exception");
+                    log.InfoFormat(ex.Message);
+                    log.InfoFormat(ex.StackTrace);
+                }
             }
-            document.IsNewDocument = false;
-            document.Set(skillSave);
-            SkillsDocuments.Save(document);
         }
 
         public PlayerSkillsSave LoadSkills(string characterID, Res resource, out bool isNew ) {
-            log.InfoFormat("load skills for character = {0} [red]", characterID);
-            var document = SkillsDocuments.FindOne(Query<SkillsDocument>.EQ(d => d.CharacterId, characterID));
-            if(document != null) {
-                isNew = false;
-                return document.SourceObject(resource);
-            } else {
-                isNew = true;
-                document = new SkillsDocument {
-                    CharacterId = characterID,
-                    IsNewDocument = isNew,
-                    Skills = new Dictionary<int, int> { { 0, -1 }, { 1, -1 }, { 2, -1 }, { 3, -1 }, { 4, -1 }, { 5, -1 } }
-                };
-                SkillsDocuments.Save(document);
-                return document.SourceObject(resource);
+            lock (sync) {
+                log.InfoFormat("load skills for character = {0} [red]", characterID);
+                var document = SkillsDocuments.FindOne(Query<SkillsDocument>.EQ(d => d.CharacterId, characterID));
+                if (document != null) {
+                    isNew = false;
+                    return document.SourceObject(resource);
+                } else {
+                    isNew = true;
+                    document = new SkillsDocument {
+                        CharacterId = characterID,
+                        IsNewDocument = isNew,
+                        Skills = new Dictionary<int, int> { { 0, -1 }, { 1, -1 }, { 2, -1 }, { 3, -1 }, { 4, -1 }, { 5, -1 } }
+                    };
+                    SkillsDocuments.Save(document);
+                    return document.SourceObject(resource);
+                }
             }
         }
     }

@@ -10,6 +10,7 @@ namespace Nebula.Database {
     public class ContractDatabase {
         private static ILogger s_Log = LogManager.GetCurrentClassLogger();
         private MongoCollection<ContractDocument> m_ContractDocuments;
+        private static readonly object sync = new object();
         private GameApplication m_App;
 
         private static ContractDatabase s_Instance = null;
@@ -26,34 +27,38 @@ namespace Nebula.Database {
         }
 
         public void SaveContracts(string characterId, ContractSave save) {
-            s_Log.InfoFormat("save contracts for character = {0}".Color(LogColor.red), characterId);
-            var document = m_ContractDocuments.FindOne(Query<ContractDocument>.EQ(c => c.characterId, characterId));
-            if(document == null ) {
-                document = new ContractDocument {
-                     characterId = characterId
-                };
+            lock (sync) {
+                s_Log.InfoFormat("save contracts for character = {0}".Color(LogColor.red), characterId);
+                var document = m_ContractDocuments.FindOne(Query<ContractDocument>.EQ(c => c.characterId, characterId));
+                if (document == null) {
+                    document = new ContractDocument {
+                        characterId = characterId
+                    };
+                }
+                document.isNewDocument = false;
+                document.Set(save);
+                m_ContractDocuments.Save(document);
             }
-            document.isNewDocument = false;
-            document.Set(save);
-            m_ContractDocuments.Save(document);
         }
 
         public ContractSave LoadContracts(string characterId, IRes resource, out bool isNew ) {
-            s_Log.InfoFormat("load contracts for character = {0}", characterId);
-            var document = m_ContractDocuments.FindOne(Query<ContractDocument>.EQ(c => c.characterId, characterId));
-            if(document != null ) {
-                isNew = false;
-                return document.SourceObject(resource);
-            } else {
-                isNew = true;
-                document = new ContractDocument {
-                    characterId = characterId,
-                    isNewDocument = isNew,
-                    activeContracts = new System.Collections.Generic.List<System.Collections.Hashtable>(),
-                    completedContracts = new System.Collections.Generic.List<System.Collections.Hashtable>()
-                };
-                m_ContractDocuments.Save(document);
-                return document.SourceObject(resource);
+            lock (sync) {
+                s_Log.InfoFormat("load contracts for character = {0}", characterId);
+                var document = m_ContractDocuments.FindOne(Query<ContractDocument>.EQ(c => c.characterId, characterId));
+                if (document != null) {
+                    isNew = false;
+                    return document.SourceObject(resource);
+                } else {
+                    isNew = true;
+                    document = new ContractDocument {
+                        characterId = characterId,
+                        isNewDocument = isNew,
+                        activeContracts = new System.Collections.Generic.List<System.Collections.Hashtable>(),
+                        completedContracts = new System.Collections.Generic.List<System.Collections.Hashtable>()
+                    };
+                    m_ContractDocuments.Save(document);
+                    return document.SourceObject(resource);
+                }
             }
         }
     }

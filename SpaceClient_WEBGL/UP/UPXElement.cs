@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+#if UP
 using System.Xml;
-
+#endif
 
 namespace Nebula.Client.UP {
+#if UP
     public class UPXElement {
         private XmlNode mElement;
 
@@ -138,4 +140,5 @@ namespace Nebula.Client.UP {
             return mResult;
         }
     }
+#endif
 }

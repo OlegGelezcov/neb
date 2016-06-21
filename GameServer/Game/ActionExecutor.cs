@@ -9,10 +9,13 @@ namespace Space.Game {
     using Nebula.Game;
     using Nebula.Game.Bonuses;
     using Nebula.Game.Components;
+    using Nebula.Game.Components.PlanetObjects;
     using Nebula.Game.Events;
     using Nebula.Inventory;
     using Nebula.Inventory.Objects;
     using Nebula.Server.Components;
+    using Nebula.Server.Nebula.Server.Components.AI;
+    using Nebula.Server.Nebula.Server.Components.PlanetObjects;
     using ServerClientCommon;
     using Space.Game.Drop;
     using Space.Game.Inventory;
@@ -544,21 +547,25 @@ namespace Space.Game {
 
         public Hashtable RequestContainer(string itemId, byte itemType ) {
 
-            NebulaObject targetObject;
-            (Player.nebulaObject.world as MmoWorld).TryGetObject(itemType, itemId, out targetObject);
-            if(!targetObject) {
+            try {
+                NebulaObject targetObject;
+                (Player.nebulaObject.world as MmoWorld).TryGetObject(itemType, itemId, out targetObject);
+                if (!targetObject) {
+                    return new Hashtable();
+                }
+
+
+                IChest chest = targetObject.GetInterface<IChest>();
+
+                if (chest == null) {
+                    return new Hashtable();
+                }
+
+                Hashtable result = chest.GetInfoForActor(Player.nebulaObject.Id);
+                return result;
+            } catch(Exception ex) {
                 return new Hashtable();
             }
-
-
-            IChest chest = targetObject.GetInterface<IChest>();
-
-            if(chest == null) {
-                return new Hashtable();
-            }
-
-            Hashtable result = chest.GetInfoForActor(Player.nebulaObject.Id);
-            return result;
         }
 
 
@@ -1748,11 +1755,11 @@ namespace Space.Game {
                     miningStationInventoryObject.capacity * 3,
                     characterID)},
                 { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop((Race)(byte)miningStationInventoryObject.race),
-                        1, Turret.SelectFraction(playerRace))},
+                        30, Turret.SelectFraction(playerRace))},
                 { ComponentID.CombatAI, new StayAIComponentData(false, 0, Nebula.Server.AttackMovingType.AttackStay, miningData.useHitProbForAgro) },
                 { ComponentID.Movable, new SimpleMovableComponentData(0) },
                 { ComponentID.Weapon, new SimpleWeaponComponentData(miningData.optimalDistance, 1, miningData.cooldown, true, miningData.damageInTargetHp) },
-                { ComponentID.Target, new TargetComponentData() }
+                { ComponentID.Target, new TargetComponentData() },
 
             };
 
@@ -1779,6 +1786,302 @@ namespace Space.Game {
 
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
+            };
+        }
+
+        public Hashtable CreatePlanetObjectMiningStation(int row, int column, string itemId) {
+            Race race = Player.GetComponent<RaceableObject>().getRace();
+            MmoWorld world = Player.nebulaObject.mmoWorld();
+
+            var resourceData = (world.Resource() as Res).playerConstructions.planetMiningStationData;
+
+            if (world.Zone.worldType != WorldType.instance) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.InvalidWorldType }
+                };
+            }
+            var commandCenter = world.FindObjectOfType<CommanderCenterPlanetObject>();
+            if (!commandCenter) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildCommandCenterFirst }
+                };
+            } else {
+                var raceComponent = commandCenter.GetComponent<RaceableObject>();
+                if (raceComponent != null && (raceComponent.getRace() != race)) {
+                    return new Hashtable {
+                        { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildCommandCenterFirst }
+                    };
+                }
+            }
+            if (world.HasObjectAtCell(row, column)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.CellAlreadyFilled }
+                };
+            }
+
+            int currentMiningStationsCount = world.Filter(obj => obj.GetComponent<PlanetMiningStationObject>() != null).Count;
+            if (currentMiningStationsCount >= world.maxCountPlanetMiningStations) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildAdditionalResourceHangar }
+                };
+            }
+
+            Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
+                { ComponentID.Model, new ModelComponentData(GetPlanetMiningStationModel(race)) },
+                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, 200, 0) },
+                { ComponentID.Raceable, new RaceableComponentData(race) },
+                { ComponentID.Damagable, new NotShipDamagableComponentData(resourceData.maxHp, true, 60, false ) },
+                { ComponentID.Bonuses, new BonusesComponentData() },
+                { ComponentID.Bot, new BotComponentData(BotItemSubType.PlanetBuilding) },
+                { ComponentID.PlanetBuilding, new MiningStationPlanetObjectComponentData(row, column, PlanetBasedObjectType.MiningStation, Player.nebulaObject.Id, 
+                "CraftOre0001", resourceData.maxSlots, 0, 0, resourceData.life, resourceData.workSpeed) },
+                { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 30, Turret.SelectFraction(race))},
+                { ComponentID.CombatAI, new StayAINonCombatComponentData(false, 0)},
+                { ComponentID.Movable, new SimpleMovableComponentData(0) }
+            };
+            NebulaObjectData data = new NebulaObjectData {
+                componentCollection = components,
+                ID = "MS_" + Guid.NewGuid().ToString(),
+                position = world.GetCellPosition(row, column),
+                rotation = Vector3.Zero
+            };
+
+            var msObj = ObjectCreate.NebObject(world, data);
+            msObj.SetDatabaseSaveable(true);
+            msObj.AddToWorld();
+            world.SaveWorldState();
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+            };
+        }
+
+        public Hashtable CreatePlanetObjectResourceAccelerator(int row, int column, string itemId ) {
+            Race race = Player.GetComponent<RaceableObject>().getRace();
+            MmoWorld world = Player.nebulaObject.mmoWorld();
+
+            var resourceData = (world.Resource() as Res).playerConstructions.planetResourceAcceleratorData;
+
+            if (world.Zone.worldType != WorldType.instance) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.InvalidWorldType }
+                };
+            }
+            var commandCenter = world.FindObjectOfType<CommanderCenterPlanetObject>();
+            if (!commandCenter) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildCommandCenterFirst }
+                };
+            } else {
+                var raceComponent = commandCenter.GetComponent<RaceableObject>();
+                if (raceComponent != null && (raceComponent.getRace() != race)) {
+                    return new Hashtable {
+                        { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildCommandCenterFirst }
+                    };
+                }
+            }
+            if (world.HasObjectAtCell(row, column)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.CellAlreadyFilled }
+                };
+            }
+
+            Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
+                { ComponentID.Model, new ModelComponentData(GetPlanetResourceAcceleratorModel(race))},
+                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, 200, 0 ) },
+                { ComponentID.Raceable, new RaceableComponentData(race) },
+                { ComponentID.Damagable, new NotShipDamagableComponentData(resourceData.maxHp, true, 60, false) },
+                { ComponentID.Bonuses, new BonusesComponentData() },
+                { ComponentID.Bot, new BotComponentData(BotItemSubType.PlanetBuilding) },
+                { ComponentID.PlanetBuilding, new ResourceAcceleratorPlanetObjectComponentData(row, column, PlanetBasedObjectType.ResourceAccelerator, Player.nebulaObject.Id, resourceData.life, 0)},
+                { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 30, Turret.SelectFraction(race) ) },
+                { ComponentID.CombatAI, new StayAINonCombatComponentData(false, 0) },
+                { ComponentID.Movable, new SimpleMovableComponentData(0) }
+            };
+
+            NebulaObjectData data = new NebulaObjectData {
+                componentCollection = components,
+                ID = "RA_" + Guid.NewGuid().ToString(),
+                position = world.GetCellPosition(row, column),
+                rotation = Vector3.Zero
+            };
+
+            var raObject = ObjectCreate.NebObject(world, data);
+            raObject.SetDatabaseSaveable(true);
+            raObject.AddToWorld();
+            world.SaveWorldState();
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+            };
+        }
+
+        public Hashtable CreatePlanetObjectResourceHangar(int row, int column, string itemId ) {
+            Race race = Player.GetComponent<RaceableObject>().getRace();
+            MmoWorld world = Player.nebulaObject.mmoWorld();
+            var resourceData = (world.Resource() as Res).playerConstructions.planetResourceHangarData;
+
+            if (world.Zone.worldType != WorldType.instance) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.InvalidWorldType }
+                };
+            }
+            var commandCenter = world.FindObjectOfType<CommanderCenterPlanetObject>();
+            if (!commandCenter) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildCommandCenterFirst }
+                };
+            } else {
+                var raceComponent = commandCenter.GetComponent<RaceableObject>();
+                if (raceComponent != null && (raceComponent.getRace() != race)) {
+                    return new Hashtable {
+                        { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildCommandCenterFirst }
+                    };
+                }
+            }
+            if (world.HasObjectAtCell(row, column)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.CellAlreadyFilled }
+                };
+            }
+
+            Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
+                { ComponentID.Model, new ModelComponentData(GetPlanetResourceHangarModel(race))},
+                { ComponentID.NebulaObject, new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, 200, 0 ) },
+                { ComponentID.Raceable, new RaceableComponentData(race) },
+                { ComponentID.Damagable, new NotShipDamagableComponentData(resourceData.maxHp, true, 60, false) },
+                { ComponentID.Bonuses, new BonusesComponentData() },
+                { ComponentID.Bot, new BotComponentData(BotItemSubType.PlanetBuilding) },
+                { ComponentID.PlanetBuilding, new ResourceHangarPlanetObjectComponentData(row, column, PlanetBasedObjectType.ResourceHangar, Player.nebulaObject.Id, resourceData.life, 0) },
+                { ComponentID.Character, new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 30, Turret.SelectFraction(race) ) },
+                { ComponentID.CombatAI, new StayAINonCombatComponentData(false, 0) },
+                { ComponentID.Movable, new SimpleMovableComponentData(0) }
+            };
+
+            NebulaObjectData data = new NebulaObjectData {
+                componentCollection = components,
+                ID = "RH_" + Guid.NewGuid().ToString(),
+                position = world.GetCellPosition(row, column ),
+                rotation = Vector3.Zero
+            };
+
+            var resourceHangarObject = ObjectCreate.NebObject(world, data);
+            resourceHangarObject.SetDatabaseSaveable(true);
+            resourceHangarObject.AddToWorld();
+            world.SaveWorldState();
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+            };
+        }
+
+        public Hashtable CreatePlanetObjectTurret(int row, int column, string itemId ) {
+            Race race = Player.GetComponent<RaceableObject>().getRace();
+
+            MmoWorld world = Player.nebulaObject.mmoWorld();
+            var resourceData = (world.Resource() as Res).playerConstructions.planetTurretData;
+
+            if (world.Zone.worldType != WorldType.instance) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.InvalidWorldType }
+                };
+            }
+            var commandCenter = world.FindObjectOfType<CommanderCenterPlanetObject>();
+            if(!commandCenter ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildCommandCenterFirst }
+                };
+            } else {
+                var raceComponent = commandCenter.GetComponent<RaceableObject>();
+                if(raceComponent != null && (raceComponent.getRace() != race )) {
+                    return new Hashtable {
+                        { (int)SPC.ReturnCode, (int)RPCErrorCode.BuildCommandCenterFirst }
+                    };
+                }
+            }
+            if (world.HasObjectAtCell(row, column)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.CellAlreadyFilled }
+                };
+            }
+
+            Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
+                { ComponentID.Model,                new ModelComponentData(GetPlanetTurretModel(race)) },
+                { ComponentID.NebulaObject,         new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, 50, 0 ) },
+                { ComponentID.Raceable,             new RaceableComponentData(race) },
+                { ComponentID.Damagable,            new NotShipDamagableComponentData(resourceData.maxHp, true, 60, false ) },
+                { ComponentID.Bonuses,              new BonusesComponentData() },
+                { ComponentID.Bot,                  new BotComponentData(BotItemSubType.PlanetBuilding) },
+                { ComponentID.PlanetBuilding,       new TurretPlanetObjectComponentData(row, column, PlanetBasedObjectType.Turret, Player.nebulaObject.Id, resourceData.life, 0) },
+                { ComponentID.Character,            new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 30, Turret.SelectFraction(race) ) },
+                { ComponentID.CombatAI,             new StayAIComponentData(false, 0, Nebula.Server.AttackMovingType.AttackStay, false) },
+                { ComponentID.Movable,              new SimpleMovableComponentData(0) },
+                { ComponentID.Weapon,               new SimpleWeaponComponentData(resourceData.od, resourceData.damage, 2, false, 0) },
+                { ComponentID.Target,               new TargetComponentData() }
+            };
+
+            NebulaObjectData data = new NebulaObjectData {
+                componentCollection = components,
+                ID = "PT_" + Guid.NewGuid().ToString(),
+                position = world.GetCellPosition(row, column),
+                rotation = Vector3.Zero
+            };
+
+            var turretPlanetObject = ObjectCreate.NebObject(world, data);
+            turretPlanetObject.SetDatabaseSaveable(true);
+            turretPlanetObject.AddToWorld();
+            world.SaveWorldState();
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+            };
+        }
+
+        public Hashtable CreatePlanetObjectCommandCenter(int row, int column, string itemId ) {
+            MmoWorld world = Player.nebulaObject.mmoWorld();
+            var resourceData = (world.Resource() as Res).playerConstructions.planetCommandCenterData;
+
+            if(world.Zone.worldType != WorldType.instance ) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.InvalidWorldType }
+                };
+            }
+            if(world.FindObjectOfType<CommanderCenterPlanetObject>()) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.MultipleObjectRestricted }
+                };
+            }
+            if(world.HasObjectAtCell(row, column)) {
+                return new Hashtable {
+                    { (int)SPC.ReturnCode, (int)RPCErrorCode.CellAlreadyFilled }
+                };
+            }
+
+            Race race = Player.GetComponent<RaceableObject>().getRace();
+
+            //delete inventory item will be leter
+            Dictionary<ComponentID, ComponentData> components = new Dictionary<ComponentID, ComponentData> {
+                { ComponentID.Model,            new ModelComponentData(GetCommandCenterModel(race)) },
+                { ComponentID.NebulaObject,     new NebulaObjectComponentData(ItemType.Bot, new Dictionary<byte, object>(), string.Empty, 300, 0) },
+                { ComponentID.Raceable,         new RaceableComponentData(race) },
+                { ComponentID.Damagable,        new NotShipDamagableComponentData(resourceData.maxHp, false, 0, false) },
+                { ComponentID.Bonuses,          new BonusesComponentData() },
+                { ComponentID.Bot,              new BotComponentData(BotItemSubType.PlanetBuilding) },
+                { ComponentID.PlanetBuilding,   new CommandCenterPlanetObjectComponentData(row, column, PlanetBasedObjectType.CommanderCenter, Player.nebulaObject.Id, resourceData.life, 0)  },
+                { ComponentID.Character,        new BotCharacterComponentData(CommonUtils.RandomWorkshop(race), 30, Turret.SelectFraction(race)) },
+                { ComponentID.CombatAI,         new StayAINonCombatComponentData(false, 0f) },
+                { ComponentID.Movable,          new SimpleMovableComponentData(0) }
+            };
+
+            NebulaObjectData data = new NebulaObjectData {
+                componentCollection = components,
+                ID = "DR_" + Guid.NewGuid().ToString(),
+                position = world.GetCellPosition(row, column),
+                rotation = Vector3.Zero
+            };
+
+            var commandCenterObject = ObjectCreate.NebObject(world, data);
+            commandCenterObject.SetDatabaseSaveable(true);
+            commandCenterObject.AddToWorld();
+            world.SaveWorldState();
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
             };
         }
 
@@ -2086,6 +2389,69 @@ namespace Space.Game {
             return new Hashtable {
                 {(int)SPC.ReturnCode, (int)code}
             };
+        }
+
+        private string GetPlanetMiningStationModel(Race race) {
+            switch(race) {
+                case Race.Humans:
+                    return "h_p_mining_station";
+                case Race.Borguzands:
+                    return "b_p_mining_station";
+                case Race.Criptizoids:
+                    return "c_p_mining_station";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private string GetPlanetResourceAcceleratorModel(Race race) {
+            switch(race) {
+                case Race.Humans:
+                    return "h_resource_accelerator";
+                case Race.Borguzands:
+                    return "b_resource_accelerator";
+                case Race.Criptizoids:
+                    return "c_resource_accelerator";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        private string GetPlanetResourceHangarModel(Race race) {
+            switch(race) {
+                case Race.Humans:
+                    return "h_resource_hangar";
+                case Race.Borguzands:
+                    return "b_resource_hangar";
+                case Race.Criptizoids:
+                    return "c_resource_hangar";
+                default:
+                    return string.Empty;
+            }
+        }
+        private string GetPlanetTurretModel(Race race) {
+            switch(race) {
+                case Race.Humans:
+                    return "h_planet_turret";
+                case Race.Borguzands:
+                    return "b_planet_turret";
+                case Race.Criptizoids:
+                    return "c_planet_turret";
+                default:
+                    return string.Empty;
+            }
+        }
+        private string GetCommandCenterModel(Race race) {
+            switch(race) {
+                case Race.Humans:
+                    return "h_command_center";
+                case Race.Borguzands:
+                    return "b_command_center";
+                case Race.Criptizoids:
+                    return "c_command_center";
+                default:
+                    return string.Empty;
+            }
         }
 
         private string GetDrillModel(Race race) {

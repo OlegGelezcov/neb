@@ -3,6 +3,8 @@ using ExitGames.Logging;
 using MongoDB.Bson;
 using Nebula.Game;
 using Nebula.Server.Components;
+using Nebula.Server.Nebula.Server.Components.AI;
+using Nebula.Server.Nebula.Server.Components.PlanetObjects;
 using ServerClientCommon;
 using Space.Game;
 using System;
@@ -175,6 +177,8 @@ namespace Nebula.Database {
                                     return new FreeFlyNearPointComponentData(hash);
                                 case ComponentSubType.ai_stay:
                                     return new StayAIComponentData(hash);
+                                case ComponentSubType.ai_stay_non_combat:
+                                    return new StayAINonCombatComponentData(hash);
                                 default:
                                     return new FreeFlyNearPointComponentData(hash);
                             }
@@ -189,6 +193,25 @@ namespace Nebula.Database {
                     return new FounderCubeComponentData(hash);
                 case ComponentID.MiningStation:
                     return new MiningStationComponentData(hash);
+                case ComponentID.PlanetBuilding: {
+                        if (hash.ContainsKey((int)SPC.PlanetObjectType)) {
+                            switch((PlanetBasedObjectType)(int)hash[(int)SPC.PlanetObjectType]) {
+                                case PlanetBasedObjectType.CommanderCenter:
+                                    return new CommandCenterPlanetObjectComponentData(hash);
+                                case PlanetBasedObjectType.Turret:
+                                    return new TurretPlanetObjectComponentData(hash);
+                                case PlanetBasedObjectType.ResourceHangar:
+                                    return new ResourceHangarPlanetObjectComponentData(hash);
+                                case PlanetBasedObjectType.ResourceAccelerator:
+                                    return new ResourceAcceleratorPlanetObjectComponentData(hash);
+                                case PlanetBasedObjectType.MiningStation:
+                                    return new MiningStationPlanetObjectComponentData(hash);
+                                default:
+                                    return new CommandCenterPlanetObjectComponentData(hash);
+                            }
+                        }
+                        return new CommandCenterPlanetObjectComponentData(hash);
+                    }
                 default:
                     {
                         log.InfoFormat("Component from Save not defined for = {0} [dy]", (ComponentID)componentID);

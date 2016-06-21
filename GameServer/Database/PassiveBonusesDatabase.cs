@@ -17,6 +17,7 @@ namespace Nebula.Database {
         private GameApplication m_App;
 
         private MongoCollection<PassiveBonusesDocument> collection { get; set; }
+        private static readonly object sync = new object();
 
         private static PassiveBonusesDatabase s_Instance = null;
         public static PassiveBonusesDatabase instance(GameApplication app) {
@@ -36,23 +37,27 @@ namespace Nebula.Database {
 
 
         public void SavePassiveBonuses(string characterID, Dictionary<int, PassiveBonusDbData> bonuses) {
-            log.InfoFormat("save passive bonuses {0} [red]", characterID);
-            var document = collection.FindOne(Query<PassiveBonusesDocument>.EQ(d => d.characterID, characterID));
-            if(document == null ) {
-                document = new PassiveBonusesDocument { characterID = characterID };
+            lock (sync) {
+                log.InfoFormat("save passive bonuses {0} [red]", characterID);
+                var document = collection.FindOne(Query<PassiveBonusesDocument>.EQ(d => d.characterID, characterID));
+                if (document == null) {
+                    document = new PassiveBonusesDocument { characterID = characterID };
+                }
+                document.Set(bonuses);
+                collection.Save(document);
             }
-            document.Set(bonuses);
-            collection.Save(document);
         }
 
         public Dictionary<int, PassiveBonusDbData> LoadPassiveBonuses(string characterID) {
-            log.InfoFormat("load passive bonuses for character = {0} [red]", characterID);
-            var document = collection.FindOne(Query<PassiveBonusesDocument>.EQ(d => d.characterID, characterID));
-            if(document == null ) {
-                document = new PassiveBonusesDocument { characterID = characterID, bonuses = new Dictionary<int, PassiveBonusDbData>() };
-                collection.Save(document);
+            lock (sync) {
+                log.InfoFormat("load passive bonuses for character = {0} [red]", characterID);
+                var document = collection.FindOne(Query<PassiveBonusesDocument>.EQ(d => d.characterID, characterID));
+                if (document == null) {
+                    document = new PassiveBonusesDocument { characterID = characterID, bonuses = new Dictionary<int, PassiveBonusDbData>() };
+                    collection.Save(document);
+                }
+                return document.bonuses;
             }
-            return document.bonuses;
         }
     }
 }

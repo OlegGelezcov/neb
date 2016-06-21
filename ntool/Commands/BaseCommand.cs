@@ -106,9 +106,17 @@ namespace ntool.Commands {
                     return new RegisterCommand(source, context);
                 case "getwebchar":
                     return new GetWebCharacterObjectCommand(source, context);
+                case "getchars":
+                    return new GetCharactersCommand(source, context);
+                case "ucount":
+                    return new GetUsersOnlineCommand(source, context);
 
             }
             return null;
+        }
+
+        public static string FormatGetCharsCommand(string login, string gameRef ) {
+            return string.Format("getchars {0} {1}", login, gameRef);
         }
 
         public Application app {

@@ -139,6 +139,10 @@ namespace Login {
                         objInfo = new FounderCubeInventoryObject().GetInfo();
                     }
                     break;
+                case InapObjectType.credits_bag: {
+                        objInfo = new CreditsBagObject("creditsbag", inapItem.data.GetValue<int>("count", 10000), false).GetInfo();
+                    }
+                    break;
 
             }
 
@@ -159,6 +163,8 @@ namespace Login {
                 itemID = objInfo.GetValue<string>((int)SPC.Id, string.Empty);
             } else if(inapItem.type == InapObjectType.founder_cube) {
                 itemID = objInfo.GetValue<string>((int)SPC.Id, string.Empty);
+            } else if(inapItem.type == InapObjectType.credits_bag) {
+                itemID = "creditsbag";
             }
             else {
                 itemID = inapId + inapItem.tag.ToString();

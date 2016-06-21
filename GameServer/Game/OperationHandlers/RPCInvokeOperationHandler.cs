@@ -1,15 +1,20 @@
 ﻿using Common;
+using ExitGames.Logging;
 using Nebula.Drop;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using Nebula.Inventory.Objects;
 using Nebula.Server.Operations;
 using Photon.SocketServer;
 using ServerClientCommon;
 using Space.Game;
+using Space.Game.Inventory;
 using System.Collections;
 
 namespace Nebula.Game.OperationHandlers {
     public class RPCInvokeOperationHandler : BasePlayerOperationHandler {
+
+        private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
         private const float LORE_BOX_ACTION_DISTANCE = 70;
 
@@ -53,6 +58,24 @@ namespace Nebula.Game.OperationHandlers {
                     return CallUnlockAllLore(actor, request, operation);
                 case RPCID.rpc_StartAsteroidCollecting:
                     return CallStartAsteroidCollecting(actor, request, operation);
+                case RPCID.rpc_ForceDispose:
+                    return CallForceDispose(actor, request, operation);
+                case RPCID.rpc_UseCreditsBag:
+                    return CallUseCreditsBag(actor, request, operation);
+                case RPCID.rpc_CreateCommandCenter:
+                    return CallCreateCommandCenter(actor, request, operation);
+                case RPCID.rpc_CreatePlanetObjectTurret:
+                    return CallCreatePlanetTurret(actor, request, operation);
+                case RPCID.rpc_CreatePlanetObjectResourceHangar:
+                    return CallCreatePlanetResourceHangar(actor, request, operation);
+                case RPCID.rpc_CreatePlanetObjectResourceAccelerator:
+                    return CallCreatePlanetResourceAccelerator(actor, request, operation);
+                case RPCID.rpc_CreatePlanetObjectMiningStation:
+                    return CallCreatePlanetMiningStation(actor, request, operation);
+                case RPCID.rpc_GetCells:
+                    return CallGetCells(actor, request, operation);
+                case RPCID.rpc_resetSystemToNeutral:
+                    return CallResetSystemToNeutral(actor, request, operation);
                 default:
                     return new OperationResponse(request.OperationCode) {
                         ReturnCode = (int)ReturnCode.InvalidRPCID,
@@ -61,11 +84,160 @@ namespace Nebula.Game.OperationHandlers {
             }
         }
 
+        private OperationResponse CallResetSystemToNeutral(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+
+            var forts = (player.World as MmoWorld).FindObjectsOfType<Outpost>();
+            foreach(var kf in forts ) {
+                (kf.Value.nebulaObject as GameObject).Destroy();
+            }
+            s_Log.InfoFormat("removed: {0} fortifications", forts.Count);
+
+            var outposts = (player.World as MmoWorld).FindObjectsOfType<MainOutpost>();
+            foreach(var kf in outposts ) {
+                (kf.Value.nebulaObject as GameObject).Destroy();
+            }
+            s_Log.InfoFormat("removed: {0} outposts", outposts.Count);
+
+            forts.Clear();
+            outposts.Clear();
+
+            (player.World as MmoWorld).SetUnderAttack(false);
+            (player.World as MmoWorld).SetCurrentRace(Race.None);
+            RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                 rpcId = op.rpcId,
+                 result = new Hashtable {
+                     { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+                 }
+            };
+            return new OperationResponse(request.OperationCode, respInstance);
+        }
+
+        private OperationResponse CallGetCells(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = player.nebulaObject.mmoWorld().GetCellInfo()
+            };
+            return new OperationResponse(request.OperationCode, respInstance);
+        }
+
+        private OperationResponse CallCreatePlanetMiningStation(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length >= 3 ) {
+                int row = (int)op.parameters[0];
+                int column = (int)op.parameters[1];
+                string itemId = (string)op.parameters[2];
+                Hashtable resp = player.ActionExecutor.CreatePlanetObjectMiningStation(row, column, itemId);
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = resp
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+        private OperationResponse CallCreatePlanetResourceAccelerator(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length >= 3 ) {
+                int row = (int)op.parameters[0];
+                int column = (int)op.parameters[1];
+                string itemId = (string)op.parameters[2];
+                Hashtable resp = player.ActionExecutor.CreatePlanetObjectResourceAccelerator(row, column, itemId);
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = resp
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallCreatePlanetResourceHangar(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length >= 3 ) {
+                int row = (int)op.parameters[0];
+                int column = (int)op.parameters[1];
+                string itemId = (string)op.parameters[2];
+                Hashtable resp = player.ActionExecutor.CreatePlanetObjectResourceHangar(row, column, itemId);
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = resp
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallCreatePlanetTurret(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length >= 3 ) {
+                int row = (int)op.parameters[0];
+                int column = (int)op.parameters[1];
+                string itemId = (string)op.parameters[2];
+                Hashtable resp = player.ActionExecutor.CreatePlanetObjectTurret(row, column, itemId);
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = resp
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallCreateCommandCenter(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length >= 3) {
+                int row = (int)op.parameters[0];
+                int column = (int)op.parameters[1];
+                string itemId = (string)op.parameters[2];
+                Hashtable resp = player.ActionExecutor.CreatePlanetObjectCommandCenter(row, column, itemId);
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = resp
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallUseCreditsBag(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length >= 1) {
+                string itemId = (string)op.parameters[0];
+                ServerInventoryItem creditsBagItem;
+                if(player.Station.StationInventory.TryGetItem(InventoryObjectType.credits_bag, itemId, out creditsBagItem ) ) {
+                    if(creditsBagItem.Count > 0  ) {
+                        int count = (creditsBagItem.Object as CreditsBagObject).count;
+                        player.ActionExecutor.AddCredits(count);
+                        player.Station.StationInventory.Remove(InventoryObjectType.credits_bag, itemId, 1);
+                        player.EventOnStationHoldUpdated();
+                        RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                            rpcId = op.rpcId,
+                            result = new Hashtable {
+                                  {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                                  {(int)SPC.Count, count }
+                              }
+                        };
+                        return new OperationResponse(request.OperationCode, respInstance);
+                    } else {
+                        return ErrorResponse(request, op.rpcId, RPCErrorCode.CountIsZero);
+                    }
+                } else {
+                    return ErrorResponse(request, op.rpcId, RPCErrorCode.ItemNotFound);
+                }
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallForceDispose(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            player.SetForceDispose();
+            RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = new Hashtable {
+                    {(int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+                }
+            };
+            return new OperationResponse(request.OperationCode, responseInstance);
+        }
+
         /// <summary>
         /// Handle start collecting asteroid action. Receive request from client and send StartCollectAsteroid generic event to all subscribers
         /// </summary>
         private OperationResponse CallStartAsteroidCollecting(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
-            if(op.parameters != null || op.parameters.Length >= 2 ) {
+            if(op.parameters != null && op.parameters.Length >= 2 ) {
                 byte containerType = (byte)op.parameters[0];
                 string containerId = (string)op.parameters[1];
                 var mmoComponent = player.GetComponent<MmoMessageComponent>();
@@ -75,7 +247,7 @@ namespace Nebula.Game.OperationHandlers {
                 RPCInvokeResponse responseInstance = new RPCInvokeResponse {
                     rpcId = op.rpcId,
                     result = new Hashtable {
-                        { (int)SPC.ReturnCode, RPCErrorCode.Ok }
+                        { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
                     }
                 };
                 return new OperationResponse(request.OperationCode, responseInstance);
@@ -367,6 +539,16 @@ namespace Nebula.Game.OperationHandlers {
                 ReturnCode = (int)ReturnCode.InvalidOperationParameter,
                 DebugMessage = "RPC parameters not valid"
             };
+        }
+
+        private OperationResponse ErrorResponse(OperationRequest request, int rpcId, RPCErrorCode code) {
+            RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                rpcId = rpcId,
+                result = new Hashtable {
+                      {(int)SPC.ReturnCode, (int)code }
+                  }
+            };
+            return new OperationResponse(request.OperationCode, respInstance);
         }
     }
 }

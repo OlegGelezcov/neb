@@ -173,41 +173,47 @@ namespace Space.Game {
 
             log.InfoFormat("MmoActor Load() [dy]");
 
-            if(mCharacter == null ) {
+            if (mCharacter == null) {
                 mCharacter = GetComponent<PlayerCharacterObject>();
             }
-            if(mCharacter != null && mCharacter.characterId == null ) {
+            if (mCharacter != null && mCharacter.characterId == null) {
                 mCharacter.SetCharacterId((string)nebulaObject.Tag((byte)PlayerTags.CharacterId));
             }
 
             bool isNew = false;
-            PlayerCharacter dbCharacter = CharacterDatabase.instance(application).LoadCharacter(mCharacter.characterId, resource as Res, out isNew);
-            if (!isNew) {
-                SetPlayerCharacter(dbCharacter);
-            } else {
-                this.name = (string)nebulaObject.Tag((byte)PlayerTags.Name);
-                GetComponent<PlayerCharacterObject>().SetExp(0);
-                GetComponent<PlayerShip>().SetStartModel((Hashtable)nebulaObject.Tag((byte)PlayerTags.Model));
-                GetComponent<PlayerCharacterObject>().SetWorkshop((byte)(int)nebulaObject.Tag((byte)PlayerTags.Workshop));
-                GetComponent<RaceableObject>().SetRace((byte)(int)nebulaObject.Tag((byte)PlayerTags.Race));
-                GetComponent<PlayerCharacterObject>().SetLogin((string)nebulaObject.Tag((byte)PlayerTags.Login));
+            try {
+                PlayerCharacter dbCharacter = CharacterDatabase.instance(application).LoadCharacter(mCharacter.characterId, resource as Res, out isNew);
 
-                CharacterDatabase.instance(application).SaveCharacter(mCharacter.characterId, GetPlayerCharacter());
+                if (!isNew) {
+                    SetPlayerCharacter(dbCharacter);
+                } else {
+                    this.name = (string)nebulaObject.Tag((byte)PlayerTags.Name);
+                    GetComponent<PlayerCharacterObject>().SetExp(0);
+                    GetComponent<PlayerShip>().SetStartModel((Hashtable)nebulaObject.Tag((byte)PlayerTags.Model));
+                    GetComponent<PlayerCharacterObject>().SetWorkshop((byte)(int)nebulaObject.Tag((byte)PlayerTags.Workshop));
+                    GetComponent<RaceableObject>().SetRace((byte)(int)nebulaObject.Tag((byte)PlayerTags.Race));
+                    GetComponent<PlayerCharacterObject>().SetLogin((string)nebulaObject.Tag((byte)PlayerTags.Login));
+
+                    CharacterDatabase.instance(application).SaveCharacter(mCharacter.characterId, GetPlayerCharacter());
+                }
+
+                switch ((Race)(byte)(int)nebulaObject.Tag((byte)PlayerTags.Race)) {
+                    case Race.Humans:
+                        GetComponent<PlayerCharacterObject>().SetFraction(FractionType.PlayerHumans);
+                        break;
+                    case Race.Borguzands:
+                        GetComponent<PlayerCharacterObject>().SetFraction(FractionType.PlayerBorguzands);
+                        break;
+                    case Race.Criptizoids:
+                        GetComponent<PlayerCharacterObject>().SetFraction(FractionType.PlayerCriptizids);
+                        break;
+                }
+
+            } catch (Exception ex) {
+                log.InfoFormat("handled exception");
+                log.InfoFormat(ex.Message);
+                log.InfoFormat(ex.StackTrace);
             }
-
-            switch ((Race)(byte)(int)nebulaObject.Tag((byte)PlayerTags.Race)) {
-                case Race.Humans:
-                    GetComponent<PlayerCharacterObject>().SetFraction(FractionType.PlayerHumans);
-                    break;
-                case Race.Borguzands:
-                    GetComponent<PlayerCharacterObject>().SetFraction(FractionType.PlayerBorguzands);
-                    break;
-                case Race.Criptizoids:
-                    GetComponent<PlayerCharacterObject>().SetFraction(FractionType.PlayerCriptizids);
-                    break;
-            }
-
-
         }
 
         
@@ -423,6 +429,7 @@ namespace Space.Game {
         private float needDisposeTimer = 0;
         private Thread disposeThread = null;
         private float mUnderAttackTimer = UNDER_ATTACK_EXP_INTERVAL;
+        private bool m_ForceDispose = false;
 
         public void OnDisconnect(PeerBase peer )
         {
@@ -438,17 +445,29 @@ namespace Space.Game {
             var playerLoader = GetComponent<PlayerLoaderObject>();
             playerLoader.Save(true);
 
-            needDispose = true;
-            if(disposeThread == null ) {
-                disposeThread = new Thread(MakeDispose);
-                disposeThread.Start();
+            if (!m_ForceDispose) {
+                needDispose = true;
+                if (disposeThread == null) {
+                    disposeThread = new Thread(MakeDispose);
+                    disposeThread.Start();
+                }
+            } else {
+                m_ForceDispose = false;
+                Dispose();
+                log.InfoFormat("such as force dispose is setted dispose completed now");
             }
+
             ((Peer)peer).SetCurrentOperationHandler(null);
             peer.Dispose();
             
         }
 
         private float mSubZoneTimer = 5;
+
+        public void SetForceDispose() {
+            log.InfoFormat("FORCE DISPOSE -> ON");
+            m_ForceDispose = true;
+        }
 
         public override void Update(float deltaTime) {
             printPropertiesTimer -= deltaTime;
@@ -474,13 +493,23 @@ namespace Space.Game {
                 mSubZoneTimer -= deltaTime;
                 if(mSubZoneTimer < 0f ) {
                     mSubZoneTimer = 5;
+
+                    //before we set subzone of player to dynamically by it position
+                    
                     int subZone = world.ResolvePositionSubzone(transform.position);
                     if(subZone != nebulaObject.subZone) {
                         SetNewSubZone(subZone);
                     }
+
+                    //now we set constant subzone for players to global subzone
+                    //if (nebulaObject.subZone != GLOBAL_SUBZONE) {
+                    //    SetNewSubZone(GLOBAL_SUBZONE);
+                    //}
                 }
             }
         }
+
+        public const int GLOBAL_SUBZONE = 0;
 
         public void SetNewSubZone(int subZone) {
             nebulaObject.SetSubZone(subZone);
@@ -794,33 +823,51 @@ namespace Space.Game {
         }
 
 
-
+        private bool isBeginnerWorldState {
+            get {
+                var character = GetComponent<PlayerCharacterObject>();
+                if(character != null ) {
+                    return (World as MmoWorld).isBeginnerLocation && (character.level < 3);
+                }
+                return false;
+            }
+        }
 
         public void Death() {
+            try {
+                log.InfoFormat("MmoActor.Death()...destroying pets");
 
-            log.InfoFormat("MmoActor.Death()...destroying pets");
+                Avatar.SendEventShipDestroyed(true);
+                mTarget.Clear();
+                if (!chestCreated) {
+                    //we lost loot only in non beginner state
+                    if (!isBeginnerWorldState) {
+                        var damagable = GetComponent<DamagableObject>();
+                        if (damagable.killed && damagable.createChestOnKilling) {
+                            float chestTime = resource.ServerInputs.playerLootChestLifeTime;
 
-            
-
-            Avatar.SendEventShipDestroyed(true);
-            mTarget.Clear();
-            if(!chestCreated) {
-                var damagable = GetComponent<DamagableObject>();
-                if (damagable.killed && damagable.createChestOnKilling) {
-                    float chestTime = resource.ServerInputs.playerLootChestLifeTime;
-
-                    if (Rand.Float01() > mPassiveBonuses.chanceDontDropLootBonus) {
-                        var allInventoryItems = GetAllInventoryItems();
-                        ObjectCreate.SharedChest(nebulaObject.mmoWorld(), transform.position, chestTime, allInventoryItems).AddToWorld();
-                        ClearInventory();
-                        log.InfoFormat("create shared chest when player die, items count = {0}  on time = {1} [purple]", allInventoryItems.Count, chestTime);
-                        GetComponent<PlayerLoaderObject>().SaveInventory();
-
+                            if (Rand.Float01() > mPassiveBonuses.chanceDontDropLootBonus) {
+                                var allInventoryItems = GetAllInventoryItems();
+                                ObjectCreate.SharedChest(nebulaObject.mmoWorld(), transform.position, chestTime, allInventoryItems).AddToWorld();
+                                ClearInventory();
+                                log.InfoFormat("create shared chest when player die, items count = {0}  on time = {1} [purple]", allInventoryItems.Count, chestTime);
+                                GetComponent<PlayerLoaderObject>().SaveInventory();
+                            } else {
+                                log.InfoFormat("you dont drop loot via passive bonus [red]");
+                            }
+                        } else {
+                            log.InfoFormat("player dont drop loot, reason - 1) killed = {0}, 2 create cheston killing = {1}", damagable.killed, damagable.createChestOnKilling);
+                        }
                     } else {
-                        log.InfoFormat("you dont drop loot via passive bonus [red]");
+                        log.InfoFormat("world in beginner state, player dont drop loot...");
                     }
+                    chestCreated = true;
+                } else {
+                    log.InfoFormat("Avatar already create chest...");
                 }
-                chestCreated = true;
+            } catch (Exception exception ) {
+                log.InfoFormat("MmoActor.Death() exception: {0}", exception.Message);
+                log.InfoFormat(exception.StackTrace);
             }
         }
 

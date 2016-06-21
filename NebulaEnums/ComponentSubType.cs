@@ -29,6 +29,12 @@
         explore_location_contract,
         normal_drop_list,
         contract_drop_list,
-        found_item_contract_mark
+        found_item_contract_mark,
+        planet_object_command_center,
+        ai_stay_non_combat,
+        planet_object_turret,
+        planet_object_resource_hangar,
+        planet_object_resource_accelerator,
+        planet_object_mining_station
     }
 }

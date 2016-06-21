@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
+#if UP
 using System.Xml;
+#endif
 
 namespace Nebula.Client.UP {
+#if UP
     public class UPXDocument {
         private XmlDocument mDocument;
 
@@ -39,4 +42,5 @@ namespace Nebula.Client.UP {
             return mResult;
         }
     }
+#endif
 }

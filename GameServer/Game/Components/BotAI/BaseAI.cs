@@ -35,6 +35,13 @@ namespace Nebula.Game.Components.BotAI {
             mRotationSpeed = data.rotationSpeed;
         }
 
+        public void SetAlignWithForwardDirection(bool align) {
+            mAlignWithForwardDirection = align;
+        }
+        public void SetRotationSpeed(float rotSpeed) {
+            mRotationSpeed = rotSpeed;
+        }
+
         public void SetAIType(AIType ai) {
             aiType = ai;
         }

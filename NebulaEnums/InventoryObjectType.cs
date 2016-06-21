@@ -31,7 +31,12 @@
         pet_skin = 22,
         founder_cube = 23,
         contract_item = 24,
-
+        credits_bag = 25,
+        planet_command_center = 26,
+        planet_mining_station = 27,
+        planet_turret = 28,
+        planet_resource_hangar = 29,
+        planet_resource_accelerator = 30
         //pass elenment
         //pass
     }

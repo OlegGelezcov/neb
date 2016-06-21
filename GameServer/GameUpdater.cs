@@ -1,6 +1,7 @@
 ﻿using Common;
 using ExitGames.Concurrency.Fibers;
 using ExitGames.Logging;
+using MongoDB.Driver;
 using Nebula.Game;
 using Nebula.Game.Utils;
 using NebulaCommon;
@@ -112,6 +113,18 @@ namespace Nebula {
                 mLoop = mFiber.ScheduleOnInterval(Update, UPDATE_INTERVAL, UPDATE_INTERVAL);
             }
             log.InfoFormat("after updater start");
+            log.Info(string.Format("MONGO: Computed wait queue size: {0}", MongoDefaults.ComputedWaitQueueSize));
+            log.Info(string.Format("MONGO: Connect Timeout: {0}", MongoDefaults.ConnectTimeout));
+            log.Info(string.Format("MONGO: Max Batch count: {0}", MongoDefaults.MaxBatchCount));
+            log.Info(string.Format("MONGO: Max Connection Idle Time: {0}", MongoDefaults.MaxConnectionIdleTime));
+            log.Info(string.Format("MONGO: Max Connection Life Time: {0}", MongoDefaults.MaxConnectionLifeTime));
+            log.Info(string.Format("MONGO: Max Connection Pool Size: {0}", MongoDefaults.MaxConnectionPoolSize));
+            log.Info(string.Format("MONGO: Socket Timeout: {0}", MongoDefaults.SocketTimeout));
+            log.Info(string.Format("MONGO: TCP Receive Buffer Size: {0}", MongoDefaults.TcpReceiveBufferSize));
+            log.Info(string.Format("MONGO: TCP  Send Buffer Size: {0}", MongoDefaults.TcpSendBufferSize));
+            log.Info(string.Format("MONGO: Wait Queue Multiple: {0}", MongoDefaults.WaitQueueMultiple));
+            log.Info(string.Format("MONGO: Wait queue Size: {0}", MongoDefaults.WaitQueueSize));
+            log.Info(string.Format("MONGO: WAIT queue Timeout: {0}", MongoDefaults.WaitQueueTimeout));
         }
 
         /*

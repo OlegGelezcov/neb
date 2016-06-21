@@ -23,6 +23,10 @@ using Nebula.Game.Utils;
 using Nebula.Game.Contracts;
 using Nebula.Game.Contracts.Marks;
 using Nebula.Game.Events;
+using Nebula.Game.Components.PlanetObjects;
+using Nebula.Server.Nebula.Server.Components.PlanetObjects;
+using Nebula.Server.Nebula.Server.Components.AI;
+using Nebula.Server.Nebula.Server.Components;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -80,6 +84,31 @@ namespace Nebula.Game {
                             }
                         }
                         break;
+                    case ComponentID.PlanetBuilding: {
+                            switch((comp.Value as MultiComponentData).subType) {
+                                case ComponentSubType.planet_object_command_center: {
+                                        components.Add(typeof(CommanderCenterPlanetObject));
+                                    }
+                                    break;
+                                case ComponentSubType.planet_object_turret: {
+                                        components.Add(typeof(PlanetTurretObject));
+                                    }
+                                    break;
+                                case ComponentSubType.planet_object_resource_hangar: {
+                                        components.Add(typeof(PlanetResourceHangarObject));
+                                    }
+                                    break;
+                                case ComponentSubType.planet_object_resource_accelerator: {
+                                        components.Add(typeof(PlanetResourceAcceleratorObject));
+                                    }
+                                    break;
+                                case ComponentSubType.planet_object_mining_station: {
+                                        components.Add(typeof(PlanetMiningStationObject));
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
                     case ComponentID.Activator:
                         {
                             switch((comp.Value as MultiComponentData).subType) {
@@ -92,6 +121,10 @@ namespace Nebula.Game {
                     case ComponentID.Planet:
                         {
                             components.Add(typeof(PlanetObject));
+                        }
+                        break;
+                    case ComponentID.PlanetLandingTeleport: {
+                            components.Add(typeof(PlanetLandingTeleport));
                         }
                         break;
                     case ComponentID.LoreBox: {
@@ -114,6 +147,10 @@ namespace Nebula.Game {
                                 break;
                             case ComponentSubType.ai_stay:
                                 components.Add(typeof(StayCombatAI));
+                                break;
+                            case ComponentSubType.ai_stay_non_combat: {
+                                    components.Add(typeof(StayNonCombatAI));
+                                }
                                 break;
                             case ComponentSubType.ai_wander_cube:
                                 components.Add(typeof(WanderCombatAI));
@@ -399,6 +436,31 @@ namespace Nebula.Game {
                             }
                         }
                         break;
+                    case ComponentID.PlanetBuilding: {
+                            switch((comp.Value as MultiComponentData).subType) {
+                                case ComponentSubType.planet_object_command_center: {
+                                        nebObject.GetComponent<CommanderCenterPlanetObject>().Init(comp.Value as CommandCenterPlanetObjectComponentData);
+                                    }
+                                    break;
+                                case ComponentSubType.planet_object_turret: {
+                                        nebObject.GetComponent<PlanetTurretObject>().Init(comp.Value as TurretPlanetObjectComponentData);
+                                    }
+                                    break;
+                                case ComponentSubType.planet_object_resource_hangar: {
+                                        nebObject.GetComponent<PlanetResourceHangarObject>().Init(comp.Value as ResourceHangarPlanetObjectComponentData);
+                                    }
+                                    break;
+                                case ComponentSubType.planet_object_resource_accelerator: {
+                                        nebObject.GetComponent<PlanetResourceAcceleratorObject>().Init(comp.Value as ResourceAcceleratorPlanetObjectComponentData);
+                                    }
+                                    break;
+                                case ComponentSubType.planet_object_mining_station: {
+                                        nebObject.GetComponent<PlanetMiningStationObject>().Init(comp.Value as MiningStationPlanetObjectComponentData);
+                                    }
+                                    break;
+                            }
+                        }
+                        break;
                     case ComponentID.Activator:
                         {
                             switch((comp.Value as MultiComponentData).subType) {
@@ -425,6 +487,10 @@ namespace Nebula.Game {
                                     break;
                                 case ComponentSubType.ai_stay:
                                     nebObject.GetComponent<StayCombatAI>().Init(comp.Value as StayAIComponentData);
+                                    break;
+                                case ComponentSubType.ai_stay_non_combat: {
+                                        nebObject.GetComponent<StayNonCombatAI>().Init(comp.Value as StayAINonCombatComponentData);
+                                    }
                                     break;
                                 case ComponentSubType.ai_wander_cube:
                                     nebObject.GetComponent<WanderCombatAI>().Init(comp.Value as WanderAIComponentData);
@@ -456,6 +522,10 @@ namespace Nebula.Game {
                         break;
                     case ComponentID.LoreBox: {
                             nebObject.GetComponent<LoreBoxComponent>().Init(comp.Value as LoreBoxComponentData);
+                        }
+                        break;
+                    case ComponentID.PlanetLandingTeleport: {
+                            nebObject.GetComponent<PlanetLandingTeleport>().Init(comp.Value as PlanetLandingTeleportData);
                         }
                         break;
                     case ComponentID.FounderCube: {

@@ -15,6 +15,7 @@ namespace ServerClientCommon {
         public int Index;
         public string Application;
         public string[] Locations;
+        public string Ipv6Address = string.Empty;
 
         public Hashtable GetInfo() {
             return new Hashtable {
@@ -23,8 +24,9 @@ namespace ServerClientCommon {
                 {(short)SPC.Protocol,       this.Protocol   },
                 {(short)SPC.Port,           this.Port       },
                 {(short)SPC.Index,          this.Index      },
-                {(short)SPC.Application,   this.Application},
-                { (short)SPC.Locations, Locations }
+                {(short)SPC.Application,    this.Application},
+                {(short)SPC.Locations,      Locations },
+                {(short)SPC.IPv6Address,    Ipv6Address }
             };
         }
 
@@ -44,6 +46,7 @@ namespace ServerClientCommon {
             this.Index = info.Value<int>((short)SPC.Index);
             this.Application = info.Value<string>((short)SPC.Application);
             this.Locations = info.Value<string[]>((short)SPC.Locations);
+            this.Ipv6Address = info.Value<string>((short)SPC.IPv6Address, string.Empty);
         }
 
         public bool ContainsLocation(string worldID) {

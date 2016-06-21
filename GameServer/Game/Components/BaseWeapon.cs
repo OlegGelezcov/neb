@@ -25,6 +25,7 @@ namespace Nebula.Game.Components {
         protected PlayerSkills cachedSkills { get; private set; }
         protected DamagableObject cachedDamagable { get; private set; }
         private AchievmentComponent m_Achievments;
+        private BotObject m_CachedBot;
 
         public abstract WeaponBaseType myWeaponBaseType { get; }
 
@@ -106,6 +107,7 @@ namespace Nebula.Game.Components {
             mPassiveBonuses = GetComponent<PassiveBonusesComponent>();
             mMessage = GetComponent<MmoMessageComponent>();
             m_Achievments = GetComponent<AchievmentComponent>();
+            m_CachedBot = GetComponent<BotObject>();
         }
 
         public override void Update(float deltaTime) {
@@ -275,6 +277,33 @@ namespace Nebula.Game.Components {
         }
 
         private float ComputeMissProb(NebulaObject targetObject) {
+
+            //if target either planet obj or turret or drill we don't use level difference miss
+            if(targetObject.Type == (byte)ItemType.Bot ) {
+                var botComp = targetObject.GetComponent<BotObject>();
+                if(botComp != null ) {
+                    BotItemSubType subType = (BotItemSubType)botComp.botSubType;
+                    switch(subType) {
+                        case BotItemSubType.PlanetBuilding:
+                        case BotItemSubType.Turret:
+                        case BotItemSubType.Drill:
+                            return 0;
+                    }
+                }
+            }
+
+            //if source planet obj or drill or turret we don't use level difference miss
+            if(nebulaObject.Type == (byte)ItemType.Bot) {
+                if(m_CachedBot != null ) {
+                    BotItemSubType subType = (BotItemSubType)m_CachedBot.botSubType;
+                    switch(subType) {
+                        case BotItemSubType.Drill:
+                        case BotItemSubType.PlanetBuilding:
+                        case BotItemSubType.Turret:
+                            return 0;
+                    }
+                }
+            }
 
             var targetCharacter = targetObject.Character();
             if(!targetCharacter) {

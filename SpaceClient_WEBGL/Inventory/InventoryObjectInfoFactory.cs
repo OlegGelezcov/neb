@@ -72,6 +72,8 @@ namespace Nebula.Client.Inventory {
                         return new FounderCubeInventoryObjectInfo(info);
                     case InventoryObjectType.contract_item:
                         return new ContractItemInventoryObjectInfo(info);
+                    case InventoryObjectType.credits_bag:
+                        return new CreditsBagObjectInfo(info);
                     //case InventoryObjectType.pass:
                         //return new PassInventoryObjectInfo(info);
                     //case InventoryObjectType.credits:

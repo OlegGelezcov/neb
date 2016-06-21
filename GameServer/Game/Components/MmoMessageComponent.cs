@@ -356,6 +356,22 @@ namespace Nebula.Game.Components {
         }
 
 
+        public void ReceiveCellsUpdated(Hashtable info ) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.CellsUpdated,
+                EventData = info
+            };
+            SendParameters sendParameters = new SendParameters {
+                ChannelId = Settings.ItemEventChannel,
+                Unreliable = false
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+
         public void SendActivatorEvent(bool active) {
             if(!nebulaObject) {
                 return;
@@ -376,6 +392,8 @@ namespace Nebula.Game.Components {
             var msg = new ItemEventMessage(nebulaObject as Item, eventData, sendParameters);
             (nebulaObject as Item).EventChannel.Publish(msg);
         }
+
+        
 
         public void SendCollectChest(Hashtable hash) {
             var eventInstance = new ItemGeneric {

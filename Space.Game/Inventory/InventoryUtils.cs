@@ -88,6 +88,8 @@ namespace Nebula.Inventory {
                     return new FounderCubeInventoryObject(itemInfo);
                 case InventoryObjectType.contract_item:
                     return new ContractItemObject(itemInfo);
+                case InventoryObjectType.credits_bag:
+                    return new CreditsBagObject(itemInfo);
                 //case InventoryObjectType.pass:
                    // return new PassInventoryObject(itemInfo);
                 //case InventoryObjectType.credits:

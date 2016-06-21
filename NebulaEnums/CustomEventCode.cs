@@ -53,7 +53,8 @@ namespace Common
         AchievmentUnlocked = 50,
         ReceivePlayerMark = 51,
         FoundLoreRecord = 52,
-        StartAsteroidCollecting = 53
+        StartAsteroidCollecting = 53,
+        CellsUpdated = 54
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

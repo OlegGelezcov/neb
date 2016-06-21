@@ -337,6 +337,14 @@ namespace ServerClientCommon {
         DayPoster = 322,
         Transactions = 323,
         TargetCharacterId = 324,
-        TargetCharacterName = 325
+        TargetCharacterName = 325,
+        IPv6Address = 326,
+        DepositedCount = 327,
+        PlanetObjectType = 328,
+        Row = 329,
+        Column = 330,
+        HasCellObject = 331,
+        Cells = 332,
+        OreId = 333
     }
 }

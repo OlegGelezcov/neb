@@ -18,7 +18,8 @@
         ContractMark,
         Trigger,
         PlanetBuilding,
-        LoreBox
+        LoreBox,
+        PlanetLandingTeleport
     }
 }
 

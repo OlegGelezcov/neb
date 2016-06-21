@@ -10,6 +10,8 @@ namespace Nebula.Database {
     public class AchievmentDatabase {
         private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
+        private static readonly object sync = new object();
+
         private MongoCollection<AchievmentDocument> achievmentDocuments { get; set; }
 
         private static AchievmentDatabase s_Instance = null;
@@ -28,36 +30,40 @@ namespace Nebula.Database {
         }
 
         public void SaveAchievment(string characterId, AchievmentSave achievments ) {
-            s_Log.InfoFormat("save achievments for character: {0}".Color(LogColor.yellow), characterId);
-            var document = achievmentDocuments.FindOne(Query<AchievmentDocument>.EQ(d => d.characterId, characterId));
-            if(document == null ) {
-                document = new AchievmentDocument {
-                     characterId = characterId
-                };
+            lock (sync) {
+                s_Log.InfoFormat("save achievments for character: {0}".Color(LogColor.yellow), characterId);
+                var document = achievmentDocuments.FindOne(Query<AchievmentDocument>.EQ(d => d.characterId, characterId));
+                if (document == null) {
+                    document = new AchievmentDocument {
+                        characterId = characterId
+                    };
+                }
+                document.isNewDocument = false;
+                document.Set(achievments);
+                achievmentDocuments.Save(document);
             }
-            document.isNewDocument = false;
-            document.Set(achievments);
-            achievmentDocuments.Save(document);
         }
 
         public AchievmentSave LoadAchievments(string characterId, out bool isNew) {
-            s_Log.InfoFormat("load achievments for character: {0}".Color(LogColor.orange), characterId);
-            var document = achievmentDocuments.FindOne(Query<AchievmentDocument>.EQ(d => d.characterId, characterId));
-            if(document != null ) {
-                isNew = false;
-                return document.SourceObject();
-            } else {
-                isNew = true;
-                document = new AchievmentDocument {
-                     characterId = characterId,
-                     isNewDocument = isNew,
-                     variables = new Hashtable(),
-                     visitedZones = new System.Collections.Generic.List<string>(),
-                     loreRecords = new System.Collections.Generic.List<string>(),
-                     points = 0
-                };
-                achievmentDocuments.Save(document);
-                return document.SourceObject();
+            lock(sync) {
+                s_Log.InfoFormat("load achievments for character: {0}".Color(LogColor.orange), characterId);
+                var document = achievmentDocuments.FindOne(Query<AchievmentDocument>.EQ(d => d.characterId, characterId));
+                if (document != null) {
+                    isNew = false;
+                    return document.SourceObject();
+                } else {
+                    isNew = true;
+                    document = new AchievmentDocument {
+                        characterId = characterId,
+                        isNewDocument = isNew,
+                        variables = new Hashtable(),
+                        visitedZones = new System.Collections.Generic.List<string>(),
+                        loreRecords = new System.Collections.Generic.List<string>(),
+                        points = 0
+                    };
+                    achievmentDocuments.Save(document);
+                    return document.SourceObject();
+                }
             }
         }
     }

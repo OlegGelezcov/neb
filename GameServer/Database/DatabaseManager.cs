@@ -27,6 +27,8 @@ namespace Space.Database {
         //Full world states
         public MongoCollection<WorldState> worldStates { get; private set; }
 
+        private static readonly object sync = new object();
+
 
         public void Setup() {
             //DbClient = new MongoClient(connectionString);
@@ -47,7 +49,9 @@ namespace Space.Database {
         }
 
         public WorldState GetWorldState(string worldID) {
-            return worldStates.FindOne(Query<WorldState>.EQ(ws => ws.worldID, worldID));
+            lock (sync) {
+                return worldStates.FindOne(Query<WorldState>.EQ(ws => ws.worldID, worldID));
+            }
         }
 
         /// <summary>
@@ -56,13 +60,15 @@ namespace Space.Database {
         /// <param name="worldID">World ID to be found</param>
         /// <returns>World info or null if not found</returns>
         public WorldDocument GetWorld(string worldID) {
-            //search world by id query
-            var query = Query<WorldDocument>.EQ(world => world.info.worldID, worldID);
-            var result = Worlds.FindOne(query);
-            if(result == null) {
-                return null;
+            lock (sync) {
+                //search world by id query
+                var query = Query<WorldDocument>.EQ(world => world.info.worldID, worldID);
+                var result = Worlds.FindOne(query);
+                if (result == null) {
+                    return null;
+                }
+                return result;
             }
-            return result;
         }
 
         /// <summary>
@@ -70,17 +76,19 @@ namespace Space.Database {
         /// </summary>
         /// <returns></returns>
         public ConcurrentDictionary<string, WorldInfo> GetWorlds() {
-            //get all worlds from database
-            var result = Worlds.FindAll().ToList();
+            lock (sync) {
+                //get all worlds from database
+                var result = Worlds.FindAll().ToList();
 
-            //construct dictionary from query result
-            ConcurrentDictionary<string, WorldInfo> worldInfoDict = new ConcurrentDictionary<string, WorldInfo>();
-            foreach (var world in result) {
-                if (world.info != null) {
-                    worldInfoDict.TryAdd(world.info.worldID, world.info);
+                //construct dictionary from query result
+                ConcurrentDictionary<string, WorldInfo> worldInfoDict = new ConcurrentDictionary<string, WorldInfo>();
+                foreach (var world in result) {
+                    if (world.info != null) {
+                        worldInfoDict.TryAdd(world.info.worldID, world.info);
+                    }
                 }
+                return worldInfoDict;
             }
-            return worldInfoDict;
         }
 
         /// <summary>
@@ -88,43 +96,45 @@ namespace Space.Database {
         /// </summary>
         /// <param name="world">Target world to be saved</param>
         public void SetWorld(MmoWorld world) {
-            var document = GetWorld(world.Zone.Id);
-            if(document == null ) {
-                //world info not found in DB, than create new world info
-                var worldInfo = new WorldInfo {
-                    worldID = world.Zone.Id,
-                    currentRace = (int)(byte)world.ownedRace,
-                    startRace = (int)(byte)world.Zone.InitiallyOwnedRace,
-                    underAttack = world.underAttack,
-                    worldType = (int)world.Zone.worldType,
-                    attackRace = (byte)world.attackedRace,
-                     playerCount = world.playerCount
-                };
-                document = new WorldDocument { info = worldInfo };           
-            } else {
-                //check the document info not null
-                if(document.info == null ) {
-                    document.info = new WorldInfo { worldID = world.Zone.Id };
-                }
+            lock (sync) {
+                var document = GetWorld(world.Zone.Id);
+                if (document == null) {
+                    //world info not found in DB, than create new world info
+                    var worldInfo = new WorldInfo {
+                        worldID = world.Zone.Id,
+                        currentRace = (int)(byte)world.ownedRace,
+                        startRace = (int)(byte)world.Zone.InitiallyOwnedRace,
+                        underAttack = world.underAttack,
+                        worldType = (int)world.Zone.worldType,
+                        attackRace = (byte)world.attackedRace,
+                        playerCount = world.playerCount
+                    };
+                    document = new WorldDocument { info = worldInfo };
+                } else {
+                    //check the document info not null
+                    if (document.info == null) {
+                        document.info = new WorldInfo { worldID = world.Zone.Id };
+                    }
 
-                //world info found in db, get world info and update data from MmoWorld
-                document.info.currentRace = (int)(byte)world.ownedRace;
-                document.info.startRace = (int)(byte)world.Zone.InitiallyOwnedRace;
-                document.info.underAttack = world.underAttack;
-                document.info.worldType = (int)world.Zone.worldType;
-                document.info.attackRace = (byte)world.attackedRace;
-                document.info.playerCount = world.playerCount;
+                    //world info found in db, get world info and update data from MmoWorld
+                    document.info.currentRace = (int)(byte)world.ownedRace;
+                    document.info.startRace = (int)(byte)world.Zone.InitiallyOwnedRace;
+                    document.info.underAttack = world.underAttack;
+                    document.info.worldType = (int)world.Zone.worldType;
+                    document.info.attackRace = (byte)world.attackedRace;
+                    document.info.playerCount = world.playerCount;
+                }
+                /*
+                log.InfoFormat("save world state = [{0}, {1}, {2}, {3}, {4}, {5}] [red]", 
+                    document.info.worldID,
+                    (Race)(byte)document.info.currentRace, 
+                    (Race)(byte)document.info.startRace, 
+                    document.info.underAttack, 
+                    (WorldType)(int)document.info.worldType, 
+                    document.info.playerCount);*/
+                //save updated world info
+                Worlds.Save(document);
             }
-            /*
-            log.InfoFormat("save world state = [{0}, {1}, {2}, {3}, {4}, {5}] [red]", 
-                document.info.worldID,
-                (Race)(byte)document.info.currentRace, 
-                (Race)(byte)document.info.startRace, 
-                document.info.underAttack, 
-                (WorldType)(int)document.info.worldType, 
-                document.info.playerCount);*/
-            //save updated world info
-            Worlds.Save(document);
         }
 
 

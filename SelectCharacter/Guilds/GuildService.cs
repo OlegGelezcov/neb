@@ -711,6 +711,7 @@ namespace SelectCharacter.Guilds {
 
             guildObject.AddCredits(count);
             guildObject.AddTransaction(CoalitionTransaction.MakeTransaction(CoalitionTransactionType.deposit, member.characterName, characterId, count));
+            member.AddDeposited(count);
             MarkModified(guildId);
 
             SendGuildUpdateEvent(characterId, guildObject.GetInfo(mApplication));

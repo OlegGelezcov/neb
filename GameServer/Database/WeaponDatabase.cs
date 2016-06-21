@@ -11,6 +11,7 @@ namespace Nebula.Database {
         //private MongoServer DbServer { get; set; }
         //private MongoDatabase Database { get; set; }
         private MongoCollection<WeaponDocument> WeaponDocuments { get; set; }
+        private static readonly object sync = new object();
 
         private static WeaponDatabase s_Instance = null;
         private GameApplication m_App;
@@ -32,27 +33,31 @@ namespace Nebula.Database {
         }
 
         public void SaveWeapon(string characterID, ShipWeaponSave weaponSave) {
-            log.InfoFormat("save weapon for character = {0} [red]", characterID);
-            var document = WeaponDocuments.FindOne(Query<WeaponDocument>.EQ(d => d.CharacterId, characterID));
-            if(document == null ) {
-                document = new WeaponDocument { CharacterId = characterID };
+            lock(sync) {
+                log.InfoFormat("save weapon for character = {0} [red]", characterID);
+                var document = WeaponDocuments.FindOne(Query<WeaponDocument>.EQ(d => d.CharacterId, characterID));
+                if (document == null) {
+                    document = new WeaponDocument { CharacterId = characterID };
+                }
+                document.IsNewDocument = false;
+                document.Set(weaponSave);
+                WeaponDocuments.Save(document);
             }
-            document.IsNewDocument = false;
-            document.Set(weaponSave);
-            WeaponDocuments.Save(document);
         }
 
         public ShipWeaponSave LoadWeapon(string characterID, Res resource, out bool isNew) {
-            log.InfoFormat("load weapon for character = {0}", characterID);
-            var document = WeaponDocuments.FindOne(Query<WeaponDocument>.EQ(d => d.CharacterId, characterID));
-            if(document != null ) {
-                isNew = false;
-                return document.SourceObject(resource);
-            } else {
-                isNew = true;
-                document = new WeaponDocument { CharacterId = characterID, IsNewDocument = isNew, WeaponObject = new System.Collections.Hashtable() };
-                WeaponDocuments.Save(document);
-                return document.SourceObject(resource);
+            lock (sync) {
+                log.InfoFormat("load weapon for character = {0}", characterID);
+                var document = WeaponDocuments.FindOne(Query<WeaponDocument>.EQ(d => d.CharacterId, characterID));
+                if (document != null) {
+                    isNew = false;
+                    return document.SourceObject(resource);
+                } else {
+                    isNew = true;
+                    document = new WeaponDocument { CharacterId = characterID, IsNewDocument = isNew, WeaponObject = new System.Collections.Hashtable() };
+                    WeaponDocuments.Save(document);
+                    return document.SourceObject(resource);
+                }
             }
         }
     }

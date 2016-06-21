@@ -55,8 +55,13 @@ namespace Master {
             if (IsMaster) {
                 if(log.IsDebugEnabled) {
                     log.DebugFormat("Received init request from game client on master node");
+                    log.DebugFormat("Received init Request: App ID: {0}, Client Version: {1}, Local IP: {2}, Local Port: {3}, Protocol Type: {4}, Remote IP: {5}, Remote Port: {6}",
+                        initRequest.ApplicationId, initRequest.ClientVersion.ToString(),
+                        initRequest.LocalIP, initRequest.LocalPort, initRequest.Protocol.ProtocolType,
+                        initRequest.RemoteIP, initRequest.RemotePort);
                 }
                 return new MasterClientPeer(initRequest, this);
+                
             }
 
             if(log.IsDebugEnabled) {

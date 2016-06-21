@@ -8,6 +8,7 @@
     using Nebula.Engine;
     using Nebula.Game;
     using Nebula.Game.Components;
+    using Nebula.Game.Components.PlanetObjects;
     using Nebula.Game.Events;
     using ServerClientCommon;
     using Space.Game.Resources;
@@ -60,6 +61,10 @@
 
         private GameApplication m_App;
 
+        private readonly List<string> m_BeginnerLocationIds = new List<string> { "H1", "H2", "H3", "H1_01", "H1_02", "H2_01", "H2_02", "H3_01", "H3_02",
+                                                                                 "E1", "E2", "E3", "E1_01", "E1_02", "E2_01", "E2_02", "E3_01", "E3_02",
+                                                                                 "B1", "B2", "B3", "B1_01", "B1_02", "B2_01", "B2_02", "B3_01", "B3_02"};
+
         public MmoWorld(string name, Vector minCorner, Vector maxCorner, Vector tileDimensions, Res resource, GameApplication app)
             : base(minCorner, maxCorner, tileDimensions, new MmoItemCache() )
         {
@@ -96,17 +101,51 @@
             }
         }
 
-        public bool SetCellObject(int row, int column, NebulaObject obj) {
-            return m_Cells.SetCellObject(row, column, obj);
+        private void SendCellsUpdated() {
+            Hashtable hash = GetCellInfo();
+            var players = Filter(p => p.GetComponent<MmoActor>() != null);
+            foreach (var player in players) {
+                player.GetComponent<MmoMessageComponent>().ReceiveCellsUpdated(hash);
+            }
+        }
+
+        public bool SetCellObject(int row, int column, PlanetObjectBase obj) {
+            bool result = m_Cells.SetCellObject(row, column, obj);
+            SendCellsUpdated();
+            return result;
         }
 
         public bool UnsetCellObject(int row, int column ) {
-            return m_Cells.UnsetCellObject(row, column);
+            bool result = m_Cells.UnsetCellObject(row, column);
+            SendCellsUpdated();
+            return result;
+        }
+
+        public bool HasObjectAtCell(int row, int column ) {
+            return m_Cells.HasCellObject(row, column);
+        }
+
+        public bool IsObjectAtCell(int row, int col, string objId ) {
+            return m_Cells.IsObjectAtCell(row, col, objId);
+        }
+
+        public Vector3 GetCellPosition(int row, int column ) {
+            return m_Cells.GetCellPosition(row, column);
+        }
+
+        public Hashtable GetCellInfo() {
+            return m_Cells.GetInfo();
         }
 
         public GameApplication application {
             get {
                 return m_App;
+            }
+        }
+
+        public int maxCountPlanetMiningStations {
+            get {
+                return 3 + 3 * Filter(obj => obj.GetComponent<PlanetResourceHangarObject>() != null).Count;
             }
         }
 
@@ -637,6 +676,12 @@
         }
         public void OnEvent(BaseEvent evt) {
             m_EventManager.OnEvent(evt);
+        }
+
+        public bool isBeginnerLocation {
+            get {
+                return m_BeginnerLocationIds.Contains(Name);
+            }
         }
     }
          

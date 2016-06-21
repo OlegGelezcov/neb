@@ -14,6 +14,7 @@ namespace ntool.Listeners {
             m_Handlers = new Dictionary<byte, BaseHandler>();
             m_Handlers.Add((byte)OperationCode.RegisterUser, new RegisterHandler((byte)OperationCode.RegisterUser, app));
             m_Handlers.Add((byte)OperationCode.Login, new LoginHandler((byte)OperationCode.Login, app));
+            m_Handlers.Add((byte)OperationCode.GetUsersOnline, new GetUsersOnlineHandler((byte)OperationCode.GetUsersOnline, app));
         }
 
         public override void OnEvent(EventData eventData) {

@@ -15,6 +15,17 @@ using System.Globalization;
 namespace Common {
     public static class CommonExtensions {
 
+        public static string StringArray(this float[] arr) {
+            if(arr == null ) {
+                return string.Empty;
+            }
+            StringBuilder sb = new StringBuilder();
+            foreach(float f in arr ) {
+                sb.AppendFormat("{0:F1}, ", f);
+            }
+            return sb.ToString();
+        }
+
         public static string ReplaceVariables(this string sourceString, Hashtable variablesInfo) {
             string result = sourceString;
             foreach (System.Collections.DictionaryEntry entry in variablesInfo) {

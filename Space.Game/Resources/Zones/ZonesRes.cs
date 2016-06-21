@@ -11,6 +11,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Nebula.Resources.Zones;
 using Nebula.Resources.Zones.Planets;
+using Nebula.Server.Nebula.Server.Components;
 
 namespace Space.Game.Resources.Zones {
     public class ZonesRes
@@ -286,6 +287,10 @@ namespace Space.Game.Resources.Zones {
                             break;
                         case ComponentID.LoreBox: {
                                 componentCollection.Add(ComponentID.LoreBox, new LoreBoxComponentData(ce));
+                            }
+                            break;
+                        case ComponentID.PlanetLandingTeleport: {
+                                componentCollection.Add(ComponentID.PlanetLandingTeleport, new PlanetLandingTeleportData(ce));
                             }
                             break;
                         case ComponentID.CombatAI:

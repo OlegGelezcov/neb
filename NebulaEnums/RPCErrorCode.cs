@@ -67,6 +67,12 @@ namespace Common {
         ErrorOfAcceptContract = 1056,
         LoreRecordAlreadyUnlocked = 1057,
         IsEmpty = 1058,
+        CountIsZero = 1059,
+        InvalidWorldType = 1060,
+        MultipleObjectRestricted = 1061,
+        CellAlreadyFilled = 1062,
+        BuildCommandCenterFirst = 1063,
+        BuildAdditionalResourceHangar = 1064,
 
         UnknownError = 10002,
         

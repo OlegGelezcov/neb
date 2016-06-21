@@ -9,7 +9,7 @@ namespace SelectCharacter.Guilds {
         public string characterId { get; set; }
         public string characterName { get; set; } = string.Empty;
         public int characterIcon { get; set; } = -1;
-
+        public int depositedCount { get; set; } = 0;
 
         public int guildStatus { get; set; }
 
@@ -29,6 +29,14 @@ namespace SelectCharacter.Guilds {
         /// </summary>
         public bool IsSetGuildDescriptionGranted() {
             return (guildStatus == (int)GuildMemberStatus.Moderator) || (guildStatus == (int)GuildMemberStatus.Owner);
+        }
+
+        /// <summary>
+        /// Add cnt to total deposited credits
+        /// </summary>
+        /// <param name="cnt"></param>
+        public void AddDeposited(int cnt) {
+            depositedCount += cnt;
         }
 
         public Hashtable GetInfo(SelectCharacterApplication app) {
@@ -67,7 +75,8 @@ namespace SelectCharacter.Guilds {
                 { (int)SPC.Status, guildStatus },
                 { (int)SPC.Exp, exp },
                 { (int)SPC.CharacterName, characterName },
-                { (int)SPC.Icon, characterIcon }
+                { (int)SPC.Icon, characterIcon },
+                { (int)SPC.DepositedCount, depositedCount }
             };
         }
     }

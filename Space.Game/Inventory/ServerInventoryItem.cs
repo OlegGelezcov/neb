@@ -12,12 +12,15 @@ namespace Space.Game.Inventory
 
         public ServerInventoryItem() : base() { }
 
+       
+
         public override Hashtable GetInfo()
         {
             if (_object == null)
                 return new Hashtable { { (int)SPC.Count, _count } };
 
             var objectInfo = _object.GetInfo();
+            
             objectInfo.Add((int)SPC.Count, _count);
             return objectInfo;
         }

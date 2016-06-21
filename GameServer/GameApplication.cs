@@ -223,6 +223,8 @@ public class GameApplication : ApplicationBase
 #endif
             databaseConnectionString = File.ReadAllText(databaseConnectionFile).Trim();
 
+
+            MongoDefaults.MaxConnectionPoolSize = 500;
             
             m_MongoClient = new MongoClient(databaseConnectionString);
             log.InfoFormat("connected to: {0}".Color(LogColor.orange), databaseConnectionFile);
@@ -233,6 +235,7 @@ public class GameApplication : ApplicationBase
             m_DefaultDatabase = m_MongoServer.GetDatabase(GameServerSettings.Default.DatabaseName);
             log.InfoFormat("received default database".Color(LogColor.orange));
 
+           
             DatabaseManager.Setup();
 
             if(updater != null ) {

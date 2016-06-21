@@ -197,7 +197,7 @@ namespace Login {
                 password = facebookId.value,
                 facebookId = facebookId.value,
                 vkontakteId = string.Empty,
-                nebulaCredits = 0
+                nebulaCredits = NEBULA_CREDITS_AT_START
             };
             var result = UserLogins.Save(databaseUser);
             return databaseUser;
