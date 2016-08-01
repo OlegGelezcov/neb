@@ -28,7 +28,13 @@ namespace Nebula.Game.Skills {
             var sourceBonuses = source.GetComponent<PlayerBonuses>();
             var sourceWeapon = source.GetComponent<BaseWeapon>();
 
+            info.SetSkillUseState(SkillUseState.normal);
             if(!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false;
+            }
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
 
@@ -40,7 +46,7 @@ namespace Nebula.Game.Skills {
 
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_crit_damage_on_pc, critDmgPcTime, critDmgPc);
                 sourceBonuses.SetBuff(buff);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);

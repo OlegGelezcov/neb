@@ -92,6 +92,24 @@ namespace Nebula.Game.Components {
             }
         }
 
+        public bool isPlanetTurret {
+            get {
+                return (mBotSubType == (byte)BotItemSubType.PlanetBuilding);
+            }
+        }
+
+        public bool isOutpost {
+            get {
+                return (mBotSubType == (byte)BotItemSubType.MainOutpost);
+            }
+        }
+
+        public bool isFortification {
+            get {
+                return (mBotSubType == (byte)BotItemSubType.Outpost);
+            }
+        }
+
         public string botGroup {
             get {
                 if(mInitData!= null ) {

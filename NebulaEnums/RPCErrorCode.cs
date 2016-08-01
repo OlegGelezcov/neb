@@ -73,6 +73,7 @@ namespace Common {
         CellAlreadyFilled = 1062,
         BuildCommandCenterFirst = 1063,
         BuildAdditionalResourceHangar = 1064,
+        ErrorOfAddingItemToInventory = 1065,
 
         UnknownError = 10002,
         

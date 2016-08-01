@@ -13,6 +13,7 @@ namespace Nebula.Game.Components {
     using Nebula.Engine;
     using Pets;
     using Photon.SocketServer;
+    using Server.Events;
     using ServerClientCommon;
     using Space.Game;
     using Space.Server;
@@ -82,6 +83,47 @@ namespace Nebula.Game.Components {
                     break;
             }
 
+        }
+
+        /// <summary>
+        /// when changed some property send it to others and self
+        /// </summary>
+        /// <param name="properties"></param>
+        public void SendPropertyUpdate(Hashtable properties, bool onlyReceive = false) {
+            ItemPropertyUpdate eventInstance = new ItemPropertyUpdate {
+                itemId = nebulaObject.Id,
+                itemType = nebulaObject.Type,
+                properties = properties
+            };
+            SendParameters sendParameters = new SendParameters { Unreliable = false, ChannelId = Settings.ItemEventChannel };
+            EventData eventData = new EventData((byte)EventCode.ItemPropertyUpdate, eventInstance);
+            var message = new ItemEventMessage(nebulaObject as Item, eventData, sendParameters);
+
+            if (!onlyReceive) {
+                (nebulaObject as Item).EventChannel.Publish(message);
+            }
+
+            if (nebulaObject.IsPlayer()) {
+                ReceiveEvent(eventData, sendParameters);  
+            } 
+        }
+
+
+        /// <summary>
+        /// Send to self player buffs info when they is updated
+        /// </summary>
+        /// <param name="buffHash"></param>
+        public void ReceiveBuffsUpdate(Hashtable buffHash) {
+            if (nebulaObject.IsPlayer()) {
+                ItemGeneric eventInstance = new ItemGeneric {
+                    ItemId = nebulaObject.Id,
+                    ItemType = nebulaObject.Type,
+                    CustomEventCode = (byte)CustomEventCode.BuffsUpdated
+                };
+                SendParameters sendParameters = new SendParameters { Unreliable = false, ChannelId = Settings.ItemEventChannel };
+                EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+                ReceiveEvent(eventData, sendParameters);
+            }
         }
 
         /// <summary>
@@ -575,6 +617,12 @@ namespace Nebula.Game.Components {
             if(!nebulaObject) {
                 return;
             }
+            if(receiver == EventReceiver.OwnerAndSubscriber) {
+                if(nebulaObject.getItemType() != ItemType.Avatar ) {
+                    receiver = EventReceiver.ItemSubscriber;
+                }
+            }
+
             healProperties.Add((int)SPC.ShotID, healID);
             healID++;
             if(healID == int.MaxValue) {

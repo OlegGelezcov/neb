@@ -18,9 +18,15 @@ namespace Nebula.Game.Skills {
             float resistTime = skill.data.Inputs.Value<float>("resist_time");
 
             string debuffID = skill.data.Id.ToString();
+            info.SetSkillUseState(SkillUseState.normal);
             if(!CheckForShotEnemy(source, skill)) {
                 return false;
             }
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
+                return false;
+            }
+
             var sourceWeapon = source.GetComponent<BaseWeapon>();
             var targetBonuses = source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>();
 
@@ -32,7 +38,7 @@ namespace Nebula.Game.Skills {
             }
 
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 if(mastery) {
                     resistTime *= 2;
                 }

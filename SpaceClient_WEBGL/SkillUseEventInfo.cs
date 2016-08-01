@@ -16,6 +16,9 @@ namespace Nebula.Client {
         public string message { get; private set; }
         public Hashtable useInfo { get; private set; }
 
+        public SkillUseState state { get; private set; }
+        public bool improvedByCompanionMastery { get; private set; }
+
         public void ParseInfo(Hashtable info) {
             isOn = info.GetValueBool((int)SPC.IsOn);
             data = new SkillData(info.Value<Hashtable>((int)SPC.Data));
@@ -26,6 +29,20 @@ namespace Nebula.Client {
             isSuccess = info.GetValueBool((int)SPC.IsSuccess);
             message = info.GetValueString((int)SPC.Message);
             useInfo = info.GetValueHash((int)SPC.Info);
+
+            state = SkillUseState.normal;
+            improvedByCompanionMastery = false;
+            if (useInfo != null ) {
+                if(useInfo.ContainsKey((int)SPC.SkillUseState)) {
+                    state = (SkillUseState)useInfo.GetValueByte((int)SPC.SkillUseState);
+                }
+                if(useInfo.ContainsKey((int)SPC.Mastery)) {
+                    improvedByCompanionMastery = (bool)useInfo[(int)SPC.Mastery];
+                }
+            }
+
+            
+            
         }
 
         public object GetInfoValue(SPC key) {

@@ -54,7 +54,7 @@ namespace Nebula.Client {
             this.lastFireTime = info.GetValueFloat((int)SPC.LastFireTime);
             this.damage = info.GetValueFloat((int)SPC.Damage);
             this.ready = info.GetValueBool((int)SPC.Ready);
-            this.hitProb = info.GetValueFloat((int)SPC.HitProb);
+            //this.hitProb = info.GetValueFloat((int)SPC.HitProb);
             this.optimalDistance = info.GetValueFloat((int)SPC.OptimalDistance);
             this.range = info.GetValueFloat((int)SPC.Range);
             this.farProb = info.GetValueFloat((int)SPC.FarProb);

@@ -14,8 +14,8 @@ namespace Nebula.Inventory.Objects {
             ParseInfo(info);
         }
 
-        public TurretInventoryObject(string inID, int inRace, bool inBinded = false ) {
-            Id = inID;
+        public TurretInventoryObject(int inRace, bool inBinded = false ) {
+            Id = "turret_inventory_object_" + inRace.ToString();
             race = inRace;
             binded = inBinded;
             isNew = true;

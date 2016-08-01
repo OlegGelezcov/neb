@@ -20,41 +20,13 @@ namespace Nebula.Game.Skills {
             float damageMult = skill.data.Inputs.Value<float>("dmg_mult");
             string id = source.Id + skill.data.Id;
 
-            var sourceTarget = source.GetComponent<PlayerTarget>();
-            var sourceCharacter = source.GetComponent<CharacterObject>();
-
-            if(!sourceCharacter) {
-                log.InfoFormat("Skill {0} error: source don;t has character", skill.data.Id.ToString("X8"));
+            info.SetSkillUseState(SkillUseState.normal);
+            if (!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
                 return false;
             }
-            if(!sourceTarget.hasTarget) {
-                log.InfoFormat("Skill {0} error: source don't have target", skill.data.Id.ToString("X8"));
-                return false;
-            }
-            if(!sourceTarget.targetObject) {
-                log.InfoFormat("Skill {0} error: source target object invalid", skill.data.Id.ToString("X8"));
-                return false;
-            }
-
-            var sourceWeapon = source.GetComponent<BaseWeapon>();
-            if (!sourceWeapon) {
-                log.InfoFormat("Skill {0} error: source don't has weapon", skill.data.Id.ToString("X8"));
-                return false;
-            }
-
-            var targetCharacter = sourceTarget.targetObject.GetComponent<CharacterObject>();
-            if(!targetCharacter) {
-                log.InfoFormat("Skill {0} error: target don;t has character", skill.data.Id.ToString("X8"));
-                return false;
-            }
-            if(sourceCharacter.RelationTo(targetCharacter) == FractionRelation.Friend) {
-                log.InfoFormat("Skill {0} error: source and target in friend fraction, source fraction = {1}, target fraction = {2}",
-                    skill.data.Id.ToString("X8"), (FractionType)(byte)sourceCharacter.fraction, (FractionType)(byte)targetCharacter.fraction);
-                return false;
-            }
-
-            if (Mathf.Approximately(sourceWeapon.HitProbTo(sourceTarget.nebulaObject), 0f)) {
-                log.InfoFormat("Skill {0} error: hit prob is 0", skill.data.Id.ToString("X8"));
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
 
@@ -63,8 +35,8 @@ namespace Nebula.Game.Skills {
                 damageMult *= 2;
             }
             WeaponHitInfo hit;
-            var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, damageMult);
-            if(hit.hitAllowed) {
+            var shotInfo = source.Weapon().GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, damageMult);
+            if(hit.normalOrMissed) {
                 if(mastery) {
                     buffDamageInterval *= 2;
                 }

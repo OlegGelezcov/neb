@@ -12,7 +12,7 @@ namespace Nebula.Game.Skills {
     public class Skill_0000045E : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(ShotToEnemyRestricted(source, skill)) {
+            if (NotEnemyCheck(source, skill, info)) {
                 return false;
             }
 
@@ -28,7 +28,7 @@ namespace Nebula.Game.Skills {
 
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, damageMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 Vector3 center = (source.transform.position + targetObject.transform.position) * 0.5f;
                 float radius = source.transform.DistanceTo(targetObject.transform) * 0.5f;
                 var skillComponent = source.GetComponent<Skill_0000045E_Component>();

@@ -200,6 +200,10 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                             }
                         }
                         break;
+                    case "PlanetObjectUnderAttackNotification": {
+                            log.Info("PlanetObjectUnderAttackNotification(): end response...");
+                        }
+                        break;
                 }
             }
         } else {

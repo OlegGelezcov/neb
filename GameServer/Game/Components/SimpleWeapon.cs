@@ -45,6 +45,9 @@ namespace Nebula.Game.Components {
             mCooldown = data.cooldown;
             mUseTargetHP = data.useTargetHPForDamage;
             mTargetHPPercent = data.targetHPPercentDamage;
+            if(props != null  ) {
+                props.SetProperty((byte)PS.Damage, m_DamageVal);
+            }
         }
 
         public override float optimalDistance {

@@ -10,7 +10,13 @@ namespace Nebula.Game.Skills {
     public class Skill_00000441 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
             if(ShotToEnemyRestricted(source, skill)) {
+                info.SetSkillUseState(Common.SkillUseState.invalidTarget);
+                return false;
+            }
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(Common.SkillUseState.tooFar);
                 return false;
             }
 

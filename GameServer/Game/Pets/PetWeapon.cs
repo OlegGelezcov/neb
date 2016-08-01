@@ -56,7 +56,7 @@ namespace Nebula.Game.Pets {
             if(m_Pet.info.damageType == Common.WeaponDamageType.damage) {
                 WeaponHitInfo hit;
                 Hashtable shot = Fire(m_Target.targetObject, out hit);
-                if(hit.hitAllowed) {
+                if(hit.normalOrMissed) {
                     m_Message.SendShot(Common.EventReceiver.ItemSubscriber, shot);
                     ResetTimer();
                 }

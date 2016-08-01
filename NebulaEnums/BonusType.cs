@@ -245,7 +245,8 @@ namespace Common {
         decrease_energy_regen_on_pc,
         decrease_energy_regen_on_cnt,
         auto_loot_chest,
-        invisibility
+        invisibility,
+        block_skills
     }
 
     /// <summary>
@@ -312,6 +313,7 @@ namespace Common {
                 case BonusType.decrease_dron_strength_on_cnt:
                 case BonusType.decrease_dron_strength_on_pc:
                 case BonusType.increase_input_damage_on_pc:
+                case BonusType.block_skills:
                     return true;
                 default:
                     return false;

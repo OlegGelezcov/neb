@@ -16,8 +16,8 @@ namespace Nebula.Server.Nebula.Server.Components.PlanetObjects {
         public CommandCenterPlanetObjectComponentData(Hashtable hash)
             : base(hash) { }
 
-        public CommandCenterPlanetObjectComponentData(int row, int column, PlanetBasedObjectType objectType, string ownerId, float life, float lifeTimer)
-            : base(row, column, objectType, ownerId, life, lifeTimer) { }
+        public CommandCenterPlanetObjectComponentData(int row, int column, PlanetBasedObjectType objectType, string ownerId, float life, float lifeTimer, string characterId, string characterName, string coalitionName)
+            : base(row, column, objectType, ownerId, life, lifeTimer, characterId, characterName, coalitionName) { }
 
         public override ComponentSubType subType {
             get {

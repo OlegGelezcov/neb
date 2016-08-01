@@ -212,18 +212,18 @@ namespace Nebula.Balance {
                     baseVal = 0f;
                     break;
                 case 2:
-                    baseVal = 0.1f;
+                    baseVal = 0.05f;
                     break;
                 case 3:
-                    baseVal = 0.2f;
+                    baseVal = 0.1f;
                     break;
                 case 4:
-                    baseVal = 0.3f;
+                    baseVal = 0.15f;
                     break;
                      
             }
 
-            return baseVal + level * 0.01f;
+            return baseVal + level * 0.002f;
         }
     }
 }

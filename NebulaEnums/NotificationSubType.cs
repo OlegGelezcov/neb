@@ -12,6 +12,7 @@ namespace ServerClientCommon {
         RequestFriend,
         RequestToGroup,
         MiningStationAttack,
-        AuctionPurchase
+        AuctionPurchase,
+        PlanetObjectAttack
     }
 }

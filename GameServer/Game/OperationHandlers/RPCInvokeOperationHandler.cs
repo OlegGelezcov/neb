@@ -76,12 +76,52 @@ namespace Nebula.Game.OperationHandlers {
                     return CallGetCells(actor, request, operation);
                 case RPCID.rpc_resetSystemToNeutral:
                     return CallResetSystemToNeutral(actor, request, operation);
+                case RPCID.rpc_CollectOreFromPlanetMiningStation:
+                    return CallCollectOreFromPlanetMiningStation(actor, request, operation);
+                case RPCID.rpc_CreateTestSharedChest:
+                    return CallCreateTestSharedChest(actor, request, operation);
+                case RPCID.rpc_MoveAllFromInventoryToStationWithExclude:
+                    return CallMoveAllFromInventoryToStationWithExclude(actor, request, operation);
                 default:
                     return new OperationResponse(request.OperationCode) {
                         ReturnCode = (int)ReturnCode.InvalidRPCID,
                         DebugMessage = string.Format("not found rpc with id = {0}", operation.rpcId)
                     };
             }
+        }
+
+        private OperationResponse CallMoveAllFromInventoryToStationWithExclude(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                string[] excludeItems = (string[])op.parameters[0];
+                Hashtable hash = player.ActionExecutor.MoveAllFromInventoryToStationWithExclude(excludeItems);
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = hash
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallCreateTestSharedChest(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = player.ActionExecutor.CreateTestSharedChest()
+            };
+            return new OperationResponse(request.OperationCode, responseInstance);
+        }
+
+        private OperationResponse CallCollectOreFromPlanetMiningStation(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                string itemId = (string)op.parameters[0];
+                Hashtable hash = player.ActionExecutor.CollectOreFromPlanetMiningStation(itemId);
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = hash
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
         }
 
         private OperationResponse CallResetSystemToNeutral(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {

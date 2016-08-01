@@ -13,7 +13,13 @@ namespace Nebula.Game.Skills {
     public class Skill_000003F2 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(SkillUseState.normal);
             if (!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false;
+            }
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
             float dmgMult = skill.data.Inputs.GetValue<float>("dmg_mult", 0f);
@@ -27,7 +33,7 @@ namespace Nebula.Game.Skills {
                 dmgMult *= 2;
             }
             var shot = weapon.Fire(out hit, skill.data.Id, dmgMult);
-            if (hit.hitAllowed) {
+            if (hit.normalOrMissed) {
                 if(mastery) {
                     speedTime *= 2;
                 }

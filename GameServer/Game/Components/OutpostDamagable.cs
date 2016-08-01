@@ -110,5 +110,14 @@ namespace Nebula.Game.Components {
             }
             return new Hashtable();
         }
+
+        protected override void AddHealth(float val, bool byHeal) {
+            if(byHeal) {
+                if(val > fixedDamage ) {
+                    val = fixedDamage;
+                }
+            }
+            base.AddHealth(val, byHeal);
+        }
     }
 }

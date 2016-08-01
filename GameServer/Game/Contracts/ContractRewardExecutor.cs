@@ -112,7 +112,7 @@ namespace Nebula.Game.Contracts {
         private ServerInventoryItem GiveTurretReward(MmoActor player, ContractTurretDataReward turretReward ) {
             RaceableObject raceableComponent = player.GetComponent<RaceableObject>();
             if (raceableComponent != null) {
-                TurretInventoryObject turretInventoryObject = new TurretInventoryObject("turret", raceableComponent.race);
+                TurretInventoryObject turretInventoryObject = new TurretInventoryObject(raceableComponent.race);
                 return new ServerInventoryItem(turretInventoryObject, turretReward.count);
             }
             return null;

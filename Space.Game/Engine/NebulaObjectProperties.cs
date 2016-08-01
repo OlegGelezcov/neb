@@ -55,6 +55,28 @@ namespace Nebula.Engine {
             propertiesRevision++;
         }
 
+        public void SetProperty(PS key, object pvalue) {
+            SetProperty((byte)key, pvalue);
+        }
+
+        public bool HasProperty(PS key) {
+            CheckProperties();
+            if(properties.ContainsKey((byte)key)) {
+                return true;
+            }
+            return false;
+        }
+
+        public object GetProperty(PS key) {
+            if(HasProperty(key)) {
+                object pObj;
+                if(properties.TryGetValue((byte)key, out pObj)) {
+                    return pObj;
+                }
+            }
+            return null;
+        }
+
 
 
         public Hashtable raw {

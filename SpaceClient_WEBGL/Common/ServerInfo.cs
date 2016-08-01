@@ -1,6 +1,7 @@
 ﻿using Common;
 using System.Linq;
 using ExitGames.Client.Photon;
+using Nebula.Client;
 
 namespace ServerClientCommon {
     public class ServerInfo : IInfo {
@@ -32,7 +33,13 @@ namespace ServerClientCommon {
         }
 
         public override string ToString() {
-            return string.Format("server type={0}, ip={1}, protocol={2}, port={3}, index={4}, ipv6={5}", ServerType, ip, Protocol, Port, Index, ipv6);
+            string str = string.Format("server type={0}, ip={1}, protocol={2}, port={3}, index={4}, ipv6={5}\n", ServerType, ip, Protocol, Port, Index, ipv6);
+            if(Locations != null ) {
+                str += Locations.ToList().ToCharacterSeparatedString(',');
+            } else {
+                str += "(locations is null)";
+            }
+            return str;
         }
 
         public void ParseInfo(Hashtable info) {

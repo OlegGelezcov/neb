@@ -114,6 +114,8 @@ namespace Common
         ContractId = 92,
         Mark = 93,
         Group = 94,
-        Icon = 95
+        Icon = 95,
+        WeaponState = 96,
+        SkillsBlocked = 97
     }
 }

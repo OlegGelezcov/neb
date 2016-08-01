@@ -18,7 +18,12 @@ namespace Nebula.Game.Skills {
             float speed_pc = skill.data.Inputs.Value<float>("speed_pc");
             float speed_time = skill.data.Inputs.Value<float>("speed_time");
             string id = skill.data.Id.ToString();
+            info.SetSkillUseState(SkillUseState.normal);
             if(!CheckForShotEnemy(source, skill)) {
+                return false;
+            }
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
             var sourceWeapon = source.GetComponent<BaseWeapon>();
@@ -30,7 +35,7 @@ namespace Nebula.Game.Skills {
             }
 
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 if(mastery) {
                     speed_time *= 2;
                 }

@@ -21,7 +21,12 @@ namespace Nebula.Game.Skills {
 
             string id = source.Id +  skill.data.Id.ToString();
 
+            info.SetSkillUseState(SkillUseState.normal);
             if(!CheckForShotEnemy(source, skill)) {
+                return false;
+            }
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
 
@@ -29,7 +34,7 @@ namespace Nebula.Game.Skills {
 
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 //Buff hpRestorBuff = new Buff(id, null, BonusType.restore_hp_on_pc_for_sec, hpRestorDur, hpRestorPc);
                 //source.GetComponent<PlayerBonuses>().SetBuff(hpRestorBuff);
                 var damagable = source.GetComponent<DamagableObject>();
@@ -45,5 +50,7 @@ namespace Nebula.Game.Skills {
                 return false;
             }
         }
+
+
     }
 }

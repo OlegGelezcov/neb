@@ -14,13 +14,11 @@ namespace Nebula.Game.Skills {
     public class Skill_00000454 : SkillExecutor  {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!source) {
+
+            if (NotEnemyCheck(source, skill, info)) {
                 return false;
             }
 
-            if(!CheckForShotEnemy(source, skill)) {
-                return false;
-            }
             float dmgMult = skill.data.Inputs.Value<float>("dmg_mult");
             float dmgTime = skill.data.Inputs.Value<float>("dmg_time");
             int dmgMultCount = skill.data.Inputs.Value<int>("dmg_mult_count");

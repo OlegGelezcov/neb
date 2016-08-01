@@ -17,5 +17,16 @@ namespace Nebula.Client {
             }
             return stringBuilder.ToString();
         }
+
+        public static string ToCharacterSeparatedString<T>(this List<T> source, char ch) {
+            if(source == null ) {
+                return string.Empty;
+            }
+            var stringBuilder = new StringBuilder();
+            foreach(var str in source ) {
+                stringBuilder.Append(str + ch.ToString() + " ");
+            }
+            return stringBuilder.ToString();
+        }
     }
 }

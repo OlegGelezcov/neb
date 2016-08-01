@@ -7,12 +7,19 @@ using Nebula.Engine;
 using Nebula.Game.Components;
 using Space.Game;
 using Nebula.Game.Bonuses;
+using Common;
 
 namespace Nebula.Game.Skills {
     public class Skill_00000408 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!CheckForShotEnemy(source, skill)) {
+            info.SetSkillUseState(SkillUseState.normal);
+            if (!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false;
+            }
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
 
@@ -26,7 +33,7 @@ namespace Nebula.Game.Skills {
             }
             WeaponHitInfo hit;
             var shot = source.Weapon().Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 Buff critChanceDebuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.decrease_crit_chance_on_pc, critChanceTime, critChancePc);
                 source.Target().targetObject.Bonuses().SetBuff(critChanceDebuff);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);

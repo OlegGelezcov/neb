@@ -29,6 +29,7 @@ namespace Nebula.Game.Skills {
         //}
 
 
+
         static SkillExecutor() {
             emptyExecutor = new EmptySkillExecutor();
 
@@ -247,6 +248,7 @@ namespace Nebula.Game.Skills {
         /// <returns>Return dictionary of founded items</returns>
         protected ConcurrentDictionary<string, Item> GetHealTargets(NebulaObject source, NebulaObject target, float radius ) {
             var sourceCharacter = source.Character();
+
             return source.mmoWorld().GetItems((item) => {
                 float distance = target.transform.DistanceTo(item.transform);
                 if (distance < radius) {
@@ -265,6 +267,43 @@ namespace Nebula.Game.Skills {
                 }
                 return false;
             });
+        }
+
+        protected ConcurrentDictionary<string, Item> GetNearestFriends(NebulaObject source, float radius) {
+            var sourceCharacter = source.Character();
+            return source.mmoWorld().GetItems((item) => {
+                var itemDamagable = item.Damagable();
+                var itemCharacter = item.Character();
+                var itemBonuses = item.Bonuses();
+                bool allItemComponentsPresent = itemDamagable && itemCharacter && itemBonuses;
+
+                if(allItemComponentsPresent) {
+                    if(sourceCharacter.RelationTo(itemCharacter) == FractionRelation.Friend ) {
+                        float distance = sourceCharacter.transform.DistanceTo(item.transform);
+                        if (distance < radius) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            });
+        }
+
+        protected bool NotAllyCheck(NebulaObject source, Hashtable info ) {
+            info.SetSkillUseState(SkillUseState.normal);
+            if(!CheckForHealAlly(source)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return true;
+            }
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
+                return true;
+            }
+            return false;
+        }
+
+        protected bool FriendTargetInvalid(NebulaObject source) {
+            return (!CheckForHealAlly(source));
         }
 
         //Check range heal to ally when using skill
@@ -297,6 +336,19 @@ namespace Nebula.Game.Skills {
             return false;
         }
 
+        public bool NotEnemyCheck(NebulaObject source, PlayerSkill skill, Hashtable info) {
+            info.SetSkillUseState(SkillUseState.normal);
+            if(ShotToEnemyRestricted(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return true;
+            }
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
+                return true;
+            }
+            return false;
+        }
+
         protected bool ShotToEnemyRestricted(NebulaObject source, PlayerSkill skill ) {
             return (!CheckForShotEnemy(source, skill));
         }
@@ -316,10 +368,10 @@ namespace Nebula.Game.Skills {
                 log.InfoFormat("Skill {0} error: source don't has weapon", skill.data.Id.ToString("X8"));
                 return false;
             }
-            if (Mathf.Approximately(sourceWeapon.HitProbTo(sourceTarget.nebulaObject), 0f)) {
-                log.InfoFormat("Skill {0} error: hit prob is 0", skill.data.Id.ToString("X8"));
-                return false;
-            }
+            //if (Mathf.Approximately(sourceWeapon.HitProbTo(sourceTarget.nebulaObject), 0f)) {
+            //    log.InfoFormat("Skill {0} error: hit prob is 0", skill.data.Id.ToString("X8"));
+            //    return false;
+            //}
 
             var targetBonuses = sourceTarget.targetObject.GetComponent<PlayerBonuses>();
             if (!targetBonuses) {
@@ -343,6 +395,10 @@ namespace Nebula.Game.Skills {
             return true;
         }
 
+        protected bool NotCheckDistance(NebulaObject source) {
+            return source.Weapon().BlockedByDistance(source.Target().targetObject);
+        }
+
         protected bool CheckForShotFriend(NebulaObject source, PlayerSkill skill ) {
             var sourceTarget = source.GetComponent<PlayerTarget>();
             if (!sourceTarget.hasTarget) {
@@ -358,10 +414,10 @@ namespace Nebula.Game.Skills {
                 log.InfoFormat("Skill {0} error: source don't has weapon", skill.data.Id.ToString("X8"));
                 return false;
             }
-            if (Mathf.Approximately(sourceWeapon.HitProbTo(sourceTarget.nebulaObject), 0f)) {
-                log.InfoFormat("Skill {0} error: hit prob is 0", skill.data.Id.ToString("X8"));
-                return false;
-            }
+            //if (Mathf.Approximately(sourceWeapon.HitProbTo(sourceTarget.nebulaObject), 0f)) {
+            //    log.InfoFormat("Skill {0} error: hit prob is 0", skill.data.Id.ToString("X8"));
+            //    return false;
+            //}
 
             var targetBonuses = sourceTarget.targetObject.GetComponent<PlayerBonuses>();
             if (!targetBonuses) {

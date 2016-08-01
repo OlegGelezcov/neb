@@ -14,22 +14,51 @@ namespace Nebula.Game.Skills {
     public class Skill_00000410 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!CheckForHealAlly(source)) {
+            info.SetSkillUseState(Common.SkillUseState.normal);
+
+            //if(!CheckForHealAlly(source)) {
+            //    info.SetSkillUseState(Common.SkillUseState.invalidTarget);
+            //    return false;
+            //}
+            //if(NotCheckDistance(source)) {
+            //    info.SetSkillUseState(Common.SkillUseState.tooFar);
+            //    return false;
+            //}
+
+            if(!source) {
+                info.SetSkillUseState(Common.SkillUseState.invalidTarget);
                 return false;
             }
+
             float healMult = skill.GetFloatInput("heal_mult");
             float healAreaMult = skill.GetFloatInput("area_heal");
             float radius = skill.GetFloatInput("radius");
 
-            float damage = source.Weapon().GetDamage(false).totalDamage;
-            float targetHeal = damage * healMult;
+            float damage = source.Weapon().GetDamage().totalDamage;
+            float selfHeal = damage * healMult;
             float areaHeal = damage * healAreaMult;
 
             bool mastery = RollMastery(source);
             if(mastery) {
-                targetHeal *= 2;
+                info.SetMastery(true);
+                selfHeal *= 2;
                 areaHeal *= 2;
+            } else {
+                info.SetMastery(false);
             }
+
+            var weapon = source.Weapon();
+            var message = source.MmoMessage();
+
+            foreach(var friend in GetNearestFriends(source, radius)) {
+                if(friend.Value.Id == source.Id ) {
+                    message.SendHeal(Common.EventReceiver.OwnerAndSubscriber, weapon.HealSelf(selfHeal, skill.idInt));
+                } else {
+                    message.SendHeal(Common.EventReceiver.OwnerAndSubscriber, weapon.Heal(friend.Value, areaHeal, skill.idInt));
+                }
+            }
+            return true;
+            /*
             var weapon = source.Weapon();
             var heal = weapon.Heal(source.Target().targetObject, targetHeal, skill.data.Id);
 
@@ -41,7 +70,7 @@ namespace Nebula.Game.Skills {
                 var additionalHeal = weapon.Heal(pitem.Value, areaHeal);
                 message.SendHeal(Common.EventReceiver.OwnerAndSubscriber, additionalHeal);
             }
-            return true;
+            return true;*/
         }
     }
 }

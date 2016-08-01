@@ -107,6 +107,19 @@ namespace SelectCharacter {
             return (int)ReturnCode.Ok;
         }
 
+        public object PlanetObjectUnderAttackNotification(string characterID, string worldID, byte race, int planetObjectType ) {
+            string id = "PMS_" + worldID + planetObjectType.ToString() + race.ToString();
+            Hashtable data = new Hashtable {
+                { (int)SPC.WorldId, worldID },
+                { (int)SPC.Race, (int)race },
+                { (int)SPC.ObjectType, planetObjectType }
+            };
+            var notification = mApplication.Notifications.Create(id, "planet_object_attack", data, NotficationRespondAction.Delete, NotificationSourceServiceType.Server,
+                 NotificationSubType.PlanetObjectAttack);
+            mApplication.Notifications.SetNotificationToCharacter(characterID, notification);
+            return (int)ReturnCode.Ok;
+        }
+
         public object SendChatBroadcast(string message) {
             ChatMessage msg = new ChatMessage {
                 chatGroup = (int)ChatGroup.race,

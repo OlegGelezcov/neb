@@ -15,7 +15,13 @@ namespace Nebula.Game.Skills {
     public class Skill_0000042D : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
             if(ShotToEnemyRestricted(source, skill)) {
+                info.SetSkillUseState(Common.SkillUseState.invalidTarget);
+                return false;
+            }
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(Common.SkillUseState.tooFar);
                 return false;
             }
 
@@ -34,7 +40,7 @@ namespace Nebula.Game.Skills {
             WeaponHitInfo hit;
 
             Hashtable shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 message.SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
                 ConcurrentDictionary<string, Item> targets = GetTargets(source, targetObject, radius);
                 int counter = 0;

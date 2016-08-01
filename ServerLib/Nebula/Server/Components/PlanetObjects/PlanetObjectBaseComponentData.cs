@@ -17,6 +17,9 @@ namespace Nebula.Server.Nebula.Server.Components.PlanetObjects {
         public string ownerId { get; private set; } = string.Empty;
         public float life { get; private set; }
         public float lifeTimer { get; private set; }
+        public string characterId { get; private set; } = string.Empty;
+        public string characterName { get; private set; } = string.Empty;
+        public string coalitionName { get; private set; } = string.Empty;
 
         public PlanetObjectBaseComponentData(XElement element ) {
             row = element.GetInt("row");
@@ -40,15 +43,28 @@ namespace Nebula.Server.Nebula.Server.Components.PlanetObjects {
             if(hash.ContainsKey((int)SPC.Timer)) {
                 lifeTimer = hash.GetValue<float>((int)SPC.Timer, 0f);
             }
+            if(hash.ContainsKey((int)SPC.CharacterId)) {
+                this.characterId = hash.GetValue<string>((int)SPC.CharacterId, string.Empty);
+            }
+            if(hash.ContainsKey((int)SPC.CharacterName)) {
+                this.characterName = hash.GetValue<string>((int)SPC.CharacterName, string.Empty);
+            }
+            if(hash.ContainsKey((int)SPC.GuildName)) {
+                this.coalitionName = hash.GetValue<string>((int)SPC.GuildName, string.Empty);
+            }
         }
 
-        public PlanetObjectBaseComponentData(int row, int column, PlanetBasedObjectType objectType, string ownerId, float life, float lifeTimer) {
+        public PlanetObjectBaseComponentData(int row, int column, PlanetBasedObjectType objectType, string ownerId, float life, float lifeTimer,
+            string characterId, string characterName, string coalitionName ) {
             this.row = row;
             this.column = column;
             this.objectType = objectType;
             this.ownerId = ownerId;
             this.life = life;
             this.lifeTimer = lifeTimer;
+            this.characterId = characterId;
+            this.characterName = characterName;
+            this.coalitionName = coalitionName;
         }
 
         public virtual Hashtable AsHash() {
@@ -58,7 +74,10 @@ namespace Nebula.Server.Nebula.Server.Components.PlanetObjects {
                 { (int)SPC.PlanetObjectType, (int)objectType },
                 { (int)SPC.OwnerGameRef, ownerId },
                 { (int)SPC.Interval, life },
-                { (int)SPC.Timer, lifeTimer }
+                { (int)SPC.Timer, lifeTimer },
+                { (int)SPC.CharacterId, characterId },
+                { (int)SPC.CharacterName, characterName },
+                { (int)SPC.GuildName, coalitionName }
             };
         }
 

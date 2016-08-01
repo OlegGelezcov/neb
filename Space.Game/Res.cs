@@ -178,6 +178,14 @@
 
             difficulty = new DifficultyRes();
             difficulty.Load(Path.Combine(basePath, "Data/Drop/difficulty.xml"));
+
+            planetOreMap = new Planet2OreMapRes();
+            planetOreMap.Load(Path.Combine(basePath, "Data/planet2oremap.xml"));
+        }
+
+        public Planet2OreMapRes planetOreMap {
+            get;
+            private set;
         }
 
         public DifficultyRes difficulty {

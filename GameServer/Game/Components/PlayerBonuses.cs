@@ -20,6 +20,7 @@ namespace Nebula.Game.Components {
 
         private List<BonusType> mSpeedDebuffs;
         private BonusesComponentData mInitData;
+        private MmoMessageComponent m_Mmo;
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -41,6 +42,7 @@ namespace Nebula.Game.Components {
 
         public override void Start() {
             InitVariables();
+            m_Mmo = GetComponent<MmoMessageComponent>();
         }
 
         public void Respawn() {
@@ -176,6 +178,13 @@ namespace Nebula.Game.Components {
                     bon.SetBuff(buff);
                 }
             }
+            if(success && nebulaObject.IsPlayer()) {
+                if(m_Mmo != null) {
+                    var buffHash = GetInfo();
+                    SetBuffsProperty(buffHash);
+                    m_Mmo.SendPropertyUpdate(new Hashtable { { (byte)PS.Bonuses, buffHash } }, true);
+                }
+            }
         }
 
         public void SetBuff(Buff buff) {
@@ -241,7 +250,11 @@ namespace Nebula.Game.Components {
             foreach(var bonusPair in bonuses) {
                 bonusPair.Value.Update(deltaTime);
             }
-            props.SetProperty((byte)PS.Bonuses, GetInfo());
+            SetBuffsProperty(GetInfo());
+        }
+
+        private void SetBuffsProperty(Hashtable buffHash) {
+            props.SetProperty((byte)PS.Bonuses, buffHash);
         }
 
         public Hashtable GetInfo()

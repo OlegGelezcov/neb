@@ -15,7 +15,14 @@ namespace Nebula.Game.Skills {
             info = new Hashtable();
 
             string id = skill.data.Id.ToString();
+
+            info.SetSkillUseState(SkillUseState.normal);
             if (!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false;
+            }
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
 
@@ -35,7 +42,7 @@ namespace Nebula.Game.Skills {
             }
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
-            if (hit.hitAllowed) {
+            if (hit.normalOrMissed) {
 
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 var items = (source.world as MmoWorld).GetItems((it) => {

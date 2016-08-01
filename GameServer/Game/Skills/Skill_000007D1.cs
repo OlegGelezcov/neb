@@ -12,7 +12,7 @@ namespace Nebula.Game.Skills {
     public class Skill_000007D1 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!CheckForShotEnemy(source, skill)) {
+            if (NotEnemyCheck(source, skill, info)) {
                 return false;
             }
 
@@ -35,7 +35,7 @@ namespace Nebula.Game.Skills {
 
             BonusType[] speedDebuffs = BuffUtils.GetDebuffsForParameter(BuffParameter.speed);
 
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 message.SendShot(EventReceiver.OwnerAndSubscriber, shot);
 
                 var items = source.mmoWorld().GetItems((item) => {
@@ -62,7 +62,7 @@ namespace Nebula.Game.Skills {
                 foreach(var pitem in items) {
                     WeaponHitInfo itemHit;
                     var itemShot = sourceWeapon.Fire(pitem.Value, out itemHit, skill.data.Id, dmgMult);
-                    if(hit.hitAllowed) {
+                    if(hit.normalOrMissed) {
                         message.SendShot(EventReceiver.OwnerAndSubscriber, itemShot);
                     } else {
                         message.SendShot(EventReceiver.OwnerAndSubscriber, shot);

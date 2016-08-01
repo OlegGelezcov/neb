@@ -30,7 +30,6 @@ namespace Nebula.Game.Components {
 
         private const string RESPAWN_SKILL_ID = "000003F9";
         private const string SKILL_00000435 = "00000435";
-
         private const string INCREASE_MAX_HP_FOR_CRIT_ID = "000003FC";
         private const int INCREASE_MAX_HP_FOR_CRIT_BUFF_TAG = 2001;
         private const string MOVE_DAMAGE_FROM_TARGET_TO_ME_SKILL_ID = "00000404";
@@ -52,11 +51,15 @@ namespace Nebula.Game.Components {
         private int m456ID;
         private int m45CID;
 
+
+
         public class DamageReceiver {
             public DamagableObject target { get; set; }
             public float expireTime { get; set; }
             public float damagePercent { get; set; }
         }
+
+
 
         private ConcurrentDictionary<string, DamageReceiver> mDamageHealReceivers = new ConcurrentDictionary<string, DamageReceiver>();
 
@@ -76,6 +79,8 @@ namespace Nebula.Game.Components {
         //number of uses in sequence one skill
         private int mSequenceSkillCounter = 0;
         private DamagableObject mDamagable;
+
+        private readonly ActionTimer m_BlockSkillsTimer = new ActionTimer();
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -120,6 +125,7 @@ namespace Nebula.Game.Components {
         private bool started { get; set; } = false;
 
         private bool m_StartCalled = false;
+        private bool m_Blocked = false;
 
         public override void Start() {
             if (!m_StartCalled) {
@@ -138,7 +144,14 @@ namespace Nebula.Game.Components {
                 m45CID = SkillExecutor.SkilIDFromHexString("0000045C");
 
             }
+            SetBlockedProperty(false);
             started = true;
+        }
+
+        public bool blocked {
+            get {
+                return m_Blocked;
+            }
         }
 
         public void Load() {
@@ -216,6 +229,7 @@ namespace Nebula.Game.Components {
         }
 
         public bool UseSkill(int index, NebulaObject target) {
+
             if (index >= 0 && index < 6) {
                 return this.skills[index].Use(target);
             }
@@ -246,7 +260,24 @@ namespace Nebula.Game.Components {
             m415.Update(deltaTime);
             m41C.Update(deltaTime);
             m432.Update(deltaTime);
+            m_BlockSkillsTimer.Update(deltaTime);
             //m3FD.Update(deltaTime);
+        }
+
+        public void Block(float interval) {
+            m_BlockSkillsTimer.Start(interval, () => {
+                SetBlockedProperty(true);
+            }, () => {
+                SetBlockedProperty(false);
+            });
+        }
+
+        private void SetBlockedProperty(bool val) {
+            m_Blocked = val;
+            props.SetProperty((byte)PS.SkillsBlocked, val);
+            if(message != null ) {
+                message.SendPropertyUpdate(new Hashtable { { (byte)PS.SkillsBlocked, val } }, true );
+            }
         }
 
         private void UpdateSkillAtIndex(int index, ShipModel model) {
@@ -797,6 +828,38 @@ namespace Nebula.Game.Components {
                 }
             }
         }
+
+        public class ActionTimer {
+
+            private bool m_Started = false;
+            private Action m_EndAction = null;
+            private float m_Timer = 0;
+            private float m_Interval = 0;
+
+            public void Start(float interval, Action startAction, Action endAction) {
+                if(startAction != null) {
+                    startAction();
+                }
+                m_Interval = interval;
+                m_Timer = 0;
+                m_EndAction = endAction;
+                m_Started = true;
+            }
+
+            public void Update(float deltaTime) {
+                if(m_Started) {
+                    m_Timer += deltaTime;
+                    if(m_Timer >= m_Interval ) {                      
+                        if(m_EndAction != null ) {
+                            m_EndAction();
+                            m_EndAction = null;
+                        }
+                        m_Started = false;
+                    }
+                }
+            }
+        }
+
     }
 
 

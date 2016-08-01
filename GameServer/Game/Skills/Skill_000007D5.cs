@@ -12,10 +12,7 @@ namespace Nebula.Game.Skills {
     public class Skill_000007D5 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!source) {
-                return false;
-            }
-            if(!CheckForShotEnemy(source, skill)) {
+            if (NotEnemyCheck(source, skill, info)) {
                 return false;
             }
 

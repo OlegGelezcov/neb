@@ -111,7 +111,15 @@ namespace Nebula.Game.Components {
         public void SetGuildInfo(Hashtable hash) {
             guildId = hash.GetValue<string>((int)SPC.Guild, string.Empty);
             guildName = hash.GetValue<string>((int)SPC.GuildName, string.Empty);
+            if (guildId == null) {
+                guildId = string.Empty;
+            }
+            if (guildName == null) {
+                guildName = string.Empty;
+            }
             nebulaObject.properties.SetProperty((byte)PS.GuildName, guildName);
+
+
             log.InfoFormat("guild name setted = {0}", guildName);
         }
 
@@ -216,7 +224,7 @@ namespace Nebula.Game.Components {
             mMessage.ReceiveExp(e);
 
             if(m_PetManager) {
-                m_PetManager.AddExp((int)System.Math.Round((float)(e + additionalExp) * 0.5f));
+                m_PetManager.AddExp(e);
             }
             if(m_Achivments != null ) {
                 m_Achivments.SetVariable("player_level", resource.Leveling.LevelForExp(exp));

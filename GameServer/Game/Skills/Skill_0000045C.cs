@@ -10,6 +10,7 @@ namespace Nebula.Game.Skills {
     public class Skill_0000045C : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
             return true;
         }
     }

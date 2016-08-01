@@ -1,4 +1,5 @@
-﻿using Nebula.Drop;
+﻿using Common;
+using Nebula.Drop;
 using Nebula.Engine;
 using Nebula.Game.Components;
 using Space.Game;
@@ -15,7 +16,13 @@ namespace Nebula.Game.Skills {
             var sourceCharacter = source.Character();
             var sourceRaceable = source.Raceable();
 
-            if(!CheckForShotEnemy(source, skill)) {
+            info.SetSkillUseState(SkillUseState.normal);
+            if (!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false;
+            }
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
 
@@ -31,7 +38,7 @@ namespace Nebula.Game.Skills {
 
             }
             var shot = source.Weapon().Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
 
                 WeaponDamage sInpWeapDmg = new WeaponDamage(sourceWeapon.myWeaponBaseType);

@@ -38,8 +38,8 @@ namespace Nebula.Server.Nebula.Server.Components.PlanetObjects {
         }
 
         public MiningStationPlanetObjectComponentData(int row, int column, PlanetBasedObjectType objectType, string ownerId,
-            string oreId, int maxCount, int curCount, float lifeTimer, float lifeInterval, float speed)
-            : base(row, column, objectType, ownerId, lifeInterval, lifeTimer ) {
+            string oreId, int maxCount, int curCount, float lifeTimer, float lifeInterval, float speed, string characterId, string characterName, string coalitionName)
+            : base(row, column, objectType, ownerId, lifeInterval, lifeTimer, characterId, characterName, coalitionName ) {
             this.oreId = oreId;
             this.maxCount = maxCount;
             this.curCount = curCount;
@@ -68,6 +68,10 @@ namespace Nebula.Server.Nebula.Server.Components.PlanetObjects {
         public void AddCount(int cnt) {
             curCount += cnt;
             curCount = (int)GameMath.Mathf.Clamp(curCount, 0, maxCount);
+        }
+
+        public void ClearCount() {
+            curCount = 0;
         }
     }
 }

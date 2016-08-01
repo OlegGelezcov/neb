@@ -24,6 +24,12 @@ namespace Space.Game
             mTime = Time.curtime();
         }
 
+        public bool isAvatar {
+            get {
+                return DamagerType == ItemType.Avatar;
+            }
+        }
+
         public string DamagerId {
             get {
                 return _damagerId;

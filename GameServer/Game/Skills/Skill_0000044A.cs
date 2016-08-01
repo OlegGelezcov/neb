@@ -16,10 +16,12 @@ namespace Nebula.Game.Skills {
 
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(ShotToEnemyRestricted(source, skill)) {
+
+            if (NotEnemyCheck(source, skill, info)) {
                 ResetCounter();
                 return false;
             }
+
 
             var dmgMult = skill.GetFloatInput("dmg_mult");
             var hpPc = skill.GetFloatInput("hp_pc");
@@ -43,7 +45,7 @@ namespace Nebula.Game.Skills {
             var targetObject = source.Target().targetObject;
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 Buff buff = new Buff(skill.id, null, Common.BonusType.increase_healing_speed_on_pc, hpTime, hpPc);
                 source.Bonuses().SetBuff(buff);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);

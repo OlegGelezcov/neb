@@ -17,10 +17,8 @@ namespace Nebula.Game.Skills {
     public class Skill_00000449 : SkillExecutor  {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!source) {
-                return false;
-            }
-            if(!CheckForShotEnemy(source, skill )) {
+
+            if (NotEnemyCheck(source, skill, info)) {
                 return false;
             }
 
@@ -37,7 +35,7 @@ namespace Nebula.Game.Skills {
             var sourceWeapon = source.GetComponent<BaseWeapon>();
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 source.GetComponent<DamagableObject>().SetReflectParameters(reflectDamagePc, reflectDamageTime);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;

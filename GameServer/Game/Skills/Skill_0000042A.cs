@@ -26,7 +26,7 @@ namespace Nebula.Game.Skills {
             }
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if (hit.hitAllowed) {
+            if (hit.normalOrMissed) {
                 if(Rand.Float01() < effectProb ) {
                     BuffParameter prm = CommonUtils.GetRandomEnumValue<BuffParameter>(new List<BuffParameter>());
                     BonusType[] debuffs = BuffUtils.GetBuffsForParameter(prm);

@@ -19,9 +19,10 @@ namespace Nebula.Game.Skills {
             float healMult = skill.GetFloatInput("heal_mult");
             float dmgMult = skill.GetFloatInput("dmg_mult");
 
-            if(!CheckForHealAlly(source)) {
+            if(NotAllyCheck(source, info)) {
                 return false;
             }
+
 
             bool mastery = RollMastery(source);
             if(mastery) {

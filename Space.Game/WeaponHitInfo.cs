@@ -12,33 +12,37 @@ namespace Space.Game {
 
     public class WeaponHitInfo : IInfoSource
     {
-        public  float hitProb;
-        public  bool isHitted;
-        public  bool hitAllowed;
-        public  bool isCritical;
+        //public  float hitProb;
+        //public  bool isHitted;
+        //public  bool hitAllowed;
+        //public  bool isCritical;
 
         private WeaponDamage m_ActualDamage;
-        private bool gunsOverheatted;
-        private bool weaponBlocked;
-        private string errorMessageId;
+        private ShotState m_State;
+
+        //private bool gunsOverheatted;
+        //private bool weaponBlocked;
+        //private string errorMessageId;
 
         public float remainTargetHP { get; private set; }
 
         public WeaponHitInfo() {
-            hitAllowed = false;
-            hitProb = 0f;
-            isHitted = false;
-            isCritical = false;
-            errorMessageId = string.Empty;
+            //hitAllowed = false;
+            ////hitProb = 0f;
+            //isHitted = false;
+            //isCritical = false;
+            //errorMessageId = string.Empty;
+            m_State = ShotState.normal;
         }
 
-        public WeaponHitInfo(bool hitAllowed, float hitProb, bool isHitted, bool isCritical, string errorMsgId)
-        {
-            this.hitAllowed = hitAllowed;
-            this.hitProb = hitProb;
-            this.isHitted = isHitted;
-            this.isCritical = isCritical;
-            this.errorMessageId = errorMsgId;
+        public WeaponHitInfo(ShotState state) {
+            //    this.hitAllowed = hitAllowed;
+            //    this.hitProb = hitProb;
+            //    this.isHitted = isHitted;
+            //    this.isCritical = isCritical;
+            //    this.errorMessageId = errorMsgId;
+            m_State = state;
+
         }
 
         public void SetActualDamage(WeaponDamage actualDamage)
@@ -46,21 +50,21 @@ namespace Space.Game {
             m_ActualDamage = actualDamage;
         }
 
-        public void SetGunsOverheatted(bool overheatted)
-        {
-            this.gunsOverheatted = overheatted;
-        }
+        //public void SetGunsOverheatted(bool overheatted)
+        //{
+        //    this.gunsOverheatted = overheatted;
+        //}
 
-        public void SetWeaponBlocked(bool weaponBlocked)
-        {
-            this.weaponBlocked = weaponBlocked;
-            if(weaponBlocked) {
-                hitAllowed = false;
-                SetErrorMessageId("EM0004");
-            } else {
-                hitAllowed = true;
-            }
-        }
+        //public void SetWeaponBlocked(bool weaponBlocked)
+        //{
+        //    this.weaponBlocked = weaponBlocked;
+        //    if(weaponBlocked) {
+        //        hitAllowed = false;
+        //        SetErrorMessageId("EM0004");
+        //    } else {
+        //        hitAllowed = true;
+        //    }
+        //}
 
         public WeaponDamage actualDamage
         {
@@ -69,34 +73,75 @@ namespace Space.Game {
             }
         }
 
-        public bool GunsOverheatted
-        {
-            get { return this.gunsOverheatted; }
-        }
-
-        public bool IsWeaponBlocked
-        {
-            get { return this.weaponBlocked; }
-        }
-
-        public bool notBlocked {
+        public ShotState state {
             get {
-                return (!IsWeaponBlocked);
+                return m_State;
             }
         }
 
-        public string ErrorMessageId
-        {
-            get
-            {
-                return this.errorMessageId;
+        //public void ChangeState(ShotState state) {
+        //    m_State = state;
+        //}
+
+        public void Interrupt(ShotState state ) {
+            //interrup only if before was normal state
+            if(normal) {
+                m_State = state;
             }
         }
 
-        public void SetErrorMessageId(string errorMessageId)
-        {
-            this.errorMessageId = errorMessageId;
+        public bool normal {
+            get {
+                return (state == ShotState.normal) || (state == ShotState.normalCritical);
+            }
         }
+
+        public bool normalOrMissed {
+            get {
+                return normal || (state == ShotState.missed);
+            }
+        }
+
+        public void MakeCritical() {
+            if(normal) {
+                m_State = ShotState.normalCritical;
+            }
+        }
+
+        public bool interrupted {
+            get {
+                return (!normal);
+            }
+        }
+
+        //public bool GunsOverheatted
+        //{
+        //    get { return this.gunsOverheatted; }
+        //}
+
+        //public bool IsWeaponBlocked
+        //{
+        //    get { return this.weaponBlocked; }
+        //}
+
+        //public bool notBlocked {
+        //    get {
+        //        return (!IsWeaponBlocked);
+        //    }
+        //}
+
+        //public string ErrorMessageId
+        //{
+        //    get
+        //    {
+        //        return this.errorMessageId;
+        //    }
+        //}
+
+        //public void SetErrorMessageId(string errorMessageId)
+        //{
+        //    this.errorMessageId = errorMessageId;
+        //}
 
         public void SetRemainTargetHp(float hp) {
             remainTargetHP = hp;
@@ -104,18 +149,19 @@ namespace Space.Game {
 
         public Hashtable GetInfo() {
             return new Hashtable {
-                {(int)SPC.IsHitted, isHitted },
+                //{(int)SPC.IsHitted, isHitted },
                 { (int)SPC.ActualDamage, actualDamage.totalDamage },
-                { (int)SPC.OverheatingGuns, GunsOverheatted},
-                { (int)SPC.FireBlocked, IsWeaponBlocked},
-                { (int)SPC.FireAllowed, hitAllowed},
-                { (int)SPC.IsCritical, isCritical },
-                { (int)SPC.HitProb, hitProb},
-                { (int)SPC.ErrorMessageId, ErrorMessageId},
+                //{ (int)SPC.OverheatingGuns, GunsOverheatted},
+                //{ (int)SPC.FireBlocked, IsWeaponBlocked},
+                //{ (int)SPC.FireAllowed, hitAllowed},
+                //{ (int)SPC.IsCritical, isCritical },
+                //{ (int)SPC.HitProb, hitProb},
+                //{ (int)SPC.ErrorMessageId, ErrorMessageId},
                 { (int)SPC.RocketDamage, actualDamage.rocketDamage },
                 { (int)SPC.LaserDamage, actualDamage.laserDamage },
                 { (int)SPC.AcidDamage, actualDamage.acidDamage },
-                { (int)SPC.WeaponBaseType, (int)actualDamage.baseType }
+                { (int)SPC.WeaponBaseType, (int)actualDamage.baseType },
+                { (int)SPC.ShotState, (byte)state }
             };
         }
     }

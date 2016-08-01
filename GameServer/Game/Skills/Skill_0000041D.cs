@@ -8,7 +8,13 @@ namespace Nebula.Game.Skills {
     public class Skill_0000041D : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
             if(!CheckForHealAlly(source)) {
+                info.SetSkillUseState(Common.SkillUseState.invalidTarget);
+                return false;
+            }
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(Common.SkillUseState.tooFar);
                 return false;
             }
 

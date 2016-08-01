@@ -69,7 +69,6 @@ namespace Nebula.Game.Components {
         }
 
         protected virtual void ModifyDamage(InputDamage damage) {
-            
         }
 
         public override InputDamage ReceiveDamage(InputDamage inputDamage) {
@@ -136,6 +135,7 @@ namespace Nebula.Game.Components {
 
         public override void Death() {
             base.Death();
+
             (nebulaObject as GameObject).Destroy();
         }
 

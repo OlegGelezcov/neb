@@ -6,6 +6,11 @@ using System.Text;
 using Common;
 using ServerClientCommon;
 using Nebula.Server.Nebula.Server.Components.PlanetObjects;
+using System.Collections.Concurrent;
+using Space.Game;
+using Space.Game.Inventory;
+using Space.Game.Inventory.Objects;
+using GameMath;
 
 namespace Nebula.Game.Components.PlanetObjects {
     public class PlanetMiningStationObject : PlanetObjectBase {
@@ -16,6 +21,10 @@ namespace Nebula.Game.Components.PlanetObjects {
 
         private RaceableObject m_RaceComponent;
         private bool m_HasAcceleratorFlag = false;
+
+        private readonly ConcurrentDictionary<string, DamageInfo> m_Damagers = new ConcurrentDictionary<string, DamageInfo>();
+        
+
 
         public override PlanetBasedObjectType objectType {
             get {
@@ -87,6 +96,59 @@ namespace Nebula.Game.Components.PlanetObjects {
             }
         }
 
-        
+        public int count {
+            get {
+                var md = miningData;
+                if(md != null ) {
+                    return md.curCount;
+                }
+                return 0;
+            }
+        }
+
+        public void ClearCount() {
+            var md = miningData;
+            if(md != null ) {
+                md.ClearCount();
+            }
+            props.SetProperty((byte)PS.Info, GetBuildingProperties());
+        }
+
+
+        /// <summary>
+        /// Called when this object was killed
+        /// </summary>
+        public void OnWasKilled() {
+            var mData = miningData;
+            if(mData == null || mData.curCount == 0) {
+                return;
+            }
+            if(m_Damagers.Count > 0 ) {
+                var entry = resource.planetOreMap.GetEntry(nebulaObject.mmoWorld().GetID());
+                List<ServerInventoryItem> items = new List<ServerInventoryItem>();
+                if (entry != null ) {
+                    foreach(string oreId in entry.ores ) {
+                        items.Add(new ServerInventoryItem(new MaterialObject(oreId), mData.curCount));
+                    }
+                }
+
+                if(items.Count > 0 ) {
+                    var chest = ObjectCreate.Chest(nebulaObject.mmoWorld(), transform.position + new Vector3(0, 1, 0) * 20.0f, 240, m_Damagers, items);
+                    chest.AddToWorld();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when this object receive damage
+        /// </summary>
+        /// <param name="damager"></param>
+        public override void OnNewDamage(DamageInfo damager) {
+            base.OnNewDamage(damager);
+            if(damager.isAvatar && (!m_Damagers.ContainsKey(damager.DamagerId))) {
+                m_Damagers.TryAdd(damager.DamagerId, damager);
+            }
+        }
+
     }
 }

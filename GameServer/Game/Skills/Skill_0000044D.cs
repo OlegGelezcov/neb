@@ -48,7 +48,7 @@ namespace Nebula.Game.Skills {
             foreach (var target in filteredTargets) {
                 WeaponHitInfo hit;
                 var shot = weapon.Fire(target, out hit, skill.data.Id, damagePerTarget);
-                if(hit.hitAllowed) {
+                if(hit.normalOrMissed) {
                     sourceMessage.SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
 
                     var nearItems = GetTargets(source, target, radius);

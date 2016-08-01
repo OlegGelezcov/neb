@@ -14,7 +14,14 @@ namespace Nebula.Game.Skills {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
 
-            if(!CheckForShotEnemy(source, skill)) { return false; }
+            info.SetSkillUseState(SkillUseState.normal);
+            if(!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false; }
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
+                return false;
+            }
 
             float dmgMult = skill.data.Inputs.Value<float>("dmg_mult");
             float resistPc = skill.data.Inputs.Value<float>("resist_pc");
@@ -31,7 +38,7 @@ namespace Nebula.Game.Skills {
 
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.decrease_resist_on_pc, resistTime, resistPc);
                 targetBonuses.SetBuff(buff);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);

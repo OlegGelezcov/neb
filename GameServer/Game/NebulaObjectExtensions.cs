@@ -7,7 +7,9 @@
 using Common;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using ServerClientCommon;
 using Space.Game;
+using System.Collections;
 
 namespace Nebula.Game {
     public static class NebulaObjectExtensions {
@@ -93,6 +95,20 @@ namespace Nebula.Game {
                 default:
                     return "[" + type.ToString() + "]";
             }
+        }
+
+        public static void SetSkillUseState(this Hashtable hash, SkillUseState state ) {
+            if(hash.ContainsKey((int)SPC.SkillUseState)) {
+                hash.Remove((int)SPC.SkillUseState);
+            }
+            hash[(int)SPC.SkillUseState] = (byte)state;
+        }
+
+        public static void SetMastery(this Hashtable hash, bool val) {
+            if(hash.ContainsKey((int)SPC.Mastery)) {
+                hash.Remove((int)SPC.Mastery);
+            }
+            hash[(int)SPC.Mastery] = val;
         }
     }
 }

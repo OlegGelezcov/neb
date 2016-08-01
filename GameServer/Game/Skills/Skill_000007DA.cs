@@ -12,8 +12,7 @@ namespace Nebula.Game.Skills {
             if(!source ) {
                 return false;
             }
-
-            if(!CheckForShotEnemy(source, skill)) {
+            if (NotEnemyCheck(source, skill, info)) {
                 return false;
             }
 
@@ -38,7 +37,7 @@ namespace Nebula.Game.Skills {
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
 
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
 
                 var items = (source.world as MmoWorld).GetItems((it) => {

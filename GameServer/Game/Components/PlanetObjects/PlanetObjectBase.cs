@@ -17,6 +17,7 @@ namespace Nebula.Game.Components.PlanetObjects {
 
         private bool m_Destroyed = false;
         private float m_PropTimer = 0;
+        private float m_LastReceiveDamageNotificationTime = 0.0f;
 
         public override void Start() {
             BindToWorld();
@@ -62,11 +63,15 @@ namespace Nebula.Game.Components.PlanetObjects {
                 { (int)SPC.Row, row },
                 { (int)SPC.Column, column },
                 { (int)SPC.PlanetObjectType, (int)objectType },
-                { (int)SPC.OwnerGameRef, ownerId }
+                { (int)SPC.OwnerGameRef, ownerId },
+               
             };
             if(m_Data != null ) {
                 hash.Add((int)SPC.Interval, m_Data.life);
                 hash.Add((int)SPC.Timer, m_Data.lifeTimer);
+                hash.Add((int)SPC.CharacterId, m_Data.characterId);
+                hash.Add((int)SPC.CharacterName, m_Data.characterName);
+                hash.Add((int)SPC.GuildName, m_Data.coalitionName);
             }
             return hash;
         }
@@ -109,5 +114,16 @@ namespace Nebula.Game.Components.PlanetObjects {
             }
         }
 
+        public virtual void OnNewDamage(DamageInfo damager) {
+            if ((Time.curtime() - m_LastReceiveDamageNotificationTime) >= MiningStation.RECEIVE_DAMAGE_NOTIFICATION_INTERVAL) {
+                m_LastReceiveDamageNotificationTime = Time.curtime();
+                if (m_Data != null && (!string.IsNullOrEmpty(m_Data.characterId))) {
+                    nebulaObject.mmoWorld().application.updater.CallS2SMethod(
+                        NebulaCommon.ServerType.SelectCharacter,
+                        "PlanetObjectUnderAttackNotification",
+                        new object[] { m_Data.characterId, nebulaObject.mmoWorld().Zone.Id, damager.race, (int)objectType });
+                }
+            }
+        }
     }
 }

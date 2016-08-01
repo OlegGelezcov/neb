@@ -146,7 +146,8 @@ namespace Nebula.Game.Components {
                 object[] raw = new object[filteredObjects.Count];
                 int index = 0;
                 foreach (var p in filteredObjects) {
-                    raw[index++] = new Hashtable { { (int)SPC.Count, 1 }, { (int)SPC.Info, p.Value.GetInfo() } };
+                    raw[index++] = new Hashtable { { (int)SPC.Count, p.Value.Count },
+                                                    { (int)SPC.Info, p.Value.GetInfo() } };
                 }
                 return raw;
             }

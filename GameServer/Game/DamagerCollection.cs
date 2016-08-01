@@ -138,6 +138,11 @@ namespace Nebula.Game {
             GivePvpPoints(playerObject, owner, npcLevel, (int)playerLevel);
         }
 
+        private const int PVP_POINTS_FOR_TURRET = 5;
+        private const int PVP_POINTS_FOR_FORTIFICATION = 10;
+        private const int PVP_POINTS_FOR_MAINOUTPOST = 20;
+        private const int PVP_POINTS_FOR_PLANET_BUILDING = 10;
+
 
         public void GivePvpPoints(NebulaObject playerObject, NebulaObject owner, float npcLevel, int playerLevel) {
             if (owner.Type == (byte)ItemType.Avatar) {
@@ -153,13 +158,16 @@ namespace Nebula.Game {
                     int points = 0;
                     switch ((BotItemSubType)bot.botSubType) {
                         case BotItemSubType.Turret:
-                            points = 5;
+                            points = PVP_POINTS_FOR_TURRET;
                             break;
                         case BotItemSubType.Outpost:
-                            points = 10;
+                            points = PVP_POINTS_FOR_FORTIFICATION;
                             break;
                         case BotItemSubType.MainOutpost:
-                            points = 20;
+                            points = PVP_POINTS_FOR_MAINOUTPOST;
+                            break;
+                        case BotItemSubType.PlanetBuilding:
+                            points = PVP_POINTS_FOR_MAINOUTPOST;
                             break;
                     }
 

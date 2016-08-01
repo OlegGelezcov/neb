@@ -13,27 +13,59 @@ namespace Nebula.Game.Skills {
     public class Skill_0000040F : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!CheckForHealAlly(source)) {
-                return false;
+
+            info.SetSkillUseState(Common.SkillUseState.normal);
+
+            bool castOnTarget = true;
+            if (source.Target().hasTarget) {
+                if (FriendTargetInvalid(source)) {
+                    info.SetSkillUseState(Common.SkillUseState.invalidTarget);
+                    //return false;
+                    castOnTarget = false;
+                } else {
+                    if (NotCheckDistance(source)) {
+                        info.SetSkillUseState(Common.SkillUseState.tooFar);
+                        //return false;
+                        castOnTarget = false;
+                    }
+                }
+            } else {
+                castOnTarget = false;
             }
+
             float healMult = skill.GetFloatInput("heal_mult");
             float resistPc = skill.GetFloatInput("resist_pc");
             float resistTime = skill.GetFloatInput("resist_time");
 
 
-            float damage = source.Weapon().GetDamage(false).totalDamage;
+            float damage = source.Weapon().GetDamage().totalDamage;
             float healing = damage * healMult;
 
             bool mastery = RollMastery(source);
             if(mastery) {
                 healing *= 2;
                 resistTime *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
 
-            var heal = source.Weapon().Heal(source.Target().targetObject, healing, skill.data.Id);
-            source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal);
-            Buff resistBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_resist_on_pc, resistTime, resistPc);
-            source.Bonuses().SetBuff(resistBuff);
+            NebulaObject targetObject = null;
+            if(castOnTarget) {
+                targetObject = source.Target().targetObject;
+                var heal = source.Weapon().Heal(targetObject, healing, skill.data.Id);
+                source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal);
+                Buff resistBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_resist_on_cnt, resistTime, resistPc);
+                targetObject.Bonuses().SetBuff(resistBuff);
+            }
+
+            targetObject = source;
+            var heal2 = source.Weapon().Heal(targetObject, healing, skill.data.Id);
+            source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal2);
+            Buff resistBuff2 = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_resist_on_cnt, resistTime, resistPc);
+            targetObject.Bonuses().SetBuff(resistBuff2);
+
+
             return true;
         }
     }

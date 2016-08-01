@@ -76,6 +76,7 @@ namespace Common
         UseSkill = 19,
         WorkshopEntered = 20,
         WorkshopExited = 21,
+        ItemPropertyUpdate = 22,
         LTEST = 250
     }
 }

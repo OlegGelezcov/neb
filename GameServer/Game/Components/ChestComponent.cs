@@ -197,6 +197,20 @@ namespace Nebula.Game.Components {
                                     }
                                 }
                                 break;
+                            case InventoryObjectType.planet_resource_hangar: {
+                                    var hangarDropItem = dropItem as PlanetHangarDropItem;
+                                    if(hangarDropItem != null &&  count > 0 ) {
+                                        GeneratePlanetHangarScheme(count, newObjects);
+                                    }
+                                }
+                                break;
+                            case InventoryObjectType.planet_resource_accelerator: {
+                                    var accDropItem = dropItem as PlanetResourceAcceleratorDropItem;
+                                    if(accDropItem != null && count > 0 ) {
+                                        GeneratePlanetResourceAcceleratorScheme(count, newObjects);
+                                    }
+                                }
+                                break;
                         }
                     }
                 }
@@ -212,6 +226,16 @@ namespace Nebula.Game.Components {
                     petManager.ChestFilled(nebulaObject);
                 }
             }
+        }
+
+        private void GeneratePlanetResourceAcceleratorScheme(int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects) {
+            PlanetResourceAcceleratorInventoryObject obj = new PlanetResourceAcceleratorInventoryObject();
+            newObjects.TryAdd(obj.Id, new ServerInventoryItem(obj, count));
+        }
+
+        private void GeneratePlanetHangarScheme(int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects ) {
+            PlanetResourceHangarInventoryObject obj = new PlanetResourceHangarInventoryObject();
+            newObjects.TryAdd(obj.Id, new ServerInventoryItem(obj, count));
         }
 
         private void GenerateContractItemObject(string template, string contractId, int count, ConcurrentDictionary<string, ServerInventoryItem> newObjects ) {

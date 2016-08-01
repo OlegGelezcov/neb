@@ -54,7 +54,8 @@ namespace Common
         ReceivePlayerMark = 51,
         FoundLoreRecord = 52,
         StartAsteroidCollecting = 53,
-        CellsUpdated = 54
+        CellsUpdated = 54,
+        BuffsUpdated = 55
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

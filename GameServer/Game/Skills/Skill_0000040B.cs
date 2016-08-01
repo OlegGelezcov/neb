@@ -23,7 +23,7 @@ namespace Nebula.Game.Skills {
 
             WeaponHitInfo hit;
             var shot = source.Weapon().Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 Buff speedBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_speed_on_pc, speedTime, speedPc);
                 source.Bonuses().SetBuff(speedBuff);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);

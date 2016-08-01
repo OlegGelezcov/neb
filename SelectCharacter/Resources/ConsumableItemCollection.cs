@@ -52,25 +52,36 @@ namespace SelectCharacter.Resources {
                 case "repair_patch_300pc":
                     return new RepairPatchObject("repair_patch_300pc", 6f, true);
                 case "fort_level_upgrade_1_10":
-                    return new FortUpgradeObject("fort_level_upgrade_1_10", 1, 10, (Race)(byte)race, true);
+                    return new FortUpgradeObject(1, 10, (Race)(byte)race, true);
                 case "fort_level_upgrade_11_20":
-                    return new FortUpgradeObject("fort_level_upgrade_11_20", 11, 20, (Race)(byte)race, true);
+                    return new FortUpgradeObject(11, 20, (Race)(byte)race, true);
                 case "fort_level_upgrade_21_30":
-                    return new FortUpgradeObject("fort_level_upgrade_21_30", 21, 30, (Race)(byte)race, true);
+                    return new FortUpgradeObject(21, 30, (Race)(byte)race, true);
                 case "out_level_upgrade_1_10":
-                    return new OutpostUpgradeObject("out_level_upgrade_1_10", 1, 10, (Race)(byte)race, true);
+                    return new OutpostUpgradeObject(1, 10, (Race)(byte)race, true);
                 case "out_level_upgrade_11_20":
-                    return new OutpostUpgradeObject("out_level_upgrade_11_20", 11, 20, (Race)(byte)race, true);
+                    return new OutpostUpgradeObject(11, 20, (Race)(byte)race, true);
                 case "out_level_upgrade_21_30":
-                    return new OutpostUpgradeObject("out_level_upgrade_21_30", 21, 30, (Race)(byte)race, true);
+                    return new OutpostUpgradeObject(21, 30, (Race)(byte)race, true);
                 case "turret":
-                    return new TurretInventoryObject("turret", race, true);
+                    return new TurretInventoryObject(race, true);
                 case "fortification":
-                    return new FortificationInventoryObject("fortification", race, true);
+                    return new FortificationInventoryObject(race, true);
                 case "outpost":
-                    return new OutpostInventoryObject("outpost", race, true);
+                    return new OutpostInventoryObject(race, true);
                 case "mining_station_light":
-                    return new MiningStationInventoryObject("mining_station_light", race, 10, 30, true);
+                    return new MiningStationInventoryObject(race, 10, 30, true);
+
+                case "planet_command_center":
+                    return new PlanetCommandCenterInventoryObject();
+                case "planet_mining_station":
+                    return new PlanetMiningStationInventoryObject();
+                case "planet_turret":
+                    return new PlanetTurretInventoryObject();
+                case "planet_resource_hangar":
+                    return new PlanetResourceHangarInventoryObject();
+                case "planet_resource_accelerator":
+                    return new PlanetResourceAcceleratorInventoryObject();
                 default:
                     return null;
             }

@@ -3,11 +3,20 @@
 namespace Nebula.Game.Components {
     public class FixedInputDamageDamagableObject : NotShipDamagableObject {
 
-        private float mFixedDamage = 0f;
+        private float m_FixedDamage = 0f;
+
+
+        #region Properties
+        protected float fixedDamage {
+            get {
+                return m_FixedDamage;
+            }
+        } 
+        #endregion
 
         public void Init(FixedInputDamageDamagableComponentData data) {
             base.Init(data);
-            mFixedDamage = data.fixedInputDamage;
+            m_FixedDamage = data.fixedInputDamage;
         }
 
         protected override void ModifyDamage(InputDamage damage) {
@@ -15,7 +24,7 @@ namespace Nebula.Game.Components {
                 //we ignore damage
             } else {
                 damage.ClearAllDamages();
-                damage.SetBaseDamage(mFixedDamage);
+                damage.SetBaseDamage(m_FixedDamage);
             }
         }
 
@@ -23,5 +32,7 @@ namespace Nebula.Game.Components {
             //inputDamage.ClearAllDamages();
             //inputDamage.SetBaseDamage(mFixedDamage);
         }
+
+
     }
 }

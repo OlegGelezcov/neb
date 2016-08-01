@@ -40,7 +40,13 @@
 
         public string id {
             get {
-                return data.Id.ToString();
+                return idInt.ToString();
+            }
+        }
+
+        public int idInt {
+            get {
+                return data.Id;
             }
         }
 
@@ -86,7 +92,9 @@
             if (data.IsEmpty) {
                 return false;
             }
-
+            if(skills.blocked ) {
+                return false;
+            }
             //if (target) {
             //    if (false == target.GetComponent<DamagableObject>()) {
             //        return false;

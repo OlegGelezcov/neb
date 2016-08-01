@@ -23,7 +23,7 @@ namespace Nebula.Game.Components.BotAI {
     [REQUIRE_COMPONENT(typeof(MovableObject))]
     [REQUIRE_COMPONENT(typeof(BaseWeapon))]
     public class CombatBaseAI  : BaseAI {
-        private const float MIN_AGRO = 80;
+        private const float MIN_AGRO = 40;
         private const float MAX_AGRO = 350;
 
         public const float RESET_TARGET_INTERVAL = 20;
@@ -204,6 +204,34 @@ namespace Nebula.Game.Components.BotAI {
                 return false;
             }
         }
+
+        private bool isPlanetTurret {
+            get {
+                if(mBotObject != null && mBotObject.isPlanetTurret) {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        private bool isOutpost {
+            get {
+                if(mBotObject != null && mBotObject.isOutpost) {
+                    return true;
+                }
+                return false;
+            }
+        }
+
+        private bool isFortification {
+            get {
+                if(mBotObject != null && mBotObject.isFortification) {
+                    return true;
+                }
+                return false;
+            }
+        }
+
 
         protected virtual Vector3 GetStartPosition() {
             return mStartPosition;
@@ -528,8 +556,13 @@ namespace Nebula.Game.Components.BotAI {
                             }
                         } else {
                             float d = transform.DistanceTo(item.transform);
-                            if (d < Mathf.Clamp(0.5f * mWeapon.optimalDistance, MIN_AGRO, MAX_AGRO)) {
-                                return true;
+
+                            if (isPlanetTurret || isTurret || isOutpost || isFortification ) {
+                                return (d < mWeapon.optimalDistance);
+                            } else {
+                                if (d < Mathf.Clamp(0.7f * mWeapon.optimalDistance, MIN_AGRO, MAX_AGRO)) {
+                                    return true;
+                                }
                             }
                         }
                     }

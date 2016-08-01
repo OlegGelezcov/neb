@@ -1,4 +1,5 @@
-﻿using Nebula.Engine;
+﻿using Common;
+using Nebula.Engine;
 using Nebula.Game.Bonuses;
 using Nebula.Game.Components;
 using Space.Game;
@@ -8,7 +9,13 @@ namespace Nebula.Game.Skills {
     public class Skill_0000040A : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!CheckForShotEnemy(source, skill)) {
+            info.SetSkillUseState(SkillUseState.normal);
+            if (!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false;
+            }
+            if (NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
 
@@ -39,7 +46,7 @@ namespace Nebula.Game.Skills {
 
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 Buff resistDebuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.decrease_resist_on_cnt, resistTime, targetResistance);
                 targetBonuses.SetBuff(resistDebuff);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);

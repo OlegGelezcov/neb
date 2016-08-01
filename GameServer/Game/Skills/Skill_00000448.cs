@@ -21,10 +21,8 @@ namespace Nebula.Game.Skills {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
 
-            if(!source ) {
-                return false;
-            }
-            if(!CheckForShotEnemy(source, skill)) {
+
+            if (NotEnemyCheck(source, skill, info)) {
                 return false;
             }
 
@@ -43,7 +41,7 @@ namespace Nebula.Game.Skills {
             }
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed ) {
+            if(hit.normalOrMissed ) {
                 if( (skills.lastSkill != skill.data.Id ) || (skills.lastSkill == skill.data.Id && skills.sequenceSkillCounter < skillCount )) {
                     Buff buff = new Buff(skill.data.Id.ToString() + skills.sequenceSkillCounter, null, BonusType.increase_crit_chance_on_cnt, critChanceTime, critChancePc);
                     source.GetComponent<PlayerBonuses>().SetBuff(buff);

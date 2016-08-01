@@ -4,7 +4,7 @@
       gaming_udp_port="5106"
       gaming_web_socket_port="9091"
       public_ip_address="192.168.1.102">
-    <locations>H1,H2,H3,H4,H5,H6,H7,PW1</locations>
+    <locations>H1,PW1</locations>
   </role>
   
   <!--
@@ -21,14 +21,14 @@
         gaming_udp_port="5110"
         gaming_web_socket_port="9095"
         public_ip_address="192.168.1.102" >
-    <locations>E1,E2,E3,E4,E5,E6,E7,PW2</locations>
+    <locations>E1,PWC1</locations>
   </role>
   <role name="NeutralGame"
          gaming_tcp_port="4566"
          gaming_udp_port="5111"
          gaming_web_socket_port="9096"
          public_ip_address="192.168.1.102" >
-    <locations>N1,N2,N3,N4</locations>
+    <locations>N1</locations>
   </role>
 
   <role name="BGame"
@@ -36,7 +36,7 @@
        gaming_udp_port="5112"
        gaming_web_socket_port="9097"
        public_ip_address="192.168.1.102" >
-    <locations>B1,B2,B3,B4,B5,B6,B7,PW3</locations>
+    <locations>B1,PWB1</locations>
   </role>
   
 </roles>

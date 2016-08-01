@@ -49,5 +49,8 @@
         public const int rpc_CreatePlanetObjectResourceAccelerator = 28;
         public const int rpc_CreatePlanetObjectMiningStation = 29;
         public const int rpc_resetSystemToNeutral = 30;
+        public const int rpc_CollectOreFromPlanetMiningStation = 31;
+        public const int rpc_CreateTestSharedChest = 32;
+        public const int rpc_MoveAllFromInventoryToStationWithExclude = 33;
     }
 }

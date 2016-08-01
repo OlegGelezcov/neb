@@ -31,7 +31,7 @@ namespace Nebula.Game.Skills {
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.GetComponent<BaseWeapon>().Fire(out hit, skill.data.Id, dmgMult);
 
-            if (hit.hitAllowed) {
+            if (hit.normalOrMissed) {
 
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
 

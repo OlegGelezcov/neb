@@ -7,9 +7,17 @@ namespace Nebula.Game.Skills {
     public class Skill_00000444 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
             if(ShotToEnemyRestricted(source, skill)) {
+                info.SetSkillUseState(Common.SkillUseState.invalidTarget);
+                return false;
+
+            }
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(Common.SkillUseState.tooFar);
                 return false;
             }
+
             var targetObject = source.Target().targetObject;
             var sourceWeapon = source.Weapon();
             var sourceBonuses = source.Bonuses();
@@ -24,7 +32,7 @@ namespace Nebula.Game.Skills {
             }
 
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 sourceWeapon.Heal(source, source.Damagable().maximumHealth * hpPc);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
                 return true;

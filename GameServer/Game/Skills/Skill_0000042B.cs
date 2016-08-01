@@ -11,7 +11,15 @@ namespace Nebula.Game.Skills {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
 
-            if (!CheckForShotEnemy(source, skill)) { return false; }
+            info.SetSkillUseState(SkillUseState.normal);
+            if (!CheckForShotEnemy(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false; }
+
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
+                return false;
+            }
             float dmgMult = skill.data.Inputs.Value<float>("dmg_mult");
             float dmg2Mult = skill.data.Inputs.Value<float>("dmg2_mult");
             float radius = skill.data.Inputs.Value<float>("radius");
@@ -28,7 +36,7 @@ namespace Nebula.Game.Skills {
 
             WeaponHitInfo hit;
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
-            if (hit.hitAllowed) {
+            if (hit.normalOrMissed) {
 
                 var items = (source.world as MmoWorld).GetItems((it) => {
                     if (it.GetComponent<DamagableObject>() && it.GetComponent<CharacterObject>()) {

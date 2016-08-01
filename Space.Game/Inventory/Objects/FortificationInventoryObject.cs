@@ -12,8 +12,8 @@ namespace Nebula.Inventory.Objects {
         public FortificationInventoryObject(Hashtable info) {
             ParseInfo(info);
         }
-        public FortificationInventoryObject(string inID, int inRace, bool inBinded = false) {
-            Id = inID;
+        public FortificationInventoryObject( int inRace, bool inBinded = false) {
+            Id = "fortification_inventory_object" + inRace.ToString();
             race = inRace;
             binded = inBinded;
             m_IsNew = true;

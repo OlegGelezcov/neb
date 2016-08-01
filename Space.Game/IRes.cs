@@ -81,6 +81,7 @@ namespace Space.Game {
         PredefinedDropLists predefinedDropLists { get; }
         NpcClassSkillsResource npcSkills { get;  }
         DifficultyRes difficulty { get; }
+        Planet2OreMapRes planetOreMap { get; }
     }
 
 }

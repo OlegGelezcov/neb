@@ -62,7 +62,7 @@ namespace Nebula.Game.Skills {
                 dmgMult = dmgMult * (1f + sourceBonuses.dronStrengthPcBonus) + sourceBonuses.dronStrengthCntBonus;
 
                 var shotInfo = sourceWeapon.Fire(itemPair.Value, out hit, skill.data.Id, dmgMult );
-                if(hit.hitAllowed) {
+                if(hit.normalOrMissed) {
                     source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 }
                 counter++;

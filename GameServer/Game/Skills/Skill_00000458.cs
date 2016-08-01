@@ -13,7 +13,7 @@ namespace Nebula.Game.Skills {
     public class Skill_00000458 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(ShotToEnemyRestricted(source, skill)) {
+            if (NotEnemyCheck(source, skill, info)) {
                 return false;
             }
 
@@ -40,7 +40,7 @@ namespace Nebula.Game.Skills {
             }
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, damageMult);
-            if(hit.hitAllowed) {
+            if(hit.normalOrMissed) {
                 if(targetDamagable.killed) {
                     float resotedHp = source.Damagable().maximumHealth * hpRestoredPc;
                     if(mastery) {

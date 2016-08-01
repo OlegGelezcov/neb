@@ -21,6 +21,7 @@ namespace Nebula.Game.Components {
         private PlayerSkills m_Skills;
         private AchievmentComponent m_Achievments;
         private BotObject m_Bot;
+        private MmoMessageComponent m_Mmo;
 
         public override Hashtable DumpHash() {
             var hash =  base.DumpHash();
@@ -41,7 +42,7 @@ namespace Nebula.Game.Components {
             //hash["level"] = myLevel.ToString();
             return hash;
         }
-        private float mHealth = 1000;
+        private float m_Health = 1000;
 
         public bool god {
             get {
@@ -87,10 +88,23 @@ namespace Nebula.Game.Components {
 
         public float health {
             get {
-                return mHealth;
+                return m_Health;
             }
             private set {
-                mHealth = Mathf.Clamp(value, -100000, maximumHealth);
+                m_Health = Mathf.Clamp(value, -100000, maximumHealth);
+            }
+        }
+
+        private float m_HealthFromLastSend = 0f;
+        private void SendUpdateCurrentHealth() {
+            float hp = health;
+            SetCurrentHealthProperty(hp);
+
+            if (!Mathf.Approximately(m_HealthFromLastSend, hp)) {
+                m_HealthFromLastSend = hp;
+                if (m_Mmo != null) {
+                    m_Mmo.SendPropertyUpdate(new Hashtable { { (byte)PS.CurrentHealth, health } });
+                }
             }
         }
 
@@ -250,6 +264,11 @@ namespace Nebula.Game.Components {
             m_Skills = GetComponent<PlayerSkills>();
             m_Achievments = GetComponent<AchievmentComponent>();
             m_Bot = GetComponent<BotObject>();
+            m_Mmo = GetComponent<MmoMessageComponent>();
+        }
+
+        private void SetCurrentHealthProperty(float val) {
+            nebulaObject.properties.SetProperty((byte)PS.CurrentHealth, val);
         }
 
         public override void Update(float deltaTime) {
@@ -265,7 +284,7 @@ namespace Nebula.Game.Components {
 
 
             nebulaObject.properties.SetProperty((byte)PS.MaxHealth, maximumHealth);
-            nebulaObject.properties.SetProperty((byte)PS.CurrentHealth, health);
+            SendUpdateCurrentHealth();
 
             bool destoyed = (!nebulaObject);
 
@@ -353,11 +372,19 @@ namespace Nebula.Game.Components {
                 }
 
                 float val = Mathf.Abs(heal.value) * mult;
-                health += val;
+
+
+                AddHealth(val, true);
+
                 if(m_Achievments != null ) {
                     m_Achievments.OnHeal(val);
                 }
             }
+        }
+
+
+        protected virtual void AddHealth(float val, bool byHeal) {
+            health += val;
         }
         public void SubHealth(float hp) {
             health -= Mathf.Abs( hp );

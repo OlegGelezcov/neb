@@ -38,6 +38,12 @@ namespace Nebula.Inventory.DropList {
                         string contract = element.GetString("contract");
                         return new ContractObjectDropItem(template, contract, min, max, prob);
                     }
+                case InventoryObjectType.planet_resource_hangar: {
+                        return new PlanetHangarDropItem(min, max, prob);
+                    }
+                case InventoryObjectType.planet_resource_accelerator: {
+                        return new PlanetResourceAcceleratorDropItem(min, max, prob);
+                    }
                 default:
                     return null;
             }

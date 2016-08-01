@@ -121,12 +121,19 @@ namespace Nebula.Client.Guilds {
             return null;
         }
 
-        public bool IsMember(string characterID) {
+        public bool HasMember(string characterID) {
             return (GetMember(characterID) != null);
         }
 
         public bool IsOwner(string characterID) {
             return (characterID == ownerCharacterID);
+        }
+
+        public bool IsSoldier(string characterId ) {
+            if(HasMember(characterId)) {
+                return GetMember(characterId).guildStatus == (int)GuildMemberStatus.Member;
+            }
+            return false;
         }
 
         public bool has {
