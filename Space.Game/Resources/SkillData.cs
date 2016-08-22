@@ -35,6 +35,12 @@ namespace Space.Game.Resources {
             }
         }
 
+        public bool hasSkill {
+            get {
+                return (!IsEmpty);
+            }
+        }
+
         public Hashtable GetInfo()
         {
             return new Hashtable 

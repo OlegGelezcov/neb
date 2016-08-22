@@ -40,7 +40,7 @@ namespace Nebula.Game.Skills {
             if(buffsCount < stackCount) {
                 Buff newBuff = new Buff(Guid.NewGuid().ToString(), null, Common.BonusType.increase_crit_damage_on_pc, critDmgTime, critDmgPc);
                 newBuff.SetTag(skillID);
-                mySkills.bonuses.SetBuff(newBuff);
+                mySkills.bonuses.SetBuff(newBuff, mySkills.nebulaObject);
             }
             s_Log.InfoFormat("439.OnEnemyDeath()->critdmg% = {0}, critdmgtime={1}, stackcnt={2}, buffscnt={3}, bonustotal={4}".Color(LogColor.orange),
                 critDmgPc, critDmgTime, stackCount, buffsCount, mySkills.bonuses.critDamagePcBonus);

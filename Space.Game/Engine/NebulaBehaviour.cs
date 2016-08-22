@@ -126,13 +126,35 @@ namespace Nebula.Engine {
                 foreach (var method in GetType().GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
                     if (method.Name == message) {
                         if (arg != null) {
-                            method.Invoke(this, new object[] { arg });
-                        } else {
-                            method.Invoke(this, null);
+#if LOCAL
+                        LogAttribute(method);
+#endif
+                        method.Invoke(this, new object[] { arg });
+                    } else {
+#if LOCAL
+                        LogAttribute(method);
+#endif
+                        method.Invoke(this, null);
                         }
                     }
                 }
 
+        }
+
+        private void LogAttribute(MethodInfo method) {
+            var attributes = method.GetCustomAttributes(false);
+            if(attributes != null ) {
+                foreach(var attr in attributes) {
+                    if(attr is ComponentMessageAttribute) {
+                        ComponentMessageAttribute cma = attr as ComponentMessageAttribute;
+                        if(cma != null ) {
+                            if(cma.WriteCallLog && !string.IsNullOrEmpty(cma.Log)) {
+                                LibLogger.Log(cma.Log);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public object RequireProperty(byte key) {

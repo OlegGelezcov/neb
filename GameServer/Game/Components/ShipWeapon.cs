@@ -350,8 +350,8 @@ namespace Nebula.Game.Components {
             return result;
         }
 
-        public override Hashtable Heal(NebulaObject targetObject, float healValue, int skillID = -1) {
-            var result =  base.Heal(targetObject, healValue, skillID);
+        public override Hashtable Heal(NebulaObject targetObject, float healValue, int skillID = -1, bool generateCrit = true) {
+            var result =  base.Heal(targetObject, healValue, skillID, generateCrit);
             return result;
         }
 

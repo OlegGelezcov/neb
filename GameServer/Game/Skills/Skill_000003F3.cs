@@ -55,7 +55,7 @@ namespace Nebula.Game.Skills {
                 }
                 foreach(var friend in friends ) {
                     Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_crit_chance_on_cnt, critChanceTime, critChanceCnt);
-                    friend.Value.GetComponent<PlayerBonuses>().SetBuff(buff);
+                    friend.Value.GetComponent<PlayerBonuses>().SetBuff(buff, source);
                 }
 
                 return true;

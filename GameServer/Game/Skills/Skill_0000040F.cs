@@ -56,14 +56,14 @@ namespace Nebula.Game.Skills {
                 var heal = source.Weapon().Heal(targetObject, healing, skill.data.Id);
                 source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal);
                 Buff resistBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_resist_on_cnt, resistTime, resistPc);
-                targetObject.Bonuses().SetBuff(resistBuff);
+                targetObject.Bonuses().SetBuff(resistBuff, source);
             }
 
             targetObject = source;
             var heal2 = source.Weapon().Heal(targetObject, healing, skill.data.Id);
             source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal2);
             Buff resistBuff2 = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_resist_on_cnt, resistTime, resistPc);
-            targetObject.Bonuses().SetBuff(resistBuff2);
+            targetObject.Bonuses().SetBuff(resistBuff2, source);
 
 
             return true;

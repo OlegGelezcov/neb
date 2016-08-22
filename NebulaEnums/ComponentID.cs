@@ -60,7 +60,9 @@ namespace Common {
         Achievments = 52,
         PlanetBuilding = 53,
         LoreBox = 54,
-        PlanetLandingTeleport = 55
+        PlanetLandingTeleport = 55,
+        Quests = 56,
+        Dialogs = 57
         //PlanetBasedObject = 55
     }
 }

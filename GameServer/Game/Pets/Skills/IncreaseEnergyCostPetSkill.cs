@@ -44,7 +44,7 @@ namespace Nebula.Game.Pets.Skills {
                     var targetBonuses = ownerTarget.targetObject.Bonuses();
                     if(targetBonuses) {
                         Buff buff = new Buff(m_BonusName, null, Common.BonusType.increase_energy_cost_on_pc, m_Time, m_EnergyPc);
-                        targetBonuses.SetBuff(buff);
+                        targetBonuses.SetBuff(buff, pet.nebulaObject);
                         m_LastEnemy = targetBonuses.nebulaObject;
                         return true;
                     }

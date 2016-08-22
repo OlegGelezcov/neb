@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;FORCE_SKILL_GENERATION_ON_MODULE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;FORCE_SKILL_GENERATION_ON_MODULE;LOCAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -92,6 +92,7 @@
     <Compile Include="EmptyNebulaLogger.cs" />
     <Compile Include="Engine\BehaviourCollection.cs" />
     <Compile Include="Engine\BehaviourMissedException.cs" />
+    <Compile Include="Engine\ComponentMessageAttribute.cs" />
     <Compile Include="Engine\ComponentMessages.cs" />
     <Compile Include="Engine\IBaseWorld.cs" />
     <Compile Include="Engine\NebulaBehaviour.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Inventory\Objects\RepairPatchObject.cs" />
     <Compile Include="Inventory\Objects\TurretInventoryObject.cs" />
     <Compile Include="IRes.cs" />
+    <Compile Include="LibLogger.cs" />
     <Compile Include="NetUtils.cs" />
     <Compile Include="Pets\IPetParamResource.cs" />
     <Compile Include="Pets\PetActiveSkill.cs" />
@@ -159,6 +161,37 @@
     <Compile Include="Pets\PetSkillInfo.cs" />
     <Compile Include="Pets\PetUpgradeRequirement.cs" />
     <Compile Include="Pets\PetUpgradeTable.cs" />
+    <Compile Include="Quests\Actions\PostAction.cs" />
+    <Compile Include="Quests\Actions\PostActionName.cs" />
+    <Compile Include="Quests\Actions\PostActionParser.cs" />
+    <Compile Include="Quests\Actions\StartQuestPostAction.cs" />
+    <Compile Include="Quests\BoolQuestVariableData.cs" />
+    <Compile Include="Quests\BoolVariableValueEqCondition.cs" />
+    <Compile Include="Quests\DialogCompletedCondition.cs" />
+    <Compile Include="Quests\Dialogs\DialogData.cs" />
+    <Compile Include="Quests\Dialogs\DialogDataCollection.cs" />
+    <Compile Include="Quests\Dialogs\DialogDataResource.cs" />
+    <Compile Include="Quests\Dialogs\IPostActionTarget.cs" />
+    <Compile Include="Quests\EmptyQuestCondition.cs" />
+    <Compile Include="Quests\FloatQuestVariableData.cs" />
+    <Compile Include="Quests\FloatVariableValueEqCondition.cs" />
+    <Compile Include="Quests\IntegerQuestVariableData.cs" />
+    <Compile Include="Quests\IntVariableValueEqCondition.cs" />
+    <Compile Include="Quests\IQuest.cs" />
+    <Compile Include="Quests\IQuestConditionTarget.cs" />
+    <Compile Include="Quests\OnSpaceCondition.cs" />
+    <Compile Include="Quests\OnStationCondition.cs" />
+    <Compile Include="Quests\QuestCompletedCondition.cs" />
+    <Compile Include="Quests\QuestCondition.cs" />
+    <Compile Include="Quests\QuestConditionFactory.cs" />
+    <Compile Include="Quests\QuestData.cs" />
+    <Compile Include="Quests\QuestDataCollection.cs" />
+    <Compile Include="Quests\QuestDataResource.cs" />
+    <Compile Include="Quests\QuestVariableData.cs" />
+    <Compile Include="Quests\QuestVariableDataFactory.cs" />
+    <Compile Include="Quests\QuestVariableTypeName.cs" />
+    <Compile Include="Quests\UserEvent.cs" />
+    <Compile Include="Quests\UserEventCondition.cs" />
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Resources\ColorList.cs" />
     <Compile Include="Resources\ColorListCollection.cs" />

@@ -35,7 +35,7 @@ namespace Nebula.Game.Components {
         private PlayerCharacterObject mCharacter;
         private readonly ResistanceDetail m_ResistDetail = new ResistanceDetail();
         private PassiveBonusesComponent m_PassiveBonuses;
-        private float m_InvisTimer = -1;
+        //private float m_InvisTimer = -1;
 
         private bool m_StartCalled = false;
 
@@ -235,19 +235,19 @@ namespace Nebula.Game.Components {
                 }
             }
 
-            if(m_InvisTimer > 0 ) {
-                m_InvisTimer -= deltaTime;
-                if(m_InvisTimer <= 0.0f ) {
-                    if(nebulaObject.invisible) {
-                        nebulaObject.SetInvisibility(false);
-                    }
-                }
-            }
+            //if(m_InvisTimer > 0 ) {
+            //    m_InvisTimer -= deltaTime;
+            //    if(m_InvisTimer <= 0.0f ) {
+            //        if(nebulaObject.invisible) {
+            //            nebulaObject.SetInvisibility(false);
+            //        }
+            //    }
+            //}
         }
 
-        public void SetInvisTimer(float time) {
-            m_InvisTimer = time;
-        }
+        //public void SetInvisTimer(float time) {
+        //    m_InvisTimer = time;
+        //}
 
 
         public override void SetModule(ShipModule module, out ShipModule prevModule) {
@@ -412,7 +412,7 @@ namespace Nebula.Game.Components {
                 log.InfoFormat("adding invisibility buff");
                 Buff invisBuff = new Buff(BonusType.invisibility.ToString(), nebulaObject, BonusType.invisibility, -1, 1, () => { return nebulaObject.invisible == true; }, -1, false);
                 if(mBonuses != null ) {
-                    mBonuses.SetBuff(invisBuff);
+                    mBonuses.SetBuff(invisBuff, nebulaObject);
                 }
             } else {
                 log.InfoFormat("removing invisibility buff");

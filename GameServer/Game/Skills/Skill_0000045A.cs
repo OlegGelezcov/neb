@@ -26,7 +26,7 @@ namespace Nebula.Game.Skills {
             }
 
             Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_speed_on_pc, speedTime, speedPc);
-            sourceBonuses.SetBuff(buff);
+            sourceBonuses.SetBuff(buff, source);
             return true;
         }
     }

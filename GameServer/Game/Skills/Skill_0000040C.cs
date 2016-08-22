@@ -42,7 +42,7 @@ namespace Nebula.Game.Skills {
             if(hit.normalOrMissed) {
                 var targetObject = source.Target().targetObject;         
                 Buff debuff = new Buff(skill.data.Id.ToString(), null, BonusType.block_skills, blockTime, 1.0f);
-                targetObject.Bonuses().SetBuff(debuff);
+                targetObject.Bonuses().SetBuff(debuff, source);
                 targetObject.Skills().Block(blockTime);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;

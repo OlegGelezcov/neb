@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Common;
 using Nebula.Engine;
+using Nebula.Game.Bonuses;
 using Nebula.Game.Components;
 using Space.Game;
-using Nebula.Game.Bonuses;
-using Common;
+using System.Collections;
 
 namespace Nebula.Game.Skills {
     public class Skill_00000408 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
             info.SetSkillUseState(SkillUseState.normal);
-            if (!CheckForShotEnemy(source, skill)) {
+            if (ShotToEnemyRestricted(source, skill)) {
                 info.SetSkillUseState(SkillUseState.invalidTarget);
                 return false;
             }
@@ -24,24 +20,27 @@ namespace Nebula.Game.Skills {
             }
 
             float dmgMult = skill.GetFloatInput("dmg_mult");
-            float critChancePc = skill.GetFloatInput("crit_chance_pc");
-            float critChanceTime = skill.GetFloatInput("time");
+            float dmgPc = skill.GetFloatInput("dmg_pc");
+            float dmgTime = skill.GetFloatInput("time");
+
             bool mastery = RollMastery(source);
             if(mastery) {
-                dmgMult *= 2;
-                critChanceTime *= 2;
+                dmgPc *= 2;
+                dmgTime *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
+
             WeaponHitInfo hit;
             var shot = source.Weapon().Fire(out hit, skill.data.Id, dmgMult);
             if(hit.normalOrMissed) {
-                Buff critChanceDebuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.decrease_crit_chance_on_pc, critChanceTime, critChancePc);
-                source.Target().targetObject.Bonuses().SetBuff(critChanceDebuff);
+                Buff critChanceDebuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.decrease_damage_on_pc, dmgTime, dmgPc);
+                source.Target().targetObject.Bonuses().SetBuff(critChanceDebuff, source);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
                 return true;
-            } else {
-                source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
-                return false;
             }
+            return false;
         }
     }
 }

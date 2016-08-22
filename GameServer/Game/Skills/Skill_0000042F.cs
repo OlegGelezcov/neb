@@ -41,11 +41,11 @@ namespace Nebula.Game.Skills {
             if(hit.normalOrMissed) {
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
                 Buff buff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_speed_on_pc, speedTime, speedPc);
-                sourceBonuses.SetBuff(buff);
+                sourceBonuses.SetBuff(buff, source);
 
                 foreach(var ally in GetHealTargets(source, source, radius)) {
                     Buff buff2 = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_speed_on_pc, speedTime, speedPc);
-                    ally.Value.Bonuses().SetBuff(buff2);
+                    ally.Value.Bonuses().SetBuff(buff2, source);
                 }
                 return true;
             } else {

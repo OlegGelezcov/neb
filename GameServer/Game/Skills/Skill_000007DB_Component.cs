@@ -77,8 +77,8 @@ namespace Nebula.Game.Skills {
                 Buff cooldownDebuff = new Buff(mData.Id.ToString(), null, BonusType.increase_cooldown_on_pc, mTimer, cdPc, () => {
                     return (item.transform.DistanceTo(nebulaObject.transform) <= mRadius);
                 });
-                itemBonuses.SetBuff(speeddebuff);
-                itemBonuses.SetBuff(cooldownDebuff);
+                itemBonuses.SetBuff(speeddebuff, speeddebuff.owner);
+                itemBonuses.SetBuff(cooldownDebuff, cooldownDebuff.owner);
             }
         }
     }

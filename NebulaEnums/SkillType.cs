@@ -22,6 +22,8 @@ namespace Common
         /// <summary>
         /// Skill active while toggled on unlimited time
         /// </summary>
-        Persistent = 2
+        Persistent = 2,
+
+        Passive = 3
     }
 }

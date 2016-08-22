@@ -34,12 +34,12 @@ namespace Nebula.Game.Skills {
 
             //decrated skill do nothing (only for icons)
             Buff sourceDebuff = new Buff(skill.id, null, Common.BonusType.block_resist, time);
-            sourceBonuses.SetBuff(sourceDebuff);
+            sourceBonuses.SetBuff(sourceDebuff, source);
             sourceShip.BlockResist(time);
 
             //decorated skill do nothing (only for icons)
             Buff targetDebuff = new Buff(skill.id, null, Common.BonusType.block_resist, time);
-            targetBonuses.SetBuff(targetDebuff);
+            targetBonuses.SetBuff(targetDebuff, source);
             targetShip.BlockResist(time);
             return true;
         }

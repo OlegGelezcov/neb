@@ -27,7 +27,7 @@ namespace Nebula.Game.Skills {
             Buff buff = new Buff(skill.data.Id.ToString(), source, Common.BonusType.increase_max_hp_on_pc, -1, maxHpPc, () => {
                 return true;
             }, skill.data.Id);
-            source.Bonuses().SetBuff(buff);
+            source.Bonuses().SetBuff(buff, source);
             return true;
         }
     }

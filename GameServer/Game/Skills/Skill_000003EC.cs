@@ -40,7 +40,7 @@ namespace Nebula.Game.Skills {
                     speed_time *= 2;
                 }
                 Buff buff = new Buff(id, null, BonusType.increase_speed_on_pc, speed_time, speed_pc);
-                source.GetComponent<PlayerBonuses>().SetBuff(buff);
+                source.GetComponent<PlayerBonuses>().SetBuff(buff, source);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;
             } else {

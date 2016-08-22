@@ -14,6 +14,8 @@ namespace Nebula.Game.Skills {
     public class Skill_00000416 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
+
             float hpPc = skill.GetFloatInput("hp_pc");
             float hpPcTimed = skill.GetFloatInput("hp_pc_timed");
             float hpTime = skill.GetFloatInput("hp_time");
@@ -29,9 +31,18 @@ namespace Nebula.Game.Skills {
             if(mastery) {
                 hpInstance *= 2;
                 hpTime *= 2;
+                hpRestorePerSec *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
-            damagable.RestoreHealth(source, hpInstance);
+
+
+            //damagable.RestoreHealth(source, hpInstance);
+            source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, source.Weapon().HealSelf(hpInstance, skill.idInt));
+
             damagable.SetRestoreHPPerSec(hpRestorePerSec, hpTime, id);
+
             return true;
         }
     }

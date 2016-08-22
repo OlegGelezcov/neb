@@ -48,7 +48,7 @@ namespace Nebula.Game.Skills {
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.normalOrMissed) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_crit_damage_on_pc, critDmgPcTime, critDmgPc);
-                sourceBonuses.SetBuff(buff);
+                sourceBonuses.SetBuff(buff, source);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;
             } else {

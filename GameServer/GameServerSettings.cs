@@ -24,7 +24,8 @@ namespace Nebula {
         public string PetCollectionName { get; private set; }
         public string ContractCollectionName { get; private set; }
         public string AchievmentCollectionName { get; private set; }
-
+        public string DatabaseQuestCollectionName { get; private set; }
+        public string DatabaseDialogCollectionName { get; private set; }
 
         public static GameServerSettings Default {
             get {
@@ -47,7 +48,9 @@ namespace Nebula {
                     TimedEffectsCollectionName = "timed_effects",
                     PetCollectionName = "pets",
                     ContractCollectionName = "contracts",
-                    AchievmentCollectionName = "achievments"
+                    AchievmentCollectionName = "achievments",
+                    DatabaseQuestCollectionName = "quests",
+                    DatabaseDialogCollectionName = "dialogs"
                 };
 #else
                 return new GameServerSettings {
@@ -68,7 +71,9 @@ namespace Nebula {
                     TimedEffectsCollectionName = "timed_effects",
                     PetCollectionName = "pets",
                     ContractCollectionName = "contracts",
-                    AchievmentCollectionName = "achievments"
+                    AchievmentCollectionName = "achievments",
+                    DatabaseQuestCollectionName = "quests",
+                    DatabaseDialogCollectionName = "dialogs"
                 };
 #endif
             }

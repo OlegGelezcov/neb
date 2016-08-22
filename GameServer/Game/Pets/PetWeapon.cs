@@ -99,9 +99,9 @@ namespace Nebula.Game.Pets {
             return new WeaponDamage(myWeaponBaseType);
         }
 
-        public override Hashtable Heal(NebulaObject targetObject, float healValue, int skillID = -1) {
+        public override Hashtable Heal(NebulaObject targetObject, float healValue, int skillID = -1, bool generateCrit = true) {
             if (ready) {
-                return base.Heal(targetObject, healValue, skillID);
+                return base.Heal(targetObject, healValue, skillID, generateCrit);
             }
             return FailHeal(targetObject);
         }

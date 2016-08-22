@@ -30,7 +30,7 @@ namespace Nebula.Game.Skills {
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.normalOrMissed) {
                 Buff buff = new Buff(skill.id, null, Common.BonusType.decrease_max_hp_on_pc, hpTime, hpPc);
-                targetBonuses.SetBuff(buff);
+                targetBonuses.SetBuff(buff, source);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
                 return true;
             } else {

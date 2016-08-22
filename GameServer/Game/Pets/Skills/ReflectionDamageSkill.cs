@@ -43,8 +43,11 @@ namespace Nebula.Game.Pets.Skills {
             if(bonuses && (false == bonuses.Contains(m_BuffName))) {
 
                 Buff buff = new Buff(m_BuffName, null, Common.BonusType.reflection_pc, m_Time, m_Value);
-                bonuses.SetBuff(buff);
-                return true;
+
+                if (pet != null) {
+                    bonuses.SetBuff(buff, pet.nebulaObject);
+                    return true;
+                }
             }
             return false;
         }

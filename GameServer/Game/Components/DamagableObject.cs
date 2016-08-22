@@ -22,6 +22,7 @@ namespace Nebula.Game.Components {
         private AchievmentComponent m_Achievments;
         private BotObject m_Bot;
         private MmoMessageComponent m_Mmo;
+        private CharacterObject m_Character;
 
         public override Hashtable DumpHash() {
             var hash =  base.DumpHash();
@@ -35,7 +36,7 @@ namespace Nebula.Game.Components {
             hash["killed?"] = mWasKilled.ToString();
             hash["reflect_damage%"] = mReflectDamageProb.ToString();
             hash["reflect_damage_timer"] = mReflectDamageTimer.ToString();
-            hash["absorbed_damage"] = mAbsorbedDamage.ToString();
+            //hash["absorbed_damage"] = mAbsorbedDamage.ToString();
             hash["timed_damage"] = (timedDamage != null) ? timedDamage.damagePerSecond.ToString() : "0";
             hash["heal_blocked?"] = healBlocked.ToString();
             //hash["difficulty_mult"] = myDifficultyMult.ToString();
@@ -67,16 +68,16 @@ namespace Nebula.Game.Components {
         private float mReflectDamageProb = 0f;
         private float mReflectDamageTimer = 0f;
 
-        private float mAbsorbedDamage = NO_ABSORB;
+        //private float mAbsorbedDamage = NO_ABSORB;
 
         private TimedDamage timedDamage { get; set; }
 
         public bool healBlocked {
             get {
-                if(!mBonuses) {
-                    return false;
+                if(mBonuses) {
+                    return (Mathf.NotEqual(0f, mBonuses.Value(BonusType.block_heal)));
                 }
-                return (!Mathf.Approximately(0f, mBonuses.Value(BonusType.block_heal)));
+                return false;
             }
         }
 
@@ -91,7 +92,11 @@ namespace Nebula.Game.Components {
                 return m_Health;
             }
             private set {
+                float previousHealth = m_Health;
                 m_Health = Mathf.Clamp(value, -100000, maximumHealth);
+                if(Mathf.NotEqual(previousHealth, m_Health)) {
+                    SendUpdateCurrentHealth();
+                }
             }
         }
 
@@ -100,7 +105,7 @@ namespace Nebula.Game.Components {
             float hp = health;
             SetCurrentHealthProperty(hp);
 
-            if (!Mathf.Approximately(m_HealthFromLastSend, hp)) {
+            if (Mathf.NotEqual(m_HealthFromLastSend, hp)) {
                 m_HealthFromLastSend = hp;
                 if (m_Mmo != null) {
                     m_Mmo.SendPropertyUpdate(new Hashtable { { (byte)PS.CurrentHealth, health } });
@@ -149,6 +154,12 @@ namespace Nebula.Game.Components {
 
         public abstract float baseMaximumHealth { get; }
 
+        public CharacterObject character {
+            get {
+                return m_Character;
+            }
+        }
+
 
         public void SetIgnoreDamageAtStart(bool ignore) {
 
@@ -196,14 +207,15 @@ namespace Nebula.Game.Components {
             }
         }
 
-        public void SetAbsorbDamage(float absorb) {
-            mAbsorbedDamage = absorb;
-        }
+        //public void SetAbsorbDamage(float absorb) {
+        //    mAbsorbedDamage = absorb;
+        //}
 
         protected virtual void AbsorbDamage(InputDamage inputDamage) {
             float absorbed = 0;
             float ret = inputDamage.totalDamage;
 
+            /*
             if(mAbsorbedDamage > 0) {
                 mAbsorbedDamage -= inputDamage.totalDamage;
                 if(mAbsorbedDamage >= 0f ) {
@@ -217,9 +229,18 @@ namespace Nebula.Game.Components {
                     ret = result;
 
                 }
-            }
+            }*/
 
             if(mBonuses) {
+                if(ret > 0 ) {
+                    float absorbCnt = mBonuses.absorbDamageCntBonus;
+
+                    if (Mathf.NotEqual(absorbCnt, 0.0f)) {
+                        float remainAbsorb = absorbCnt - ret;
+                        ret -= absorbCnt;
+                        mBonuses.SetAbsrobBuff(remainAbsorb, nebulaObject);
+                    }
+                }
                 if(ret > 0 ) {
                     float absorbPC = mBonuses.absrodDamagePcBonus;
                     float dmgToAbsorbe = ret * absorbPC;
@@ -229,6 +250,10 @@ namespace Nebula.Game.Components {
                     float hp = (absorbed + dmgToAbsorbe) * restoreHpPc;
                     Heal(new InputHeal(hp));
                 }
+            }
+
+            if(ret < 0) {
+                ret = 0;
             }
 
             inputDamage.ClearAllDamages();
@@ -265,7 +290,10 @@ namespace Nebula.Game.Components {
             m_Achievments = GetComponent<AchievmentComponent>();
             m_Bot = GetComponent<BotObject>();
             m_Mmo = GetComponent<MmoMessageComponent>();
+            m_Character = GetComponent<CharacterObject>();
         }
+
+
 
         private void SetCurrentHealthProperty(float val) {
             nebulaObject.properties.SetProperty((byte)PS.CurrentHealth, val);
@@ -331,7 +359,13 @@ namespace Nebula.Game.Components {
             if(mBonuses) {
                 float hpCntAtSec = mBonuses.restoreHpAtSecCntBonus;
                 float hpPcAtSec = mBonuses.restoreHpAtSecPcBonus * baseMaximumHealth;
-                float restHp = (hpCntAtSec + hpPcAtSec) * deltaTime;
+
+                float hpcnt = hpCntAtSec * deltaTime;
+                float hppc = hpPcAtSec * deltaTime;
+
+                float restHp = hpcnt + hppc;
+
+               
 
                 if(Mathf.Approximately(restHp, 0.0f)) {
                     restHp = 0.0f;
@@ -342,6 +376,10 @@ namespace Nebula.Game.Components {
                     log.InfoFormat("restore self on value = {0:F1} yellow", restHp);
                     if (m_Skills) {
                         m_Skills.OnHealthRestored(nebulaObject, restHp);
+                    }
+                    if (m_Mmo != null && character != null) {
+                        m_Mmo.SendHeal(EventReceiver.OwnerAndSubscriber, BaseWeapon.ConstructHealMessage(nebulaObject, nebulaObject, character.workshop, Const.NO_SKILL_ID, restHp, false));
+                        log.InfoFormat(string.Format("sended self heal per sec [green]: {0} at object type: {1}", restHp, nebulaObject.getItemType()));
                     }
                 }
             }
@@ -365,11 +403,14 @@ namespace Nebula.Game.Components {
                 if(mBonuses) {
                     mult = (1.0f + mBonuses.healingSpeedPcBonus);
                 }
+
+                //we now don't disable healing speed from self
+                /*
                 if(heal.hasSource) {
                     if(heal.source.Id == nebulaObject.Id ) {
                         mult = 1.0f;
                     }
-                }
+                }*/
 
                 float val = Mathf.Abs(heal.value) * mult;
 
@@ -452,16 +493,21 @@ namespace Nebula.Game.Components {
         //}
 
 
-        public void SetTimedDamage(float interval, float damagePerSecond, WeaponBaseType wbt) {
+        public void SetTimedDamage(float interval, float damagePerSecond, WeaponBaseType wbt, int skillID) {
             if(timedDamage != null ) {
                 timedDamage.StartDamage(interval, damagePerSecond, wbt);
+
+                if (mBonuses != null) {
+                    Buff buff = new Buff(skillID.ToString(), null, BonusType.timed_damage, interval, damagePerSecond);
+                    mBonuses.SetBuff(buff, null);
+                }
             }
         }
 
         public void SetRestoreHPPerSec(float restorePerSec, float restoreTimer, string buffId) {
             if(mBonuses) {
                 Buff buff = new Buff(buffId, null, BonusType.restore_hp_at_sec_on_cnt, restoreTimer, restorePerSec);
-                mBonuses.SetBuff(buff);
+                mBonuses.SetBuff(buff, buff.owner);
             }
             //mRestorPerSec = restorePerSec;
             //mRestorPerSecTimer = restoreTimer;

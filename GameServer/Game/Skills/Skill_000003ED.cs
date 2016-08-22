@@ -41,7 +41,7 @@ namespace Nebula.Game.Skills {
                         dmgPerSecTime *= 2;
                     }
 
-                    targ.GetComponent<DamagableObject>().SetTimedDamage(dmgPerSecTime, hit.actualDamage.totalDamage * dmgPerSecPC, sourceWeapon.myWeaponBaseType);
+                    targ.GetComponent<DamagableObject>().SetTimedDamage(dmgPerSecTime, hit.actualDamage.totalDamage * dmgPerSecPC, sourceWeapon.myWeaponBaseType, skill.idInt);
                 }
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;

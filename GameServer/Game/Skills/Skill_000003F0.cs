@@ -38,7 +38,7 @@ namespace Nebula.Game.Skills {
                     blockWeaponInterval *= 2;
                 }
                 Buff blockWeaponBuff = new Buff(skill.data.Id.ToString(), null, BonusType.block_weapon, blockWeaponInterval);
-                source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>().SetBuff(blockWeaponBuff);
+                source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>().SetBuff(blockWeaponBuff, source);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shot);
                 return true;
             } else {

@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace Nebula.Game.Skills {
 
-    //speed debuff on target
+    //speed debuff on target on 50%
     public class Skill_00000420 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
@@ -34,16 +34,16 @@ namespace Nebula.Game.Skills {
                 return false;
             }
 
-            var sourceMovable = source.Movable();
-            float speedValue = sourceMovable.maximumSpeed * speedPc;
-
             bool mastery = RollMastery(source);
             if(mastery) {
                 speedTime *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
 
-            Buff buff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.decrease_speed_on_cnt, speedTime, speedValue);
-            target.Bonuses().SetBuff(buff);
+            Buff buff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.decrease_speed_on_pc, speedTime, speedPc);
+            target.Bonuses().SetBuff(buff, source);
             return true;
         }
     }

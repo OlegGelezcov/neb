@@ -45,7 +45,7 @@ namespace Nebula.Game.Skills {
                 //log.Info("HIT ALLOWED");
                 float speedCount = source.GetComponent<MovableObject>().normalSpeed * decreaseSpeedPercent;
                 Buff speedDebuff = new Buff(id, null, BonusType.decrease_speed_on_cnt, skill.data.Durability, speedCount);
-                targetBonuses.SetBuff(speedDebuff);
+                targetBonuses.SetBuff(speedDebuff, source);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;
             } else {

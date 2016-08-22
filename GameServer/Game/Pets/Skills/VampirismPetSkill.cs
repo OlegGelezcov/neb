@@ -45,8 +45,8 @@ namespace Nebula.Game.Pets.Skills {
 
                 Buff buffDmg = new Buff(m_BonusName1, null, Common.BonusType.increase_damage_on_pc, m_Time, m_DmgPc);
                 Buff buffVamp = new Buff(m_BonusName2, null, Common.BonusType.vampirism_pc, m_Time, m_vampPc);
-                ownerBonuses.SetBuff(buffDmg);
-                ownerBonuses.SetBuff(buffVamp);
+                ownerBonuses.SetBuff(buffDmg, pet.nebulaObject);
+                ownerBonuses.SetBuff(buffVamp, pet.nebulaObject);
                 return true;
             }
             return false;

@@ -41,8 +41,8 @@ namespace Nebula.Game.Skills {
 
             Buff cooldownBuff = new Buff(skill.data.Id.ToString(), null, BonusType.decrease_cooldown_on_pc, cooldownTime, cooldownPc);
             Buff resistBuff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_resist_on_pc, resistTime, resistPc);
-            bonuses.SetBuff(cooldownBuff);
-            bonuses.SetBuff(resistBuff);
+            bonuses.SetBuff(cooldownBuff, source);
+            bonuses.SetBuff(resistBuff, source);
             return true;
         }
     }

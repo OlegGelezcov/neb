@@ -3,7 +3,10 @@ using ExitGames.Logging;
 using Nebula.Drop;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using Nebula.Game.Components.Quests;
+using Nebula.Game.Components.Quests.Dialogs;
 using Nebula.Inventory.Objects;
+using Nebula.Quests;
 using Nebula.Server.Operations;
 using Photon.SocketServer;
 using ServerClientCommon;
@@ -82,12 +85,127 @@ namespace Nebula.Game.OperationHandlers {
                     return CallCreateTestSharedChest(actor, request, operation);
                 case RPCID.rpc_MoveAllFromInventoryToStationWithExclude:
                     return CallMoveAllFromInventoryToStationWithExclude(actor, request, operation);
+                case RPCID.rpc_TestStun:
+                    return CallTestStun(actor, request, operation);
+                case RPCID.rpc_TestAreaInvisibility:
+                    return CallTestAreaInvisibilty(actor, request, operation);
+                case RPCID.rpc_GetQuests:
+                    return CallGetQuests(actor, request, operation);
+                case RPCID.rpc_CompleteQuest:
+                    return CallCompleteQuest(actor, request, operation);
+                case RPCID.rpc_GetDialogs:
+                    return CallGetDialogs(actor, request, operation);
+                case RPCID.rpc_UserEvent:
+                    return CallUserEvent(actor, request, operation);
+                case RPCID.rpc_ResetQuests:
+                    return CallResetQuests(actor, request, operation);
                 default:
                     return new OperationResponse(request.OperationCode) {
                         ReturnCode = (int)ReturnCode.InvalidRPCID,
                         DebugMessage = string.Format("not found rpc with id = {0}", operation.rpcId)
                     };
             }
+        }
+
+        private OperationResponse CallResetQuests(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            player.GetComponent<QuestManager>().Reset();
+            player.GetComponent<DialogManager>().Reset();
+            RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = (int)RPCErrorCode.Ok
+            };
+            return new OperationResponse(request.OperationCode, respInstance);
+        }
+
+        private OperationResponse CallUserEvent(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                RPCErrorCode code = RPCErrorCode.Ok;
+                UserEventName eventName = (UserEventName)(int)op.parameters[0];
+                switch(eventName) {
+                    case UserEventName.object_scanner_select_ship:
+                    case UserEventName.start_moving:
+                    case UserEventName.rotate_camera: {
+                            if (player.GetComponent<QuestManager>().TryCheckActiveQuests(new UserEvent(eventName))) {
+                                s_Log.InfoFormat("player complete some quest with event: {0}".Lime(), eventName);
+                            } else {
+                                s_Log.InfoFormat("no quest completed by event: {0}".Orange(), eventName);
+                            }
+                        }
+                        break;
+                    case UserEventName.dialog_completed: {
+                            if(op.parameters.Length > 1) {
+                                string dialogId = (string)op.parameters[1];
+                                player.GetComponent<DialogManager>().CompleteDialog(dialogId);
+                            } else {
+                                code = RPCErrorCode.MissedParameter;
+                            }
+                        }
+                        break;
+                    default: {
+                            s_Log.Info(string.Format("error: no support for event: {0}", eventName).Red());
+                            code = RPCErrorCode.UnsupportedEvent;
+                        }
+                        break;
+                }
+
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = (int)code
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallGetDialogs(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = (int)ReturnCode.Ok
+            };
+            player.GetComponent<DialogManager>().SendInfo();
+            return new OperationResponse(request.OperationCode, respInstance);
+        }
+
+        private OperationResponse CallCompleteQuest(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                string questId = (string)op.parameters[0];
+                bool status = player.GetComponent<QuestManager>().CompleteReadyQuest(questId);
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = status
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallGetQuests(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = (int)ReturnCode.Ok
+            };
+            player.GetComponent<QuestManager>().SendInfo();
+            return new OperationResponse(request.OperationCode, respInstance);
+        }
+
+        private OperationResponse CallTestAreaInvisibilty(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                float radius = (float)op.parameters[0];
+                RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                    rpcId = op.rpcId,
+                    result = player.ActionExecutor.TestSetAreaInvisibility(radius)
+                };
+                return new OperationResponse(request.OperationCode, respInstance);
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallTestStun(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = player.ActionExecutor.TestStun()
+            };
+            return new OperationResponse(request.OperationCode, respInstance);
         }
 
         private OperationResponse CallMoveAllFromInventoryToStationWithExclude(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {

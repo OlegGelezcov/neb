@@ -52,5 +52,12 @@
         public const int rpc_CollectOreFromPlanetMiningStation = 31;
         public const int rpc_CreateTestSharedChest = 32;
         public const int rpc_MoveAllFromInventoryToStationWithExclude = 33;
+        public const int rpc_TestStun = 34;
+        public const int rpc_TestAreaInvisibility = 35;
+        public const int rpc_GetQuests = 36;
+        public const int rpc_CompleteQuest = 37;
+        public const int rpc_GetDialogs = 38;
+        public const int rpc_UserEvent = 39;
+        public const int rpc_ResetQuests = 40;
     }
 }

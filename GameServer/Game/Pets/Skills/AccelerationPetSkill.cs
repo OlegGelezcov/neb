@@ -42,7 +42,7 @@ namespace Nebula.Game.Pets.Skills {
                 var bonuses = pet.owner.Bonuses();
                 if(bonuses) {
                     Buff buff = new Buff(m_BonusName, null, Common.BonusType.increase_speed_on_pc, m_Time, m_PercentValue);
-                    bonuses.SetBuff(buff);
+                    bonuses.SetBuff(buff, pet.nebulaObject);
                     return true;
                 }
             }

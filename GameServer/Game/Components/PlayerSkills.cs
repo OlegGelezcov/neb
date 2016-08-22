@@ -43,7 +43,7 @@ namespace Nebula.Game.Components {
         private readonly ActiveSkillUpdater m3F8 = new ActiveSkillUpdater();
         private readonly ActiveSkillUpdater m404 = new ActiveSkillUpdater();
         private readonly ActiveSkillUpdater m415 = new ActiveSkillUpdater();
-        private readonly ActiveSkillUpdater m41C = new ActiveSkillUpdater();
+        //private readonly ActiveSkillUpdater m41C = new ActiveSkillUpdater();
         private readonly ActiveSkillUpdater m432 = new ActiveSkillUpdater();
         private int m439ID;
         private int m43AID;
@@ -258,7 +258,7 @@ namespace Nebula.Game.Components {
             m3F8.Update(deltaTime);
             m404.Update(deltaTime);
             m415.Update(deltaTime);
-            m41C.Update(deltaTime);
+           // m41C.Update(deltaTime);
             m432.Update(deltaTime);
             m_BlockSkillsTimer.Update(deltaTime);
             //m3FD.Update(deltaTime);
@@ -525,7 +525,7 @@ namespace Nebula.Game.Components {
                         if(bonuses.GetBuffCountWithTag( BonusType.increase_resist_on_pc, m451ID) < stackCount) {
                             Buff buff = new Buff(Guid.NewGuid().ToString(), null, BonusType.increase_resist_on_pc, resistTime, resistPc);
                             buff.SetTag(m451ID);
-                            bonuses.SetBuff(BonusType.increase_resist_on_pc, buff);
+                            bonuses.SetBuff(BonusType.increase_resist_on_pc, buff, buff.owner);
                         }
                     }
                 }
@@ -545,7 +545,7 @@ namespace Nebula.Game.Components {
                 //we must have this skill and this skill is on
                 if(HasSkill(skillID)) {
                     var skill = GetSkillById(skillID);
-                    if(skill.isOn) {
+                    if(skill.isPersistentAndActive || skill.isPassive ) {
                         float respawnProb = skill.data.Inputs.GetValue<float>("resurrect_pc", 0f);
                         float regeneratedHp = skill.data.Inputs.GetValue<float>("hp_regen_pc", 0f);
                         float randomNumber = Rand.Float01();
@@ -562,23 +562,27 @@ namespace Nebula.Game.Components {
                 int skill417ID = SkillExecutor.SkilIDFromHexString(SKILL_00000417);
                 if(HasSkill(skill417ID)) {
                     var skill = GetSkillById(skill417ID);
-                    if(skill.isOn) {
-                        float respawnProb = skill.data.Inputs.GetValue<float>("resurrect_pc", 0f);
-                        float regeneratedHp = skill.data.Inputs.GetValue<float>("hp_regen_pc", 0f);
+                    if( skill.isPersistentAndActive || skill.isPassive ) {
+                        float respawnProb = skill.GetFloatInput("resurrect_pc");
+                        float regeneratedHp = skill.GetFloatInput("hp_regen_pc");
                         float randomNumber = Rand.Float01();
+
+                        log.InfoFormat("respawn by skill test need: {0} real: {1}", respawnProb, randomNumber);
                         if(randomNumber < respawnProb) {
+                            log.InfoFormat("object was success respawned by skill 00000417 [green]");
                             var damagable = nebulaObject.Damagable();
                             damagable.ForceSetHealth(damagable.maximumHealth * regeneratedHp);
                             nebulaObject.MmoMessage().SendResurrect();
                             return true;
-                        }
+                        } 
+
                     }
                 }
 
                 int s435 = SkillExecutor.SkilIDFromHexString(SKILL_00000435);
                 if(HasSkill(s435)) {
                     var skill = GetSkillById(s435);
-                    if(skill.isOn) {
+                    if(skill.isPersistentAndActive || skill.isPassive ) {
                         var resurrectProb = skill.GetFloatInput("resurrect_pc");
                         var hpPc = skill.GetFloatInput("hp_regen_pc");
                         if(Rand.Float01() < resurrectProb) {
@@ -593,7 +597,7 @@ namespace Nebula.Game.Components {
                 int s453 = SkillExecutor.SkilIDFromHexString(SKILL_00000453);
                 if(HasSkill(s453)) {
                     var skill = GetSkillById(s453);
-                    if(skill.isOn) {
+                    if(skill.isPersistentAndActive || skill.isPassive ) {
                         var resurrectProb = skill.GetFloatInput("resurrect_pc");
                         var hpPc = skill.GetFloatInput("hp_regen_pc");
                         if(Rand.Float01() < resurrectProb) {
@@ -654,7 +658,7 @@ namespace Nebula.Game.Components {
                             log.InfoFormat("set buff to max hp green");
                             Buff buff = new Buff(Guid.NewGuid().ToString(), null, BonusType.increase_max_hp_on_pc, hpTime, hpPc);
                             buff.SetTag(INCREASE_MAX_HP_FOR_CRIT_BUFF_TAG);
-                            bonuses.SetBuff(buff);
+                            bonuses.SetBuff(buff, buff.owner);
                         }
                     }
                 }
@@ -668,8 +672,8 @@ namespace Nebula.Game.Components {
                     float time = skill.GetFloatInput("time");
                     Buff dmgBuff = new Buff(skill.id, null, BonusType.increase_damage_on_pc, time, dmgPc);
                     Buff energyCostBuff = new Buff(skill.id, null, BonusType.decrease_energy_cost_on_pc, time, enCostPc);
-                    bonuses.SetBuff(dmgBuff);
-                    bonuses.SetBuff(energyCostBuff);
+                    bonuses.SetBuff(dmgBuff, dmgBuff.owner);
+                    bonuses.SetBuff(energyCostBuff, energyCostBuff.owner);
                 }
             }
         }
@@ -688,12 +692,23 @@ namespace Nebula.Game.Components {
 
 
         public void OnCriticalHeal(float critHeal) {
-            if(m41C.active) {
-                var skill = GetSkillById(SkillExecutor.SkilIDFromHexString(SKILL_0000041C));
-                if(skill != null ) {
-                    (skill.GetExecutor() as Skill_0000041C).Make(nebulaObject, skill, m41C.value);
+            
+            if (bonuses != null ) {
+                float buffVal = bonuses.Value(BonusType.buff_41c);
+                if (Mathf.NotEqual(buffVal, 0.0f)) {
+                    int sid = SkillExecutor.SkilIDFromHexString("0000041C");
+                    if (HasSkill(sid)) {
+                        var skill = GetSkillById(sid);
+                        (skill.GetExecutor() as Skill_0000041C).Make(nebulaObject, skill, buffVal);
+                    }
                 }
             }
+            //if(m41C.active) {
+            //    var skill = GetSkillById(SkillExecutor.SkilIDFromHexString(SKILL_0000041C));
+            //    if(skill != null ) {
+            //        (skill.GetExecutor() as Skill_0000041C).Make(nebulaObject, skill, m41C.value);
+            //    }
+            //}
         }
 
         /// <summary>
@@ -782,9 +797,9 @@ namespace Nebula.Game.Components {
         }
 
         //activate heal other when make crit heal skill
-        public void Set41C(float duration, float healPc) {
-            m41C.Activate(duration, healPc);
-        }
+        //public void Set41C(float duration, float healPc) {
+        //    m41C.Activate(duration, healPc);
+        //}
 
         public void Set432(float duration, float healPc) {
             m432.Activate(duration, healPc);

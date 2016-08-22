@@ -64,7 +64,7 @@ namespace Nebula.Game.Skills {
             float critChanceBuffValue = Mathf.Clamp(targets.Count * critChanceForBot, 0, maxCrit);
             if (!Mathf.Approximately(0f, critChanceBuffValue)) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_crit_chance_on_cnt, time, critChanceBuffValue);
-                source.Bonuses().SetBuff(buff);
+                source.Bonuses().SetBuff(buff, source);
             }
             return true;
         }

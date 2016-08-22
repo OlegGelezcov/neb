@@ -88,7 +88,7 @@ namespace Nebula.Game.Components {
 
             Buff buff = new Buff("ExpTimedEffect", null, Common.BonusType.increase_exp_on_pc, interval, value);
             buff.SetTag(m_EffectTag);
-            target.SetBuff(buff);
+            target.SetBuff(buff, buff.owner);
         }
 
         public override string ToString() {

@@ -117,6 +117,10 @@
                 return false;
         }
 
+        public static bool NotEqual(float a, float b) {
+            return (!Approximately(a, b));
+        }
+
         public static bool IsZero(float f) {
             return Approximately(f, 0f);
         }

@@ -47,7 +47,7 @@ namespace Nebula.Game.Pets.Skills {
                         s_Log.InfoFormat("additional damage pet skill check made failed");
                         return false;
                     }, -1, false);
-                    ownerBonuses.SetBuff(buff);
+                    ownerBonuses.SetBuff(buff, pet.nebulaObject);
                     return true;
                 }
             }

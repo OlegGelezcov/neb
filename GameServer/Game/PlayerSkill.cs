@@ -38,6 +38,30 @@
             }
         }
 
+        public bool isPersistentAndActive {
+            get {
+                return isPersistent && isOn;
+            }
+        }
+
+        public bool isPersistent {
+            get {
+                if(data.hasSkill) {
+                    return (data.Type == SkillType.Persistent);
+                }
+                return false;
+            }
+        }
+
+        public bool isPassive {
+            get {
+                if(!data.IsEmpty) {
+                    return (data.Type == SkillType.Passive);
+                }
+                return false;
+            }
+        }
+
         public string id {
             get {
                 return idInt.ToString();
@@ -123,7 +147,7 @@
                 if (target.Skills() && target.Bonuses()) {
                     Buff buff = new Buff(buffID, target, BonusType.decrease_max_energy_on_cnt, -1, energyMOD, () => true, skillID);
 
-                    target.GetComponent<PlayerBonuses>().SetBuff(buff);
+                    target.GetComponent<PlayerBonuses>().SetBuff(buff, buff.owner);
                 }
             }
         }

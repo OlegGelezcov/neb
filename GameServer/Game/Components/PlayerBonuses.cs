@@ -21,6 +21,7 @@ namespace Nebula.Game.Components {
         private List<BonusType> mSpeedDebuffs;
         private BonusesComponentData mInitData;
         private MmoMessageComponent m_Mmo;
+        private PlayerTarget m_Target;
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -43,6 +44,7 @@ namespace Nebula.Game.Components {
         public override void Start() {
             InitVariables();
             m_Mmo = GetComponent<MmoMessageComponent>();
+            m_Target = GetComponent<PlayerTarget>();
         }
 
         public void Respawn() {
@@ -57,6 +59,7 @@ namespace Nebula.Game.Components {
                     if(pBonus.Value.hasAny  ) {
                         removedKey = pBonus.Key;
                         found = true;
+                        break;
                     }
                 }
             }
@@ -64,6 +67,7 @@ namespace Nebula.Game.Components {
                 PlayerBonus removedBonus = null;
                 if(mBonuses.TryRemove(removedKey, out removedBonus)) {
                     log.InfoFormat("PlayerBonuses.RemoveAnyBuff(): removed buff = {0} [yellow]", removedKey);
+                    SendPropertyUpdate(false);
                 }
             }
         }
@@ -152,9 +156,31 @@ namespace Nebula.Game.Components {
             }
         }
 
+        /// <summary>
+        /// Complete block debuf action. Check if we has buff on block debuff and than remove this buff from list
+        /// </summary>
+        /// <param name="buff"></param>
+        /// <returns></returns>
+        private bool IsDebuffBlocked(Buff buff ) {
+            if(BuffUtils.IsDebuff(buff.buffType)) {
+                var bonus = GetBonus(BonusType.block_debuff);
+                if(bonus != null && Mathf.NotEqual(bonus.value, 0.0f)) {
+                    bonus.Clear();
+                    return true;
+                }
+            }
+            return false;
+        }
 
+        private void SendPropertyUpdate(bool sendOnlyOwner = true) {
+            if (m_Mmo != null) {
+                var buffHash = GetInfo();
+                SetBuffsProperty(buffHash);
+                m_Mmo.SendPropertyUpdate(new Hashtable { { (byte)PS.Bonuses, buffHash } }, sendOnlyOwner);
+            }
+        }
 
-        public void SetBuff(BonusType type, Buff buff)
+        public void SetBuff(BonusType type, Buff buff, NebulaObject source)
         {
             InitVariables();
             if(mSpeedDebuffs.Contains(type)) {
@@ -165,6 +191,11 @@ namespace Nebula.Game.Components {
                 if (BuffNotZero(BonusType.decrease_time_of_negative_speed_buffs)) {
                     buff.MultInterval(Value(BonusType.decrease_time_of_negative_speed_buffs));
                 }
+            }
+
+            if(IsDebuffBlocked(buff)) {
+                SendPropertyUpdate();
+                return;
             }
 
 
@@ -179,16 +210,18 @@ namespace Nebula.Game.Components {
                 }
             }
             if(success && nebulaObject.IsPlayer()) {
-                if(m_Mmo != null) {
-                    var buffHash = GetInfo();
-                    SetBuffsProperty(buffHash);
-                    m_Mmo.SendPropertyUpdate(new Hashtable { { (byte)PS.Bonuses, buffHash } }, true);
+                SendPropertyUpdate();
+            }
+
+            if(success && m_Target != null ) {
+                if(source != null ) {
+                    m_Target.OnBuffSetted(buff, source);
                 }
             }
         }
 
-        public void SetBuff(Buff buff) {
-            SetBuff(buff.buffType, buff);
+        public void SetBuff(Buff buff, NebulaObject source) {
+            SetBuff(buff.buffType, buff, source);
         }
 
         public Buff GetBuff(BonusType bonusType, string buffId )
@@ -276,6 +309,15 @@ namespace Nebula.Game.Components {
                 bonuses.TryRemove(emptyBonusType, out removedBonus);
             }
             return result;
+        }
+
+        public void SetAbsrobBuff(float val, NebulaObject source) {
+            RemoveBuffs(BonusType.absorb_damage_cnt);
+            if(val > 0 ) {
+                Buff buff = new Buff(BonusType.absorb_damage_cnt.ToString(), null, BonusType.absorb_damage_cnt, 60 * 60, val);
+                SetBuff(buff, source);
+                SendPropertyUpdate(false);
+            }
         }
 
         public void ScaleDebuffInterval(float mult) {
@@ -522,6 +564,14 @@ namespace Nebula.Game.Components {
             }
         }
 
+        public float absorbDamageCntBonus {
+            get {
+                float sum = 0.0f;
+                sum += Value(BonusType.absorb_damage_cnt);
+                return sum;
+            }
+        }
+
         public float convertAbsorbedDamageToHpPcBonus {
             get {
                 float sum = 0f;
@@ -607,6 +657,12 @@ namespace Nebula.Game.Components {
         public float dronStrengthCntBonus {
             get {
                 return Value(BonusType.increase_dron_strength_on_cnt) - Value(BonusType.decrease_dron_strength_on_cnt);
+            }
+        }
+
+        public bool isStunned {
+            get {
+                return Mathf.NotEqual(Value(BonusType.stun), 0.0f);
             }
         }
 

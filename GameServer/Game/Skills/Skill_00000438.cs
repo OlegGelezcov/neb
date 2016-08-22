@@ -26,8 +26,8 @@ namespace Nebula.Game.Skills
             Buff cdBuff = new Buff(skill.id, null, Common.BonusType.decrease_cooldown_on_pc, cdTime, cdPc);
             Buff speedBuff = new Buff(skill.id, null, Common.BonusType.increase_speed_on_pc, speedTime, speedPc);
             var sourceBonuses = source.Bonuses();
-            sourceBonuses.SetBuff(cdBuff);
-            sourceBonuses.SetBuff(speedBuff);
+            sourceBonuses.SetBuff(cdBuff, source);
+            sourceBonuses.SetBuff(speedBuff, source);
             return true;
         }
     }

@@ -249,6 +249,8 @@ namespace Nebula.Game.Components {
                 bool notRespawned =  (false == mSkills.RespawnBySkill());
                 if(notRespawned) {
                     return NotRespawnByPets();
+                } else {
+                    return false;
                 }
             }
             return true;

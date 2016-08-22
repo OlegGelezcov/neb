@@ -43,7 +43,7 @@ namespace Nebula.Game.Skills {
                     resistTime *= 2;
                 }
                 Buff resistDebuff = new Buff(debuffID, null, BonusType.decrease_resist_on_pc, resistTime, resistPc);
-                targetBonuses.SetBuff(resistDebuff);
+                targetBonuses.SetBuff(resistDebuff, source);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;
             } else {

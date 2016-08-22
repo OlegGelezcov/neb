@@ -17,7 +17,7 @@ namespace Nebula.Game.Skills {
 
             source.Damagable().SetIgnoreDamage(time);
             Buff blockWeaponDebuff = new Buff(skill.id, null, Common.BonusType.block_weapon, time);
-            source.Bonuses().SetBuff(blockWeaponDebuff);
+            source.Bonuses().SetBuff(blockWeaponDebuff, source);
             return true;
         }
     }

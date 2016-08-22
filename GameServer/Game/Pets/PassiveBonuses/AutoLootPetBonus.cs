@@ -19,7 +19,7 @@ namespace Nebula.Game.Pets.PassiveBonuses {
                     Buff buff = new Buff(m_BonusName, null, BonusType.auto_loot_chest, -1, 1, () => {
                         return (pet) && (pet.owner);
                     }, -1, false);
-                    bons.SetBuff(buff);
+                    bons.SetBuff(buff, buff.owner);
                     return true;
                 }
             }

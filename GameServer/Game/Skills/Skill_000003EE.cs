@@ -41,7 +41,7 @@ namespace Nebula.Game.Skills {
                     buffDamageInterval *= 2;
                 }
                 Buff damageBuff = new Buff(id, null, BonusType.increase_damage_on_pc, buffDamageInterval, buffDamagePercent);
-                source.GetComponent<PlayerBonuses>().SetBuff(damageBuff);
+                source.GetComponent<PlayerBonuses>().SetBuff(damageBuff, source);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;
             } else {

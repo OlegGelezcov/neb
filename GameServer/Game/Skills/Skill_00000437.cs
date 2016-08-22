@@ -47,11 +47,11 @@ namespace Nebula.Game.Skills {
 
             foreach(var p in items ) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.decrease_damage_on_pc, dmgDebuffTime, dmgDebuffPc);
-                p.Value.GetComponent<PlayerBonuses>().SetBuff(buff);
+                p.Value.GetComponent<PlayerBonuses>().SetBuff(buff, source);
             }
 
             Buff dmgBuff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_damage_on_pc, dmgDebuffTime, dmgBuffPc);
-            sourceBonuses.SetBuff(dmgBuff);
+            sourceBonuses.SetBuff(dmgBuff, source);
             return true;
         }
     }

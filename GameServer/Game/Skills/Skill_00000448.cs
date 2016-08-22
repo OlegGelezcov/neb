@@ -44,7 +44,7 @@ namespace Nebula.Game.Skills {
             if(hit.normalOrMissed ) {
                 if( (skills.lastSkill != skill.data.Id ) || (skills.lastSkill == skill.data.Id && skills.sequenceSkillCounter < skillCount )) {
                     Buff buff = new Buff(skill.data.Id.ToString() + skills.sequenceSkillCounter, null, BonusType.increase_crit_chance_on_cnt, critChanceTime, critChancePc);
-                    source.GetComponent<PlayerBonuses>().SetBuff(buff);
+                    source.GetComponent<PlayerBonuses>().SetBuff(buff, source);
                 }
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;

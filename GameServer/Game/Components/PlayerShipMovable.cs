@@ -5,6 +5,7 @@ using ExitGames.Logging;
 using Nebula.Engine;
 using Nebula.Server.Components;
 using ServerClientCommon;
+using Space.Game;
 
 namespace Nebula.Game.Components {
 
@@ -18,6 +19,8 @@ namespace Nebula.Game.Components {
         private AIState mAI;
         private float mShiftSpeedFactor;
         private PassiveBonusesComponent m_PassiveBonuses;
+        private MmoMessageComponent m_Mmo;
+        private float m_LastSpeedSendTime = 0f;
 
         public void Init(PlayerShipMovableComponentData data) {}
 
@@ -26,6 +29,7 @@ namespace Nebula.Game.Components {
             mAI = GetComponent<AIState>();
             mShiftSpeedFactor = nebulaObject.world.Resource().ServerInputs.GetValue<float>("accelerated_motion_speed_factor");
             m_PassiveBonuses = GetComponent<PassiveBonusesComponent>();
+            m_Mmo = GetComponent<MmoMessageComponent>();
         }
 
         public override float normalSpeed {
@@ -52,8 +56,19 @@ namespace Nebula.Game.Components {
         public override float speed {
             get {
                 var total =  base.speed;
-                props.SetProperty((byte)PS.CurrentLinearSpeed, total);
+                SendSpeedProperty(total);
                 return total;
+            }
+        }
+
+        private void SendSpeedProperty(float total) {
+            props.SetProperty((byte)PS.CurrentLinearSpeed, total);
+
+            if (Time.curtime() > m_LastSpeedSendTime + 1) {
+                m_LastSpeedSendTime = Time.curtime();
+                if (m_Mmo != null) {
+                    m_Mmo.SendPropertyUpdate(new Hashtable { { (byte)PS.CurrentLinearSpeed, total } }, true);
+                }
             }
         }
 

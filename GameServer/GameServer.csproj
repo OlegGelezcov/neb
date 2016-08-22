@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorName.cs" />
     <Compile Include="ConnectionConfigCollection.cs" />
     <Compile Include="ConnectionRole.cs" />
     <Compile Include="ConsoleLogContext.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="Database\ContractDatabase.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Database\DatabaseUtils.cs" />
+    <Compile Include="Database\DialogDatabase.cs" />
+    <Compile Include="Database\DialogDocument.cs" />
     <Compile Include="Database\InventoryDatabase.cs" />
     <Compile Include="Database\InventoryDocument.cs" />
     <Compile Include="Database\InventoryItemDocumentElement.cs" />
@@ -79,6 +82,8 @@
     <Compile Include="Database\PetDatabase.cs" />
     <Compile Include="Database\PetDocument.cs" />
     <Compile Include="Database\ContractDocument.cs" />
+    <Compile Include="Database\QuestDatabase.cs" />
+    <Compile Include="Database\QuestDocument.cs" />
     <Compile Include="Database\ShipModelDatabase.cs" />
     <Compile Include="Database\ShipModelDocument.cs" />
     <Compile Include="Database\ShipModuleDocumentElement.cs" />
@@ -162,6 +167,13 @@
     <Compile Include="Game\Components\PlayerSkills.cs" />
     <Compile Include="Game\Components\PlayerTimedEffects.cs" />
     <Compile Include="Game\Components\PvpStore.cs" />
+    <Compile Include="Game\Components\Quests\BooleanQuestVariable.cs" />
+    <Compile Include="Game\Components\Quests\Dialogs\DialogManager.cs" />
+    <Compile Include="Game\Components\Quests\FloatQuestVariable.cs" />
+    <Compile Include="Game\Components\Quests\IntegerQuestVariable.cs" />
+    <Compile Include="Game\Components\Quests\QuestManager.cs" />
+    <Compile Include="Game\Components\Quests\QuestVariable.cs" />
+    <Compile Include="Game\Components\Quests\ServerQuest.cs" />
     <Compile Include="Game\Components\RaceableModelComponent.cs" />
     <Compile Include="Game\Components\RespawnableObject.cs" />
     <Compile Include="Game\Components\SharedChest.cs" />
@@ -486,6 +498,7 @@
     <Compile Include="Game\InvasionPortalEnemyShip.cs" />
     <Compile Include="Game\NpcShipWeapon.cs" />
     <Compile Include="Game\WorldNpcManager.cs" />
+    <Compile Include="LibLoggerObject.cs" />
     <Compile Include="NebulaLogger.cs" />
     <Compile Include="OutgoingMasterServerPeer.cs" />
     <Compile Include="PlanetWorldCellBoard.cs" />

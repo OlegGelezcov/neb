@@ -48,8 +48,8 @@ namespace Nebula.Game.Pets.Skills {
                 if (!ownerBonuses.Contains(m_BonusName1)) {
                     Buff buffAbsorb = new Buff(m_BonusName1, null, Common.BonusType.absorb_damage_pc, m_Time, m_AbsorbDmgPc);
                     Buff convertBuff = new Buff(m_BonusName2, null, Common.BonusType.convert_absorbed_damage_to_hp_pc, m_Time, m_ConvertDmgPc);
-                    ownerBonuses.SetBuff(buffAbsorb);
-                    ownerBonuses.SetBuff(convertBuff);
+                    ownerBonuses.SetBuff(buffAbsorb, pet.nebulaObject);
+                    ownerBonuses.SetBuff(convertBuff, pet.nebulaObject);
                     return true;
                 }
             }

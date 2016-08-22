@@ -37,7 +37,7 @@ namespace Nebula.Game.Pets.Skills {
                 return false;
             }
             Buff buff = new Buff(m_BonusName, null, Common.BonusType.decrease_input_damage_on_pc, m_BonusTime, m_BonusPercent);
-            bonuses.SetBuff(buff);
+            bonuses.SetBuff(buff, pet.nebulaObject);
             return true;
         }
 

@@ -1,4 +1,5 @@
 ﻿using Nebula.Engine;
+using Nebula.Game.Bonuses;
 using Nebula.Game.Components;
 using System.Collections;
 
@@ -6,8 +7,42 @@ namespace Nebula.Game.Skills {
 
     //restored targe
     public class Skill_0000041D : SkillExecutor {
+
+        /// <summary>
+        /// Now this stun skill
+        /// </summary>
+        /// <param name="source">Source who cast</param>
+        /// <param name="skill">Skill was used</param>
+        /// <param name="info">Returned cast info</param>
+        /// <returns>Status of cast using</returns>
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
+
+            if(ShotToEnemyRestricted(source, skill)) {
+                info.SetSkillUseState(Common.SkillUseState.invalidTarget);
+                return false;
+            } else {
+                if(NotCheckDistance(source)) {
+                    info.SetSkillUseState(Common.SkillUseState.tooFar);
+                    return false;
+                }
+            }
+
+            float time = skill.GetFloatInput("time");
+
+            bool mastery = RollMastery(source);
+            if(mastery) {
+                time *= 2.0f;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
+            }
+
+            source.Target().targetObject.Bonuses().SetBuff(new Buff(skill.id, null, Common.BonusType.stun, time, 1.0f), source);
+            return true;
+
+            /*
             info.SetSkillUseState(Common.SkillUseState.normal);
             if(!CheckForHealAlly(source)) {
                 info.SetSkillUseState(Common.SkillUseState.invalidTarget);
@@ -41,8 +76,9 @@ namespace Nebula.Game.Skills {
                     restoredEnergy *= 2;
                 }
                 targetEnergy.RestoreEnergy(restoredEnergy);
-            }
-            return true;
+            }*/
+
+
         }
     }
 }

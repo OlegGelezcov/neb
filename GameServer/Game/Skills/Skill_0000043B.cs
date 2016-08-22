@@ -10,10 +10,10 @@ namespace Nebula.Game.Skills {
             if(!sourceTarget.inCombat && sourceTarget.noSubscribers) {
                 source.SetInvisibility(true);
 
-                var sourceShip = source.GetComponent<PlayerShip>();
-                if(sourceShip != null ) {
-                    sourceShip.SetInvisTimer(10);
-                }
+                //var sourceShip = source.GetComponent<PlayerShip>();
+                //if(sourceShip != null ) {
+                //    sourceShip.SetInvisTimer(10);
+                //}
 
                 return true;
             }

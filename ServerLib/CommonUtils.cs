@@ -314,6 +314,10 @@ namespace Common
             return (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
         }
 
+        public static float SecondFrom1970F() {
+            return (float)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
+        }
+
         public static int SecondsFrom1970(DateTime date) {
             return (int)(date - START_DATE).TotalSeconds;
         }

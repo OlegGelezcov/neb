@@ -14,10 +14,15 @@ namespace Nebula.Game.Skills {
     public class Skill_00000423 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
+
             float radius = skill.GetFloatInput("radius");
             bool mastery = RollMastery(source);
             if(mastery) {
                 radius *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
 
             var targets = GetTargets(source, source, radius);

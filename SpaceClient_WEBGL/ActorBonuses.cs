@@ -38,6 +38,12 @@ namespace Nebula.Client {
             }
         }
 
+        public bool isStunned {
+            get {
+                return Mathf.NotEqual(Value(BonusType.stun), 0.0f);
+            }
+        }
+
         public float Value(BonusType key) {
             if (this.bonuses.ContainsKey(key)) {
                 return this.bonuses[key];

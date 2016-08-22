@@ -7,6 +7,8 @@ namespace Nebula.Game.Skills {
     public class Skill_00000413 : SkillExecutor  {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(SkillUseState.normal);
+
             if(!source) {
                 return false;
             }
@@ -15,14 +17,19 @@ namespace Nebula.Game.Skills {
                 return false;
             }
 
-            float hpPc = skill.data.Inputs.Value<float>("hp_pc");
+            float hpPc = skill.GetFloatInput("hp_pc");
             float hp = hpPc * damagable.maximumHealth;
             //damagable.SetHealth(damagable.health + hp);
             bool mastery = RollMastery(source);
             if(mastery) {
                 hp *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
-            damagable.RestoreHealth(source, hp);
+            //damagable.RestoreHealth(source, hp);
+            //source.Weapon().HealSelf(hp, skill.idInt);
+            source.MmoMessage().SendHeal(EventReceiver.OwnerAndSubscriber, source.Weapon().HealSelf(hp, skill.idInt));
             return true;
         }
     }

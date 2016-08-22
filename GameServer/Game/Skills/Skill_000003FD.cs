@@ -28,8 +28,8 @@ namespace Nebula.Game.Skills {
             if(bonuses) {
                 Buff healingBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_healing_speed_on_pc, hpSpeedTime, hpSpeed);
                 Buff speedBuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_speed_on_pc, speedTime, speedPc);
-                bonuses.SetBuff(healingBuff);
-                bonuses.SetBuff(speedBuff);
+                bonuses.SetBuff(healingBuff, source);
+                bonuses.SetBuff(speedBuff, source);
             }
             return true;
         }

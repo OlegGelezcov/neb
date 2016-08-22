@@ -35,7 +35,7 @@ namespace Nebula.Game.Skills {
             }
 
             Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.decrease_time_of_negative_speed_buffs, time, mult);
-            bonuses.SetBuff(buff);
+            bonuses.SetBuff(buff, source);
             return true;
         }
     }

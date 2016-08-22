@@ -119,6 +119,7 @@ public class GameApplication : ApplicationBase
     }
 
 
+    private readonly LibLoggerObject m_LibLoggerObj = new LibLoggerObject();
     /// <summary>
     /// Initializes static members of the <see cref="PhotonApplication"/> class.
     /// </summary>
@@ -186,10 +187,12 @@ public class GameApplication : ApplicationBase
 
     protected override void Setup() {
         try {
-            
+
             /*
             Instance = this;
             */
+
+            m_LibLoggerObj.Setup();
 
             AppDomain.CurrentDomain.UnhandledException += AppDomain_OnUnhandledException;
 

@@ -28,7 +28,7 @@ namespace Nebula.Game.Skills {
             foreach (var pItem in items) {
                 var itemBonuses = pItem.Value.Bonuses();
                 foreach(var buffInfo in buffInfoCollection) {
-                    itemBonuses.SetBuff(new Buff(Guid.NewGuid().ToString(), null, buffInfo.bonusType, buffInfo.time * buffMult, buffInfo.value));
+                    itemBonuses.SetBuff(new Buff(Guid.NewGuid().ToString(), null, buffInfo.bonusType, buffInfo.time * buffMult, buffInfo.value), source);
                 }
             }
             return true;

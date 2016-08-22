@@ -74,6 +74,8 @@ namespace Common {
         BuildCommandCenterFirst = 1063,
         BuildAdditionalResourceHangar = 1064,
         ErrorOfAddingItemToInventory = 1065,
+        MissedParameter = 1066,
+        UnsupportedEvent = 1067,
 
         UnknownError = 10002,
         

@@ -1,4 +1,5 @@
-﻿using ExitGames.Concurrency.Fibers;
+﻿using Common;
+using ExitGames.Concurrency.Fibers;
 using ExitGames.Threading;
 using System;
 using System.Collections.Generic;
@@ -57,10 +58,19 @@ namespace Space.Game
         private static float delta;
         private static DateTime referenceDate;
         private static bool firstTick = true;
+        private static float s_TimeStartF;
+
+
+        public static float timeFromStartF {
+            get {
+                return CommonUtils.SecondFrom1970F() - s_TimeStartF;
+            }
+        }
 
         public static void Tick() {
             if(firstTick ) {
                 referenceDate = DateTime.UtcNow;
+                s_TimeStartF = CommonUtils.SecondFrom1970F();
                 currentTime = 0;
                 delta = 0;
                 firstTick = false;

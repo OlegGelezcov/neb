@@ -60,9 +60,9 @@ namespace Nebula.Game.Skills {
 
             Buff damageImmunityBuff = new Buff(buffID, null, BonusType.damage_immunity, debuffDamageInterval);
             Buff damageDebuff = new Buff(buffID, null, BonusType.decrease_damage_on_pc, debuffDamageInterval, debuffDamagePercent);
-            targetBonuses.SetBuff(damageImmunityBuff);
+            targetBonuses.SetBuff(damageImmunityBuff, source);
             //targetBonuses.SetBuff(damageDebuff);
-            source.GetComponent<PlayerBonuses>().SetBuff(damageDebuff);
+            source.GetComponent<PlayerBonuses>().SetBuff(damageDebuff, source);
             return true;
         }
     }

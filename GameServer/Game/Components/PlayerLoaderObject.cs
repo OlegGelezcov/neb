@@ -2,6 +2,8 @@
 using ExitGames.Logging;
 using Nebula.Database;
 using Nebula.Engine;
+using Nebula.Game.Components.Quests;
+using Nebula.Game.Components.Quests.Dialogs;
 using Nebula.Game.Contracts;
 using Nebula.Game.Pets;
 using Nebula.Game.Utils;
@@ -48,6 +50,8 @@ namespace Nebula.Game.Components {
                     GetComponent<PetManager>().Load();
                     GetComponent<ContractManager>().Load();
                     GetComponent<AchievmentComponent>().Load();
+                    GetComponent<QuestManager>().Load();
+                    GetComponent<DialogManager>().Load();
                 } catch(Exception ex) {
                     log.InfoFormat("error: handled exception");
                     log.InfoFormat(ex.Message);
@@ -79,6 +83,9 @@ namespace Nebula.Game.Components {
                     PetDatabase.instance(app).SavePets(character.characterId, player.GetComponent<PetManager>().pets);
                     ContractDatabase.instance(app).SaveContracts(character.characterId, player.GetComponent<ContractManager>().GetSave());
                     AchievmentDatabase.instance(app).SaveAchievment(character.characterId, player.GetComponent<AchievmentComponent>().GetSave());
+                    QuestDatabase.instance(app).SaveQuests(character.characterId, player.GetComponent<QuestManager>().GetInfo());
+                    DialogDatabase.instance(app).SaveDialogs(character.characterId, player.GetComponent<DialogManager>().GetInfo());
+
                 } catch(Exception exception) {
                     log.Error("handled exception at Player Loaded Object");
                     log.Error(exception.Message);

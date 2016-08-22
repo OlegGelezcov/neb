@@ -246,7 +246,13 @@ namespace Common {
         decrease_energy_regen_on_cnt,
         auto_loot_chest,
         invisibility,
-        block_skills
+        block_skills,
+        block_debuff,
+        absorb_damage_cnt,
+
+        buff_41c,
+        stun,
+        timed_damage
     }
 
     /// <summary>
@@ -314,6 +320,8 @@ namespace Common {
                 case BonusType.decrease_dron_strength_on_pc:
                 case BonusType.increase_input_damage_on_pc:
                 case BonusType.block_skills:
+                case BonusType.stun:
+                case BonusType.timed_damage:
                     return true;
                 default:
                     return false;
@@ -392,7 +400,7 @@ namespace Common {
                 case BuffParameter.hp:
                     return new BonusType[] { BonusType.increase_healing_speed_on_pc };
                 case BuffParameter.healing:
-                    return new BonusType[] { BonusType.increase_healing_on_cnt, BonusType.increase_healing_on_pc };
+                    return new BonusType[] { BonusType.increase_healing_on_cnt, BonusType.increase_healing_on_pc, BonusType.buff_41c };
                 case BuffParameter.energy_cost:
                     return new BonusType[] { BonusType.decrease_energy_cost_on_pc, BonusType.decrease_energy_cost_on_cnt };
                 case BuffParameter.dron_strength:
@@ -406,7 +414,7 @@ namespace Common {
                 case BuffParameter.restore_hp_on_sec:
                     return new BonusType[] { BonusType.restore_hp_at_sec_on_pc, BonusType.restore_hp_at_sec_on_cnt };
                 case BuffParameter.absorb_damage:
-                    return new BonusType[] { BonusType.absorb_damage_pc };
+                    return new BonusType[] { BonusType.absorb_damage_pc, BonusType.absorb_damage_cnt };
                 case BuffParameter.convert_damage_to_hp:
                     return new BonusType[] { BonusType.convert_absorbed_damage_to_hp_pc };
                 case BuffParameter.vampirism:

@@ -45,7 +45,7 @@ namespace Nebula.Game.Skills {
 
             foreach(var p in items ) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_optimal_distance_on_pc, optimalDistanceTime, optimalDistancePc);
-                p.Value.GetComponent<PlayerBonuses>().SetBuff(buff);
+                p.Value.GetComponent<PlayerBonuses>().SetBuff(buff, source);
             }
             return true;
         }

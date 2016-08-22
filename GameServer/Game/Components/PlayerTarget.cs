@@ -9,6 +9,7 @@ using System;
 using ServerClientCommon;
 using Nebula.Drop;
 using GameMath;
+using Nebula.Game.Bonuses;
 
 namespace Nebula.Game.Components {
     public class PlayerTarget : NebulaBehaviour, IInfoSource, IDatabaseObject
@@ -414,6 +415,29 @@ namespace Nebula.Game.Components {
 
         public bool IsNotTarget(string id) {
             return (false == IsTarget(id));
+        }
+
+        public void OnBuffSetted(Buff buff, NebulaObject source ) {
+            if(source != null && noTarget && (nebulaObject.getItemType() != ItemType.Avatar)) {
+
+                if (BuffUtils.IsDebuff(buff.buffType)) {
+
+                    if (nebulaObject.IsBot()) {
+                        var weap = GetComponent<BaseWeapon>();
+                        var character = GetComponent<CharacterObject>();
+                        var sourceCharacter = source.GetComponent<CharacterObject>();
+
+                        if(weap != null && character != null && sourceCharacter != null) {
+
+                            var relation = character.RelationTo(sourceCharacter);
+
+                            if(relation == FractionRelation.Enemy || relation == FractionRelation.Neutral ) {
+                                SetTarget(source);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 

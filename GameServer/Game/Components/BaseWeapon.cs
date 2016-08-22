@@ -257,7 +257,7 @@ namespace Nebula.Game.Components {
 
                 CheckPlayerAgro(targetObject);
                 SendFireMessage(hit);
-                log.InfoFormat("final hit state: {0}", hit.state);
+                //log.InfoFormat("final hit state: {0}", hit.state);
 
                 return result;
             }
@@ -268,7 +268,7 @@ namespace Nebula.Game.Components {
             return Heal(nebulaObject, val, skillId);
         }
 
-        public virtual Hashtable Heal(NebulaObject targetObject, float healValue, int skillID = -1) {
+        public virtual Hashtable Heal(NebulaObject targetObject, float healValue, int skillID = -1, bool generateCrit = true) {
             MakeMeVisible();
 
             WeaponDamage notCritDmg = GetDamage(false);
@@ -278,10 +278,13 @@ namespace Nebula.Game.Components {
             healValue = Mathf.ClampLess( healValue * (1.0f + cachedBonuses.healingPcBonus) + cachedBonuses.healingCntBonus, 0f);
 
             bool isCritHeal = false;
-            if (Rand.Float01() < criticalChance) {
-                isCritHeal = true;
-                healValue *= ratio;
-                nebulaObject.SendMessage(ComponentMessages.OnCriticalHeal, healValue);
+
+            if (generateCrit) {
+                if (Rand.Float01() < criticalChance) {
+                    isCritHeal = true;
+                    healValue *= ratio;
+
+                }
             }
 
             var targetDamaable = targetObject.Damagable();
@@ -291,17 +294,24 @@ namespace Nebula.Game.Components {
 
             StartHealDron(targetDamaable, healValue);
 
-            Hashtable result = new Hashtable();
-            result.Add((int)SPC.Source, nebulaObject.Id);
-            result.Add((int)SPC.SourceType, nebulaObject.Type);
-            result.Add((int)SPC.Target, targetObject.Id);
-            result.Add((int)SPC.TargetType, targetObject.Type);
-            result.Add((int)SPC.Workshop, cachedCharacter.workshop);
-            result.Add((int)SPC.Skill, skillID);
-            result.Add((int)SPC.HealValue, healValue);
-            //result.Add((int)SPC.IsCritical, isCritHeal);
-                   
-            return result;
+            if(isCritHeal ) {
+                nebulaObject.SendMessage(ComponentMessages.OnCriticalHeal, healValue);
+            }
+
+            return ConstructHealMessage(nebulaObject, targetObject, cachedCharacter.workshop, skillID, healValue, isCritHeal);
+        }
+
+        public static Hashtable ConstructHealMessage(NebulaObject source, NebulaObject target, byte sourceObjectWorkshop, int skillId, float val, bool isCritical) {
+            return new Hashtable {
+                { (int)SPC.Source, source.Id },
+                { (int)SPC.SourceType, source.Type },
+                { (int)SPC.Target, target.Id },
+                { (int)SPC.TargetType, target.Type },
+                { (int)SPC.Workshop, sourceObjectWorkshop },
+                { (int)SPC.Skill, skillId },
+                { (int)SPC.HealValue, val },
+                { (int)SPC.Critical, isCritical }
+            };
         }
 
         protected Hashtable FailHeal(NebulaObject targetObject) {

@@ -36,12 +36,13 @@ namespace Nebula.Game.Components.BotAI {
         private ShipWeapon mShipWeapon;
         private BotObject mBotObject;
         private PlayerSkills m_Skills;
+        private PlayerBonuses m_Bonuses;
 
         public enum MovingNearTarget { Circle, LIne }
 
         protected float mChestLiveDuration;
         protected bool mDead = false;
-        private float mShotCooldown = 3.0f;
+        private float m_ShotCooldown = 3.0f;
         private float mShotTimer;
         private float mWaitTimer = 5;
         private float mResetTargetTimer = RESET_TARGET_INTERVAL;
@@ -56,7 +57,7 @@ namespace Nebula.Game.Components.BotAI {
             var hash = base.DumpHash();
             hash["chest_life_interval"] = mChestLiveDuration.ToString();
             hash["is_dead"] = mDead.ToString();
-            hash["try_shot_cooldown"] = mShotCooldown.ToString();
+            hash["try_shot_cooldown"] = cooldown.ToString();
             hash["shot_timer"] = mShotTimer.ToString();
             hash["wait_timer"] = mWaitTimer.ToString();
             hash["reset_target_timer"] = mResetTargetTimer.ToString();
@@ -85,9 +86,11 @@ namespace Nebula.Game.Components.BotAI {
             mTarget = RequireComponent<PlayerTarget>();
             mMovable = GetComponent<MovableObject>();
             m_Skills = GetComponent<PlayerSkills>();
+            m_Bonuses = GetComponent<PlayerBonuses>();
+
             mChestLiveDuration = nebulaObject.world.Resource().ServerInputs.GetValue<float>("chest_life");
             //log.InfoFormat("chest life = {0}", mChestLiveDuration);
-            mShotTimer = mShotCooldown;
+            mShotTimer = m_ShotCooldown;
 
             mDead = false;
 
@@ -119,6 +122,15 @@ namespace Nebula.Game.Components.BotAI {
             SetupSkills();
         }
 
+
+        public float cooldown {
+            get {
+                if(m_Bonuses != null  ) {
+                    return m_ShotCooldown * (1.0f + m_Bonuses.cooldownPcBonus) + m_Bonuses.cooldownCntBonus;
+                }
+                return m_ShotCooldown;
+            }
+        }
 
         private List<int> m_CurrentSkills = null;
 
@@ -251,6 +263,12 @@ namespace Nebula.Game.Components.BotAI {
             return true;
         }
 
+        private void MoveToTarget(Vector3 direction, float deltaTime) {
+            var newPos = transform.position + direction * mMovable.speed * deltaTime;
+            var newRot = ComputeRotation(direction, mRotationSpeed, deltaTime);
+
+            Move(transform.position, transform.rotation, newPos, newRot.eulerAngles, mMovable.speed);
+        }
         public override void Update(float deltaTime) {
 
             try {
@@ -270,6 +288,10 @@ namespace Nebula.Game.Components.BotAI {
 
                 }
 
+                if(isStunned) {
+                    return;
+                }
+
                 if (mTarget.hasTarget) {
 
                     if (!ValidateTarget()) {
@@ -283,6 +305,8 @@ namespace Nebula.Game.Components.BotAI {
                     } else {
 
                         float hitProb = mWeapon.HitProbTo(mTarget.targetObject);
+                        float dist = transform.DistanceTo(mTarget.targetObject.transform);
+
                         mResetTargetTimer -= deltaTime;
                         if (hitProb < 0.1f && (mResetTargetTimer <= 0f)) {
                             mTarget.Clear();
@@ -298,12 +322,14 @@ namespace Nebula.Game.Components.BotAI {
 
                             if (combatAIType.battleMovingType == AttackMovingType.AttackPurchase) {
                                 var direction = transform.DirectionTo(mTarget.targetObject.transform);
-                                if (hitProb < 1f) {
 
-                                    var newPos = transform.position + direction * mMovable.speed * deltaTime;
-                                    var newRot = ComputeRotation(direction, mRotationSpeed, deltaTime);
+                                if (dist > mWeapon.optimalDistance * 0.9f ) {
 
-                                    Move(transform.position, transform.rotation, newPos, newRot.eulerAngles, mMovable.speed);
+                                    //var newPos = transform.position + direction * mMovable.speed * deltaTime;
+                                    //var newRot = ComputeRotation(direction, mRotationSpeed, deltaTime);
+
+                                    //Move(transform.position, transform.rotation, newPos, newRot.eulerAngles, mMovable.speed);
+                                    MoveToTarget(direction, deltaTime);
                                 } else {
                                     /*
                                     var newPos = transform.position;
@@ -329,27 +355,9 @@ namespace Nebula.Game.Components.BotAI {
                             if(skillCD >=0 ) {
                                 skillCD -= deltaTime;
                             }
-                            if (false == UpdateSkillUsing()) {
 
-                                mShotTimer -= deltaTime;
-                                if (mShotTimer <= 0f) {
-                                    mShotTimer = mShotCooldown;
-                                    if (mWaitTimer <= 0f) {
-#if USE_SKILLS
-                                    if (mSkills) {
-                                        if (mSkills.GetSkillByPosition(0).ready) {
-                                            mSkills.UseSkill(0, mTarget.targetObject);
-                                        }
-                                    }
-#else
-                                        WeaponHitInfo hit;
-                                        var shotInfo = mWeapon.Fire(out hit);
-                                        mMessage.SendShot(EventReceiver.ItemSubscriber, shotInfo);
-#endif
-                                    }
-                                }
-                            }
-
+                            
+                            SkillOrShot(deltaTime);
                         }
                     }
                 } else {
@@ -366,10 +374,65 @@ namespace Nebula.Game.Components.BotAI {
             }
         }
 
+        protected bool isStunned {
+            get {
+                if(m_Bonuses == null ) {
+                    return false;
+                }
+                return m_Bonuses.isStunned;
+            }
+        }
+
+        protected bool notStunned {
+            get {
+                return (!isStunned);
+            }
+        }
+
+        private void SkillOrShot(float deltaTime) {
+
+            float dist = transform.DistanceTo(mTarget.targetObject.transform);
+
+            if (NotAllowSkill(dist)) {
+
+                mShotTimer -= deltaTime;
+                if (mShotTimer <= 0f) {
+                    mShotTimer = cooldown;
+                    if (mWaitTimer <= 0f) {
+#if USE_SKILLS
+                                    if (mSkills) {
+                                        if (mSkills.GetSkillByPosition(0).ready) {
+                                            mSkills.UseSkill(0, mTarget.targetObject);
+                                        }
+                                    }
+#else
+                        if (dist < mWeapon.optimalDistance) {
+                            WeaponHitInfo hit;
+                            var shotInfo = mWeapon.Fire(out hit);
+                            mMessage.SendShot(EventReceiver.ItemSubscriber, shotInfo);
+                        } else {
+                            if (combatAIType.battleMovingType == AttackMovingType.AttackPurchase) {
+                                MoveToTarget(transform.DirectionTo(mTarget.targetObject.transform), deltaTime);
+                            }
+                        }
+#endif
+                    }
+                }
+            }
+        }
+
+
         private float skillCD = -1;
 
-        private bool UpdateSkillUsing() {
+        private bool NotAllowSkill(float distance) {
+            return (!UpdateSkillUsing(distance));
+        }
+
+        private bool UpdateSkillUsing(float distance) {
             if(skillCD > 0 ) {
+                return false;
+            }
+            if(distance > mWeapon.optimalDistance ) {
                 return false;
             }
             if(m_Skills && m_CurrentSkills != null) {

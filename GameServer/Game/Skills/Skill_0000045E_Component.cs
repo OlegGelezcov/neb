@@ -63,7 +63,7 @@ namespace Nebula.Game.Skills {
                 Buff speedDebuff = new Buff(mData.Id.ToString(), null, BonusType.decrease_speed_on_pc, mTimer, mSpeedPc, () => {
                     return (Vector3.Distance(mCenter, item.transform.position) <= mRadius);
                 });
-                itemBonuses.SetBuff(speedDebuff);
+                itemBonuses.SetBuff(speedDebuff, nebulaObject);
             }
 
         }

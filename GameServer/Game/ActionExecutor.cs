@@ -1265,7 +1265,7 @@ namespace Space.Game {
             var cBonuses = Player.GetComponent<PlayerBonuses>();
             BonusType randomBonusType = CommonUtils.GetRandomEnumValue<BonusType>(new List<BonusType>());
             Buff buff = new Buff(Guid.NewGuid().ToString(), null, randomBonusType, 10, 0.5f);
-            cBonuses.SetBuff(randomBonusType, buff);
+            cBonuses.SetBuff(randomBonusType, buff, Player.nebulaObject);
             return GetSuccessResponse("ok");
         }
 
@@ -1347,7 +1347,7 @@ namespace Space.Game {
         public Hashtable TestBuffs() {
             foreach(BonusType buff in Enum.GetValues(typeof(BonusType))) {
                 Player.GetComponent<PlayerBonuses>().SetBuff(new Buff(Guid.NewGuid().ToString(), null,
-                     buff, 20, 0.5f));
+                     buff, 20, 0.5f), Player.nebulaObject);
             }
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
@@ -3106,6 +3106,43 @@ namespace Space.Game {
 
             var chest = ObjectCreate.Chest(Player.World as MmoWorld, Player.transform.position, 600, damageCollection, oreList);
             chest.AddToWorld();
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+            };
+        }
+
+        public Hashtable TestStun() {
+            Player.nebulaObject.Bonuses().SetBuff(new Buff(Guid.NewGuid().ToString(), null, BonusType.stun, 4, 1), null);
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+            };
+        }
+
+        public Hashtable TestSetAreaInvisibility(float radius ) {
+
+            log.InfoFormat("set invisibilty at radius = {0}", radius);
+
+            var playerCharacter = Player.GetComponent<PlayerCharacterObject>();
+
+            var targetItems = Player.nebulaObject.mmoWorld().GetItems(item => {
+                if (item.getItemType() == ItemType.Avatar ||
+                (item.getItemType() == ItemType.Bot && item.GetComponent<BotObject>().getSubType() == BotItemSubType.StandardCombatNpc)) {
+                    if (item.Id != Player.nebulaObject.Id) {
+                        var character = item.GetComponent<CharacterObject>();
+                        var relation = playerCharacter.RelationTo(character);
+                        if (relation == FractionRelation.Enemy || relation == FractionRelation.Neutral) {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            });
+
+            foreach(var kvp in targetItems ) {
+                kvp.Value.SetInvisibility(true);
+                log.InfoFormat("object {0} now invisible", kvp.Value.Id);
+            }
+
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
             };

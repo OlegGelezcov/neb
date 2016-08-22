@@ -14,7 +14,9 @@ namespace Nebula.Game.Skills {
                 if(mastery) {
                     hpPc *= 2;
                 }
-                damagable.RestoreHealth(source, damagable.maximumHealth * hpPc);
+                //damagable.RestoreHealth(source, damagable.maximumHealth * hpPc);
+                var heal = source.Weapon().HealSelf(damagable.maximumHealth * hpPc, skill.idInt);
+                source.MmoMessage().SendHeal(Common.EventReceiver.OwnerAndSubscriber, heal);
             }
             return result;
         }

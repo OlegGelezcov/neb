@@ -7,14 +7,29 @@ using Nebula.Game.Components;
 using Common;
 using Nebula.Game.Bonuses;
 using System.Collections;
+using ServerClientCommon;
 
 namespace Nebula.Game.Skills {
     public class Skill_0000041F : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!source) {
-                return false;
+            info.SetSkillUseState(SkillUseState.normal);
+
+            bool castOnTarget = true;
+            if (source.Target().hasTarget) {
+                if (FriendTargetInvalid(source)) {
+                    castOnTarget = false;
+                    
+                } else {
+                    if (NotCheckDistance(source)) {
+                        info.SetSkillUseState(Common.SkillUseState.tooFar);
+                        return false;
+                    }
+                }
+            } else {
+                castOnTarget = false;
             }
+
 
             float optimalDistancePc = skill.data.Inputs.Value<float>("optimal_distance_pc");
             float optimalDistanceTime = skill.data.Inputs.Value<float>("optimal_distance_time");
@@ -22,17 +37,24 @@ namespace Nebula.Game.Skills {
             bool mastery = RollMastery(source);
             if(mastery) {
                 optimalDistanceTime *= 2;
-            }
-            if (CheckForShotFriend(source, skill)) {
-                Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_optimal_distance_on_pc, optimalDistanceTime, optimalDistancePc);
-                source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>().SetBuff(buff);
-                return true;
+                optimalDistancePc *= 2;
+                info.SetMastery(true);
             } else {
-                Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_optimal_distance_on_pc, optimalDistanceTime, optimalDistancePc);
-                source.GetComponent<PlayerBonuses>().SetBuff(buff);
-                return true;
+                info.SetMastery(false);
             }
 
+            if(castOnTarget) {
+                Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_optimal_distance_on_pc, optimalDistanceTime, optimalDistancePc);
+                source.Target().targetObject.Bonuses().SetBuff(buff, source);
+                info.Add((int)SPC.Target, source.Target().targetObject.Id);
+                info.Add((int)SPC.TargetType, source.Target().targetObject.Type);
+            } else {
+                Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_optimal_distance_on_pc, optimalDistanceTime, optimalDistancePc);
+                source.Bonuses().SetBuff(buff, source);
+                info.Add((int)SPC.Target, source.Id);
+                info.Add((int)SPC.TargetType, source.Type);
+            }
+            return true;
         }
     }
 }

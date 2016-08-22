@@ -16,7 +16,7 @@ namespace Nebula.Game.Skills {
             }
 
             Buff buff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.increase_resist_on_pc, resistTime, resistPc);
-            source.Bonuses().SetBuff(buff);
+            source.Bonuses().SetBuff(buff, source);
             return true;
         }
     }

@@ -213,6 +213,10 @@ namespace Nebula.Game.Skills {
             executorFactory.Add(SkilIDFromHexString("00000459"), () => new Skill_00000459());
         }
 
+        protected string GetBuffId(PlayerSkill skill, NebulaObject source, string suffix = "") {
+            return skill.idInt.ToString() + source.Id + suffix;
+        }
+
         protected bool RollMastery(NebulaObject source) {
             var pm = source.GetComponent<PetManager>();
             if(pm) {
@@ -460,6 +464,24 @@ namespace Nebula.Game.Skills {
                             }
                             //}
                         }
+                    }
+                }
+                return false;
+            });
+        }
+
+        protected ConcurrentDictionary<string, Item> GetEnemiesAndNeutrals(NebulaObject source, float radius) {
+            var sourceCharacter = source.Character();
+            return source.mmoWorld().GetItems((item) => {
+                var damagable = item.Damagable();
+                var bonuses = item.Bonuses();
+                var character = item.Character();
+                bool allComponentsPresent = damagable && bonuses && character;
+
+                if(allComponentsPresent ) {
+                    var relation = sourceCharacter.RelationTo(character);
+                    if(relation == FractionRelation.Enemy || relation == FractionRelation.Neutral) {
+                        return true;
                     }
                 }
                 return false;

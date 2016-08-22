@@ -30,7 +30,7 @@ namespace Nebula.Game.Skills {
                             var targetBonuses = sourceTarget.targetObject.Bonuses();
                             if(targetBonuses) {
                                 Buff buff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.speed_debuff_immunity, time);
-                                targetBonuses.SetBuff(buff);
+                                targetBonuses.SetBuff(buff, source);
                                 settedOnTarget = true;
                                 
                             }
@@ -41,7 +41,7 @@ namespace Nebula.Game.Skills {
 
             if(!settedOnTarget) {
                 Buff buff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.speed_debuff_immunity, time);
-                source.Bonuses().SetBuff(buff);
+                source.Bonuses().SetBuff(buff, source);
                 
             }
             return true;

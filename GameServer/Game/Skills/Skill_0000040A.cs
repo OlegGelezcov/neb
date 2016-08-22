@@ -10,7 +10,7 @@ namespace Nebula.Game.Skills {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
             info.SetSkillUseState(SkillUseState.normal);
-            if (!CheckForShotEnemy(source, skill)) {
+            if (ShotToEnemyRestricted(source, skill)) {
                 info.SetSkillUseState(SkillUseState.invalidTarget);
                 return false;
             }
@@ -42,19 +42,20 @@ namespace Nebula.Game.Skills {
             if(mastery) {
                 dmgMult *= 2;
                 resistTime *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
 
             WeaponHitInfo hit;
             var shot = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if(hit.normalOrMissed) {
                 Buff resistDebuff = new Buff(skill.data.Id.ToString(), null, Common.BonusType.decrease_resist_on_cnt, resistTime, targetResistance);
-                targetBonuses.SetBuff(resistDebuff);
+                targetBonuses.SetBuff(resistDebuff, source);
                 source.MmoMessage().SendShot(Common.EventReceiver.OwnerAndSubscriber, shot);
                 return true;
-            } else {
-                source.MmoMessage().SendShot(Common.EventReceiver.ItemOwner, shot);
-                return false;
             }
+            return false;
         }
     }
 }

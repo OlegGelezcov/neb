@@ -33,7 +33,7 @@ namespace Nebula.Game.Skills {
                     blockHealInterval *= 2;
                 }
                 Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.block_heal, blockHealInterval);
-                source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>().SetBuff(buff);
+                source.GetComponent<PlayerTarget>().targetObject.GetComponent<PlayerBonuses>().SetBuff(buff, source);
                 source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shot);
                 return true;
             } else {

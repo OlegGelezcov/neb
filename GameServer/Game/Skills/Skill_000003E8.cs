@@ -15,7 +15,7 @@ namespace Nebula.Game.Skills {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info ) {
             info = new Hashtable();
             info.SetSkillUseState(SkillUseState.normal);
-            if (!CheckForShotEnemy(source, skill)) {
+            if (ShotToEnemyRestricted(source, skill)) {
                 info.SetSkillUseState(SkillUseState.invalidTarget);
                 return false;
             }
@@ -24,10 +24,13 @@ namespace Nebula.Game.Skills {
                 return false;
             }
 
-            float dmgMult = skill.data.Inputs.Value<float>("dmg_mult");
+            float dmgMult = skill.GetFloatInput("dmg_mult");
 
             if(RollMastery(source)) {
                 dmgMult *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
 
             string id = source.Id + skill.data.Id;

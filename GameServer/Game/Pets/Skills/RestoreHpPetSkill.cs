@@ -42,8 +42,8 @@ namespace Nebula.Game.Pets.Skills {
 
                 Buff buff = new Buff(m_BonusName1, null, Common.BonusType.increase_max_hp_on_pc, m_Time, m_MaxHpPc);
                 Buff buff2 = new Buff(m_BonusName2, null, Common.BonusType.restore_hp_at_sec_on_pc, m_Time, m_HpAtSecPc);
-                bonuses.SetBuff(buff);
-                bonuses.SetBuff(buff2);
+                bonuses.SetBuff(buff, pet.nebulaObject);
+                bonuses.SetBuff(buff2, pet.nebulaObject);
                 return true;
             }
             return false;

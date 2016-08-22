@@ -7,7 +7,8 @@ namespace Nebula.Game.Skills {
     public class Skill_00000412 : SkillExecutor  {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            
+            info.SetSkillUseState(SkillUseState.normal);
+
             if(!source) {
                 return false;
             }
@@ -23,7 +24,12 @@ namespace Nebula.Game.Skills {
             bool mastery = RollMastery(source);
             if(mastery) {
                 hpTime *= 2;
+                hpVal *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
+
             damagable.SetRestoreHPPerSec(hpVal, hpTime, id);
             return true;
         }

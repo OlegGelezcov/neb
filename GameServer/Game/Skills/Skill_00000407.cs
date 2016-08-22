@@ -9,7 +9,15 @@ namespace Nebula.Game.Skills {
     public class Skill_00000407 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
-            if(!CheckForShotEnemy(source, skill)) {
+            info.SetSkillUseState(SkillUseState.normal);
+
+            if (ShotToEnemyRestricted(source, skill)) {
+                info.SetSkillUseState(SkillUseState.invalidTarget);
+                return false;
+            }
+
+            if(NotCheckDistance(source)) {
+                info.SetSkillUseState(SkillUseState.tooFar);
                 return false;
             }
 
@@ -26,6 +34,9 @@ namespace Nebula.Game.Skills {
             if(mastery) {
                 dmgMult *= 2;
                 hp_pc *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
 
             WeaponHitInfo hit;
@@ -48,18 +59,22 @@ namespace Nebula.Game.Skills {
 
                 float hp = hp_pc * sourceDamagable.maximumHealth;
 
+                var sourceMmoMessage = source.MmoMessage();
                 foreach(var p in items) {
+                    /*
                     var d = p.Value.GetComponent<DamagableObject>();
-                    d.RestoreHealth(source, hp);
+                    d.RestoreHealth(source, hp);*/
                     //d.SetHealth(d.health + hp);
+                    var heal = sourceWeapon.Heal(p.Value, hp, skill.idInt);
+                    sourceMmoMessage.SendHeal(EventReceiver.OwnerAndSubscriber, heal);
+
                     info.Add(p.Value.Id, p.Value.Type);
                 }
 
                 return true;
-            } else {
-                source.GetComponent<MmoMessageComponent>().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
-                return false;
             }
+            return false;
+
         }
     }
 }

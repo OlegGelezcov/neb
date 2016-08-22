@@ -110,5 +110,64 @@ namespace Nebula.Game {
             }
             hash[(int)SPC.Mastery] = val;
         }
+
+        public static string MakeColor(this string str, string colorName) {
+            return str + " :" + colorName; 
+        }
+
+        public static string Cyan(this string str ) {
+            return str.MakeColor(ColorName.cyan);
+        }
+
+        public static string Magenta(this string str) {
+            return str.MakeColor(ColorName.magenta);
+        }
+
+        public static string Green(this string str) {
+            return str.MakeColor(ColorName.green);
+        }
+
+        public static string Lightblue(this string str) {
+            return str.MakeColor(ColorName.lightblue);
+        }
+
+        public static string Lime(this string str) {
+            return str.MakeColor(ColorName.lime);
+        }
+
+        public static string Maroon(this string str) {
+            return str.MakeColor(ColorName.maroon);
+        }
+
+        public static string Olive(this string str) {
+            return str.MakeColor(ColorName.olive);
+        }
+
+        public static string Orange(this string str) {
+            return str.MakeColor(ColorName.orange);
+        }
+
+        public static string Purple(this string str) {
+            return str.MakeColor(ColorName.purple);
+        }
+
+        public static string Red(this string str) {
+            return str.MakeColor(ColorName.red);
+        }
+
+        public static string Silver(this string str) {
+            return str.MakeColor(ColorName.silver);
+        }
+        public static string Teal(this string str) {
+            return str.MakeColor(ColorName.teal);
+        }
+
+        public static string White(this string str) {
+            return str.MakeColor(ColorName.white);
+        }
+
+        public static string Yellow(this string str) {
+            return str.MakeColor(ColorName.yellow);
+        }
     }
 }

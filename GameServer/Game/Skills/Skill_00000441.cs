@@ -35,7 +35,7 @@ namespace Nebula.Game.Skills {
             }
 
             Buff targetBuff = new Buff(skill.id, null, Common.BonusType.decrease_speed_on_cnt, speedTime, speedValue);
-            targetBonuses.SetBuff(targetBuff);
+            targetBonuses.SetBuff(targetBuff, source);
             return true;
         }
     }

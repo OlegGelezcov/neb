@@ -5,6 +5,8 @@ using Nebula.Contracts;
 using Nebula.Contracts.Inventory;
 using Nebula.Inventory.DropList;
 using Nebula.Pets;
+using Nebula.Quests;
+using Nebula.Quests.Dialogs;
 using Nebula.Resources;
 using Nebula.Resources.NpcSkills;
 using Nebula.Resources.PlayerConstructions;
@@ -82,6 +84,8 @@ namespace Space.Game {
         NpcClassSkillsResource npcSkills { get;  }
         DifficultyRes difficulty { get; }
         Planet2OreMapRes planetOreMap { get; }
+        QuestDataResource quests { get; }
+        DialogDataResource dialogs { get; }
     }
 
 }

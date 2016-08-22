@@ -60,7 +60,7 @@ namespace Nebula.Game.Skills {
                     if(sourceBonuses.GetBuffCountWithTag( Common.BonusType.increase_damage_on_pc, skill.data.Id) < stackCount ) {
                         Buff buff = new Buff(Guid.NewGuid().ToString(), null, Common.BonusType.increase_damage_on_pc, dmgTime, dmgPc);
                         buff.SetTag(skill.data.Id);
-                        sourceBonuses.SetBuff(buff);
+                        sourceBonuses.SetBuff(buff, source);
                     }
                 }
                 return true;

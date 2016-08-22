@@ -57,7 +57,7 @@ namespace Nebula.Game.Skills {
             }
 
             Buff buff = new Buff(skill.data.Id.ToString(), null, BonusType.increase_damage_on_pc, dmgTime, dmgPc);
-            source.GetComponent<PlayerBonuses>().SetBuff(buff);
+            source.GetComponent<PlayerBonuses>().SetBuff(buff, source);
 
             return true;
         }

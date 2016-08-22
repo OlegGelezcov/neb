@@ -55,7 +55,14 @@ namespace Common
         FoundLoreRecord = 52,
         StartAsteroidCollecting = 53,
         CellsUpdated = 54,
-        BuffsUpdated = 55
+        BuffsUpdated = 55,
+
+        Quests = 56,
+        QuestAccepted = 57,
+        QuestReady = 58,
+        QuestCompleted = 59,
+        Dialogs = 60,
+        DialogCompleted = 61
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

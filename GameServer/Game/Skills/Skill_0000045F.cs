@@ -22,11 +22,11 @@ namespace Nebula.Game.Skills {
 
             ActionOnEnemyTargets((item) => {
                 Buff buff = new Buff(skill.id, null, Common.BonusType.decrease_damage_on_pc, dmgTime, dmgPc);
-                item.Bonuses().SetBuff(buff);
+                item.Bonuses().SetBuff(buff, source);
             }, source, source, radius);
 
             Buff dronBuff = new Buff(skill.id, null, Common.BonusType.increase_dron_strength_on_pc, dronTime, dronPc);
-            source.Bonuses().SetBuff(dronBuff);
+            source.Bonuses().SetBuff(dronBuff, source);
             return true;
         }
     }

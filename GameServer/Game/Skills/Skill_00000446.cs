@@ -36,7 +36,7 @@ namespace Nebula.Game.Skills {
                     var item = pItem.Value;
                     var itemBonuses = item.Bonuses();
                     Buff speedDebuff = new Buff(skill.id, null, Common.BonusType.decrease_speed_on_pc, speedTime, speedPc);
-                    itemBonuses.SetBuff(speedDebuff);
+                    itemBonuses.SetBuff(speedDebuff, source);
                 }
                 return true;
             } else {

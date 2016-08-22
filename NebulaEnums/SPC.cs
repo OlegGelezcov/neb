@@ -349,5 +349,13 @@ namespace ServerClientCommon {
         ShotState = 334,
         WeaponState = 335,
         SkillUseState = 336,
+        Critical = 337,
+        Var1 = 338,
+        Var2 = 339,
+        Var3 = 340,
+        State = 341,
+        CompletedQuests = 342,
+        ActiveQuests = 343,
+        CompletedDialogs = 344
     }
 }

@@ -2,6 +2,8 @@
     using Common;
     using ExitGames.Logging;
     using Nebula.Game.Components;
+    using Nebula.Game.Components.Quests;
+    using Nebula.Game.Components.Quests.Dialogs;
     using Nebula.Game.Contracts;
     using Nebula.Game.Events;
     using Nebula.Game.Pets;
@@ -192,7 +194,9 @@
                     typeof(PetManager),
                     typeof(PlayerEventSubscriber),
                     typeof(ContractManager),
-                    typeof(AchievmentComponent)
+                    typeof(AchievmentComponent),
+                    typeof(QuestManager),
+                    typeof(DialogManager)
                 };
 
                 Dictionary<byte, object> tags = new Dictionary<byte, object> {

@@ -294,7 +294,7 @@ namespace Nebula.Game.Components {
             if(mUpdateRaceStatusBonusTimer <= 0f) {
                 mUpdateRaceStatusBonusTimer = RACE_STATUS_BONUS_UPDATE_INTERVAL;
                 if (isCommanderOrAdmiral()) {
-                    mBonuses.SetBuff(new Buff("race_status", null, BonusType.increase_resist_on_cnt, RACE_STATUS_BONUS_UPDATE_INTERVAL * 2, 0.5f));
+                    mBonuses.SetBuff(new Buff("race_status", null, BonusType.increase_resist_on_cnt, RACE_STATUS_BONUS_UPDATE_INTERVAL * 2, 0.5f), nebulaObject);
                 }
             }
         }

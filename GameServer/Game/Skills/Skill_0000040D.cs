@@ -37,7 +37,7 @@ namespace Nebula.Game.Skills {
             var shotInfo = sourceWeapon.Fire(out hit, skill.data.Id, dmgMult);
             if (hit.normalOrMissed) {
                 Buff damageDebuff = new Buff(skill.data.Id.ToString(), null, BonusType.decrease_damage_on_pc, damageTime, damagePc);
-                source.Target().targetObject.Bonuses().SetBuff(damageDebuff);
+                source.Target().targetObject.Bonuses().SetBuff(damageDebuff, source);
                 source.MmoMessage().SendShot(EventReceiver.OwnerAndSubscriber, shotInfo);
                 return true;
             }

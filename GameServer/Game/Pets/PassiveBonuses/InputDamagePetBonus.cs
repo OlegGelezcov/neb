@@ -23,8 +23,10 @@ namespace Nebula.Game.Pets.PassiveBonuses {
                     Buff buff = new Buff(m_BonusName, null, BonusType.decrease_input_damage_on_pc, -1, data.value, () => {
                         return (pet) && (pet.owner);
                     }, -1, false);
-                    bons.SetBuff(buff);
-                    return true;
+                    if (pet != null) {
+                        bons.SetBuff(buff, pet.nebulaObject);
+                        return true;
+                    }
                 }
             }
             return false;

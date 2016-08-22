@@ -59,7 +59,7 @@ namespace Nebula.Game.Pets.Skills {
 
             if(bonuses) {
                 Buff buff = new Buff(m_BonusName, null, Common.BonusType.decrease_damage_on_pc, m_Time, m_Value);
-                bonuses.SetBuff(buff);
+                bonuses.SetBuff(buff, pet.nebulaObject);
                 m_LastEnemy = bonuses.nebulaObject;
                 s_Log.InfoFormat("used pet skill 3 and set buff (decrease_damage_on_pc) on object = {0}:{1}".Color(LogColor.white), (ItemType)m_LastEnemy.Type, m_LastEnemy.Id);
                 return true;

@@ -28,12 +28,12 @@ namespace Nebula.Game.Skills {
             var targetBonuses = targetObject.Bonuses();
 
             Buff speedDebuff = new Buff(skill.id, null, Common.BonusType.decrease_speed_on_pc, speedTime, speedPc);
-            targetBonuses.SetBuff(speedDebuff);
+            targetBonuses.SetBuff(speedDebuff, source);
 
             var targetDamagable = targetObject.Damagable();
 
             float damage = sourceWeapon.GenerateDamage().totalDamage * dmgPc;
-            targetDamagable.SetTimedDamage(speedTime, damage, sourceWeapon.myWeaponBaseType);
+            targetDamagable.SetTimedDamage(speedTime, damage, sourceWeapon.myWeaponBaseType, skill.idInt);
             info.Add((int)SPC.Damage, damage);
 
             source.SetInvisibility(false);

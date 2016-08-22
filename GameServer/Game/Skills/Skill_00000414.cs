@@ -14,12 +14,16 @@ namespace Nebula.Game.Skills {
     public class Skill_00000414 : SkillExecutor {
         public override bool TryCast(NebulaObject source, PlayerSkill skill, out Hashtable info) {
             info = new Hashtable();
+            info.SetSkillUseState(Common.SkillUseState.normal);
 
             float hpPc = skill.GetFloatInput("hp_pc");
             float hpTime = skill.GetFloatInput("hp_time");
             float radius = skill.GetFloatInput("radius");
+
             var damagable = source.Damagable();
+
             float restoredHp = hpPc * damagable.maximumHealth;
+
             float restoredHpPerSec = restoredHp / hpTime;
 
             string id = source.Id + skill.data.Id.ToString();
@@ -27,13 +31,18 @@ namespace Nebula.Game.Skills {
             bool mastery = RollMastery(source);
             if(mastery) {
                 hpTime *= 2;
+                restoredHpPerSec *= 2;
+                info.SetMastery(true);
+            } else {
+                info.SetMastery(false);
             }
-            damagable.SetRestoreHPPerSec(restoredHpPerSec, hpTime, id);
 
-            var items = GetHealTargets(source, source, radius);
-            foreach(var pItem in items) {
-                pItem.Value.Damagable().SetRestoreHPPerSec(restoredHpPerSec, hpTime, id);
+            //damagable.SetRestoreHPPerSec(restoredHpPerSec, hpTime, id);
+
+            foreach(var item in GetNearestFriends(source, radius)) {
+                item.Value.Damagable().SetRestoreHPPerSec(restoredHpPerSec, hpTime, id);
             }
+
             return true;
         }
     }

@@ -85,27 +85,54 @@ namespace Nebula.Game.Components {
 
         }
 
+
+        private Hashtable m_PropertyCache = new Hashtable();
+        private void AddProps(Hashtable hash) {
+            foreach(DictionaryEntry kv in hash ) {
+                m_PropertyCache[kv.Key] = kv.Value;
+            }
+        }
+        private float m_LastUpdateTime = 0f;
+
         /// <summary>
         /// when changed some property send it to others and self
         /// </summary>
         /// <param name="properties"></param>
-        public void SendPropertyUpdate(Hashtable properties, bool onlyReceive = false) {
-            ItemPropertyUpdate eventInstance = new ItemPropertyUpdate {
-                itemId = nebulaObject.Id,
-                itemType = nebulaObject.Type,
-                properties = properties
-            };
-            SendParameters sendParameters = new SendParameters { Unreliable = false, ChannelId = Settings.ItemEventChannel };
-            EventData eventData = new EventData((byte)EventCode.ItemPropertyUpdate, eventInstance);
-            var message = new ItemEventMessage(nebulaObject as Item, eventData, sendParameters);
-
-            if (!onlyReceive) {
-                (nebulaObject as Item).EventChannel.Publish(message);
+        public void SendPropertyUpdate(Hashtable pps, bool onlyReceive = false) {
+            if(nebulaObject.getItemType() != ItemType.Avatar ) {
+                return;
             }
 
-            if (nebulaObject.IsPlayer()) {
-                ReceiveEvent(eventData, sendParameters);  
-            } 
+            AddProps(pps);
+
+
+            float time = Time.timeFromStartF;
+
+            if (time > m_LastUpdateTime + 0.2f) {
+
+                ItemPropertyUpdate eventInstance = new ItemPropertyUpdate {
+                    itemId = nebulaObject.Id,
+                    itemType = nebulaObject.Type,
+                    properties = m_PropertyCache
+                };
+                SendParameters sendParameters = new SendParameters { Unreliable = false, ChannelId = Settings.ItemEventChannel };
+                EventData eventData = new EventData((byte)EventCode.ItemPropertyUpdate, eventInstance);
+                var message = new ItemEventMessage(nebulaObject as Item, eventData, sendParameters);
+
+                if (!onlyReceive) {
+                    (nebulaObject as Item).EventChannel.Publish(message);
+                }
+
+                if (nebulaObject.IsPlayer()) {
+                    ReceiveEvent(eventData, sendParameters);
+                }
+
+                m_PropertyCache = new Hashtable();
+                //log.InfoFormat("send property update... delta = {0}", time - m_LastUpdateTime);
+                m_LastUpdateTime = time;
+                
+            }
+
         }
 
 
@@ -146,6 +173,101 @@ namespace Nebula.Game.Components {
             EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
             ItemEventMessage message = new ItemEventMessage(nebulaObject as Item, eventData, sendParameters);
             (nebulaObject as Item).EventChannel.Publish(message);
+        }
+
+        
+        public void ReceiveQuests(Hashtable hash) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.Quests,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        public void ReceiveQuestAccepted(Hashtable hash) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.QuestAccepted,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        public void ReceiveQuestReady(Hashtable hash) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.QuestReady,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        public void ReceiveQuestCompleted(Hashtable hash) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.QuestCompleted,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        public void ReceiveDialogs(Hashtable hash ) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.Dialogs,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        /// <summary>
+        /// Send event to player about completion of dialog
+        /// </summary>
+        /// <param name="dialogId"></param>
+        public void ReceiveDialogCompleted(string dialogId ) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.DialogCompleted,
+                EventData = dialogId
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
         }
 
         public void ReceiveServiceMessage(ServiceMessageType messageType, string message) {
@@ -617,7 +739,7 @@ namespace Nebula.Game.Components {
             if(!nebulaObject) {
                 return;
             }
-            if(receiver == EventReceiver.OwnerAndSubscriber) {
+            if(receiver == EventReceiver.OwnerAndSubscriber || receiver == EventReceiver.ItemOwner) {
                 if(nebulaObject.getItemType() != ItemType.Avatar ) {
                     receiver = EventReceiver.ItemSubscriber;
                 }

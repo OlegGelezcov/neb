@@ -27,8 +27,10 @@ namespace Nebula.Game.Pets.PassiveBonuses {
                     Buff buff = new Buff(m_BonusName, null, BonusType.increase_pvp_points, -1, m_Value, () => {
                         return (pet) && (pet.owner);
                     }, -1, false);
-                    bonuses.SetBuff(buff);
-                    return true;
+                    if (pet != null) {
+                        bonuses.SetBuff(buff, pet.nebulaObject);
+                        return true;
+                    }
                 }
             }
             return false;

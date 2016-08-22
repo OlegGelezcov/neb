@@ -27,7 +27,7 @@ namespace Nebula.Game.Pets.PassiveBonuses {
                         Buff buff = new Buff(m_BonusName, null, BonusType.increase_credits, -1, data.value, () => {
                             return (pet) && (pet.owner);
                         }, -1, false);
-                        bons.SetBuff(buff);
+                        bons.SetBuff(buff, pet.nebulaObject);
                         float creditsBonus = bons.creditsPcBonus;
                         var characterId = pet.owner.GetComponent<PlayerCharacterObject>().characterId;
                         pet.owner.GetComponent<MmoActor>().application.updater.SetCreditsBonus(characterId, creditsBonus);

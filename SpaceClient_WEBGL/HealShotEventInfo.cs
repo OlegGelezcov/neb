@@ -14,7 +14,7 @@ namespace Nebula.Client {
         public int skillID { get; private set; }
         public float healValue { get; private set; }
         public int healID { get; private set; }
-       // public bool isCritical { get; private set; }
+        public bool isCritical { get; private set; }
 
         public void ParseInfo(Hashtable info) {
             sourceID = info.GetValueString((int)SPC.Source);
@@ -26,6 +26,9 @@ namespace Nebula.Client {
             healValue = info.GetValueFloat((int)SPC.HealValue);
             healID = info.GetValueInt((int)SPC.ShotID, 1);
             //isCritical = info.GetValueBool((int)SPC.IsCritical);
+            if(info.ContainsKey((int)SPC.Critical)) {
+                isCritical = info.GetValueBool((int)SPC.Critical);
+            }
         }
 
         public HealShotEventInfo(Hashtable info) {
