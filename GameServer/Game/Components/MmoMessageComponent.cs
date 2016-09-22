@@ -175,6 +175,22 @@ namespace Nebula.Game.Components {
             (nebulaObject as Item).EventChannel.Publish(message);
         }
 
+        public void ReceiveCode(RPCErrorCode code) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.ReceiveErrorCode,
+                EventData = new Hashtable {
+                        { (int)SPC.ReturnCode, (int)code}
+                    }
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
         
         public void ReceiveQuests(Hashtable hash) {
             var eventInstance = new ItemGeneric {
@@ -241,6 +257,21 @@ namespace Nebula.Game.Components {
                 ItemId = nebulaObject.Id,
                 ItemType = nebulaObject.Type,
                 CustomEventCode = (byte)CustomEventCode.Dialogs,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        public void ReceiveQuestConditionUpdate(Hashtable hash) {
+            var eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.QuestConditionUpdate,
                 EventData = hash
             };
             SendParameters sendParameters = new SendParameters {
@@ -535,8 +566,11 @@ namespace Nebula.Game.Components {
             ReceiveEvent(eventData, sendParameters);
         }
 
-
-        public void SendActivatorEvent(bool active) {
+        /// <summary>
+        /// Send to subscribers event about interactable state of activator
+        /// </summary>
+        /// <param name="interactable">Current interactable activator state</param>
+        public void SendActivatorEvent(bool interactable) {
             if(!nebulaObject) {
                 return;
             }
@@ -545,7 +579,7 @@ namespace Nebula.Game.Components {
                 ItemId = nebulaObject.Id,
                 ItemType = nebulaObject.Type,
                 CustomEventCode = (byte)CustomEventCode.Activator,
-                EventData = new Hashtable { { (int)SPC.Active, active } }
+                EventData = new Hashtable { { (int)SPC.Interactable, interactable } }
             };
             SendParameters sendParameters = new SendParameters {
                 ChannelId = Settings.ItemEventChannel,

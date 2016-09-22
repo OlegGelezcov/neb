@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;FORCE_SKILL_GENERATION_ON_MODULE;LOCAL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;FORCE_SKILL_GENERATION_ON_MODULE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -101,6 +101,17 @@
     <Compile Include="Engine\NebulaTransform.cs" />
     <Compile Include="Engine\PropertyMissedException.cs" />
     <Compile Include="Engine\REQUIRE_COMPONENT.cs" />
+    <Compile Include="Game\Events\BaseEvent.cs" />
+    <Compile Include="Game\Events\ConstructionKilledEvent.cs" />
+    <Compile Include="Game\Events\ContractEvent.cs" />
+    <Compile Include="Game\Events\EnterStationEvent.cs" />
+    <Compile Include="Game\Events\InventoryItemsAddedEvent.cs" />
+    <Compile Include="Game\Events\PlayerKilledEvent.cs" />
+    <Compile Include="Game\Events\QuestItemUsedEvent.cs" />
+    <Compile Include="Game\Events\QuestStartedEvent.cs" />
+    <Compile Include="Game\Events\TriggerEvent.cs" />
+    <Compile Include="Game\Events\UpgradePetEvent.cs" />
+    <Compile Include="Game\Events\WorldCapturedEvent.cs" />
     <Compile Include="ICombatStatsCalculator.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="INebulaLogger.cs" />
@@ -140,6 +151,7 @@
     <Compile Include="Inventory\Objects\PlanetResourceAcceleratorInventoryObject.cs" />
     <Compile Include="Inventory\Objects\PlanetResourceHangarInventoryObject.cs" />
     <Compile Include="Inventory\Objects\PlanetTurretInventoryObject.cs" />
+    <Compile Include="Inventory\Objects\QuestItemObject.cs" />
     <Compile Include="Inventory\Objects\RepairKitObject.cs" />
     <Compile Include="Inventory\Objects\RepairPatchObject.cs" />
     <Compile Include="Inventory\Objects\TurretInventoryObject.cs" />
@@ -161,17 +173,27 @@
     <Compile Include="Pets\PetSkillInfo.cs" />
     <Compile Include="Pets\PetUpgradeRequirement.cs" />
     <Compile Include="Pets\PetUpgradeTable.cs" />
+    <Compile Include="Quests\Actions\AddItemToHangarUniquePostAction.cs" />
     <Compile Include="Quests\Actions\PostAction.cs" />
     <Compile Include="Quests\Actions\PostActionName.cs" />
     <Compile Include="Quests\Actions\PostActionParser.cs" />
+    <Compile Include="Quests\Actions\RemoveItemPostAction.cs" />
+    <Compile Include="Quests\Actions\SetBoolVariablePostAction.cs" />
     <Compile Include="Quests\Actions\StartQuestPostAction.cs" />
     <Compile Include="Quests\BoolQuestVariableData.cs" />
     <Compile Include="Quests\BoolVariableValueEqCondition.cs" />
+    <Compile Include="Quests\CountOfItemsGECondition.cs" />
     <Compile Include="Quests\DialogCompletedCondition.cs" />
     <Compile Include="Quests\Dialogs\DialogData.cs" />
     <Compile Include="Quests\Dialogs\DialogDataCollection.cs" />
     <Compile Include="Quests\Dialogs\DialogDataResource.cs" />
     <Compile Include="Quests\Dialogs\IPostActionTarget.cs" />
+    <Compile Include="Quests\Drop\AsteroidDropSource.cs" />
+    <Compile Include="Quests\Drop\DropInfo.cs" />
+    <Compile Include="Quests\Drop\DropItem.cs" />
+    <Compile Include="Quests\Drop\DropSource.cs" />
+    <Compile Include="Quests\Drop\QuestChestDropSource.cs" />
+    <Compile Include="Quests\Drop\QuestObjectDropItem.cs" />
     <Compile Include="Quests\EmptyQuestCondition.cs" />
     <Compile Include="Quests\FloatQuestVariableData.cs" />
     <Compile Include="Quests\FloatVariableValueEqCondition.cs" />
@@ -179,6 +201,7 @@
     <Compile Include="Quests\IntVariableValueEqCondition.cs" />
     <Compile Include="Quests\IQuest.cs" />
     <Compile Include="Quests\IQuestConditionTarget.cs" />
+    <Compile Include="Quests\IsWorldCondition.cs" />
     <Compile Include="Quests\OnSpaceCondition.cs" />
     <Compile Include="Quests\OnStationCondition.cs" />
     <Compile Include="Quests\QuestCompletedCondition.cs" />
@@ -187,11 +210,17 @@
     <Compile Include="Quests\QuestData.cs" />
     <Compile Include="Quests\QuestDataCollection.cs" />
     <Compile Include="Quests\QuestDataResource.cs" />
+    <Compile Include="Quests\QuestItemUsedNearActivatorWithBadgeCondition.cs" />
+    <Compile Include="Quests\QuestItemUsedNearPointCondition.cs" />
     <Compile Include="Quests\QuestVariableData.cs" />
     <Compile Include="Quests\QuestVariableDataFactory.cs" />
     <Compile Include="Quests\QuestVariableTypeName.cs" />
+    <Compile Include="Quests\Triggers\QuestItemUsedNearPointTrigger.cs" />
+    <Compile Include="Quests\Triggers\QuestTrigger.cs" />
+    <Compile Include="Quests\Triggers\QuestTriggerParser.cs" />
     <Compile Include="Quests\UserEvent.cs" />
     <Compile Include="Quests\UserEventCondition.cs" />
+    <Compile Include="Quests\VariableValueCondition.cs" />
     <Compile Include="ResourcePool.cs" />
     <Compile Include="Resources\ColorList.cs" />
     <Compile Include="Resources\ColorListCollection.cs" />

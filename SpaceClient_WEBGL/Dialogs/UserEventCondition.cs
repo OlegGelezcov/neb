@@ -15,7 +15,7 @@ namespace Nebula.Client.Dialogs {
             }
         }
 
-        public UserEventCondition(UserEventName nm) {
+        public UserEventCondition(UserEventName nm) : base(QuestConditionName.USER_EVENT) {
             m_Name = nm;
         }
 

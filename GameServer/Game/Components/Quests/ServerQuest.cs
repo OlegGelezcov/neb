@@ -8,6 +8,7 @@ using System.Collections.Concurrent;
 using ServerClientCommon;
 using Nebula.Quests;
 using Space.Game;
+using Nebula.Game.Events;
 
 namespace Nebula.Game.Components.Quests {
     public class ServerQuest : IInfo, IQuest {
@@ -65,11 +66,39 @@ namespace Nebula.Game.Components.Quests {
             }
         }
 
+        public bool ExecuteTriggers(IQuestConditionTarget target, BaseEvent evt) {
+            var data = GetData(target.GetRace(), target.GetResource());
+            bool executed = false;
+            if(data != null ) {
+                if(data.triggers != null ) {
+                    foreach(var trigger in data.triggers ) {
+                        executed = (executed || trigger.Execute(target, evt));
+                    }
+                }
+            }
+            return executed;
+        }
+
         public bool SetInteger(string name, int val ) {
             QuestVariable target = null;
             if(m_Variables.TryGetValue(name, out target )) {
                 if(target is IntegerQuestVariable ) {
                     (target as IntegerQuestVariable).SetValue(val);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool IncreaseInteger(string name, int inc, out int newVal ) {
+            newVal = 0;
+
+            QuestVariable target = null;
+            if(m_Variables.TryGetValue(name, out target)) {
+                if(target is IntegerQuestVariable) {
+                    int val = (target as IntegerQuestVariable).value;
+                    newVal = val + inc;
+                    (target as IntegerQuestVariable).SetValue(newVal);
                     return true;
                 }
             }
@@ -132,6 +161,14 @@ namespace Nebula.Game.Components.Quests {
                 }
             }
             return false;
+        }
+
+        public List<QuestCondition> FilterCompleteConditions(string name, Race race, IRes resource) {
+            var data = GetData(race, resource);
+            if(data != null ) {
+                return data.FilterCompleteConditions(name);
+            }
+            return new List<QuestCondition>();
         }
 
         public string id {

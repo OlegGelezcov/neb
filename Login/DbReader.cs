@@ -11,6 +11,7 @@ using MongoDB.Driver.Builders;
 using Nebula.Server.Login;
 using ServerClientCommon;
 using System;
+using System.Collections.Generic;
 
 namespace Login {
 
@@ -40,6 +41,8 @@ namespace Login {
         /// </summary>
         public MongoCollection<DbUserLogin> UserLogins { get; private set; }
 
+        public MongoCollection<DbUserStat> UserStats { get; private set;  }
+
         /// <summary>
         /// Logger
         /// </summary>
@@ -49,6 +52,7 @@ namespace Login {
         /// String utils object
         /// </summary>
         private readonly LoginTextUtilities mLoginUtilities = new LoginTextUtilities();
+
 
         /// <summary>
         /// Set database connection
@@ -60,7 +64,9 @@ namespace Login {
             this.DbClient = new MongoClient(connectionString);
             this.DbServer = this.DbClient.GetServer();
             this.Database = this.DbServer.GetDatabase(databaseName);
+
             this.UserLogins = this.Database.GetCollection<DbUserLogin>(userLoginsCollectionName);
+            this.UserStats = this.Database.GetCollection<DbUserStat>("userstats");
         }
 
         /// <summary>
@@ -114,6 +120,22 @@ namespace Login {
             return this.UserLogins.Count(query) > 0;
         }
 
+        public DbUserStat GetStat(string login) {
+            var query = Query<DbUserStat>.EQ(user => user.login, login);
+            var stat = UserStats.FindOne(query);
+            if(stat == null ) {
+                stat = new DbUserStat {
+                    login = login,
+                    sessions = new List<int>(),
+                    platform = string.Empty
+                };
+            }
+            return stat;
+        }
+
+        public void SaveStat(DbUserStat stat) {
+            UserStats.Save(stat);
+        }
 
 
         /// <summary>
@@ -161,6 +183,12 @@ namespace Login {
             return UserLogins.FindOne(query);
         }
 
+        public DbUserLogin GetUser(SteamId steamId ) {
+            string sid = steamId.value;
+            var query = Query<DbUserLogin>.EQ(user => user.steamId, sid);
+            return UserLogins.FindOne(query);
+        }
+
         public DbUserLogin GetUser(VkontakteId vkId ) {
             string vkontakteId = vkId.value;
             var query = Query<DbUserLogin>.EQ(user => user.vkontakteId, vkontakteId);
@@ -180,7 +208,8 @@ namespace Login {
                 password = auth.password,
                 facebookId = fbId.value,
                 vkontakteId = vkId.value,
-                nebulaCredits = NEBULA_CREDITS_AT_START
+                nebulaCredits = NEBULA_CREDITS_AT_START,
+                steamId = string.Empty
             };
 
             var result = UserLogins.Save(dbUser);
@@ -197,7 +226,24 @@ namespace Login {
                 password = facebookId.value,
                 facebookId = facebookId.value,
                 vkontakteId = string.Empty,
-                nebulaCredits = NEBULA_CREDITS_AT_START
+                nebulaCredits = NEBULA_CREDITS_AT_START,
+                steamId = string.Empty
+            };
+            var result = UserLogins.Save(databaseUser);
+            return databaseUser;
+        }
+
+        public DbUserLogin CreateUser(SteamId steamId ) {
+            DbUserLogin databaseUser = new DbUserLogin {
+                creationTime = CommonUtils.SecondsFrom1970(),
+                email = string.Empty,
+                gameRef = Guid.NewGuid().ToString(),
+                login = steamId.value,
+                password = steamId.value,
+                facebookId = string.Empty,
+                vkontakteId = string.Empty,
+                nebulaCredits = NEBULA_CREDITS_AT_START,
+                steamId = steamId.value
             };
             var result = UserLogins.Save(databaseUser);
             return databaseUser;
@@ -212,7 +258,8 @@ namespace Login {
                 password = vkontakteId.value,
                 facebookId = string.Empty,
                 vkontakteId = vkontakteId.value,
-                nebulaCredits = 0
+                nebulaCredits = 0,
+                steamId = string.Empty
             };
             var result = UserLogins.Save(databaseUser);
             return databaseUser;

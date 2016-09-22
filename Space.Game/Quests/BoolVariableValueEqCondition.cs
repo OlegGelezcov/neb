@@ -1,14 +1,22 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Nebula.Quests {
-    public class BoolVariableValueEqCondition : QuestCondition  {
+    public class BoolVariableValueEqCondition : VariableValueCondition  {
         private string m_VariableName;
         private bool m_Value;
 
-        public BoolVariableValueEqCondition(string name, bool value ) {
+        public override string variableName {
+            get {
+                return variableName;
+            }
+        }
+
+        public BoolVariableValueEqCondition(string name, bool value ) : 
+            base(QuestConditionName.BOOL_VARIABLE_VALUE_EQ) {
             m_VariableName = name;
             m_Value = value;
         }

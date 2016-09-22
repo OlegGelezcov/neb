@@ -15,6 +15,9 @@ using Space.Server.Messages;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Space.Game.Inventory;
+using System;
+using System.Collections.Concurrent;
 
 namespace Nebula.Game.Components {
 
@@ -194,6 +197,7 @@ namespace Nebula.Game.Components {
                 (nebulaObject.world as MmoWorld).asteroidManager.SetDestructionTime(zoneAsteroidInfo.Index, Time.curtime());
             }
         }
+
 
         public override int behaviourId {
             get {

@@ -62,7 +62,9 @@ namespace Common
         QuestReady = 58,
         QuestCompleted = 59,
         Dialogs = 60,
-        DialogCompleted = 61
+        DialogCompleted = 61,
+        QuestConditionUpdate = 62,
+        ReceiveErrorCode = 63
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

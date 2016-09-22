@@ -84,6 +84,8 @@ namespace Nebula.Client.Inventory {
                         return new PlanetResourceHangarInventoryObjectInfo(info);
                     case InventoryObjectType.planet_turret:
                         return new PlanetTurretInventoryObjectInfo(info);
+                    case InventoryObjectType.quest_item:
+                        return new QuestItemInventoryObjectInfo(info);
                     //case InventoryObjectType.pass:
                         //return new PassInventoryObjectInfo(info);
                     //case InventoryObjectType.credits:

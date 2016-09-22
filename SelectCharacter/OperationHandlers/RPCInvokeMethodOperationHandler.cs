@@ -15,10 +15,12 @@ namespace SelectCharacter.OperationHandlers {
 
             OperationResponse response = null;
             switch(operation.rpcId) {
+#if LOCAL
                 case RPCID.rpc_sc_SetRaceStatus: {
                         response = CallSetRaceStatus(request, operation);
                     }
                     break;
+#endif
                 case RPCID.rpc_sc_DepositCreditsToCoalition: {
                         response = DepositCreditsToCoalition(request, operation);
                     }

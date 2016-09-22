@@ -535,7 +535,7 @@ namespace Nebula.Game.Components {
         //Check for skill "000003F9" - when give chance regenerate health when object killed, check before sending OnWasKilled
         public bool RespawnBySkill() {
 
-            log.InfoFormat("PlayerSkills.RespwanBySkill(): check blue");
+            //log.InfoFormat("PlayerSkills.RespwanBySkill(): check blue");
 
             //only for players
             if(nebulaObject.IsPlayer()) {
@@ -549,7 +549,7 @@ namespace Nebula.Game.Components {
                         float respawnProb = skill.data.Inputs.GetValue<float>("resurrect_pc", 0f);
                         float regeneratedHp = skill.data.Inputs.GetValue<float>("hp_regen_pc", 0f);
                         float randomNumber = Rand.Float01();
-                        log.InfoFormat("Respawn by skill check, respawn prob = {0:F1}, random number = {1:F1} blue", respawnProb, randomNumber);
+                        //log.InfoFormat("Respawn by skill check, respawn prob = {0:F1}, random number = {1:F1} blue", respawnProb, randomNumber);
                         if(randomNumber < respawnProb) {
                             var damagable = nebulaObject.Damagable();
                             damagable.ForceSetHealth(damagable.maximumHealth * regeneratedHp);
@@ -567,9 +567,9 @@ namespace Nebula.Game.Components {
                         float regeneratedHp = skill.GetFloatInput("hp_regen_pc");
                         float randomNumber = Rand.Float01();
 
-                        log.InfoFormat("respawn by skill test need: {0} real: {1}", respawnProb, randomNumber);
+                        //log.InfoFormat("respawn by skill test need: {0} real: {1}", respawnProb, randomNumber);
                         if(randomNumber < respawnProb) {
-                            log.InfoFormat("object was success respawned by skill 00000417 [green]");
+                           // log.InfoFormat("object was success respawned by skill 00000417 [green]");
                             var damagable = nebulaObject.Damagable();
                             damagable.ForceSetHealth(damagable.maximumHealth * regeneratedHp);
                             nebulaObject.MmoMessage().SendResurrect();
@@ -614,7 +614,7 @@ namespace Nebula.Game.Components {
 
         //message handler
         public void OnEnemyDeath(NebulaObject enemy) {
-            log.InfoFormat("Message = {0} yellow", ComponentMessages.OnEnemyDeath);
+            //log.InfoFormat("Message = {0} yellow", ComponentMessages.OnEnemyDeath);
             //Handle skill 3F7 when enemy dead
             if(m3F7.active) {
                 var damagable = nebulaObject.Damagable();
@@ -644,7 +644,7 @@ namespace Nebula.Game.Components {
 
         //message handler on critical hit
         public void OnCriticalHit() {
-            log.InfoFormat("Message: OnCriticalHit yellow");
+           // log.InfoFormat("Message: OnCriticalHit yellow");
             if (HasSkill(SkillExecutor.SkilIDFromHexString(INCREASE_MAX_HP_FOR_CRIT_ID))) {
                 var skill = GetSkillById(SkillExecutor.SkilIDFromHexString(INCREASE_MAX_HP_FOR_CRIT_ID));
                 if (skill != null) {
@@ -655,7 +655,7 @@ namespace Nebula.Game.Components {
 
                         int buffCount = bonuses.GetBuffCountWithTag(BonusType.increase_max_hp_on_pc, INCREASE_MAX_HP_FOR_CRIT_BUFF_TAG);
                         if (buffCount < stackCount) {
-                            log.InfoFormat("set buff to max hp green");
+                           // log.InfoFormat("set buff to max hp green");
                             Buff buff = new Buff(Guid.NewGuid().ToString(), null, BonusType.increase_max_hp_on_pc, hpTime, hpPc);
                             buff.SetTag(INCREASE_MAX_HP_FOR_CRIT_BUFF_TAG);
                             bonuses.SetBuff(buff, buff.owner);
@@ -725,7 +725,7 @@ namespace Nebula.Game.Components {
 
                 nebulaObject.Damagable().SubHealth(eatedDamage);
 
-                log.InfoFormat("eat ally damage = {0}", eatedDamage);
+                //log.InfoFormat("eat ally damage = {0}", eatedDamage);
 
                 return true;
             }
@@ -741,7 +741,7 @@ namespace Nebula.Game.Components {
                         var m43a = skill.GetExecutor() as Skill_0000043A;
                         if(target.health < target.maximumHealth * m43a.hpPc ) {
                             if(false == Mathf.Approximately(m43a.dmgMult, 0f)) {
-                                log.InfoFormat("modify damage on {0}% with skill 43A", m43a.dmgMult);
+                                //log.InfoFormat("modify damage on {0}% with skill 43A", m43a.dmgMult);
                                 inputDamage.Mult(m43a.dmgMult);
                                 //return inputDamage;
                             }

@@ -10,6 +10,8 @@
         PlayerKilled = 8,
         ConstructionKilled = 9,
         UpgradePet = 10,
-        WorldCaptured = 11
+        WorldCaptured = 11,
+        QuestStarted = 12,
+        QuestItemUsed = 13
     }
 }

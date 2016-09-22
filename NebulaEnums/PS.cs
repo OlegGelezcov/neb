@@ -116,6 +116,9 @@ namespace Common
         Group = 94,
         Icon = 95,
         WeaponState = 96,
-        SkillsBlocked = 97
+        SkillsBlocked = 97,
+        QuestChest = 98,
+        Badge = 99,
+        Interactable = 100
     }
 }

@@ -64,5 +64,7 @@ namespace Nebula.Engine {
         /// OnStartAttack message sended to damager from receiver (parameter is receiver nebula object)
         /// </summary>
         public const string OnStartAttack = "OnStartAttack";
+
+        
     }
 }

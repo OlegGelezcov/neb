@@ -62,7 +62,9 @@ namespace Common {
         LoreBox = 54,
         PlanetLandingTeleport = 55,
         Quests = 56,
-        Dialogs = 57
+        Dialogs = 57,
+        QuestChest = 58,
+
         //PlanetBasedObject = 55
     }
 }

@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Nebula.Quests {
     public class UserEventCondition : QuestCondition {
+
+        public UserEventCondition() : base(QuestConditionName.USER_EVENT) { }
+
         public override bool CheckCondition(IQuestConditionTarget target, object data = null) {
             if(data != null ) {
                 if(data is UserEvent  ) {

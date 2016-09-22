@@ -76,6 +76,11 @@ namespace Common {
         ErrorOfAddingItemToInventory = 1065,
         MissedParameter = 1066,
         UnsupportedEvent = 1067,
+        ObjectNotInteractable = 1068,
+        NoPlayersAtZone = 1069,
+        CollectionNotEmpty = 1070,
+        QuestDataNotFound = 1071,
+        NoValidObjects = 1072,
 
         UnknownError = 10002,
         

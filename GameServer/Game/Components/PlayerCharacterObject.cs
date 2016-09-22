@@ -3,6 +3,7 @@ using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Game.Bonuses;
+using Nebula.Game.Components.Quests;
 using Nebula.Game.Pets;
 using Nebula.Game.Utils;
 using Nebula.Server.Components;
@@ -29,6 +30,7 @@ namespace Nebula.Game.Components {
         private RaceableObject mRace;
         private PetManager m_PetManager;
         private AchievmentComponent m_Achivments;
+        private QuestManager m_QuestManager;
 
         private BroadcastChatMessageComposer m_ChatComposer = new BroadcastChatMessageComposer();
 
@@ -104,6 +106,7 @@ namespace Nebula.Game.Components {
             mRace = GetComponent<RaceableObject>();
             m_PetManager = GetComponent<PetManager>();
             m_Achivments = GetComponent<AchievmentComponent>();
+            m_QuestManager = GetComponent<QuestManager>();
         }
 
 
@@ -132,7 +135,7 @@ namespace Nebula.Game.Components {
         public void OnEnemyDeath(NebulaObject enemy) {
 
             try {
-                log.InfoFormat(string.Format("PlayerCharacter:OnEnemyDeath()->{0}", enemy.Id));
+                //log.InfoFormat(string.Format("PlayerCharacter:OnEnemyDeath()->{0}", enemy.Id));
 
                 switch (enemy.getItemType()) {
                     case ItemType.Bot: {
@@ -209,6 +212,7 @@ namespace Nebula.Game.Components {
 
 
         public void AddExp(int e) {
+            
             float bonusAddition = 0f;
             if(mBonuses != null && e > 0) {
                 bonusAddition = (float)System.Math.Ceiling( e * mBonuses.expPcBonus );
@@ -217,7 +221,7 @@ namespace Nebula.Game.Components {
 
             e += additionalExp;
             exp += (e);
-            log.InfoFormat("added exp = {0}, additional exp = {1}".Color(LogColor.orange), e,  e - additionalExp);
+           // log.InfoFormat("added exp = {0}, additional exp = {1}".Color(LogColor.orange), e,  e - additionalExp);
             mPlayer.UpdateCharacterOnMaster();
             mPlayer.EventOnPlayerInfoUpdated();
             //mMessage.ReceiveServiceMessage(ServiceMessageType.Info, string.Format("exp received = {0}", e));
@@ -226,8 +230,13 @@ namespace Nebula.Game.Components {
             if(m_PetManager) {
                 m_PetManager.AddExp(e);
             }
-            if(m_Achivments != null ) {
-                m_Achivments.SetVariable("player_level", resource.Leveling.LevelForExp(exp));
+
+            int currentLevel = resource.Leveling.LevelForExp(exp);
+            if (m_Achivments != null ) {
+                m_Achivments.SetVariable("player_level", currentLevel);
+            }
+            if(m_QuestManager != null ) {
+                m_QuestManager.OnPlayerLevel(currentLevel);
             }
         }
 
@@ -262,7 +271,7 @@ namespace Nebula.Game.Components {
         }
 
         public void OnStationExited() {
-            log.InfoFormat("player exited from station, requesting status...".Color(LogColor.orange));
+            //log.InfoFormat("player exited from station, requesting status...".Color(LogColor.orange));
             mPlayer.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "RequestRaceStatus", new object[] { nebulaObject.Id, characterId });
         }
 

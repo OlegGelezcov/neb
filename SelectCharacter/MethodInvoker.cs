@@ -23,7 +23,7 @@ namespace SelectCharacter {
             peer = inPeer;
         }
 
-
+#if LOCAL
         public object SetYesNoNotification() {
 
             var notification = peer.application.Notifications.Create( Guid.NewGuid().ToString(),
@@ -37,6 +37,7 @@ namespace SelectCharacter {
             peer.application.Notifications.SetNotificationToCharacter(peer.characterId, notification);
             return 0;
         }
+#endif
 
         public object InviteToGroup(string sourceGameRefID, string sourceCharacterID, string sourceLogin, string targetCharacterID ) {
 
@@ -363,9 +364,11 @@ namespace SelectCharacter {
             return application.pvpStoreItems.GetInfo();
         }
 
+#if LOCAL
         public bool AddPvpPoints(string login, string gameRef, string character, int count) {
             return application.Stores.AddPvpPoints(login, gameRef, character, count);
         }
+#endif
 
         public Hashtable GetCharacterAchievments(string characterId ) {
             Hashtable variables =  application.achievmentCache.GetAchievments(characterId);

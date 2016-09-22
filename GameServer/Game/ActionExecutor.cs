@@ -9,7 +9,9 @@ namespace Space.Game {
     using Nebula.Game;
     using Nebula.Game.Bonuses;
     using Nebula.Game.Components;
+    using Nebula.Game.Components.Activators;
     using Nebula.Game.Components.PlanetObjects;
+    using Nebula.Game.Components.Quests;
     using Nebula.Game.Events;
     using Nebula.Inventory;
     using Nebula.Inventory.Objects;
@@ -36,6 +38,8 @@ namespace Space.Game {
         private object syncObject = new object();
         private PetOperations m_PetOps;
         private ContractOperations m_ContractOps;
+
+        private readonly QuestItemUseChecker m_QuestItemChecker = new QuestItemUseChecker();
 
         public ActionExecutor(MmoActor actor) 
         {
@@ -294,8 +298,8 @@ namespace Space.Game {
             }
             catch(Exception ex)
             {
-                CL.Out(LogFilter.PLAYER, ex.Message);
-                CL.Out(LogFilter.PLAYER, ex.StackTrace);
+                log.InfoFormat(ex.Message.Red());
+                log.InfoFormat(ex.StackTrace.Red());
             }
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError } }; //GetErrorResponse("Exception occured");
         }
@@ -736,11 +740,13 @@ namespace Space.Game {
             return this._actor.Station.GetInfo();
         }
 
+#if LOCAL
         public Hashtable AddScheme() {
            // log.Info("AddScheme() called");
             ShipModelSlotType slotType = CommonUtils.RandomSlotType();
             return AddSchemeAtSlot(slotType);
         }
+#endif
 
         public Hashtable AddSchemeAtSlot(ShipModelSlotType slotType)
         {
@@ -785,6 +791,7 @@ namespace Space.Game {
             };
         }
 
+#if LOCAL
         public Hashtable CmdAddOres() {
             int counter = 0;
             foreach (var oreInfo in Player.resource.Materials.Ores) {
@@ -798,7 +805,9 @@ namespace Space.Game {
 
             return GetSuccessResponse("added {0} ores".f(counter));
         }
+#endif
 
+#if LOCAL
         /// <summary>
         /// Adding oreCount units all ores to station inventory and schemeCount differenct Schemes
         /// </summary>
@@ -855,7 +864,9 @@ namespace Space.Game {
             });
             return GetSuccessResponse("Ok");
         }
+#endif
 
+#if LOCAL
         public Hashtable addne() {
             foreach(var pb in Player.resource.PassiveBonuses.allData) {
                 NebulaElementObject neObj = new NebulaElementObject(pb.elementID, pb.elementID);
@@ -866,7 +877,7 @@ namespace Space.Game {
                 { (int)SPC.ReturnCode, RPCErrorCode.Ok }
             };
         }
-
+#endif
 
 
         public Hashtable GetWeapon()
@@ -954,6 +965,7 @@ namespace Space.Game {
             return GetSuccessResponse("ores added successfully");
         }
 
+#if LOCAL
         public Hashtable AddInventorySlots()
         {
             int maxSlots = this.Player.Inventory.MaxSlots;
@@ -965,6 +977,7 @@ namespace Space.Game {
                 {ACTION_RESULT.RETURN, this.Player.Inventory.MaxSlots }
             };
         }
+#endif
 
         public Hashtable DestroyInventoryItem(byte inventoryType, byte type, string itemId, int count)
         {
@@ -1255,12 +1268,15 @@ namespace Space.Game {
 
         }
 
+#if LOCAL
         public Hashtable PrintServerStats()
         {
             ServerRuntimeStats.Default(Player.application).OutStats(ConsoleLogContext.Instance);
             return GetSuccessResponse("ok");
         }
+#endif
 
+#if LOCAL
         public Hashtable SetRandomBonus() {
             var cBonuses = Player.GetComponent<PlayerBonuses>();
             BonusType randomBonusType = CommonUtils.GetRandomEnumValue<BonusType>(new List<BonusType>());
@@ -1268,7 +1284,10 @@ namespace Space.Game {
             cBonuses.SetBuff(randomBonusType, buff, Player.nebulaObject);
             return GetSuccessResponse("ok");
         }
+#endif
 
+
+#if LOCAL
         /// <summary>
         /// Toggle god mode for player ( debug function )
         /// </summary>
@@ -1288,7 +1307,9 @@ namespace Space.Game {
                 { ACTION_RESULT.RETURN, Player.GetComponent<ShipBasedDamagableObject>().god }
             };
         }
+#endif
 
+#if LOCAL
         public Hashtable AddCredits(int credits) {
             var character = Player.GetComponent<PlayerCharacterObject>();
             var characterInfo = Player.GetPlayerCharacter();
@@ -1298,7 +1319,19 @@ namespace Space.Game {
             });
             return GetSuccessResponse("ok");
         }
+#endif
 
+        public Hashtable _AddCredits(int credits) {
+            var character = Player.GetComponent<PlayerCharacterObject>();
+            var characterInfo = Player.GetPlayerCharacter();
+
+            Player.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "AddCredits", new object[] {
+                character.login, Player.nebulaObject.Id, characterInfo.CharacterId, credits
+            });
+            return GetSuccessResponse("ok");
+        }
+
+#if LOCAL
         [TestRPC]
         public Hashtable SetSkill(string hexStr, byte slotType) {
             int skillID = int.Parse(hexStr, System.Globalization.NumberStyles.HexNumber);
@@ -1313,6 +1346,7 @@ namespace Space.Game {
             }
             return GetSuccessResponse(string.Empty);
         }
+#endif
 
         public Hashtable RequestTeleportJump(string teleportID) {
 
@@ -1344,6 +1378,7 @@ namespace Space.Game {
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
+#if LOCAL
         public Hashtable TestBuffs() {
             foreach(BonusType buff in Enum.GetValues(typeof(BonusType))) {
                 Player.GetComponent<PlayerBonuses>().SetBuff(new Buff(Guid.NewGuid().ToString(), null,
@@ -1351,7 +1386,9 @@ namespace Space.Game {
             }
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
+#endif
 
+#if LOCAL
         public Hashtable multhp(float mult) {
             var targetObject = Player.nebulaObject.Target().targetObject;
             if(targetObject.Damagable()) {
@@ -1359,7 +1396,9 @@ namespace Space.Game {
             }
             return new Hashtable();
         }
+#endif
 
+#if LOCAL
         public Hashtable invis(int invisibility) {
             NebulaObject target = null;
             if(Player.nebulaObject.Target().hasTarget) {
@@ -1375,6 +1414,7 @@ namespace Space.Game {
             }
             return new Hashtable();
         }
+#endif
 
         /// <summary>
         /// Testing broadcats message to game servers and after to client about race changes event
@@ -1393,10 +1433,12 @@ namespace Space.Game {
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
 
+#if LOCAL
         public Hashtable addexp(int count) {
             Player.GetComponent<PlayerCharacterObject>().AddExp(count);
             return new Hashtable();
         }
+#endif
 
         private int MaxCountTurretsInWorld(MmoWorld world) {
             int outpostCount = world.GetItems((item) => item.GetComponent<MainOutpost>()).Count;
@@ -2759,6 +2801,7 @@ namespace Space.Game {
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError } };
         }
 
+#if LOCAL
         public Hashtable AddTimedEffect() {
             ExpTimedEffect timedEffect = new ExpTimedEffect(1, (int)(CommonUtils.SecondsFrom1970() + 600), 1);
             Player.GetComponent<PlayerTimedEffects>().AddTimedEffect(timedEffect);
@@ -2766,7 +2809,9 @@ namespace Space.Game {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
             };
         }
+#endif
 
+#if LOCAL
         /// <summary>
         /// Test RPC method, add some boost object to player inventory
         /// </summary>
@@ -2783,6 +2828,7 @@ namespace Space.Game {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.UnknownError }
             };
         }
+#endif
 
         private ServerInventory GetInventory(byte inventoryType) {
             ServerInventory serverInventory = null;
@@ -2910,8 +2956,9 @@ namespace Space.Game {
                 {(int)SPC.Value, expObject.value },
                 {(int)SPC.Tag, expObject.tag }
             };
-        } 
+        }
 
+#if LOCAL
         public Hashtable ReceiveDamage(float dmg) {
             WeaponDamage weaponDamage = new WeaponDamage(WeaponBaseType.Rocket);
             weaponDamage.SetBaseTypeDamage(dmg);
@@ -2923,6 +2970,7 @@ namespace Space.Game {
                 {(int)SPC.ActualDamage, actual}
             };
         }
+
 
         public Hashtable AddRandomCraftElement() {
             var data = Player.resource.craftObjects.random;
@@ -2941,15 +2989,17 @@ namespace Space.Game {
                 { (int)SPC.Status, status }
             };
         }
-
+#endif
         //====================================Pet Operations=====================================
         public Hashtable GetPets() {
             return m_PetOps.GetPets();
         }
 
+#if LOCAL
         public Hashtable AddRandomPet() {
             return m_PetOps.AddRandomPet();
         }
+#endif
 
         /*
         public Hashtable ActivatePet(string id) {
@@ -2964,9 +3014,11 @@ namespace Space.Game {
             return m_PetOps.ActivatePet(deactivatePetId, activatePetId);
         }
 
+#if LOCAL
         public Hashtable AddOrReplaceActiveSkill(string petId, int oldSkill, int newSkill) {
             return m_PetOps.AddOrReplaceActiveSkill(petId, oldSkill, newSkill);
         }
+
 
         public Hashtable SetCurrentEnergy(float en) {
             Player.GetComponent<ShipEnergyBlock>().SetCurrentEnergy(en);
@@ -2975,18 +3027,23 @@ namespace Space.Game {
                 { (int)SPC.Energy, Player.GetComponent<ShipEnergyBlock>().currentEnergy }
             };
         }
+#endif
 
+#if LOCAL
         public Hashtable SetPassiveSkill(string petId, int skillId ) {
             return m_PetOps.SetPassiveSkill(petId, skillId);
         }
+
 
         public Hashtable AddPetScheme() {
             return m_PetOps.AddPetScheme();
         }
 
+
         public Hashtable AddPetSkin() {
             return m_PetOps.AddPetSkin();
         }
+#endif
 
         public Hashtable TransformPetSchemeToPet(string schemeId) {
             return m_PetOps.TransformPetSchemeToPet(schemeId);
@@ -3001,9 +3058,11 @@ namespace Space.Game {
             return m_PetOps.ImprovePetColor(petId);
         }
 
+#if LOCAL
         public Hashtable AddAllCraftResources() {
             return m_PetOps.AddAllCraftResources();
         }
+#endif
 
         public Hashtable ImprovePetMastery(string petId) {
             return m_PetOps.ImprovePetMastery(petId);
@@ -3032,6 +3091,7 @@ namespace Space.Game {
             return hash;
         }
 
+#if LOCAL
         public Hashtable DumpTarget() {
             var targetComponent = Player.nebulaObject.Target();
 
@@ -3045,6 +3105,7 @@ namespace Space.Game {
             log.Info(str);
             return hash;
         }
+#endif
 
         //=================================Contract Operations===================
         //public Hashtable AcceptTestContract() {
@@ -3090,6 +3151,65 @@ namespace Space.Game {
 
         public Hashtable GetAchievmentInfo() {
             return Player.GetComponent<AchievmentComponent>().GetInfo();
+        }
+
+        public Hashtable Activate(string activatorId) {
+            MmoWorld world = Player.nebulaObject.mmoWorld();
+            RPCErrorCode errorCode = RPCErrorCode.Ok;
+            NebulaObject activatorNebObj;
+            if(world.TryGetObject((byte)ItemType.Bot, activatorId, out activatorNebObj)) {
+                var activatorComponent = activatorNebObj.GetComponent<ActivatorObject>();
+                if(activatorComponent != null ) {
+                    activatorComponent.OnActivate(Player.nebulaObject, out errorCode);
+                } else {
+                    errorCode = RPCErrorCode.ComponentNotFound;
+                }
+            } else {
+                errorCode = RPCErrorCode.ObjectNotFound;
+            }
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)errorCode }
+            };
+        }
+
+        public Hashtable UseQuestItem(string itemId ) {
+            RPCErrorCode errorCode = RPCErrorCode.Ok;
+
+            if(Player.Inventory.HasItem(InventoryObjectType.quest_item, itemId)) {
+                ServerInventoryItem item;
+                if(Player.Inventory.TryGetItem(InventoryObjectType.quest_item, itemId, out item ) ) {
+                    QuestItemObject questObject = item.Object as QuestItemObject;
+                    if(questObject != null ) {
+                        if(questObject.interactable) {
+                            errorCode = m_QuestItemChecker.Check(Player, item);
+
+                            if(errorCode == RPCErrorCode.Ok ) {
+                                Player.nebulaObject.mmoWorld().OnEvent(new QuestItemUsedEvent(itemId, Player.nebulaObject));
+                            } 
+                        } else {
+                            errorCode = RPCErrorCode.ObjectNotInteractable;
+                        }
+                    } else {
+                        errorCode = RPCErrorCode.UnknownError;
+                    }
+                } else {
+                    errorCode = RPCErrorCode.UnknownError;
+                }
+            } else {
+                errorCode = RPCErrorCode.ItemNotFound;
+            }
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)errorCode },
+                { (int)SPC.ItemId, itemId }
+            };
+        }
+
+        public Hashtable RestartQuest(string questId ) {
+            RPCErrorCode errorCode;
+            Player.GetComponent<QuestManager>().RestartQuest(questId, out errorCode);
+            return new Hashtable {
+                { (int)SPC.ReturnCode, (int)errorCode }
+            };
         }
 
         public Hashtable CreateTestSharedChest() {

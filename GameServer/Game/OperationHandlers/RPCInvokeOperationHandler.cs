@@ -33,18 +33,23 @@ namespace Nebula.Game.OperationHandlers {
             switch(operation.rpcId) {
                 case RPCID.rpc_ProposeContract:
                     return CallProposeContract(actor, request, operation);
+#if LOCAL
                 case RPCID.rpc_RestartLoop:
                     return CallRestartLoop(actor, request, operation);
+#endif
                 case RPCID.rpc_AcceptContract:
                     return CallAcceptContract(actor, request, operation);
                 case RPCID.rpc_DeclineContract:
                     return CallDeclineContract(actor, request, operation);
                 case RPCID.rpc_CompleteContract:
                     return CallCompleteContract(actor, request, operation);
+#if LOCAL
                 case RPCID.rpc_TestAddContractItems:
                     return CallTestAddContractItems(actor, request, operation);
+
                 case RPCID.rpc_TestRemoveContractItems:
                     return CallTestRemoveContractItems(actor, request, operation);
+#endif
                 case RPCID.rpc_GetAchievments:
                     return CallGetAchievments(actor, request, operation);
                 case RPCID.rpc_GetParamDetail:
@@ -53,12 +58,16 @@ namespace Nebula.Game.OperationHandlers {
                     return CallSetPlayerMark(actor, request, operation);
                 case RPCID.rpc_ResetNew:
                     return CallResetNew(actor, request, operation);
+#if LOCAL
                 case RPCID.rpc_TestKill:
                     return CallTestKill(actor, request, operation);
+#endif
                 case RPCID.rpc_UnlockLore:
                     return CallUnlockLore(actor, request, operation);
+#if LOCAL
                 case RPCID.rpc_TestUnlockFullLore:
                     return CallUnlockAllLore(actor, request, operation);
+#endif
                 case RPCID.rpc_StartAsteroidCollecting:
                     return CallStartAsteroidCollecting(actor, request, operation);
                 case RPCID.rpc_ForceDispose:
@@ -77,18 +86,25 @@ namespace Nebula.Game.OperationHandlers {
                     return CallCreatePlanetMiningStation(actor, request, operation);
                 case RPCID.rpc_GetCells:
                     return CallGetCells(actor, request, operation);
+#if LOCAL
                 case RPCID.rpc_resetSystemToNeutral:
                     return CallResetSystemToNeutral(actor, request, operation);
+#endif
                 case RPCID.rpc_CollectOreFromPlanetMiningStation:
                     return CallCollectOreFromPlanetMiningStation(actor, request, operation);
+#if LOCAL
                 case RPCID.rpc_CreateTestSharedChest:
                     return CallCreateTestSharedChest(actor, request, operation);
+#endif
                 case RPCID.rpc_MoveAllFromInventoryToStationWithExclude:
                     return CallMoveAllFromInventoryToStationWithExclude(actor, request, operation);
+#if LOCAL
                 case RPCID.rpc_TestStun:
                     return CallTestStun(actor, request, operation);
+
                 case RPCID.rpc_TestAreaInvisibility:
                     return CallTestAreaInvisibilty(actor, request, operation);
+#endif
                 case RPCID.rpc_GetQuests:
                     return CallGetQuests(actor, request, operation);
                 case RPCID.rpc_CompleteQuest:
@@ -99,12 +115,64 @@ namespace Nebula.Game.OperationHandlers {
                     return CallUserEvent(actor, request, operation);
                 case RPCID.rpc_ResetQuests:
                     return CallResetQuests(actor, request, operation);
+                case RPCID.rpc_Activate:
+                    return CallActivate(actor, request, operation);
+#if LOCAL
+                case RPCID.rpc_RestartQuest:
+                    return CallRestartQuest(actor, request, operation);
+#endif
+                case RPCID.rpc_UseQuestItem:
+                    return CallUseQuestItem(actor, request, operation);
                 default:
                     return new OperationResponse(request.OperationCode) {
                         ReturnCode = (int)ReturnCode.InvalidRPCID,
                         DebugMessage = string.Format("not found rpc with id = {0}", operation.rpcId)
                     };
             }
+        }
+
+        private OperationResponse CallUseQuestItem(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                string itemId = op.parameters[0] as string;
+                if(!string.IsNullOrEmpty(itemId)) {
+                    Hashtable hash = player.ActionExecutor.UseQuestItem(itemId);
+                    RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                        rpcId = op.rpcId,
+                        result = hash
+                    };
+                    return new OperationResponse(request.OperationCode, respInstance);
+                }
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallRestartQuest(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                string questId = op.parameters[0] as string;
+                if(!string.IsNullOrEmpty(questId)) {
+                    Hashtable hash = player.ActionExecutor.RestartQuest(questId);
+                    RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                        rpcId = op.rpcId,
+                        result = hash
+                    };
+                    return new OperationResponse(request.OperationCode, respInstance);
+                }
+            }
+            return InvalidOperationParameter(request);
+        }
+        private OperationResponse CallActivate(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                string activatorId = op.parameters[0] as string;
+                if(!string.IsNullOrEmpty(activatorId)) {
+                    Hashtable hash = player.ActionExecutor.Activate(activatorId);
+                    RPCInvokeResponse respInstance = new RPCInvokeResponse {
+                        rpcId = op.rpcId,
+                        result = hash
+                    };
+                    return new OperationResponse(request.OperationCode, respInstance);
+                }
+            }
+            return InvalidOperationParameter(request);
         }
 
         private OperationResponse CallResetQuests(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
@@ -359,7 +427,7 @@ namespace Nebula.Game.OperationHandlers {
                 if(player.Station.StationInventory.TryGetItem(InventoryObjectType.credits_bag, itemId, out creditsBagItem ) ) {
                     if(creditsBagItem.Count > 0  ) {
                         int count = (creditsBagItem.Object as CreditsBagObject).count;
-                        player.ActionExecutor.AddCredits(count);
+                        player.ActionExecutor._AddCredits(count);
                         player.Station.StationInventory.Remove(InventoryObjectType.credits_bag, itemId, 1);
                         player.EventOnStationHoldUpdated();
                         RPCInvokeResponse respInstance = new RPCInvokeResponse {

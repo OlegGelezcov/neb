@@ -12,6 +12,12 @@ using Nebula.Game.Components.Quests.Dialogs;
 using ExitGames.Logging;
 using Space.Game;
 using Nebula.Database;
+using Nebula.Quests.Drop;
+using Nebula.Game.Events;
+using Space.Game.Inventory;
+using Nebula.Game.Components.Activators;
+using GameMath;
+using Nebula.Quests.Actions;
 
 namespace Nebula.Game.Components.Quests {
     public class QuestManager : NebulaBehaviour, IInfo, IQuestConditionTarget {
@@ -23,6 +29,7 @@ namespace Nebula.Game.Components.Quests {
         private readonly ConcurrentDictionary<string, ServerQuest> m_ActiveQuests = new ConcurrentDictionary<string, ServerQuest>();
         //private readonly List<string> m_ClearedQuests = new List<string>();
 
+        private readonly List<string> m_SpecialNPCBadges = new List<string> { "tiran" };
 
         private RaceableObject m_RaceComponent;
         private DialogManager m_DialogComponent;
@@ -87,6 +94,21 @@ namespace Nebula.Game.Components.Quests {
             }
         }
 
+        /// <summary>
+        /// Start any allowed quests if no active quests
+        /// </summary>
+        private void StartAnyQuests() {
+            if(m_ActiveQuests.Count == 0 ) {
+                foreach(var qdata in resource.quests.GetQuests(race)) {
+                    if(NotCompleted(qdata.Value.id)) {
+                        if(TryStartQuest(qdata.Value.id)) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         public bool TryStartQuest(string id, object userData = null) {
             if(NotCompleted(id)) {
                 var questData = resource.quests.GetQuest(race, id);
@@ -94,23 +116,53 @@ namespace Nebula.Game.Components.Quests {
                     if(CheckConditions(this, null, questData.startConditions, userData)) {
                         ServerQuest quest = new ServerQuest(questData);
                         if(m_ActiveQuests.TryAdd(quest.id, quest)) {
+                            nebulaObject.mmoWorld().OnEvent(new QuestStartedEvent(nebulaObject, quest.id));
                             //------------------------------------------------------
                             //here we are send update to client about quest starting
                             ReceiveEvent(CustomEventCode.QuestAccepted, quest.GetInfo());
+
+                            TryCheckActiveQuests(null);
+
                             return true;
                         } else {
-                            s_Log.InfoFormat("start quest -> {0} error: fail add quest to dict", id);
+                            //s_Log.InfoFormat("start quest -> {0} error: fail add quest to dict", id);
                         }
                     } else {
-                        s_Log.InfoFormat("start quest -> {0} error: not valid start conditions", id);
+                       // s_Log.InfoFormat("start quest -> {0} error: not valid start conditions", id);
                     }
                 } else {
-                    s_Log.InfoFormat("start quest -> {0} error: not founded quest data", id);
+                    //s_Log.InfoFormat("start quest -> {0} error: not founded quest data", id);
                 }
             } else {
-                s_Log.InfoFormat("start quest -> {0} error: quest already completed", id);
+                //s_Log.InfoFormat("start quest -> {0} error: quest already completed", id);
             }
             return false;
+        }
+
+        /// <summary>
+        /// Restarting quest for debugging purposes
+        /// </summary>
+        /// <param name="questId"></param>
+        public void RestartQuest(string questId, out RPCErrorCode errorCode) {
+            errorCode = RPCErrorCode.Ok;
+            QuestData questData = resource.quests.GetQuest(race, questId);
+            if(questData != null ) {
+                if(Completed(questId)) {
+                    m_CompletedQuests.Remove(questId);
+                }
+                if(m_ActiveQuests.ContainsKey(questId)) {
+                    ServerQuest oldQuest;
+                    m_ActiveQuests.TryRemove(questId, out oldQuest);
+                }
+                ServerQuest newQuest = new ServerQuest(questData);
+                m_ActiveQuests.TryAdd(newQuest.id, newQuest);
+                nebulaObject.mmoWorld().OnEvent(new QuestStartedEvent(nebulaObject, newQuest.id));
+                SendInfo();
+                ReceiveEvent(CustomEventCode.QuestAccepted, newQuest.GetInfo());
+                TryCheckActiveQuests(null);
+            } else {
+                errorCode = RPCErrorCode.QuestDataNotFound;
+            }
         }
 
         
@@ -129,7 +181,7 @@ namespace Nebula.Game.Components.Quests {
                         //-----------------------------------------
                         //here send quest ready event------------
                         ReceiveEvent(CustomEventCode.QuestReady, kvp.Value.GetInfo());
-                        s_Log.InfoFormat("sended ready for quest: {0}".Orange(), kvp.Value.id);
+                        //s_Log.InfoFormat("sended ready for quest: {0}".Orange(), kvp.Value.id);
                     }
                 }
             }
@@ -155,7 +207,8 @@ namespace Nebula.Game.Components.Quests {
 
                     var questData = removedQuest.GetData(race, resource);
                     if (m_DialogComponent != null && questData != null) {
-                        m_DialogComponent.ExecutePostActions(questData.postActions);
+                        //m_DialogComponent.ExecutePostActions(questData.postActions);
+                        ExecutePostActionList(questData.postActions);
                     }
                     //----------------------------------------------------
                     //here send quest completed event
@@ -166,6 +219,12 @@ namespace Nebula.Game.Components.Quests {
             }
 
             return false;
+        }
+
+        public void ExecutePostActionList(List<PostAction> postActions) {
+            if(m_DialogComponent != null && postActions != null ) {
+                m_DialogComponent.ExecutePostActions(postActions);
+            }
         }
 
         private void ReceiveEvent(CustomEventCode code, Hashtable hash) {
@@ -202,12 +261,12 @@ namespace Nebula.Game.Components.Quests {
                 if(!condition.CheckCondition(target, userData)) {
                     valid = false;
                     break;
-                }
+                } 
             }
             return valid;
         }
 
-        private void SetIntegerVariable(string name, int val) {
+        public bool SetIntegerVariable(string name, int val) {
             bool setted = false;
             foreach (var kvp in m_ActiveQuests ) {
                 if(kvp.Value.SetInteger(name, val)) {
@@ -217,9 +276,55 @@ namespace Nebula.Game.Components.Quests {
             if(setted) {
                 TryCheckActiveQuests(null);
             }
+            return setted;
         }
 
-        private void SetFloatVariable(string name, float val) {
+       
+        public class VariableChangeResult<T> {
+            public ServerQuest quest;
+            public T currentValue;
+        }
+
+        public void IncreaseInteger(string varName, int cnt) {
+            var list = IncreaseVariable(varName, cnt);
+            if (list != null) {
+                foreach (var obj in list) {
+                    var condition = obj.quest.GetData(race, resource).GetVariableValueCompleteCondition(varName);
+                    if (condition != null) {
+                        Hashtable hash = new Hashtable {
+                            { (int)SPC.Quest, obj.quest.id },
+                            { (int)SPC.ConditionName, condition.name },
+                            { (int)SPC.Value, obj.currentValue },
+                            { (int)SPC.VariableName, varName }
+                        };
+                        m_MmoComponent.ReceiveQuestConditionUpdate(hash);
+
+                    }
+                }
+            }
+        }
+
+        private List<VariableChangeResult<int>> IncreaseVariable(string name, int inc ) {
+            bool setted = false;
+            List<VariableChangeResult<int>> list = null;
+            foreach(var kvp in m_ActiveQuests ) {
+                var quest = kvp.Value;
+                int newVal = 0;
+                if(quest.IncreaseInteger(name, inc, out newVal )) {
+                    if(list == null) {
+                        list = new List<VariableChangeResult<int>>();
+                    }
+                    list.Add(new VariableChangeResult<int> { quest = quest, currentValue = newVal });
+                    setted = true;
+                }
+            }
+            if(setted ) {
+                TryCheckActiveQuests();
+            }
+            return list;
+        }
+
+        public void SetFloatVariable(string name, float val) {
             bool setted = false;
             foreach(var kvp in m_ActiveQuests) {
                 if(kvp.Value.SetFloat(name, val)) {
@@ -231,17 +336,95 @@ namespace Nebula.Game.Components.Quests {
             }
         }
 
-        private void SetBoolVariable(string name, bool val) {
+        public bool SetBoolVariable(string name, bool val) {
             bool setted = false;
             foreach(var kvp in m_ActiveQuests ) {
                 if(kvp.Value.SetBool(name, val)) {
-                    s_Log.InfoFormat("setted bool variable: {0}->{1} on quest: {2}".Lime(), name, val, kvp.Value.id);
+                    //s_Log.InfoFormat("setted bool variable: {0}->{1} on quest: {2}".Lime(), name, val, kvp.Value.id);
                     setted = true;
                 }
             }
             if(setted) {
                 TryCheckActiveQuests(null);
             }
+            return setted;
+        }
+
+        //Listen to world events
+        public void OnEvent(BaseEvent evt ) {
+            bool updated = false;
+           // s_Log.Info("QuestManager.OnEvent()".Orange());
+
+
+            //handle quests what depends from adding to inventory
+            if(evt.eventType == EventType.InventoryItemsAdded) {
+                if (evt.source.Id == nebulaObject.Id) {
+                    //s_Log.InfoFormat("QuestManager.OnEvent() with inventory items added".Lightblue());
+                    InventoryItemsAddedEvent iiaEvt = evt as InventoryItemsAddedEvent;
+                    foreach (var item in iiaEvt.items) {
+                        bool someUpdateOccured = CheckCountOfItemsGECondition(item);
+                        if (!updated) {
+                            updated = someUpdateOccured;
+                        }
+                    }
+                }
+            }
+           
+            //handle quests what depend from using quest item near activator
+            if(evt.eventType == EventType.QuestItemUsed ) {
+                if(evt.source.Id == nebulaObject.Id ) {
+                    TryCheckActiveQuests((evt as QuestItemUsedEvent).itemId);
+                }
+            }
+
+            updated = (updated || HandleTriggers(evt));
+
+            if(updated) {
+                TryCheckActiveQuests();
+            }
+        }
+
+        private bool HandleTriggers(BaseEvent evt) {
+            bool executed = false;
+            foreach(var quest in m_ActiveQuests) {
+                executed = (executed || quest.Value.ExecuteTriggers(this, evt));
+            }
+            return executed;
+        }
+
+        private bool CheckCountOfItemsGECondition(ServerInventoryItem item) {
+            bool updated = false;
+
+            foreach(var kvp in m_ActiveQuests) {
+                var quest = kvp.Value;
+                var conditions = quest.FilterCompleteConditions(QuestConditionName.COUNT_OF_ITEMS_GE, race, resource);
+                //s_Log.InfoFormat("QuestManager.CheckCountOfItemsGECondition() found conditions: {0}".Lightblue(), conditions.Count);
+                if(conditions.Count > 0 ) {
+                    foreach(var condition in conditions ) {
+                        CountOfItemsGECondition coigeCondition = condition as CountOfItemsGECondition;
+                        if(item.Object.Id == coigeCondition.itemId && item.Object.Type == coigeCondition.itemType ) {
+
+                            
+
+                            int actualCount = m_Player.Inventory.ItemCount(item.Object.Type, item.Object.Id);
+                            //s_Log.InfoFormat("QuestManager.CheckCountOfItemsGECondition() send condition update event to player, actual = {0}, expected = {1}".Lightblue(),
+                                //actualCount, coigeCondition.value);
+
+                            Hashtable updateConditionHash = new Hashtable {
+                                { (int)SPC.Quest, quest.id },
+                                { (int)SPC.ConditionName, coigeCondition.name },
+                                { (int)SPC.ItemType, (byte)coigeCondition.itemType },
+                                { (int)SPC.ItemId, coigeCondition.itemId },
+                                { (int)SPC.ExpectedCount, coigeCondition.value },
+                                { (int)SPC.ActualCount, actualCount }
+                            };
+                            m_MmoComponent.ReceiveQuestConditionUpdate(updateConditionHash);
+                            updated = true;
+                        }
+                    }
+                }
+            }
+            return updated;
         }
 
         #region IQuestConditionTarget
@@ -269,6 +452,14 @@ namespace Nebula.Game.Components.Quests {
             }
             return false;
         } 
+
+        public bool isWorld(string worldId ) {
+            var world = nebulaObject.mmoWorld();
+            if(world != null ) {
+                return world.GetID() == worldId;
+            }
+            return false;
+        }
         #endregion
 
         public override int behaviourId {
@@ -294,9 +485,113 @@ namespace Nebula.Game.Components.Quests {
             }
         }
 
+        public void OnPlayerLevel(int level) {
+            SetIntegerVariable("level", level);
+        }
+
+        [ComponentMessage(true, Log = "QuestManager->OnEnterStation()#orange")]
+        public void OnEnterStation() {
+            SetBoolVariable("at_station", true);
+            StartAnyQuests();
+        }
+
         [ComponentMessage(true, Log ="QuestManager->OnStationExited()#orange")]
         public void OnStationExited() {
             SetBoolVariable("at_space", true);
+            StartAnyQuests();
+        }
+
+        [ComponentMessage(true, Log = "QuestManager->OnEnemyDeath()#orange")]
+        public void OnEnemyDeath(NebulaObject enemy) {
+            SetBoolVariable("kill_enemy", true);
+
+
+            string varName = "kill_npc_counter";
+            if (enemy.badge != null) {
+                if (m_SpecialNPCBadges.Contains(enemy.badge)) {
+                    varName = enemy.badge;
+                }
+            }
+
+            IncreaeKillNpcCounter(varName);
+        }
+
+        private void IncreaeKillNpcCounter(string varName) {
+            var list = IncreaseVariable(varName, 1);
+            if (list != null) {
+                foreach (var obj in list) {
+                    var condition = obj.quest.GetData(race, resource).GetVariableValueCompleteCondition(varName);
+                    if (condition != null) {
+                        Hashtable hash = new Hashtable {
+                            { (int)SPC.Quest, obj.quest.id },
+                            { (int)SPC.ConditionName, condition.name },
+                            { (int)SPC.Value, obj.currentValue },
+                            { (int)SPC.VariableName, varName }
+                        };
+                        m_MmoComponent.ReceiveQuestConditionUpdate(hash);
+
+                    }
+                }
+            }
+        }
+
+
+
+        public int CountOfItems(InventoryObjectType itemType, string itemId) {
+            if(m_Player == null ) {
+                return 0;
+            }
+            return m_Player.Inventory.ItemCount(itemType, itemId);
+        }
+
+        public bool HasNearActivatorsWithBadge(string badge, bool sendError = true) {
+            var activators = nebulaObject.mmoWorld().GetItems(item => {
+                var activator = item.GetComponent<ActivatorObject>();
+                if (activator && item.badge == badge) {
+                    var dist = transform.DistanceTo(item.transform);
+                    if (dist < activator.radius + item.size) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+            bool result = (activators.Count > 0);
+            if(!result) {
+                if(m_MmoComponent) {
+                    m_MmoComponent.ReceiveCode(RPCErrorCode.DistanceIsFar);
+                }
+            }
+            return result;
+        }
+
+        public bool NearPoint(Vector3 point, float radius) {
+            float mag = (transform.position - point).magnitude;
+
+            //s_Log.InfoFormat("Check distance, real = {0}, expected = {1}, my position = {2}, target point = {3}".Purple(), mag, radius, transform.position, point);
+            return mag < radius;
+        }
+
+        public List<DropInfo> activeDropInfoList {
+            get {
+                List<DropInfo> list = new List<DropInfo>();
+                foreach(var aq in m_ActiveQuests ) {
+                    var data = aq.Value.GetData(race, resource);
+                    if(data != null ) {
+                        if(data.dropInfoList.Count > 0 ) {
+                            list.AddRange(data.dropInfoList);
+                        }
+                    }
+                }
+                return list;
+            }
+        }
+
+        public Race GetRace() {
+            return race;
+        }
+
+        public IRes GetResource() {
+            return resource;
         }
     }
 }

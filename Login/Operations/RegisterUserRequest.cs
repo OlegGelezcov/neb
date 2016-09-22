@@ -22,6 +22,10 @@ namespace Login.Operations {
         [DataMember(Code = (byte)ParameterCode.VkontakteId, IsOptional = false)]
         public string vkontakteId { get; set; }
 
+        [DataMember(Code = (byte)ParameterCode.Platform, IsOptional = true )]
+        public string platform { get; set; }
+
+
         public void Prepare() {
             if(login != null ) {
                 login = login.ToLower();

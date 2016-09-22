@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,7 @@ namespace Nebula.Client.Dialogs {
             }
         }
 
-        public DialogCompletedCondition(string dialogId ) {
+        public DialogCompletedCondition(string dialogId ) : base(QuestConditionName.DIALOG_COMPLETED) {
             m_Id = dialogId;
         }
 

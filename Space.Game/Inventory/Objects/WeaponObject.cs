@@ -79,6 +79,24 @@ namespace Space.Game.Inventory.Objects {
             };
         }
 
+        public WeaponObject(WeaponGenList gen) {
+            this.id = gen.id;
+            this.template = gen.template;
+            this.level = gen.level;
+            this.optimalDistance = gen.optimalDistance;
+            this.color = gen.color;
+            this.damageType = WeaponDamageType.damage;
+            this.baseCritChance = gen.critChance;
+            this.mWorkshop = (byte)gen.workshop;
+            this.binded = false;
+            this.isNew = false;
+            m_Damage.SetRocketDamage(gen.rocketDamage);
+            m_Damage.SetLaserDamage(gen.laserDamage);
+            m_Damage.SetAcidDamage(gen.acidDamage);
+            m_Damage.SetBaseType(gen.baseType);
+            mRaw = GetInfo();
+        }
+
         public void ParseInfo(Hashtable info)
         {
             mRaw = info;

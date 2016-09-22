@@ -19,51 +19,90 @@ namespace Nebula.Game.Components.Activators {
         private int mPirateCount;
 
         private List<NebulaObject> pirates = new List<NebulaObject>();
+        private MmoWorld m_World;
 
         public void Init(SpawnPiratesActivatorComponentData data) {
             base.Init(data);
             mPirateCount = data.pirateCount;
+
         }
 
-        protected override void Activate() {
-            log.InfoFormat("SpawnPiratesActivator.Activate()");
-            base.Activate();
-
-            pirates.Clear();
-
-            for(int i = 0; i < mPirateCount; i++) {
-                var obj = GeneratePirate();
-                //(nebulaObject.world as MmoWorld).AddObject(obj);
-                obj.AddToWorld();
-                pirates.Add(obj);
-            }
+        public override void Start() {
+            base.Start();
+            m_World = nebulaObject.mmoWorld();
         }
 
-        protected override bool CheckDeactivate() {
-            if (active) {
-                bool allDead = true;
-                foreach (var pirate in pirates) {
-                    if (pirate) {
-                        allDead = false;
-                        break;
+        public override void OnActivate(NebulaObject source, out RPCErrorCode errorCode) {
+            errorCode = RPCErrorCode.Ok;
+            if(interactable) {
+                if(pirates.Count == 0 ) {
+
+                    if (existsPlayersInWorld) {
+                        for (int i = 0; i < mPirateCount; i++) {
+                            var obj = GeneratePirate();
+                            //(nebulaObject.world as MmoWorld).AddObject(obj);
+                            obj.AddToWorld();
+                            pirates.Add(obj);
+                        }
+                        InteractOff();
+                        log.InfoFormat("pirate activator started".Yellow());
+                    } else {
+                        errorCode = RPCErrorCode.NoPlayersAtZone;
                     }
+                } else {
+                    errorCode = RPCErrorCode.CollectionNotEmpty;
                 }
-                return allDead;
+            } else {
+                errorCode = RPCErrorCode.ObjectNotInteractable;
             }
-            return false;
         }
 
-        protected override void Deactivate() {
-            base.Deactivate();
-            log.InfoFormat("SpawnPiratesActivator.Deactivate()");
-            //create public chest with colored scheme
-
-            SchemeDropper dropper = new SchemeDropper(CommonUtils.GetRandomEnumValue<Workshop>(new List<Workshop>()), 1, nebulaObject.resource, ObjectColor.orange);
-            SchemeObject scheme = dropper.Drop() as SchemeObject;
-            ConcurrentBag<ServerInventoryItem> dropList = new ConcurrentBag<ServerInventoryItem> { new ServerInventoryItem( scheme , 1) };
-            var obj = ObjectCreate.SharedChest((nebulaObject.world as MmoWorld), transform.position + Rand.UnitVector3() * 4, 5 * 60, dropList);
-            obj.AddToWorld();
+        private bool existsPlayersInWorld {
+            get {
+                if(m_World.GetMmoActorsConcurrent((p)=> true).Count > 0 ) {
+                    return true;
+                }
+                return false;
+            }
         }
+
+        private bool allIsDead {
+            get {
+                bool dead = true;
+                foreach(var p in pirates ) {
+                    if(p) {
+                        dead = false;
+                        break;
+                    } 
+                }
+                return dead;
+            }
+        }
+
+        private void CheckComplete() {
+            if (pirates.Count > 0) {
+                if (allIsDead) {
+                    log.InfoFormat("Activator complete create chest".Yellow());
+                    pirates.Clear();
+                    SchemeDropper dropper = new SchemeDropper(CommonUtils.GetRandomEnumValue<Workshop>(new List<Workshop>()), 1, nebulaObject.resource, ObjectColor.orange);
+                    SchemeObject scheme = dropper.Drop() as SchemeObject;
+                    ConcurrentBag<ServerInventoryItem> dropList = new ConcurrentBag<ServerInventoryItem> { new ServerInventoryItem(scheme, 1) };
+                    var obj = ObjectCreate.SharedChest((nebulaObject.world as MmoWorld), transform.position + Rand.UnitVector3() * 4, 5 * 60, dropList);
+                    obj.AddToWorld();
+                    SetCooldownTimer(cooldown);
+                    SetInteractable(false);
+                }
+            }
+        }
+
+        public override void Update(float deltaTime) {
+            base.Update(deltaTime);
+            CheckComplete();
+            RPCErrorCode errorCode;
+            OnActivate(null, out errorCode);
+        }
+
+       
 
         private GameObject GeneratePirate() {
 

@@ -10,6 +10,7 @@ using Nebula.Game.Components;
 using ServerClientCommon;
 using Space.Game;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Nebula.Game {
     public static class NebulaObjectExtensions {
@@ -168,6 +169,18 @@ namespace Nebula.Game {
 
         public static string Yellow(this string str) {
             return str.MakeColor(ColorName.yellow);
+        }
+
+        public static string CommaString(this List<string> lst ) {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            for(int i = 0; i < lst.Count; i++ ) {
+                if(i != lst.Count - 1) {
+                    sb.Append(lst[i] + ",");
+                } else {
+                    sb.Append(lst[i]);
+                }
+            }
+            return sb.ToString();
         }
     }
 }

@@ -24,5 +24,8 @@ namespace Login.Operations {
 
         [DataMember(Code = (byte)ParameterCode.Method, IsOptional = false)]
         public byte method { get; private set; }
+
+        [DataMember(Code = (byte)ParameterCode.Platform, IsOptional = true )]
+        public string platform { get; private set; }
     }
 }

@@ -27,6 +27,7 @@ using Nebula.Game.Components.PlanetObjects;
 using Nebula.Server.Nebula.Server.Components.PlanetObjects;
 using Nebula.Server.Nebula.Server.Components.AI;
 using Nebula.Server.Nebula.Server.Components;
+using Nebula.Game.Activators;
 
 namespace Nebula.Game {
     public static class ObjectCreate {
@@ -39,6 +40,10 @@ namespace Nebula.Game {
 
             foreach(var comp in nebulaObjectData.componentCollection) {
                 switch(comp.Key) {
+                    case ComponentID.QuestChest: {
+                            components.Add(typeof(QuestChest));
+                        }
+                        break;
                     case ComponentID.Model:
                         //components.Add(typeof(ModelComponent));
                         switch((comp.Value as MultiComponentData).subType) {
@@ -115,6 +120,9 @@ namespace Nebula.Game {
                                 case ComponentSubType.spawn_pirate_activator:
                                     components.Add(typeof(SpawnPiratesActivator));
                                     break;
+                                case ComponentSubType.var_activator:
+                                    components.Add(typeof(VariableActivator));
+                                    break;
                             }
                         }
                         break;
@@ -166,6 +174,10 @@ namespace Nebula.Game {
                                 case ComponentSubType.ship_bot:
                                     {
                                         components.Add(typeof(BotShip));
+                                    }
+                                    break;
+                                case ComponentSubType.special_ship_bot: {
+                                        components.Add(typeof(SpecialBotShip));
                                     }
                                     break;
                             }
@@ -269,6 +281,9 @@ namespace Nebula.Game {
                                     break;
                                 case ComponentSubType.weapon_simple:
                                     components.Add(typeof(SimpleWeapon));
+                                    break;
+                                case ComponentSubType.special_ship_weapon:
+                                    components.Add(typeof(SpecialShipWeapon));
                                     break;
                             }
                         }
@@ -387,6 +402,10 @@ namespace Nebula.Game {
 
             foreach(var comp in nebulaObjectData.componentCollection) {
                 switch(comp.Key) {
+                    case ComponentID.QuestChest: {
+                            nebObject.GetComponent<QuestChest>().Init(comp.Value as QuestChestComponentData);
+                        }
+                        break;
                     case ComponentID.Model:
                         //nebObject.GetComponent<ModelComponent>().Init(comp.Value as ModelComponentData);
                         {
@@ -467,6 +486,9 @@ namespace Nebula.Game {
                                 case ComponentSubType.spawn_pirate_activator:
                                     nebObject.GetComponent<SpawnPiratesActivator>().Init(comp.Value as SpawnPiratesActivatorComponentData);
                                     break;
+                                case ComponentSubType.var_activator:
+                                    nebObject.GetComponent<VariableActivator>().Init(comp.Value as VariableActivatorComponentData);
+                                    break;
                             }
                         }
                         break;
@@ -506,6 +528,9 @@ namespace Nebula.Game {
                             switch ((comp.Value as MultiComponentData).subType) {
                                 case ComponentSubType.ship_bot:
                                     nebObject.GetComponent<BotShip>().Init(comp.Value as BotShipComponentData);
+                                    break;
+                                case ComponentSubType.special_ship_bot:
+                                    nebObject.GetComponent<SpecialBotShip>().Init(comp.Value as SpecialBotShipComponentData);
                                     break;
                             }
                         }
@@ -603,6 +628,9 @@ namespace Nebula.Game {
                                     break;
                                 case ComponentSubType.weapon_simple:
                                     nebObject.GetComponent<SimpleWeapon>().Init(comp.Value as SimpleWeaponComponentData);
+                                    break;
+                                case ComponentSubType.special_ship_weapon:
+                                    nebObject.GetComponent<SpecialShipWeapon>().Init(comp.Value as SpecialShipWeaponComponentData);
                                     break;
                             }
                         }

@@ -40,6 +40,7 @@ namespace Login {
                 log.DebugFormat("LoginClientPeer Disconnect: pid={0}: reason={1}, detail={2}", this.ConnectionId, reasonCode, reasonDetail);
             }
             application.LogedInUsers.OnLogOut(login);
+            application.stats.OnLogOut(login);
         }
 
         protected override void OnOperationRequest(OperationRequest operationRequest, SendParameters sendParameters) {
@@ -56,6 +57,10 @@ namespace Login {
             if(response != null ) {
                 this.SendOperationResponse(response, sendParameters);
             }
+        }
+
+        public void SetLogin(LoginId lgn) {
+            login = lgn;
         }
     }
 }

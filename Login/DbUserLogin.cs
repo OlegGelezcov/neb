@@ -47,6 +47,8 @@ namespace Login {
         /// </summary>
         public string facebookId { get; set; } = string.Empty;
 
+        public string steamId { get; set; } = string.Empty;
+
         /// <summary>
         /// User vkontakte id
         /// </summary>

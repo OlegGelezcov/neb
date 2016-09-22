@@ -20,17 +20,18 @@ namespace Nebula.Game.Events {
         public override void Start() {
             base.Start();
             if(nebulaObject.mmoWorld().AddEventSubscriber(this)) {
-                s_Log.InfoFormat("successfully add self to event subscribers...");
+                //s_Log.InfoFormat("successfully add self to event subscribers...".Lime());
             }
         }
 
         protected virtual void Disable() {
             if(nebulaObject.mmoWorld().RemoveEventSubscriber(this)) {
-                s_Log.InfoFormat("successfully removed self from event subscribers...");
+                //s_Log.InfoFormat("successfully removed self from event subscribers...".Lime());
             }
         }
 
-        public void Death() {
+        [ComponentMessage(false, Log = "EventSubscriber->Death() :orange")]
+        public virtual void Death() {
             Disable();
         }
 

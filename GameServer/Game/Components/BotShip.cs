@@ -20,10 +20,10 @@ namespace Nebula.Game.Components {
         private PlayerBonuses mBonuses;
 
 
-        private Difficulty mDifficulty = Difficulty.none;
+        protected Difficulty mDifficulty = Difficulty.none;
 
         private bool modelExist = false;
-        private bool initialized = false;
+        protected bool initialized = false;
 
         public override Hashtable DumpHash() {
             var hash = base.DumpHash();
@@ -40,7 +40,7 @@ namespace Nebula.Game.Components {
 
 
 
-        public void Init(BotShipComponentData data) {
+        public virtual void Init(BotShipComponentData data) {
             mDifficulty = data.difficulty;
 
             if (!initialized) {
@@ -57,7 +57,7 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private void Initialize() {
+        protected void Initialize() {
             if(!initialized) {
                 initialized = true;
                 mCharacter = RequireComponent<CharacterObject>();
@@ -156,7 +156,7 @@ namespace Nebula.Game.Components {
             }
         }
 
-        private void GenerateModule(DropManager dropManager, ShipModelSlotType slotType) {
+        protected virtual void GenerateModule(DropManager dropManager, ShipModelSlotType slotType) {
             ModuleDropper moduleDropper = null;
             ShipModule prevModule = null;
             var CB = resource.ModuleTemplates.RandomModule((Workshop)mCharacter.workshop, slotType);

@@ -7,7 +7,11 @@ namespace Common
 {
     public enum ActivatorType : int
     {
-        Zone
+        IntVarSet = 1,
+        IntVarIncr = 2,
+        BoolVarSet = 3,
+        FloatVarSet = 4,
+        PirateSpawn = 5
     }
 }
 

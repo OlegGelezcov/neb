@@ -7,8 +7,8 @@ namespace Nebula.Quests.Actions {
     public class StartQuestPostAction : PostAction {
         private string m_QuestId;
 
-        public StartQuestPostAction(string name, string questId )
-            : base(name) {
+        public StartQuestPostAction(string questId )
+            : base(PostActionName.START_QUEST) {
             m_QuestId = questId;
         }
 

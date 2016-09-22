@@ -28,6 +28,8 @@ namespace Nebula.Game.Components {
 
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
+        private ShipWeaponComponentData m_ComponentData;
+
         #region Linked components
         private RaceableObject mRace;
         private MmoActor mPlayer;
@@ -208,6 +210,8 @@ namespace Nebula.Game.Components {
         }
 
         public void Init(ShipWeaponComponentData data) {
+            m_ComponentData = data;
+
             nebulaObject.SetTag((byte)PS.Difficulty, (byte)data.difficulty);
             nebulaObject.SetTag((byte)PS.LightCooldown, data.cooldown);
 
@@ -216,6 +220,12 @@ namespace Nebula.Game.Components {
             InitializeAsBot();
             CacheComponents();
             Startup();
+        }
+
+        protected ShipWeaponComponentData componentData {
+            get {
+                return m_ComponentData;
+            }
         }
 
         private bool m_StartCalled = false;
@@ -417,16 +427,20 @@ namespace Nebula.Game.Components {
                     heavyCooldown = (float)nebulaObject.Tag((byte)PS.HeavyCooldown);
                 }
 
-                var dropParameters = new WeaponDropper.WeaponDropParams(
-                    resource,
-                    cachedCharacter.level,
-                    (Workshop)cachedCharacter.workshop,
-                    WeaponDamageType.damage,
-                    difficulty
-                    );
-                var dropper = DropManager.Get(resource).GetWeaponDropper(dropParameters);
-                SetWeapon(dropper.Drop() as WeaponObject);
+                GenerateWeaponObject(difficulty);
             }
+        }
+
+        protected virtual void GenerateWeaponObject(Difficulty difficulty) {
+            var dropParameters = new WeaponDropper.WeaponDropParams(
+                resource,
+                cachedCharacter.level,
+                (Workshop)cachedCharacter.workshop,
+                WeaponDamageType.damage,
+                difficulty
+                );
+            var dropper = DropManager.Get(resource).GetWeaponDropper(dropParameters);
+            SetWeapon(dropper.Drop() as WeaponObject);
         }
 
         public ShipWeaponSave GetSave() {

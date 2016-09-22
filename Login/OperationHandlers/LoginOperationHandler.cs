@@ -1,4 +1,5 @@
 ﻿using Common;
+using ExitGames.Logging;
 using Login.Operations;
 using Nebula.Server.Login;
 using Photon.SocketServer;
@@ -6,17 +7,23 @@ using ServerClientCommon;
 
 namespace Login.OperationHandlers {
     public class LoginOperationHandler : BaseOperationHandler  {
+
+        private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
+
         public LoginOperationHandler(LoginApplication app, PeerBase peer)
             : base(app, peer) { }
 
 
         private OperationResponse LoginViaFacebook(LoginOperationRequest operation) {
+
             FacebookId facebookId = new FacebookId(operation.facebookId);
             DbUserLogin user = application.GetUser(facebookId);
 
             if(user == null ) {
                 user = application.DbUserLogins.CreateUser(facebookId);
             }
+
+            string platform = GetPlatform(operation);
 
             LoginOperationResponse response = new LoginOperationResponse {
                 facebookId = user.facebookId,
@@ -27,8 +34,32 @@ namespace Login.OperationHandlers {
                 method = (byte)LoginMethod.facebook
             };
 
-            AddUserToCollection(user);
+            AddUserToCollection(user, platform);
 
+            return new OperationResponse(operation.OperationRequest.OperationCode, response);
+        }
+
+        private OperationResponse LoginViaSteam(LoginOperationRequest operation) {
+            SteamId steamId = new SteamId(operation.login);
+            DbUserLogin user = application.GetUser(steamId);
+            if(user == null ) {
+                s_Log.InfoFormat("Create new user for steam id: {0}", steamId);
+                user = application.DbUserLogins.CreateUser(steamId);
+            } else {
+                s_Log.InfoFormat("User with steam id: {0} already exists in database, ok", steamId);
+            }
+
+            string platform = GetPlatform(operation);
+
+            LoginOperationResponse response = new LoginOperationResponse {
+                facebookId = user.facebookId,
+                GameRefId = user.gameRef,
+                Login = user.login,
+                returnCode = (int)LoginReturnCode.Ok,
+                vkontakteId = user.vkontakteId,
+                method = (byte)LoginMethod.steam
+            };
+            AddUserToCollection(user, platform);
             return new OperationResponse(operation.OperationRequest.OperationCode, response);
         }
 
@@ -39,6 +70,8 @@ namespace Login.OperationHandlers {
                 user = application.DbUserLogins.CreateUser(vkontakteId);
             }
 
+            string platform = GetPlatform(operation);
+
             LoginOperationResponse response = new LoginOperationResponse {
                 facebookId = string.Empty,
                 GameRefId = user.gameRef,
@@ -48,7 +81,7 @@ namespace Login.OperationHandlers {
                 method = (byte)LoginMethod.vkontakte
             };
 
-            AddUserToCollection(user);
+            AddUserToCollection(user, platform);
 
             return new OperationResponse(operation.OperationRequest.OperationCode, response);
         }
@@ -58,6 +91,8 @@ namespace Login.OperationHandlers {
             string password = StringChiper.Decrypt(operation.encryptedPassword);
             LoginAuth loginAuth = new LoginAuth(operation.login, password);
             DbUserLogin user = application.GetUser(loginAuth);
+
+            string platform = GetPlatform(operation);
 
             LoginOperationResponse response = null;
             if(user == null ) {
@@ -78,9 +113,17 @@ namespace Login.OperationHandlers {
                     returnCode = (int)LoginReturnCode.Ok,
                     vkontakteId = user.vkontakteId
                 };
-                AddUserToCollection(user);
+                AddUserToCollection(user, platform);
             }
             return new OperationResponse(operation.OperationRequest.OperationCode, response);
+        }
+
+        private string GetPlatform(LoginOperationRequest operation) {
+            string platform = string.Empty;
+            if (operation.platform != null) {
+                platform = operation.platform;
+            }
+            return platform;
         }
 
         public override OperationResponse Handle(OperationRequest request, SendParameters sendParameters) {
@@ -103,6 +146,8 @@ namespace Login.OperationHandlers {
                 response = LoginViaFacebook(operation);
             } else if( operation.method == (byte)LoginMethod.vkontakte ) {
                 response = LoginViaVkontakte(operation);
+            } else if(operation.method == (byte)LoginMethod.steam ) {
+                response = LoginViaSteam(operation);
             }
 
             if(response != null ) {
@@ -120,9 +165,12 @@ namespace Login.OperationHandlers {
             }
         }
 
-        private void AddUserToCollection(DbUserLogin user) {
+        private void AddUserToCollection(DbUserLogin user, string platform) {
             FullUserAuth fullAuth = new FullUserAuth(user.login, user.gameRef, user.facebookId, user.vkontakteId);
+
+            (peer as LoginClientPeer).SetLogin(new LoginId(fullAuth.login));
             application.LogedInUsers.OnUserLoggedIn(fullAuth, peer as LoginClientPeer);
+            application.stats.OnUserLoggedIn(fullAuth, platform);
             if (user != null) {
                 user.IncrementSessionCount();
                 user.UpdateLastSessionTime();

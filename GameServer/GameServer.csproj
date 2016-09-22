@@ -100,6 +100,7 @@
     <Compile Include="Database\WorldState.cs" />
     <Compile Include="GameServerSettings.cs" />
     <Compile Include="GameUpdater.cs" />
+    <Compile Include="Game\Activators\VariableActivator.cs" />
     <Compile Include="Game\AsteroidInterestArea.cs" />
     <Compile Include="Game\AsteroidItem.cs" />
     <Compile Include="Game\BaseRPCOperations.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Game\Components\PlayerSkills.cs" />
     <Compile Include="Game\Components\PlayerTimedEffects.cs" />
     <Compile Include="Game\Components\PvpStore.cs" />
+    <Compile Include="Game\Components\QuestChest.cs" />
     <Compile Include="Game\Components\Quests\BooleanQuestVariable.cs" />
     <Compile Include="Game\Components\Quests\Dialogs\DialogManager.cs" />
     <Compile Include="Game\Components\Quests\FloatQuestVariable.cs" />
@@ -183,6 +185,8 @@
     <Compile Include="Game\Components\ShipMovable.cs" />
     <Compile Include="Game\Components\SimpleMovable.cs" />
     <Compile Include="Game\Components\SimpleWeapon.cs" />
+    <Compile Include="Game\Components\SpecialBotShip.cs" />
+    <Compile Include="Game\Components\SpecialShipWeapon.cs" />
     <Compile Include="Game\Components\StationComponent.cs" />
     <Compile Include="Game\Components\SubZoneComponent.cs" />
     <Compile Include="Game\Components\Teleport.cs" />
@@ -235,6 +239,9 @@
     <Compile Include="Game\Events\LocationTrigger.cs" />
     <Compile Include="Game\Events\PlayerEventSubscriber.cs" />
     <Compile Include="Game\Events\PlayerKilledEvent.cs" />
+    <Compile Include="Game\Events\QuestChestEventSubscriber.cs" />
+    <Compile Include="Game\Events\QuestItemUsedEvent.cs" />
+    <Compile Include="Game\Events\QuestStartedEvent.cs" />
     <Compile Include="Game\Events\TriggerEvent.cs" />
     <Compile Include="Game\Events\UpgradePetEvent.cs" />
     <Compile Include="Game\Events\WorldCapturedEvent.cs" />
@@ -344,6 +351,7 @@
     <Compile Include="Game\PlayerInfo.cs" />
     <Compile Include="Game\PlayerMailBoxManager.cs" />
     <Compile Include="Game\PlayerSkill.cs" />
+    <Compile Include="Game\QuestItemUseChecker.cs" />
     <Compile Include="Game\RespawnData.cs" />
     <Compile Include="Game\SaveWorldTimer.cs" />
     <Compile Include="Game\ShiftKeyState.cs" />

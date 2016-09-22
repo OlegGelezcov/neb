@@ -30,7 +30,7 @@ namespace Nebula.Game.Events {
                 success =  m_Subscribers.TryAdd(subscriber.nebulaObject.Id, subscriber);
             }
 
-            s_Log.InfoFormat("Object: {0} subscribed to events: {1}".Color(LogColor.cyan), subscriber.nebulaObject.Id, success);
+            //s_Log.InfoFormat("Object: {0} subscribed to events: {1}".Color(LogColor.cyan), subscriber.nebulaObject.Id, success);
             return success;
         }
 
@@ -45,7 +45,7 @@ namespace Nebula.Game.Events {
                 success = m_Subscribers.TryRemove(subscriberId, out removedSubscriber);
             }
 
-            s_Log.InfoFormat("Object: {0} unsubscribed from events: {1}".Color(LogColor.cyan), subscriberId, success);
+            //s_Log.InfoFormat("Object: {0} unsubscribed from events: {1}".Color(LogColor.cyan), subscriberId, success);
             return success;
         }
 

@@ -28,6 +28,49 @@ namespace Nebula.Client.Dialogs {
                         UserEventName eventName = (UserEventName)Enum.Parse(typeof(UserEventName), element.GetString("name"));
                         return CreateUserEventCondition(element, eventName);
                     }
+                case QuestConditionName.COUNT_OF_ITEMS_GE: {
+                        string id = element.GetString("id");
+                        InventoryObjectType itemType = (InventoryObjectType)Enum.Parse(typeof(InventoryObjectType), element.GetString("item_type"));
+                        int value = element.GetInt("value");
+                        string updateText = string.Empty;
+                        if (element.HasAttribute("update_text")) {
+                            updateText = element.GetString("update_text");
+                        }
+                        return new CountOfItemsGECondition(itemType, id, value, updateText);
+                    }
+                case QuestConditionName.INT_VARIABLE_VALUE_EQ:
+                case QuestConditionName.INT_VARIABLE_VARLUE_GE:
+                case QuestConditionName.FLOAT_VARIABLE_VALUE_EQ:
+                case QuestConditionName.BOOL_VARIABLE_VALUE_EQ:
+                    return ParseVariableValueCondtion(type, element);
+                default:
+                    return null;
+            }
+        }
+
+        private DialogCondition ParseVariableValueCondtion(string name, UniXMLElement element) {
+            string varName = element.GetString("name");
+            string updateText = string.Empty;
+            if(element.HasAttribute("update_text")) {
+                updateText = element.GetString("update_text");
+            }
+            switch(name) {
+                case QuestConditionName.INT_VARIABLE_VALUE_EQ: {
+                        int val = element.GetInt("value");
+                        return new IntVariableValueEQCondition(varName, val, updateText);
+                    }
+                case QuestConditionName.INT_VARIABLE_VARLUE_GE: {
+                        int val = element.GetInt("value");
+                        return new IntVariableValueGECondition(varName, val, updateText);
+                    }
+                case QuestConditionName.BOOL_VARIABLE_VALUE_EQ: {
+                        bool val = element.GetBool("value");
+                        return new BoolVariableValueEQCondition(varName, val, updateText);
+                    }
+                case QuestConditionName.FLOAT_VARIABLE_VALUE_EQ: {
+                        float val = element.GetFloat("value");
+                        return new FloatVariableValueEQCondition(varName, val, updateText);
+                    }
                 default:
                     return null;
             }

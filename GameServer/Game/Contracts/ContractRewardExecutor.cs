@@ -100,7 +100,7 @@ namespace Nebula.Game.Contracts {
         
 
         private void GiveCreditsReward(MmoActor player, ContractCreditsDataReward contractCreditsDataReward) {
-            player.ActionExecutor.AddCredits(contractCreditsDataReward.count);
+            player.ActionExecutor._AddCredits(contractCreditsDataReward.count);
             s_Log.InfoFormat("credits reward complete: {0} added".Color(LogColor.orange), contractCreditsDataReward.count);
         }
 

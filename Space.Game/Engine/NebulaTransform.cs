@@ -7,6 +7,7 @@ namespace Nebula.Engine {
 
         public Vector3 position { get; private set; }
         public Vector3 rotation { get; private set; }
+        
 
         public override void Start() {
             //position = new Vector3(0f, 0f, 0f);

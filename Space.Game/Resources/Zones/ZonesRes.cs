@@ -207,6 +207,11 @@ namespace Space.Game.Resources.Zones {
                 var lst2 = no.Elements("component").Select(ce => {
                     ComponentID componentID = (ComponentID)Enum.Parse(typeof(ComponentID), ce.GetString("id"));
                     switch(componentID) {
+                        case ComponentID.QuestChest: {
+                                QuestChestComponentData data = new QuestChestComponentData(ce);
+                                componentCollection.Add(componentID, data);
+                            }
+                            break;
                         case ComponentID.Model:
                             {
                                 ComponentSubType subType = ComponentSubType.simple_model;
@@ -278,9 +283,15 @@ namespace Space.Game.Resources.Zones {
                             {
                                 ComponentSubType subType = (ComponentSubType)Enum.Parse(typeof(ComponentSubType), ce.GetString("sub_type"));
                                 switch(subType) {
-                                    case ComponentSubType.spawn_pirate_activator:
-                                        SpawnPiratesActivatorComponentData data = new SpawnPiratesActivatorComponentData(ce);
-                                        componentCollection.Add(ComponentID.Activator, data);
+                                    case ComponentSubType.spawn_pirate_activator: {
+                                            SpawnPiratesActivatorComponentData data = new SpawnPiratesActivatorComponentData(ce);
+                                            componentCollection.Add(ComponentID.Activator, data);
+                                        }
+                                        break;
+                                    case ComponentSubType.var_activator: {
+                                            VariableActivatorComponentData data = new VariableActivatorComponentData(ce);
+                                            componentCollection.Add(ComponentID.Activator, data);
+                                        }
                                         break;
                                 }
                             }
@@ -468,6 +479,12 @@ namespace Space.Game.Resources.Zones {
                                             componentCollection.Add(ComponentID.Ship, data);
                                         }
                                         break;
+                                    case ComponentSubType.special_ship_bot: {
+                                            SpecialBotShipComponentData data = new SpecialBotShipComponentData(ce);
+                                            componentCollection.Add(ComponentID.Ship, data);
+                                        }
+                                        break;
+
                                 }
                             }
                             break;
@@ -484,6 +501,11 @@ namespace Space.Game.Resources.Zones {
                                     case ComponentSubType.weapon_simple:
                                         {
                                             SimpleWeaponComponentData data = new SimpleWeaponComponentData(ce);
+                                            componentCollection.Add(ComponentID.Weapon, data);
+                                        }
+                                        break;
+                                    case ComponentSubType.special_ship_weapon: {
+                                            SpecialShipWeaponComponentData data = new SpecialShipWeaponComponentData(ce);
                                             componentCollection.Add(ComponentID.Weapon, data);
                                         }
                                         break;

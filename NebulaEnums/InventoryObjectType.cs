@@ -36,7 +36,8 @@
         planet_mining_station = 27,
         planet_turret = 28,
         planet_resource_hangar = 29,
-        planet_resource_accelerator = 30
+        planet_resource_accelerator = 30,
+        quest_item = 31
         //pass elenment
         //pass
     }

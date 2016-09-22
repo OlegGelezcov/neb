@@ -42,6 +42,10 @@ namespace Nebula.Client {
             return element.GetFloat(key);
         }
 
+        public float[] GetFloatArray(string key) {
+            return element.GetFloatArray(key);
+        }
+
         public string innerValue {
             get {
 #if UP

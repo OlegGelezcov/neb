@@ -260,6 +260,7 @@ namespace Common
         Type = 153,
         Components = 154,
         SubZone,
+        Platform = 155,
 
         LTEST = 250
     }

@@ -108,7 +108,14 @@ namespace Login.OperationHandlers {
             FullUserAuth fullAuth = new FullUserAuth(loginAuth.login, dbUser.gameRef, fbId.value, vkId.value);
 
 
+            string platform = string.Empty;
+            if(operation.platform != null ) {
+                platform = operation.platform;
+            }
+
+            (peer as LoginClientPeer).SetLogin(new LoginId(loginAuth.login));
             application.LogedInUsers.OnUserLoggedIn(fullAuth, peer as LoginClientPeer);
+            application.stats.OnUserLoggedIn(fullAuth, platform);
 
             if(code != LoginReturnCode.Ok) {
                 RegisterUserResponse responseObject = new RegisterUserResponse {

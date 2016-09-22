@@ -25,9 +25,9 @@ namespace Nebula.Client.Manual {
             return null;
         }
 
-        public ManQuestData GetQuest(int index, ManQuestCategory category) {
+        public ManQuestData GetQuest(int index) {
             foreach(var quest in quests ) {
-                if(quest.index == index && quest.type == category ) {
+                if(quest.index == index ) {
                     return quest;
                 }
             }

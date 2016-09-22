@@ -11,6 +11,9 @@ using Nebula.Quests.Dialogs;
 using ExitGames.Logging;
 using Nebula.Database;
 using Space.Game;
+using GameMath;
+using Nebula.Inventory.Objects;
+using Space.Game.Inventory;
 
 namespace Nebula.Game.Components.Quests.Dialogs {
 
@@ -23,6 +26,8 @@ namespace Nebula.Game.Components.Quests.Dialogs {
         private RaceableObject m_RaceComponent;
         private QuestManager m_QuestComponent;
         private MmoMessageComponent m_MmoComponent;
+        private MmoActor m_Player;
+
 
         private bool m_StartCalled = false;
 
@@ -33,6 +38,7 @@ namespace Nebula.Game.Components.Quests.Dialogs {
                 m_RaceComponent = GetComponent<RaceableObject>();
                 m_QuestComponent = GetComponent<QuestManager>();
                 m_MmoComponent = GetComponent<MmoMessageComponent>();
+                m_Player = GetComponent<MmoActor>();
             }
         }
 
@@ -120,6 +126,49 @@ namespace Nebula.Game.Components.Quests.Dialogs {
                             }
                         }
                         break;
+                    case PostActionName.REMOVE_ITEM: {
+                            if(player != null ) {
+                                RemoveItemPostAction removeItemPostAction = postAction as RemoveItemPostAction;
+                                int curCount = player.Inventory.ItemCount(removeItemPostAction.type, removeItemPostAction.id);
+                                int deleteCount = Math.Min(curCount, removeItemPostAction.count);
+                                if(deleteCount > 0 ) {
+                                    player.Inventory.Remove(removeItemPostAction.type, removeItemPostAction.id, deleteCount);
+                                    player.EventOnInventoryUpdated();
+                                }
+                            }
+                        }
+                        break;
+                    case PostActionName.ADD_ITEM_TO_HANGAR_UNIQUE: {
+                            if(player != null ) {
+                                AddItemToHangarUniquePostAction act = postAction as AddItemToHangarUniquePostAction;
+                                if (!player.Station.StationInventory.HasItem(act.type, act.id)) {
+
+                                    if (player.Station.StationInventory.HasSlotsForItems(new List<string> { act.id })) {
+
+                                        switch (act.type) {
+                                            case InventoryObjectType.quest_item: {
+                                                    QuestItemObject qObj = new QuestItemObject(act.id, act.quest);
+                                                    player.Station.StationInventory.Add(qObj, act.count);
+                                                    player.EventOnStationHoldUpdated();
+                                                }
+                                                break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case PostActionName.SET_BOOL_VARIABLE: {
+                            if(m_QuestComponent != null ) {
+                                SetBoolVariablePostAction setBoolPostAction = postAction as SetBoolVariablePostAction;
+                                if(setBoolPostAction != null  ) {
+                                    if( m_QuestComponent.SetBoolVariable(setBoolPostAction.variableName, setBoolPostAction.variableValue) ) {
+                                        s_Log.InfoFormat("set bool variable success".Lime());
+                                    }
+                                }
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -153,6 +202,15 @@ namespace Nebula.Game.Components.Quests.Dialogs {
 
         public bool Completed(string id) {
             return (false == IsNotCompleted(id));
+        }
+
+        private MmoActor player {
+            get {
+                if(m_Player == null ) {
+                    m_Player = GetComponent<MmoActor>();
+                }
+                return m_Player;
+            }
         }
     }
 }

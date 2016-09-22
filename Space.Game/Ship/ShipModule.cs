@@ -182,6 +182,36 @@
             isNew = true;
         }
 
+        public ShipModule(ModuleGenList gen) {
+            this.id = gen.id;
+            this.slotType = gen.slot;
+            this.level = gen.level;
+            this.name = gen.name;
+            this.workshop = gen.workshop;
+            this.templateModuleId = gen.dataId;
+            this.craftMaterials = new Dictionary<string, int>();
+
+            foreach(var di in gen.deconstructOre) {
+                this.craftMaterials.Add(di.id, di.count);
+            }
+            this.difficulty = gen.difficulty;
+            this.color = gen.color;
+            this.prefab = gen.model;
+            this.hp = gen.hp;
+            this.speed = gen.speed;
+            this.hold = gen.hold;
+            this.critDamage = gen.critDamage;
+            SetCommonResist(gen.resist);
+            this.damageBonus = gen.damageBonus;
+            this.energyBonus = gen.energyBonus;
+            this.critChance = gen.critChance;
+            this.speedBonus = gen.speedBonus;
+            this.holdBonus = gen.holdBonus;
+            this.skillId = gen.skill;
+            this.set = gen.setId;
+            var dump = GetInfo();
+        }
+
         public static ShipModule Null()
         {
             return new ShipModule(ShipModelSlotType.CB, string.Empty, 0, string.Empty,

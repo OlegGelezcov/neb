@@ -4,7 +4,7 @@ using System.Linq;
 namespace Nebula.Client.Manual {
     public class ManQuestData {
         public string id { get; private set; }
-        public ManQuestCategory type { get; private set; }
+        //public ManQuestCategory type { get; private set; }
         public string name { get; private set; }
         public string startText { get; private set; }
         public string completeText { get; private set; }
@@ -14,7 +14,7 @@ namespace Nebula.Client.Manual {
 
         public ManQuestData(UniXMLElement element ) {
             id = element.GetString("id");
-            type = (ManQuestCategory)System.Enum.Parse(typeof(ManQuestCategory), element.GetString("type"));
+            //type = (ManQuestCategory)System.Enum.Parse(typeof(ManQuestCategory), element.GetString("type"));
             name = element.GetString("name");
             startText = element.GetString("start_text");
             completeText = element.GetString("complete_text");

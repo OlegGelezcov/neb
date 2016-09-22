@@ -356,6 +356,12 @@ namespace ServerClientCommon {
         State = 341,
         CompletedQuests = 342,
         ActiveQuests = 343,
-        CompletedDialogs = 344
+        CompletedDialogs = 344,
+        Quest = 345,
+        ConditionName = 346,
+        ExpectedCount = 347,
+        ActualCount = 348,
+        VariableName = 349,
+        Interactable = 350
     }
 }

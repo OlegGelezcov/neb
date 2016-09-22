@@ -13,7 +13,25 @@ namespace Nebula.Quests.Actions {
             switch(name) {
                 case PostActionName.START_QUEST: {
                         string questId = element.GetString("id");
-                        return new StartQuestPostAction(name, questId);
+                        return new StartQuestPostAction(questId);
+                    }
+                case PostActionName.REMOVE_ITEM: {
+                        InventoryObjectType type = (InventoryObjectType)Enum.Parse(typeof(InventoryObjectType), element.GetString("type"));
+                        string id = element.GetString("id");
+                        int count = element.GetInt("count");
+                        return new RemoveItemPostAction(type, id, count);
+                    }
+                case PostActionName.ADD_ITEM_TO_HANGAR_UNIQUE: {
+                        InventoryObjectType type = (InventoryObjectType)Enum.Parse(typeof(InventoryObjectType), element.GetString("type"));
+                        string id = element.GetString("id");
+                        int count = element.GetInt("count");
+                        string quest = element.GetString("quest");
+                        return new AddItemToHangarUniquePostAction(type, id, count, quest);
+                    }
+                case PostActionName.SET_BOOL_VARIABLE: {
+                        string varname = element.GetString("var_name");
+                        bool varvalue = element.GetBool("var_value");
+                        return new SetBoolVariablePostAction(varname, varvalue);
                     }
                 default: {
                         return null;

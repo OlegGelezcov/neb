@@ -6,20 +6,23 @@ using Space.Game;
 using Nebula.Server.Components;
 
 namespace Nebula.Game.Components.Activators {
+
     public abstract class ActivatorObject : NebulaBehaviour {
 
-        private float mCooldown;
-        private float mRadius;
-        private float mCooldownTimer;
-        private bool mActive;
+        private float m_Cooldown;
+        private float m_Radius;
+        private float m_CooldownTimer;
+        private bool m_Interactable;
+        protected ActivatorType activatorType { get; private set; }
 
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
-        public void Init(ActivatorComponentData data) {
-            mCooldown = data.cooldown;
-            mRadius = data.radius;
-            mCooldownTimer = 10;
-            mActive = false;
+        public virtual void Init(ActivatorComponentData data) {
+            m_Cooldown = data.cooldown;
+            m_Radius = data.radius;
+            m_CooldownTimer = cooldown;
+            activatorType = data.activatorType;
+            SetInteractable(true);
         }
 
         public override int behaviourId {
@@ -31,78 +34,71 @@ namespace Nebula.Game.Components.Activators {
         public override void Update(float deltaTime) {
             nebulaObject.properties.SetProperty((byte)PS.LightCooldown, cooldown);
             nebulaObject.properties.SetProperty((byte)PS.Radius, radius);
-            nebulaObject.properties.SetProperty((byte)PS.Active, active);
+            nebulaObject.properties.SetProperty((byte)PS.Interactable, interactable);
+            nebulaObject.properties.SetProperty((byte)PS.TypeName, (int)activatorType);
 
-            if(!active) {
-                if (mCooldownTimer > 0f) {
-                    mCooldownTimer -= deltaTime;
+            if(!interactable) {
+                if (m_CooldownTimer > 0f) {
+                    m_CooldownTimer -= deltaTime;
                 }
 
-                if(mCooldownTimer <= 0f ) {
-                    if(CheckActivate()) {
-                        Activate();
-                    }
-                }
-            }
-
-            if(active ) {
-                if(CheckDeactivate()) {
-                    Deactivate();
+                if(m_CooldownTimer <= 0f ) {
+                    InteractOn();
                 }
             }
         }
 
-        protected virtual bool active {
-            get {
-                return mActive;
-            }
-        }
-
-        protected virtual bool CheckActivate() {
-
-            var items = (nebulaObject.world as MmoWorld).GetItems(it => it.Type == (byte)ItemType.Avatar);
-
-            foreach(var pair in items) {
-                if(nebulaObject.transform.DistanceTo(pair.Value.transform) < mRadius ) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        protected virtual void Activate() {
-            SetActive(true);
-            GetComponent<MmoMessageComponent>().SendActivatorEvent(active);
-        }
-
-        protected abstract bool CheckDeactivate();
-
-        protected virtual void Deactivate() {
+        protected virtual void InteractOff() {
             SetCooldownTimer(cooldown);
-            SetActive(false);
-            GetComponent<MmoMessageComponent>().SendActivatorEvent(active);
+            SetInteractable(false);
+            GetComponent<MmoMessageComponent>().SendActivatorEvent(interactable);
         }
+
+        protected virtual void InteractOn() {
+            SetInteractable(true);
+            GetComponent<MmoMessageComponent>().SendActivatorEvent(interactable);
+        }
+
+        protected bool IsDistanceValid(NebulaObject obj) {
+            return transform.DistanceTo(obj.transform) < radius;
+        }
+
+        /// <summary>
+        /// Activate action this activator
+        /// </summary>
+        /// <param name="source">What object is activator source</param>
+        /// <param name="errorCode">Error code or Ok</param>
+        /// <returns>Status</returns>
+        public abstract void OnActivate(NebulaObject source, out RPCErrorCode errorCode);
 
 
         protected void SetCooldownTimer(float interval ) {
-            mCooldownTimer = interval;
+            m_CooldownTimer = interval;
+        }
+
+        protected void SetInteractable(bool val) {
+            m_Interactable = val;
+        }
+
+
+        protected virtual bool interactable {
+            get {
+                return m_Interactable;
+            }
         }
 
         protected float cooldown {
             get {
-                return mCooldown;
+                return m_Cooldown;
             }
         }
 
-        protected float radius {
+        public float radius {
             get {
-                return mRadius;
+                return m_Radius;
             }
         }
 
-        protected void SetActive(bool val) {
-            mActive = val;
-        }
+
     }
 }

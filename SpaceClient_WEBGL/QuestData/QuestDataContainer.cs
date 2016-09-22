@@ -1,5 +1,6 @@
 ﻿using Common;
 using Nebula.Client.Dialogs;
+using Nebula.Client.Quests.Markers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Nebula.Client.QuestData {
             Clear();
             UniXmlDocument document = new UniXmlDocument(xml);
             DialogConditionFactory conditionFactory = new DialogConditionFactory();
+            MarkerParser markerParser = new MarkerParser();
 
             var dumpList = document.document.Element("quests").Elements("quest").Select(questElement => {
                 string id = questElement.GetString("id");
@@ -29,8 +31,15 @@ namespace Nebula.Client.QuestData {
                 } else {
                     conditionList = new List<DialogCondition>();
                 }
-                
-                QuestData questData = new QuestData(id, text, dialogs, character, conditionList);
+
+                var markersElement = questElement.Element("stage_markers");
+                List<StageMarker> markers = null;
+                if(markersElement != null ) {
+                    markers = markerParser.ParseMarkerList(new UniXMLElement(markersElement));
+                } else {
+                    markers = new List<StageMarker>();
+                }
+                QuestData questData = new QuestData(id, text, dialogs, character, conditionList, markers);
                 Add(id, questData);
                 return questData;
             }).ToList();

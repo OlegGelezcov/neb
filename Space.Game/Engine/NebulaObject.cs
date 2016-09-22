@@ -71,6 +71,7 @@ namespace Nebula.Engine {
 
         public void SetBadge(string inBadge) {
             badge = inBadge;
+            properties.SetProperty((byte)PS.Badge, (badge == null) ? string.Empty : badge);
         }
 
         public IRes resource {
@@ -107,6 +108,7 @@ namespace Nebula.Engine {
             properties = AddComponent<NebulaObjectProperties>();
             properties.SetProperty((byte)PS.Invisibility, invisible);
             //properties.SetProperty((byte)PS.SubZoneID, subZone);
+            properties.SetProperty((byte)PS.Badge, string.Empty);
 
             if (components != null && components.Length > 0) {
                 foreach (var component in components) {

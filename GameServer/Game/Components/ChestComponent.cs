@@ -443,7 +443,7 @@ namespace Nebula.Game.Components {
                 object[] raw = new object[filteredObjects.Count];
                 int index = 0;
                 foreach(var p in filteredObjects) {
-                    raw[index++] = new Hashtable { { (int)SPC.Count, 1 }, { (int)SPC.Info, p.Value.GetInfo() } };
+                    raw[index++] = new Hashtable { { (int)SPC.Count, p.Value.Count }, { (int)SPC.Info, p.Value.GetInfo() } };
                 }
                 return raw;
             }
@@ -469,10 +469,10 @@ namespace Nebula.Game.Components {
         private static readonly ILogger log = LogManager.GetCurrentClassLogger();
 
         public static bool RollDropChest(Difficulty d) {
-            log.InfoFormat("RollDropChest() for npc difficulty = {0} green", d);
+            //log.InfoFormat("RollDropChest() for npc difficulty = {0} green", d);
 
             float randomNumber = Rand.Float01();
-            log.InfoFormat("random number = {0} green", randomNumber);
+            //log.InfoFormat("random number = {0} green", randomNumber);
 
             switch(d) {
                 case Difficulty.starter:

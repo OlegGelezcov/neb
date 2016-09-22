@@ -99,5 +99,14 @@ namespace Nebula.Client.Quests {
             }
             return false;
         }
+
+        public ClientQuest GetActiveQuest(string id) {
+            foreach(var quest in activeQuests ) {
+                if(quest.id == id ) {
+                    return quest;
+                }
+            }
+            return null;
+        }
     }
 }

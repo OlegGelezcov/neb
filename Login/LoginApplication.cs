@@ -68,7 +68,7 @@ namespace Login {
         public DbReader DbUserLogins { get; private set; }
         public InapManager inaps { get; private set; }
         public InapCollection inapResource { get; private set; }
-
+        public StatCollection stats { get; private set; }
 
         public LoginApplication() {
             UpdateMasterEndPoint();
@@ -76,6 +76,7 @@ namespace Login {
             this.GamingUdpPort = GameServerSettings.Default.GamingUdpPort;
             this.GamingWebSocketPort = GameServerSettings.Default.GamingWebSocketPort;
             this.ConnectRetryIntervalSeconds = GameServerSettings.Default.ConnectRetryInterval;
+
         }
 
         protected override PeerBase CreatePeer(InitRequest initRequest) {
@@ -104,6 +105,7 @@ namespace Login {
                 this.DbUserLogins.Setup(databaseConnectionString, GameServerSettings.Default.DatabaseName, GameServerSettings.Default.DbLoginCollectionName);
 
                 this.LogedInUsers = new LoggedInUserCollection(this);
+                stats = new StatCollection(this);
 
                 //passManager = new PassManager(this);
 
@@ -128,6 +130,7 @@ namespace Login {
                 log.Error(ex.StackTrace);
             }
         }
+
         protected override void TearDown() {
             log.InfoFormat("TearDown: serverId={0}", ServerId);
             if (this.MasterPeer != null) {
@@ -233,6 +236,10 @@ namespace Login {
 
         public DbUserLogin GetUser(FacebookId fbId ) {
             return DbUserLogins.GetUser(fbId);
+        }
+
+        public DbUserLogin GetUser(SteamId sid) {
+            return DbUserLogins.GetUser(sid);
         }
 
         public DbUserLogin GetUser(VkontakteId vkId ) {

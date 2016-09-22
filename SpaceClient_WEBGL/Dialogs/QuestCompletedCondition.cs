@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Nebula.Client.Dialogs {
 
         private string m_QuestId;
 
-        public QuestCompletedCondition(string questId ) {
+        public QuestCompletedCondition(string questId ) : base(QuestConditionName.QUEST_COMPLETED)  {
             m_QuestId = questId;
         }
         public override bool CheckCondition(IDialogConditionTarget target) {

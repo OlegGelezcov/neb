@@ -186,6 +186,7 @@
     <Compile Include="Contracts\WorldCaptureContract.cs" />
     <Compile Include="DamageDron.cs" />
     <Compile Include="Dialogs\AtSpaceCondition.cs" />
+    <Compile Include="Dialogs\CountOfItemsGECondition.cs" />
     <Compile Include="Dialogs\DialogCompletedCondition.cs" />
     <Compile Include="Dialogs\DialogConditionFactory.cs" />
     <Compile Include="Dialogs\IDialogConditionTarget.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="Dialogs\OnStationCondition.cs" />
     <Compile Include="Dialogs\QuestCompletedCondition.cs" />
     <Compile Include="Dialogs\UserEventCondition.cs" />
+    <Compile Include="Dialogs\VariableValueCondition.cs" />
     <Compile Include="Election\CommanderCandidate.cs" />
     <Compile Include="Election\CommanderCandidates.cs" />
     <Compile Include="Election\ElectionInfo.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="Inventory\Objects\PlanetResourceAcceleratorInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\PlanetResourceHangarInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\PlanetTurretInventoryObjectInfo.cs" />
+    <Compile Include="Inventory\Objects\QuestItemInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\RepairKitInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\RepairPatchInventoryObjectInfo.cs" />
     <Compile Include="Inventory\Objects\SchemeInventoryObjectInfo.cs" />
@@ -317,6 +320,10 @@
     <Compile Include="Quests\ClientQuestVariableCollection.cs" />
     <Compile Include="Quests\FloatClientQuestVariable.cs" />
     <Compile Include="Quests\IntegerClientQuestVariable.cs" />
+    <Compile Include="Quests\Markers\MarkerParser.cs" />
+    <Compile Include="Quests\Markers\MarkerType.cs" />
+    <Compile Include="Quests\Markers\PointMarker.cs" />
+    <Compile Include="Quests\Markers\StageMarker.cs" />
     <Compile Include="RaceCommand\RaceCommand.cs" />
     <Compile Include="RaceCommand\RaceCommandMember.cs" />
     <Compile Include="RaceCommand\RaceCommands.cs" />

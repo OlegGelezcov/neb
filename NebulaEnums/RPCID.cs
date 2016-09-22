@@ -59,5 +59,8 @@
         public const int rpc_GetDialogs = 38;
         public const int rpc_UserEvent = 39;
         public const int rpc_ResetQuests = 40;
+        public const int rpc_Activate = 41;
+        public const int rpc_RestartQuest = 42;
+        public const int rpc_UseQuestItem = 43;
     }
 }

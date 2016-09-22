@@ -35,6 +35,9 @@
         planet_object_turret,
         planet_object_resource_hangar,
         planet_object_resource_accelerator,
-        planet_object_mining_station
+        planet_object_mining_station,
+        special_ship_bot,
+        special_ship_weapon,
+        var_activator
     }
 }
