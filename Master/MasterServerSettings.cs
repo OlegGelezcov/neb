@@ -27,8 +27,8 @@ namespace Master {
                     MasterRelayPortTcp = 0,
                     MasterRelayPortUdp = 0,
                     MasterRelayPortWebSocket = 0,
-                    PublicIPAddress = "192.168.1.102",
-                    S2SMasterAddress = "192.168.1.102",
+                    PublicIPAddress = "192.168.1.4",
+                    S2SMasterAddress = "192.168.1.4",
                     DatabaseName = "master",
                     NewsCollectionName = "news"
                 };
@@ -40,8 +40,8 @@ namespace Master {
                     MasterRelayPortTcp = 0,
                     MasterRelayPortUdp = 0,
                     MasterRelayPortWebSocket = 0,
-                    PublicIPAddress = "45.63.0.198",
-                    S2SMasterAddress = "45.63.0.198",
+                    PublicIPAddress = "108.61.87.145",
+                    S2SMasterAddress = "108.61.87.145",
                     DatabaseName = "master",
                     NewsCollectionName = "news"
                 };

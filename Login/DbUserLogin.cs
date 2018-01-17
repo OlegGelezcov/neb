@@ -49,6 +49,8 @@ namespace Login {
 
         public string steamId { get; set; } = string.Empty;
 
+        public string deviceId { get; set; } = string.Empty;
+
         /// <summary>
         /// User vkontakte id
         /// </summary>

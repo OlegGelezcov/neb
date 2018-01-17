@@ -238,6 +238,10 @@ namespace Login {
             return DbUserLogins.GetUser(fbId);
         }
 
+        public DbUserLogin GetUser(DeviceId deviceId ) {
+            return DbUserLogins.GetUser(deviceId);
+        }
+
         public DbUserLogin GetUser(SteamId sid) {
             return DbUserLogins.GetUser(sid);
         }

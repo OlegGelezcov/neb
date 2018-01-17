@@ -5,18 +5,21 @@
         private readonly string id;
         private readonly string scene;
         private readonly string displayName;
+        private readonly bool isAvailable;
+
         //private float[] m_HumanSpawnPoint;
         //private float[] m_CriptozodSpawnPoint;
         //private float[] m_BorguzandSpawnPoint;
 
         private readonly bool isNull;
 
-        public ResZoneInfo(string id, string scene, string displayName/*, float[] humanSP, float[] criptSP, float[] borgSP*/)
+        public ResZoneInfo(string id, string scene, string displayName, bool isAvailable)
         {
             this.id = id;
             this.scene = scene;
             this.displayName = displayName;
             this.isNull = (string.IsNullOrEmpty(id) && string.IsNullOrEmpty(scene));
+            this.isAvailable = isAvailable;
             //humanSpawnPoint = humanSP;
             //criptizidSpawnPoint = criptSP;
             //borguzandSpawnPoint = borgSP;
@@ -88,9 +91,20 @@
             return this.isNull;
         }
 
+        public bool IsAvailable {
+            get {
+                return isAvailable;
+            }
+        }
+
+        public override string ToString() {
+            return string.Format("Id => {0}, Scene => {1}, Disp. Name => {2}, Is Available => {2}, Is N/A => {4}",
+                Id(), Scene(), DisplayName(), IsAvailable, IsNull());
+        }
+
         public static ResZoneInfo Null()
         {
-            return new ResZoneInfo(string.Empty, string.Empty, string.Empty);
+            return new ResZoneInfo(string.Empty, string.Empty, string.Empty, false);
         }
     }
 }

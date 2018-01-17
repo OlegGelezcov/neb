@@ -3,6 +3,7 @@ import sys
 import codecs
 from xml.etree.ElementTree import parse
 
+
 #sys.stdout = codecs.getwriter('utf8')(sys.stdout)
 
 def uprint(*objects, sep=' ', file=sys.stdout):

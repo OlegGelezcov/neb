@@ -119,6 +119,7 @@ namespace Common
         SkillsBlocked = 97,
         QuestChest = 98,
         Badge = 99,
-        Interactable = 100
+        Interactable = 100,
+        Subscribers = 101
     }
 }

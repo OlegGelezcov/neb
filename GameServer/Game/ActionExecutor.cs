@@ -327,14 +327,22 @@ namespace Space.Game {
 
             if(freeSlots >= slotsForItems) {
                 int totalCount = 0;
+                List<IInventoryObject> addedObjects = new List<IInventoryObject>();
                 foreach(var c in asteroidComponent.content) {
-                    Player.Inventory.Add(c.Material, c.Count);
+                    bool result = Player.Inventory.Add(c.Material, c.Count);
                     totalCount += c.Count;
+                    if (result) {
+                        addedObjects.Add(c.Material);
+                    }
                 }
 
                 asteroidComponent.ClearContent();
                 asteroidComponent.DestroyIfEmpty();
                 Player.EventOnInventoryUpdated();
+
+                if (addedObjects.Count > 0) {
+                    Player.EventOnInventoryItemAdded(asteroidId, (byte)ItemType.Asteroid, addedObjects);
+                }
 
                 var achievments = Player.GetComponent<AchievmentComponent>();
                 if (achievments != null) {

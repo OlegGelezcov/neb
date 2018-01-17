@@ -35,6 +35,8 @@ namespace dbtool {
                 }
             }*/
 
+
+
             var database = server.GetDatabase("user_logins");
             var logins = database.GetCollection<DbUserLogin>("user_login_collection");
             Console.WriteLine("logins: " + logins.Count());

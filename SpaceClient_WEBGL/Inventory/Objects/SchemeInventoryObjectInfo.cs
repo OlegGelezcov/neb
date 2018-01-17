@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Nebula.Client.Utils;
 
 namespace Nebula.Client.Inventory.Objects {
-    public class SchemeInventoryObjectInfo : IInventoryObjectInfo {
+    public class SchemeInventoryObjectInfo : IInventoryObjectInfo, ILeveledObjectInfo {
         private string id;
         private string name;
         private int level;

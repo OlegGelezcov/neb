@@ -110,6 +110,8 @@ namespace ntool.Commands {
                     return new GetCharactersCommand(source, context);
                 case "ucount":
                     return new GetUsersOnlineCommand(source, context);
+                case "help":
+                    return new HelpCommand(source, context);
 
             }
             return null;

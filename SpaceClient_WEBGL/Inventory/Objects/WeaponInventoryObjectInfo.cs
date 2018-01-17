@@ -5,7 +5,7 @@ using ExitGames.Client.Photon;
 using Nebula.Client.Utils;
 
 namespace Nebula.Client.Inventory.Objects {
-    public class WeaponInventoryObjectInfo : IInventoryObjectInfo {
+    public class WeaponInventoryObjectInfo : IInventoryObjectInfo, ILeveledObjectInfo {
         private string id;
         private string template;
         private int level;

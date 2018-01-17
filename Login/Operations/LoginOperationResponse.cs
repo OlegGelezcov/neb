@@ -26,5 +26,8 @@ namespace Login.Operations {
         [DataMember(Code =(byte)ParameterCode.Status)]
         public int returnCode { get; set; }
 
+        [DataMember(Code = (byte)ParameterCode.DeviceId)]
+        public string deviceId { get; set; }
+
     }
 }

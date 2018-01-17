@@ -37,7 +37,7 @@ namespace Login {
             }
         }
 
-#if LOCAL
+//#if LOCAL
         /// <summary>
         /// Add nebula credits to user account and save user in database
         /// </summary>
@@ -58,7 +58,7 @@ namespace Login {
             application.SaveUser(user);
             return true;
         }
-#endif
+//#endif
 
         /// <summary>
         /// Request purchase item

@@ -29,7 +29,7 @@ namespace Login {
             get {
 #if LOCAL
                 return new GameServerSettings {
-                    MasterIPAddress = "192.168.1.102",
+                    MasterIPAddress = "192.168.1.4",
                     GamingTcpPort = 4562,
                     GamingUdpPort = 5107,
                     ConnectRetryInterval = 15,
@@ -37,8 +37,8 @@ namespace Login {
                    LatencyMonitorAddress = "",
                     RelayPortTcp = 0,
                     RelayPortWebSocket = 0,
-                    WorkloadConfigFile = "192.168.1.102",
-                    PublicIPAddress = "192.168.1.102",
+                    WorkloadConfigFile = "192.168.1.4",
+                    PublicIPAddress = "192.168.1.4",
                     LatencyMonitorAddressUdp = "",
                     RelayPortUdp = 0,
                     EnableLatencyMonitor = false,
@@ -50,7 +50,7 @@ namespace Login {
                 };
 #else
                 return new GameServerSettings {
-                    MasterIPAddress = "45.63.0.198",
+                    MasterIPAddress = "108.61.87.145",
                     GamingTcpPort = 4562,
                     GamingUdpPort = 5107,
                     ConnectRetryInterval = 15,
@@ -58,8 +58,8 @@ namespace Login {
                     LatencyMonitorAddress = "",
                     RelayPortTcp = 0,
                     RelayPortWebSocket = 0,
-                    WorkloadConfigFile = "45.63.0.198",
-                    PublicIPAddress = "45.63.0.198",
+                    WorkloadConfigFile = "108.61.87.145",
+                    PublicIPAddress = "108.61.87.145",
                     LatencyMonitorAddressUdp = "",
                     RelayPortUdp = 0,
                     EnableLatencyMonitor = false,

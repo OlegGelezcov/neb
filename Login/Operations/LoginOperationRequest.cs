@@ -1,6 +1,7 @@
 ﻿using Common;
 using Photon.SocketServer;
 using Photon.SocketServer.Rpc;
+using System;
 
 namespace Login.Operations {
     public class LoginOperationRequest : Operation{
@@ -22,10 +23,23 @@ namespace Login.Operations {
         [DataMember(Code = (byte)ParameterCode.VkontakteId, IsOptional = false)]
         public string vkontakteId { get; private set; }
 
+        [DataMember(Code =(byte)ParameterCode.DeviceId, IsOptional = true)]
+        public string deviceId { get; private set; }
+
         [DataMember(Code = (byte)ParameterCode.Method, IsOptional = false)]
         public byte method { get; private set; }
 
         [DataMember(Code = (byte)ParameterCode.Platform, IsOptional = true )]
         public string platform { get; private set; }
+
+        public bool TryGetLoginMethod(out LoginMethod loginMethod) {
+            loginMethod = LoginMethod.device_id;
+            try {
+                loginMethod = (LoginMethod)method;
+                return true;
+            } catch(Exception) {
+                return false;
+            }
+        }
     }
 }

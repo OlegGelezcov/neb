@@ -261,6 +261,7 @@ namespace Common
         Components = 154,
         SubZone,
         Platform = 155,
+        DeviceId = 156,
 
         LTEST = 250
     }

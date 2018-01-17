@@ -1,27 +1,24 @@
 ﻿<servers>
-  <server type="login"        ip="192.168.1.102" protocol="udp" port="5107"    index="1" application="Login"              ipv6="192.168.1.102"  />
-  <server type="character"    ip="192.168.1.102" protocol="udp" port="5108"    index="1" application="SelectCharacter"    ipv6="192.168.1.102"  />
+  
+  <server type="login"        ip="192.168.1.4" protocol="udp" port="5107"    index="1" application="Login"              ipv6="192.168.1.4"  />
+  
+  <server type="character"    ip="192.168.1.4" protocol="udp" port="5108"    index="1" application="SelectCharacter"    ipv6="192.168.1.4"  />
 
-  <server type="game"         ip="192.168.1.102" protocol="udp" port="5106"    index="1" application="HumansGame"         ipv6="192.168.1.102">
-    <locations>H1,H2,H2_01,H2_02,H3,H4,H5,H6,PW1</locations>
+  <server type="game"         ip="192.168.1.4" protocol="udp" port="5106"    index="1" application="HumansGame"         ipv6="192.168.1.4">
+    <locations>H1,PW1</locations>
   </server>
 
-  <!--
-  <server type="game"         ip="192.168.1.102" protocol="udp" port="5109"    index="2" application="BorguzandsGame">
-    <locations>B1,B2,B3,B4,B5,B6,B7,B8,B9,B10,B11,B12,B13,B14,B15</locations>
-  </server>-->
-
-  <server type="game"         ip="192.168.1.102" protocol="udp" port="5110"    index="3" application="CriptizidsGame"     ipv6="192.168.1.102">
+  <server type="game"         ip="192.168.1.4" protocol="udp" port="5110"    index="3" application="CriptizidsGame"     ipv6="192.168.1.4">
     <locations>E1,PWC1</locations>
   </server>
 
-  <server type="game"         ip="192.168.1.102" protocol="udp" port="5111"    index="4" application="NeutralGame"        ipv6="192.168.1.102">
+  <server type="game"         ip="192.168.1.4" protocol="udp" port="5111"    index="4" application="NeutralGame"        ipv6="192.168.1.4">
     <locations>N1</locations>
   </server>
 
-  <server type="game"         ip="192.168.1.102" protocol="udp" port="5112"    index="2" application="BGame"              ipv6="192.168.1.102">
+  <server type="game"         ip="192.168.1.4" protocol="udp" port="5112"    index="2" application="BGame"              ipv6="192.168.1.4">
     <locations>B1,PWB1</locations>
   </server>
   
-  <server type="chat"         ip="192.168.1.102" protocol="udp" port="5111"    index="1" application="Chat"               ipv6="192.168.1.102"/>
+  <server type="chat"         ip="192.168.1.4" protocol="udp" port="5111"    index="1" application="Chat"               ipv6="192.168.1.4"/>
 </servers>

@@ -86,10 +86,10 @@ namespace Nebula.Game.OperationHandlers {
                     return CallCreatePlanetMiningStation(actor, request, operation);
                 case RPCID.rpc_GetCells:
                     return CallGetCells(actor, request, operation);
-#if LOCAL
+//#if LOCAL
                 case RPCID.rpc_resetSystemToNeutral:
                     return CallResetSystemToNeutral(actor, request, operation);
-#endif
+//#endif
                 case RPCID.rpc_CollectOreFromPlanetMiningStation:
                     return CallCollectOreFromPlanetMiningStation(actor, request, operation);
 #if LOCAL
@@ -473,7 +473,10 @@ namespace Nebula.Game.OperationHandlers {
                 RPCInvokeResponse responseInstance = new RPCInvokeResponse {
                     rpcId = op.rpcId,
                     result = new Hashtable {
-                        { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok }
+                        { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
+                        { (int)SPC.ItemId, containerId},
+                        { (int)SPC.ItemType, containerType }
+                        
                     }
                 };
                 return new OperationResponse(request.OperationCode, responseInstance);

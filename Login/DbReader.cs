@@ -183,6 +183,12 @@ namespace Login {
             return UserLogins.FindOne(query);
         }
 
+        public DbUserLogin GetUser(DeviceId deviceId ) {
+            string value = deviceId.Value;
+            var query = Query<DbUserLogin>.EQ(user => user.deviceId, value);
+            return UserLogins.FindOne(query);
+        }
+
         public DbUserLogin GetUser(SteamId steamId ) {
             string sid = steamId.value;
             var query = Query<DbUserLogin>.EQ(user => user.steamId, sid);
@@ -209,7 +215,8 @@ namespace Login {
                 facebookId = fbId.value,
                 vkontakteId = vkId.value,
                 nebulaCredits = NEBULA_CREDITS_AT_START,
-                steamId = string.Empty
+                steamId = string.Empty,
+                deviceId = string.Empty
             };
 
             var result = UserLogins.Save(dbUser);
@@ -227,7 +234,25 @@ namespace Login {
                 facebookId = facebookId.value,
                 vkontakteId = string.Empty,
                 nebulaCredits = NEBULA_CREDITS_AT_START,
-                steamId = string.Empty
+                steamId = string.Empty,
+                deviceId = string.Empty
+            };
+            var result = UserLogins.Save(databaseUser);
+            return databaseUser;
+        }
+
+        public DbUserLogin CreateUser(DeviceId deviceId ) {
+            DbUserLogin databaseUser = new DbUserLogin {
+                creationTime = CommonUtils.SecondsFrom1970(),
+                email = string.Empty,
+                gameRef = Guid.NewGuid().ToString(),
+                login = deviceId.Value,
+                password = deviceId.Value,
+                facebookId = string.Empty,
+                vkontakteId = string.Empty,
+                nebulaCredits = NEBULA_CREDITS_AT_START,
+                steamId = string.Empty,
+                deviceId = deviceId.Value
             };
             var result = UserLogins.Save(databaseUser);
             return databaseUser;
@@ -243,7 +268,8 @@ namespace Login {
                 facebookId = string.Empty,
                 vkontakteId = string.Empty,
                 nebulaCredits = NEBULA_CREDITS_AT_START,
-                steamId = steamId.value
+                steamId = steamId.value,
+                deviceId = string.Empty
             };
             var result = UserLogins.Save(databaseUser);
             return databaseUser;
@@ -259,7 +285,8 @@ namespace Login {
                 facebookId = string.Empty,
                 vkontakteId = vkontakteId.value,
                 nebulaCredits = 0,
-                steamId = string.Empty
+                steamId = string.Empty,
+                deviceId = string.Empty
             };
             var result = UserLogins.Save(databaseUser);
             return databaseUser;

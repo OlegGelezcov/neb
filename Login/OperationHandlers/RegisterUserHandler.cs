@@ -105,7 +105,7 @@ namespace Login.OperationHandlers {
            
             var dbUser = database.CreateUser(loginAuth, email, fbId, vkId);
 
-            FullUserAuth fullAuth = new FullUserAuth(loginAuth.login, dbUser.gameRef, fbId.value, vkId.value);
+            FullUserAuth fullAuth = new FullUserAuth(loginAuth.login, dbUser.gameRef, fbId.value, vkId.value, string.Empty);
 
 
             string platform = string.Empty;

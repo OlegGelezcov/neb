@@ -31,6 +31,15 @@ namespace Nebula.Client {
 #endif
         }
 
+        public UniXMLElement Element(string name) {
+            var rawElement = document.Element(name);
+            if(rawElement != null ) {
+                return new UniXMLElement(rawElement);
+            }
+            return null;
+        }
+
+
 
     }
 }

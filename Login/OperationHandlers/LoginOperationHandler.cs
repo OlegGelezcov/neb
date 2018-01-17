@@ -4,6 +4,7 @@ using Login.Operations;
 using Nebula.Server.Login;
 using Photon.SocketServer;
 using ServerClientCommon;
+using System.Collections.Generic;
 
 namespace Login.OperationHandlers {
     public class LoginOperationHandler : BaseOperationHandler  {
@@ -11,7 +12,15 @@ namespace Login.OperationHandlers {
         private static readonly ILogger s_Log = LogManager.GetCurrentClassLogger();
 
         public LoginOperationHandler(LoginApplication app, PeerBase peer)
-            : base(app, peer) { }
+            : base(app, peer) {
+            loginMethods = new Dictionary<LoginMethod, System.Func<LoginOperationRequest, OperationResponse>> {
+                {LoginMethod.server, LoginViaServer },
+                {LoginMethod.facebook, LoginViaFacebook  },
+                {LoginMethod.vkontakte, LoginViaVkontakte },
+                {LoginMethod.steam, LoginViaSteam },
+                {LoginMethod.device_id, LoginViaDeviceId }
+            };
+        }
 
 
         private OperationResponse LoginViaFacebook(LoginOperationRequest operation) {
@@ -31,7 +40,8 @@ namespace Login.OperationHandlers {
                 Login = user.login,
                 returnCode = (int)LoginReturnCode.Ok,
                 vkontakteId = user.vkontakteId,
-                method = (byte)LoginMethod.facebook
+                method = (byte)LoginMethod.facebook,
+                deviceId = string.Empty
             };
 
             AddUserToCollection(user, platform);
@@ -57,7 +67,8 @@ namespace Login.OperationHandlers {
                 Login = user.login,
                 returnCode = (int)LoginReturnCode.Ok,
                 vkontakteId = user.vkontakteId,
-                method = (byte)LoginMethod.steam
+                method = (byte)LoginMethod.steam,
+                deviceId = string.Empty
             };
             AddUserToCollection(user, platform);
             return new OperationResponse(operation.OperationRequest.OperationCode, response);
@@ -78,7 +89,8 @@ namespace Login.OperationHandlers {
                 Login = user.login,
                 returnCode = (int)LoginReturnCode.Ok,
                 vkontakteId = user.vkontakteId,
-                method = (byte)LoginMethod.vkontakte
+                method = (byte)LoginMethod.vkontakte,
+                deviceId = string.Empty
             };
 
             AddUserToCollection(user, platform);
@@ -102,7 +114,8 @@ namespace Login.OperationHandlers {
                     Login = operation.login,
                     method = (byte)LoginMethod.server,
                     returnCode = (int)LoginReturnCode.UserNotFound,
-                    vkontakteId = operation.vkontakteId
+                    vkontakteId = operation.vkontakteId,
+                    deviceId = string.Empty
                 };
             } else {
                 response = new LoginOperationResponse {
@@ -111,10 +124,36 @@ namespace Login.OperationHandlers {
                     Login = user.login,
                     method = (byte)LoginMethod.server,
                     returnCode = (int)LoginReturnCode.Ok,
-                    vkontakteId = user.vkontakteId
+                    vkontakteId = user.vkontakteId,
+                    deviceId = string.Empty
                 };
                 AddUserToCollection(user, platform);
             }
+            return new OperationResponse(operation.OperationRequest.OperationCode, response);
+        }
+
+        private OperationResponse LoginViaDeviceId(LoginOperationRequest operation) {
+            DeviceId deviceId = new DeviceId(operation.deviceId);
+            DbUserLogin user = application.GetUser(deviceId);
+
+            if(user == null ) {
+                user = application.DbUserLogins.CreateUser(deviceId);
+            }
+
+            string platform = GetPlatform(operation);
+
+            LoginOperationResponse response = new LoginOperationResponse {
+                facebookId = string.Empty,
+                GameRefId = user.gameRef,
+                Login = user.login,
+                returnCode = (int)LoginReturnCode.Ok,
+                vkontakteId = user.vkontakteId,
+                method = (byte)LoginMethod.device_id,
+                deviceId = user.deviceId
+            };
+
+            AddUserToCollection(user, platform);
+
             return new OperationResponse(operation.OperationRequest.OperationCode, response);
         }
 
@@ -125,6 +164,9 @@ namespace Login.OperationHandlers {
             }
             return platform;
         }
+
+        private readonly Dictionary<LoginMethod, System.Func<LoginOperationRequest, OperationResponse>> loginMethods;
+
 
         public override OperationResponse Handle(OperationRequest request, SendParameters sendParameters) {
             LoginOperationRequest operation = new LoginOperationRequest(peer.Protocol, request);
@@ -140,6 +182,18 @@ namespace Login.OperationHandlers {
             }
 
             OperationResponse response = null;
+            LoginMethod loginMethod = LoginMethod.device_id;
+            if(operation.TryGetLoginMethod(out loginMethod)) {
+                if(loginMethods.ContainsKey(loginMethod)) {
+                    response = loginMethods[loginMethod](operation);
+                }  else {
+                    s_Log.InfoFormat("Login methods dictionary don't  contains {0}", loginMethod);
+                }
+            } else {
+                s_Log.InfoFormat("Error of parse login method {0}", operation.method);
+            }
+
+            /*
             if(operation.method == (byte)LoginMethod.server) {
                 response = LoginViaServer(operation);
             } else if( operation.method == (byte)LoginMethod.facebook ) {
@@ -148,25 +202,27 @@ namespace Login.OperationHandlers {
                 response = LoginViaVkontakte(operation);
             } else if(operation.method == (byte)LoginMethod.steam ) {
                 response = LoginViaSteam(operation);
-            }
+            }*/
 
             if(response != null ) {
                 return response;
             } else {
+                s_Log.Info("Login error occured...");
                 LoginOperationResponse data = new LoginOperationResponse {
                     facebookId = operation.facebookId,
                     GameRefId = string.Empty,
                     Login = operation.login,
                     method = operation.method,
                     returnCode = (int)LoginReturnCode.UnknownError,
-                    vkontakteId = operation.vkontakteId
+                    vkontakteId = operation.vkontakteId,
+                    deviceId = operation.deviceId
                 };
                 return new OperationResponse(operation.OperationRequest.OperationCode, data);
             }
         }
 
         private void AddUserToCollection(DbUserLogin user, string platform) {
-            FullUserAuth fullAuth = new FullUserAuth(user.login, user.gameRef, user.facebookId, user.vkontakteId);
+            FullUserAuth fullAuth = new FullUserAuth(user.login, user.gameRef, user.facebookId, user.vkontakteId, user.deviceId);
 
             (peer as LoginClientPeer).SetLogin(new LoginId(fullAuth.login));
             application.LogedInUsers.OnUserLoggedIn(fullAuth, peer as LoginClientPeer);
@@ -178,5 +234,6 @@ namespace Login.OperationHandlers {
             }
 
         }
+
     }
 }

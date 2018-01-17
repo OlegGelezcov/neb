@@ -3,6 +3,7 @@
         server = 0,
         facebook = 1,
         vkontakte = 2,
-        steam = 3
+        steam = 3,
+        device_id = 4
     }
 }

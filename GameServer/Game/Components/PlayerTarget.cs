@@ -167,7 +167,9 @@ namespace Nebula.Game.Components {
 
         public void OnTargetUnsubscribeMe(NebulaObject subscriber) {
             NebulaObject oldSubscriber;
-            mSubscribers.TryRemove(subscriber.Id, out oldSubscriber);
+            if(mSubscribers.TryRemove(subscriber.Id, out oldSubscriber)) {
+                SaveSubscribers();
+            }
             //log.InfoFormat("target subscriber removed {0}:{1} yellow", (ItemType)subscriber.Type, subscriber.Id);
         }
 
@@ -177,7 +179,9 @@ namespace Nebula.Game.Components {
                 NebulaObject oldSubscriber;
                 mSubscribers.TryRemove(subscriber.Id, out oldSubscriber);
             }
-            mSubscribers.TryAdd(subscriber.Id, subscriber);
+            if(mSubscribers.TryAdd(subscriber.Id, subscriber)) {
+                SaveSubscribers();
+            }
             //log.InfoFormat("target subscriber added {0}:{1} yellow", (ItemType)subscriber.Type, subscriber.Id);
         }
 
@@ -211,6 +215,14 @@ namespace Nebula.Game.Components {
                     log.InfoFormat("angle between us is: {0} degrees", ((int)ang));
                 }
             }*/
+        }
+
+        private void SaveSubscribers() {
+            Hashtable hash = new Hashtable();
+            foreach(var kvp in mSubscribers ) {
+                hash[kvp.Key] = kvp.Value.Type;
+            }
+            nebulaObject.properties.SetProperty((byte)PS.Subscribers, hash);
         }
 
         private void SaveProperties() {

@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using Nebula.Client.Inventory;
 using ExitGames.Client.Photon;
 using Nebula.Client.Utils;
+using Nebula.Client.Inventory.Objects;
 
 namespace Nebula.Client {
-    public class ClientShipModule : IInventoryObjectInfo {
+    public class ClientShipModule : IInventoryObjectInfo, ILeveledObjectInfo {
         public string id;
         public ShipModelSlotType type;
         public int level;
@@ -46,6 +47,12 @@ namespace Nebula.Client {
             this.ParseInfo(info);
 
 
+        }
+
+        public int Level {
+            get {
+                return this.level;
+            }
         }
 
         public bool isNew {
