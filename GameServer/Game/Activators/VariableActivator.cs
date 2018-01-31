@@ -1,7 +1,7 @@
 ﻿using Common;
 using Nebula.Engine;
 using Nebula.Game.Components.Activators;
-using Nebula.Game.Components.Quests;
+//using Nebula.Game.Components.Quests;
 using Nebula.Server.Components;
 
 namespace Nebula.Game.Activators {
@@ -20,6 +20,8 @@ namespace Nebula.Game.Activators {
 
         public override void OnActivate(NebulaObject source, out RPCErrorCode errorCode) {
             errorCode = RPCErrorCode.Ok;
+            /*
+            
             if(interactable) {
                 if(IsDistanceValid(source)) {
                     var questMgr = source.GetComponent<QuestManager>();
@@ -50,7 +52,8 @@ namespace Nebula.Game.Activators {
                 }
             } else {
                 errorCode = RPCErrorCode.ObjectNotInteractable;
-            }
+            }*/
+
         }
 
         private string variableName {

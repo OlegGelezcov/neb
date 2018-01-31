@@ -8,7 +8,7 @@ using Space.Game.Inventory;
 using System.Collections;
 using System.Collections.Concurrent;
 using Common;
-using Nebula.Game.Components.Quests;
+//using Nebula.Game.Components.Quests;
 using Nebula.Quests.Drop;
 using Nebula.Inventory.Objects;
 using ServerClientCommon;
@@ -107,6 +107,7 @@ namespace Nebula.Game.Components {
         }
 
         private void FillPlayer(string playerId ) {
+            /*
             if (IsNotFilledForPlayer(playerId)) {
                 bool success = false;
                 NebulaObject playerObject;
@@ -134,7 +135,7 @@ namespace Nebula.Game.Components {
                 if(!success) {
                     m_Content.TryAdd(playerId, new ConcurrentDictionary<string, ServerInventoryItem>());
                 }
-            }
+            }*/
         }
 
         private void CheckAndFillPlayer(string playerId ) {

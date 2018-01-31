@@ -7,6 +7,7 @@ using System.Text;
 using System.Collections;
 using ServerClientCommon;
 using Nebula.Engine;
+/*
 using Nebula.Quests;
 using Nebula.Game.Components.Quests.Dialogs;
 using ExitGames.Logging;
@@ -595,3 +596,4 @@ namespace Nebula.Game.Components.Quests {
         }
     }
 }
+*/

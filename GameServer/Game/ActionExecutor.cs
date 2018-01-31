@@ -11,7 +11,7 @@ namespace Space.Game {
     using Nebula.Game.Components;
     using Nebula.Game.Components.Activators;
     using Nebula.Game.Components.PlanetObjects;
-    using Nebula.Game.Components.Quests;
+    //using Nebula.Game.Components.Quests;
     using Nebula.Game.Events;
     using Nebula.Inventory;
     using Nebula.Inventory.Objects;
@@ -3213,8 +3213,8 @@ namespace Space.Game {
         }
 
         public Hashtable RestartQuest(string questId ) {
-            RPCErrorCode errorCode;
-            Player.GetComponent<QuestManager>().RestartQuest(questId, out errorCode);
+            RPCErrorCode errorCode = RPCErrorCode.Ok;
+           // Player.GetComponent<QuestManager>().RestartQuest(questId, out errorCode);
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)errorCode }
             };

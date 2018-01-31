@@ -52,41 +52,19 @@ namespace Nebula.Game.Contracts {
         }
 
 
-        public string id {
-            get {
-                return m_Id;
-            }
-        }
+        public string id => m_Id;
 
-        public ContractState state {
-            get {
-                return m_State;
-            }
-        }
+        public ContractState state => m_State;
 
-        public int stage {
-            get {
-                return m_Stage;
-            }
-        }
+        public int stage => m_Stage;
 
-        public string sourceWorld {
-            get {
-                return m_SourceWorld;
-            }
-        }
 
-        public ContractCategory category {
-            get {
-                return m_Category;
-            }
-        }
+        public string sourceWorld => m_SourceWorld;
 
-        protected ContractManager contractOwner {
-            get {
-                return m_ContractOwner;
-            }
-        }
+        public ContractCategory category => m_Category;
+
+
+        protected ContractManager contractOwner => m_ContractOwner;
 
         public virtual Hashtable GetInfo() {
             return new Hashtable {

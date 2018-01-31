@@ -3,7 +3,7 @@ using ExitGames.Logging;
 using GameMath;
 using Nebula.Engine;
 using Nebula.Game.Bonuses;
-using Nebula.Game.Components.Quests;
+//using Nebula.Game.Components.Quests;
 using Nebula.Game.Pets;
 using Nebula.Game.Utils;
 using Nebula.Server.Components;
@@ -30,7 +30,7 @@ namespace Nebula.Game.Components {
         private RaceableObject mRace;
         private PetManager m_PetManager;
         private AchievmentComponent m_Achivments;
-        private QuestManager m_QuestManager;
+        //private QuestManager m_QuestManager;
 
         private BroadcastChatMessageComposer m_ChatComposer = new BroadcastChatMessageComposer();
 
@@ -106,7 +106,7 @@ namespace Nebula.Game.Components {
             mRace = GetComponent<RaceableObject>();
             m_PetManager = GetComponent<PetManager>();
             m_Achivments = GetComponent<AchievmentComponent>();
-            m_QuestManager = GetComponent<QuestManager>();
+            //m_QuestManager = GetComponent<QuestManager>();
         }
 
 
@@ -235,9 +235,9 @@ namespace Nebula.Game.Components {
             if (m_Achivments != null ) {
                 m_Achivments.SetVariable("player_level", currentLevel);
             }
-            if(m_QuestManager != null ) {
-                m_QuestManager.OnPlayerLevel(currentLevel);
-            }
+            //if(m_QuestManager != null ) {
+            //    m_QuestManager.OnPlayerLevel(currentLevel);
+            //}
         }
 
         public override void SetFraction(FractionType inFraction) {

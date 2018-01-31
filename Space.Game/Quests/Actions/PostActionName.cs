@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,3 +12,4 @@ namespace Nebula.Quests.Actions {
         public const string SET_BOOL_VARIABLE = "set_bool_variable";
     }
 }
+*/

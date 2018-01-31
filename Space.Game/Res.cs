@@ -18,7 +18,7 @@
     using Nebula.Contracts.Inventory;
     using Nebula.Achievments;
     using Nebula.Quests;
-    using Nebula.Quests.Dialogs;
+    //using Nebula.Quests.Dialogs;
     public class Res : IRes {
 
         private ConcurrentDictionary<Difficulty, float> mDifficultMult;
@@ -183,21 +183,21 @@
             planetOreMap = new Planet2OreMapRes();
             planetOreMap.Load(Path.Combine(basePath, "Data/planet2oremap.xml"));
 
-            quests = new QuestDataResource();
-            quests.Load(basePath);
+            //quests = new QuestDataResource();
+            //quests.Load(basePath);
 
-            dialogs = new DialogDataResource();
-            dialogs.Load(basePath);
+            //dialogs = new DialogDataResource();
+            //dialogs.Load(basePath);
         }
 
-        public DialogDataResource dialogs {
-            get;
-            private set;
-        }
-        public QuestDataResource quests {
-            get;
-            private set;
-        }
+        //public DialogDataResource dialogs {
+        //    get;
+        //    private set;
+        //}
+        //public QuestDataResource quests {
+        //    get;
+        //    private set;
+        //}
 
         public Planet2OreMapRes planetOreMap {
             get;

@@ -7,18 +7,32 @@ namespace Nebula.Client.Pets {
 
         private readonly Dictionary<string, PetInfo> m_Pets = new Dictionary<string, PetInfo>();
 
+        public int MaxCount { get; private set; } = 10;
+
         public void ParseInfo(Hashtable hash) {
             m_Pets.Clear();
 
             foreach(System.Collections.DictionaryEntry entry in hash) {
                 string id = entry.Key.ToString();
-                Hashtable petHash = entry.Value as Hashtable;
-                if(petHash != null ) {
-                    m_Pets.Add(id, new PetInfo(petHash));
+                if (id == "max_count") {
+                    int val = 0;
+                    if(int.TryParse(entry.Value.ToString(), out val)) {
+                        MaxCount = val;
+                    }
+                } else {
+                    Hashtable petHash = entry.Value as Hashtable;
+                    if (petHash != null) {
+                        m_Pets.Add(id, new PetInfo(petHash));
+                    }
                 }
             }
         }
 
+        public int Count {
+            get {
+                return m_Pets.Count;
+            }
+        }
 
 
         public Dictionary<string, PetInfo> pets {

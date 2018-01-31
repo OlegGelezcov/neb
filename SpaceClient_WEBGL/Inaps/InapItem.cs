@@ -7,7 +7,7 @@ using System.Xml.Linq;
 #endif
 
 namespace Nebula.Client.Inaps {
-    public class InapItem {
+    public class InapItem : IInapObject {
 
         private string m_Id;
         private string m_Name;
@@ -16,6 +16,50 @@ namespace Nebula.Client.Inaps {
         private string m_Price;
         private string m_Icon;
         private InapType m_Type;
+
+        #region IInapObject
+        public string Icon {
+            get {
+                return icon;
+            }
+        }
+
+        public string Name {
+            get {
+                return name;
+            }
+        }
+
+        public string Description {
+            get {
+                return description;
+            }
+        }
+
+        public int Price {
+            get {
+                int iPrice;
+                if (int.TryParse(price, out iPrice)) {
+                    return iPrice;
+                }
+                return 0;
+            }
+        }
+
+        public CoinType CoinType {
+            get {
+                if (type == InapType.pet) {
+                    return CoinType.nebula_credits;
+                } else if (type == InapType.consumable) {
+                    return CoinType.credits;
+                } else {
+                    return CoinType.real;
+                }
+            }
+        } 
+        #endregion
+
+
 
         public string id {
             get {

@@ -26,12 +26,7 @@ namespace Nebula.Game.Contracts {
         }
 
         private bool ContainsEventType(EventType eventType) {
-            if(m_Data != null ) {
-                if(m_Data.eventTypes != null ) {
-                    return m_Data.eventTypes.Contains(eventType);
-                }
-            }
-            return false;
+            return Data?.eventTypes?.Contains(eventType) ?? false;
         }
 
         private string contractId {
@@ -42,5 +37,7 @@ namespace Nebula.Game.Contracts {
                 return string.Empty;
             }
         }
+
+        private ContractObjectComponentData Data => m_Data;
     }
 }

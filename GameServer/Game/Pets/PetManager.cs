@@ -550,7 +550,10 @@ namespace Nebula.Game.Pets {
         }
 
         public Hashtable GetInfo() {
-            return pets.GetInfo(nebulaObject.resource);
+
+            Hashtable hash =  pets.GetInfo(nebulaObject.resource);
+            hash.Add("max_count", kMaxPetCount);
+            return hash;
         }
 
         public bool ActivatePet(string id) {

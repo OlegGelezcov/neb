@@ -1,4 +1,5 @@
-﻿using Common;
+﻿/*
+using Common;
 using GameMath;
 using Nebula.Quests.Actions;
 using Space.Game;
@@ -26,3 +27,4 @@ namespace Nebula.Quests {
         IRes GetResource();
     }
 }
+*/

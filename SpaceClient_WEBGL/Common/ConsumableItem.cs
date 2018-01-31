@@ -1,8 +1,9 @@
 ﻿using Common;
 using ExitGames.Client.Photon;
+using Nebula.Client.Inaps;
 
 namespace ServerClientCommon {
-    public class ConsumableItem : IInfoSource, IInfoParser {
+    public class ConsumableItem : IInfoSource, IInfoParser, IInapObject {
 
         public ConsumableItem(string id, InventoryObjectType type, int price, int count, MoneyType moneyType) {
             this.id = id;
@@ -15,6 +16,43 @@ namespace ServerClientCommon {
         public ConsumableItem(Hashtable info) {
             ParseInfo(info);
         }
+
+        #region IInapObject
+        public string Icon {
+            get {
+                return string.Empty;
+            }
+        }
+
+        public string Name {
+            get {
+                return string.Empty;
+            }
+        }
+
+        public string Description {
+            get {
+                return string.Empty;
+            }
+        }
+
+        public int Price {
+            get {
+                return price;
+            }
+        }
+
+        public CoinType CoinType {
+            get {
+                if (moneyType == MoneyType.credits) {
+                    return CoinType.credits;
+                } else {
+                    return CoinType.pvp_points;
+                }
+            }
+        } 
+        #endregion
+
 
         public string id { get; private set; }
         public InventoryObjectType type { get; private set; }

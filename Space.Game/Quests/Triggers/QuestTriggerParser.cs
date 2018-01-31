@@ -1,4 +1,5 @@
-﻿using Common;
+﻿/*
+using Common;
 using GameMath;
 using Nebula.Quests.Actions;
 using System;
@@ -54,3 +55,4 @@ namespace Nebula.Quests.Triggers {
         }
     }
 }
+*/

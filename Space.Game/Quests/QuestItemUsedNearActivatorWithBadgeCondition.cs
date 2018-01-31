@@ -1,4 +1,5 @@
-﻿using Common;
+﻿/*
+using Common;
 
 namespace Nebula.Quests {
     public class QuestItemUsedNearActivatorWithBadgeCondition : QuestCondition {
@@ -27,3 +28,4 @@ namespace Nebula.Quests {
         }
     }
 }
+*/

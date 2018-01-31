@@ -3,8 +3,8 @@ using ExitGames.Logging;
 using Nebula.Drop;
 using Nebula.Engine;
 using Nebula.Game.Components;
-using Nebula.Game.Components.Quests;
-using Nebula.Game.Components.Quests.Dialogs;
+//using Nebula.Game.Components.Quests;
+//using Nebula.Game.Components.Quests.Dialogs;
 using Nebula.Inventory.Objects;
 using Nebula.Quests;
 using Nebula.Server.Operations;
@@ -176,8 +176,8 @@ namespace Nebula.Game.OperationHandlers {
         }
 
         private OperationResponse CallResetQuests(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
-            player.GetComponent<QuestManager>().Reset();
-            player.GetComponent<DialogManager>().Reset();
+            //player.GetComponent<QuestManager>().Reset();
+            //player.GetComponent<DialogManager>().Reset();
             RPCInvokeResponse respInstance = new RPCInvokeResponse {
                 rpcId = op.rpcId,
                 result = (int)RPCErrorCode.Ok
@@ -193,20 +193,20 @@ namespace Nebula.Game.OperationHandlers {
                     case UserEventName.object_scanner_select_ship:
                     case UserEventName.start_moving:
                     case UserEventName.rotate_camera: {
-                            if (player.GetComponent<QuestManager>().TryCheckActiveQuests(new UserEvent(eventName))) {
-                                s_Log.InfoFormat("player complete some quest with event: {0}".Lime(), eventName);
-                            } else {
-                                s_Log.InfoFormat("no quest completed by event: {0}".Orange(), eventName);
-                            }
+                            //if (player.GetComponent<QuestManager>().TryCheckActiveQuests(new UserEvent(eventName))) {
+                            //    s_Log.InfoFormat("player complete some quest with event: {0}".Lime(), eventName);
+                            //} else {
+                            //    s_Log.InfoFormat("no quest completed by event: {0}".Orange(), eventName);
+                            //}
                         }
                         break;
                     case UserEventName.dialog_completed: {
-                            if(op.parameters.Length > 1) {
-                                string dialogId = (string)op.parameters[1];
-                                player.GetComponent<DialogManager>().CompleteDialog(dialogId);
-                            } else {
-                                code = RPCErrorCode.MissedParameter;
-                            }
+                            //if(op.parameters.Length > 1) {
+                            //    string dialogId = (string)op.parameters[1];
+                            //    player.GetComponent<DialogManager>().CompleteDialog(dialogId);
+                            //} else {
+                            //    code = RPCErrorCode.MissedParameter;
+                            //}
                         }
                         break;
                     default: {
@@ -230,20 +230,20 @@ namespace Nebula.Game.OperationHandlers {
                 rpcId = op.rpcId,
                 result = (int)ReturnCode.Ok
             };
-            player.GetComponent<DialogManager>().SendInfo();
+            //player.GetComponent<DialogManager>().SendInfo();
             return new OperationResponse(request.OperationCode, respInstance);
         }
 
         private OperationResponse CallCompleteQuest(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {
-            if(op.parameters != null && op.parameters.Length > 0 ) {
-                string questId = (string)op.parameters[0];
-                bool status = player.GetComponent<QuestManager>().CompleteReadyQuest(questId);
-                RPCInvokeResponse respInstance = new RPCInvokeResponse {
-                    rpcId = op.rpcId,
-                    result = status
-                };
-                return new OperationResponse(request.OperationCode, respInstance);
-            }
+            //if(op.parameters != null && op.parameters.Length > 0 ) {
+            //    string questId = (string)op.parameters[0];
+            //    bool status = player.GetComponent<QuestManager>().CompleteReadyQuest(questId);
+            //    RPCInvokeResponse respInstance = new RPCInvokeResponse {
+            //        rpcId = op.rpcId,
+            //        result = status
+            //    };
+            //    return new OperationResponse(request.OperationCode, respInstance);
+            //}
             return InvalidOperationParameter(request);
         }
 
@@ -252,7 +252,7 @@ namespace Nebula.Game.OperationHandlers {
                 rpcId = op.rpcId,
                 result = (int)ReturnCode.Ok
             };
-            player.GetComponent<QuestManager>().SendInfo();
+            //player.GetComponent<QuestManager>().SendInfo();
             return new OperationResponse(request.OperationCode, respInstance);
         }
 

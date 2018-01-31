@@ -26,7 +26,7 @@
                     MasterIPAddress = "192.168.1.4",
                     OutgoingMasterServerPeerPort = 4520,
                     DatabaseCollectionName = "character_collection",
-                    MaxPlayerCharactersCount = 5,
+                    MaxPlayerCharactersCount = 1,
                     DatabaseName = "characters",
                     DatabaseSaveInterval = 6
                 };
@@ -40,7 +40,7 @@
                     MasterIPAddress = "108.61.87.145",
                     OutgoingMasterServerPeerPort = 4520,
                     DatabaseCollectionName = "character_collection",
-                    MaxPlayerCharactersCount = 5,
+                    MaxPlayerCharactersCount = 1,
                     DatabaseName = "characters",
                     DatabaseSaveInterval = 6
                 };

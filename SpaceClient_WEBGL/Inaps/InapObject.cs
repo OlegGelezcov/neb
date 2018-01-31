@@ -13,7 +13,7 @@ namespace Nebula.Client.Inaps {
     /// <summary>
     /// Inap for nebula credits
     /// </summary>
-    public class InapObject {
+    public class InapObject : IInapObject {
 
         private string m_Id;
         private string m_Name;
@@ -29,6 +29,38 @@ namespace Nebula.Client.Inaps {
         private bool m_Available;
         private string m_Detail;
         private bool m_Visible;
+
+        #region IInapObject
+        public string Icon {
+            get {
+                return icon;
+            }
+        }
+
+        public string Name {
+            get {
+                return name;
+            }
+        }
+
+        public string Description {
+            get {
+                return description;
+            }
+        }
+
+        public int Price {
+            get {
+                return price;
+            }
+        }
+
+        public CoinType CoinType {
+            get {
+                return CoinType.nebula_credits;
+            }
+        } 
+        #endregion
 
         public string detail {
             get {
