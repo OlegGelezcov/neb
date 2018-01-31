@@ -86,6 +86,10 @@ namespace Nebula.Quests {
     }
 
     public class NpcKilledWithColorQuestCondition : QuestCondition {
+        public override QuestConditionType Type => throw new NotImplementedException();
 
+        public override bool Check(IQuestConditionContext context) {
+            throw new NotImplementedException();
+        }
     }
 }
