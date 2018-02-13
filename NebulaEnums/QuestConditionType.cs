@@ -16,6 +16,7 @@ namespace Common {
         level_reached,
         create_companion,
         player_killed,
-        system_captured
+        system_captured,
+        npc_killed_with_bot_group
     }
 }

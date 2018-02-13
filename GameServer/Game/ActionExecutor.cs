@@ -11,6 +11,7 @@ namespace Space.Game {
     using Nebula.Game.Components;
     using Nebula.Game.Components.Activators;
     using Nebula.Game.Components.PlanetObjects;
+    using Nebula.Game.Components.Quests;
     //using Nebula.Game.Components.Quests;
     using Nebula.Game.Events;
     using Nebula.Inventory;
@@ -18,10 +19,12 @@ namespace Space.Game {
     using Nebula.Server.Components;
     using Nebula.Server.Nebula.Server.Components.AI;
     using Nebula.Server.Nebula.Server.Components.PlanetObjects;
+    using NebulaCommon.SelectCharacter;
     using ServerClientCommon;
     using Space.Game.Drop;
     using Space.Game.Inventory;
     using Space.Game.Inventory.Objects;
+    using Space.Game.Objects;
     using Space.Game.Ship;
     using Space.Server;
     using System;
@@ -325,6 +328,8 @@ namespace Space.Game {
             int freeSlots = this.Player.Inventory.FreeSlots;
             int slotsForItems = this.Player.Inventory.SlotsForItems(asteroidComponent.contentDictionary);
 
+            List<AsteroidContent> addedContent = new List<AsteroidContent>();
+
             if(freeSlots >= slotsForItems) {
                 int totalCount = 0;
                 List<IInventoryObject> addedObjects = new List<IInventoryObject>();
@@ -333,6 +338,7 @@ namespace Space.Game {
                     totalCount += c.Count;
                     if (result) {
                         addedObjects.Add(c.Material);
+                        addedContent.Add(c);
                     }
                 }
 
@@ -343,10 +349,16 @@ namespace Space.Game {
                 if (addedObjects.Count > 0) {
                     Player.EventOnInventoryItemAdded(asteroidId, (byte)ItemType.Asteroid, addedObjects);
                 }
+                
 
                 var achievments = Player.GetComponent<AchievmentComponent>();
                 if (achievments != null) {
                     achievments.OnOreCollected(totalCount);
+                }
+
+
+                if(addedContent.Count > 0 ) {
+                    Player.nebulaObject.SendMessage(ComponentMessages.OnAsteroidCollected, addedContent);
                 }
 
                 var res = new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
@@ -406,6 +418,8 @@ namespace Space.Game {
             asteroid.DestroyIfEmpty();
 
             this.Player.EventOnInventoryUpdated();
+
+            Player.nebulaObject.SendMessage(ComponentMessages.OnAsteroidCollected, new List<AsteroidContent> { contentObject });
 
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok },
@@ -715,6 +729,13 @@ namespace Space.Game {
                             achievments.OnModuleCraft();
                         }
 
+                        if(result.ContainsKey((int)SPC.Module)) {
+                            ShipModule module = result[(int)SPC.Module] as ShipModule;
+                            if(module != null ) {
+                                Player.nebulaObject.SendMessage(ComponentMessages.OnModuleCrafted, module);
+                            }
+                        }
+                        
                      //   log.InfoFormat("result module workshop: {0}", result[(int)SPC.Workshop].ToString());
                     }
 
@@ -1317,7 +1338,7 @@ namespace Space.Game {
         }
 #endif
 
-#if LOCAL
+//#if LOCAL
         public Hashtable AddCredits(int credits) {
             var character = Player.GetComponent<PlayerCharacterObject>();
             var characterInfo = Player.GetPlayerCharacter();
@@ -1327,7 +1348,7 @@ namespace Space.Game {
             });
             return GetSuccessResponse("ok");
         }
-#endif
+//#endif
 
         public Hashtable _AddCredits(int credits) {
             var character = Player.GetComponent<PlayerCharacterObject>();
@@ -1335,6 +1356,15 @@ namespace Space.Game {
 
             Player.application.updater.CallS2SMethod(NebulaCommon.ServerType.SelectCharacter, "AddCredits", new object[] {
                 character.login, Player.nebulaObject.Id, characterInfo.CharacterId, credits
+            });
+            return GetSuccessResponse("ok");
+        }
+
+        public Hashtable AddNebulaCredits(int nebulaCredits) {
+            PlayerCharacterObject character = Player.GetComponent<PlayerCharacterObject>();
+            PlayerCharacter characterInfo = Player.GetPlayerCharacter();
+            Player.application.updater.CallS2SMethod(NebulaCommon.ServerType.Login, "AddNebulaCredits", new object[] {
+                character.login, Player.nebulaObject.Id, characterInfo.CharacterId, nebulaCredits
             });
             return GetSuccessResponse("ok");
         }
@@ -1877,6 +1907,7 @@ namespace Space.Game {
             Player.nebulaObject.mmoWorld().SaveWorldState();
 
             Player.GetComponent<PlayerCharacterObject>().OnSetMiningStation();
+            Player.nebulaObject.SendMessage(ComponentMessages.OnStructureCreated, QuestStructureType.MiningStation);
 
             return new Hashtable {
                 { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok}
@@ -2526,6 +2557,7 @@ namespace Space.Game {
             achievments.OnFortificationCreated();
 
             Player.GetComponent<PlayerCharacterObject>().OnSetFortification();
+            Player.nebulaObject.SendMessage(ComponentMessages.OnStructureCreated, QuestStructureType.Fortification);
 
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }
@@ -2600,6 +2632,8 @@ namespace Space.Game {
             achievments.OnOutpostCreated();
 
             Player.GetComponent<PlayerCharacterObject>().OnSetOutpost();
+
+            Player.nebulaObject.SendMessage(ComponentMessages.OnStructureCreated, QuestStructureType.Outpost);
 
             return new Hashtable { { (int)SPC.ReturnCode, (int)RPCErrorCode.Ok } };
         }

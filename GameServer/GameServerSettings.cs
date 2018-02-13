@@ -32,7 +32,7 @@ namespace Nebula {
 #if LOCAL
                 return new GameServerSettings {
                     ConnectRetryInterval = 1000,
-                    MasterIPAddress = "192.168.1.4",
+                    MasterIPAddress = "192.168.1.8",
                     OutgoingMasterServerPeerPort = 4520,
                     UpdateInterval = 6,
                     DatabaseWorkshopCollectionName = "workshops",

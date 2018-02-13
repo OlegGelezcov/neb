@@ -8,6 +8,7 @@ using Photon.SocketServer.ServerToServer;
 using PhotonHostRuntimeInterfaces;
 using System;
 using System.Net;
+using System.Reflection;
 
 namespace Login {
     public class OutgoingMasterServerPeer : ServerPeerBase {
@@ -18,9 +19,13 @@ namespace Login {
         private bool redirected = false;
         private IDisposable updateLoop;
 
+        private readonly S2SMethodInvoker methodInvoker;
+
+
         public OutgoingMasterServerPeer(IRpcProtocol protocol, IPhotonPeer nativePeer, LoginApplication application)
             : base(protocol, nativePeer) {
             this.application = application;
+            methodInvoker = new S2SMethodInvoker(application);
             log.InfoFormat("connection to master at {0}:{1} established (id={2}), serverId={3}", this.RemoteIP, this.RemotePort, this.ConnectionId, LoginApplication.ServerId);
             this.RequestFiber.Enqueue(this.Register);
         }
@@ -86,6 +91,31 @@ namespace Login {
                     case S2SEventCode.PUTMaiTransactionEnd: {
 
                             HandlePutMailTransactionEnd(eventData, sendParameters);
+                        }
+                        break;
+                    case S2SEventCode.InvokeMethodStart: {
+                            string method = (string)eventData.Parameters[(byte)ServerToServerParameterCode.Method];
+                            object[] arguments = eventData.Parameters[(byte)ServerToServerParameterCode.Arguments] as object[];
+                            string sourceServiceId = eventData.Parameters[(byte)ServerToServerParameterCode.SourceServer] as string;
+                            byte targetServerType = (byte)eventData.Parameters[(byte)ServerToServerParameterCode.TargetServer];
+
+                            MethodInfo methodInfo = methodInvoker.GetType().GetMethod(method);
+
+                            S2SInvokeMethodEnd end = new S2SInvokeMethodEnd {
+                                method = method,
+                                sourceServerID = sourceServiceId,
+                                targetServerType = targetServerType
+                            };
+                            if(methodInfo != null ) {
+                                object result = methodInfo.Invoke(methodInvoker, arguments);
+                                end.callSuccess = true;
+                                end.result = result;
+                            } else {
+                                end.callSuccess = false;
+                                end.result = null;
+                            }
+                            EventData returnedEventData = new EventData((byte)S2SEventCode.InvokeMethodEnd, end);
+                            SendEvent(returnedEventData, new SendParameters());
                         }
                         break;
                 }

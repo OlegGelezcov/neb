@@ -10,5 +10,6 @@
         public string Name { get; set; }
         public string Description { get; set; }
         public string craftDescription { get; set; }
+        public ObjectColor Color { get; set; }
     }
 }

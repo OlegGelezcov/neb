@@ -19,6 +19,7 @@ namespace Nebula.Game.Components {
     using Space.Server;
     using Space.Server.Events;
     using Space.Server.Messages;
+    using System;
     using System.Collections;
     using System.Linq;
 
@@ -191,7 +192,9 @@ namespace Nebula.Game.Components {
             EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
             ReceiveEvent(eventData, sendParameters);
         }
-        
+
+
+        [Obsolete("Now unused this quest system")]
         public void ReceiveQuests(Hashtable hash) {
             var eventInstance = new ItemGeneric {
                 ItemId = nebulaObject.Id,
@@ -207,6 +210,7 @@ namespace Nebula.Game.Components {
             ReceiveEvent(eventData, sendParameters);
         }
 
+        [Obsolete("Now unused this quest system")]
         public void ReceiveQuestAccepted(Hashtable hash) {
             var eventInstance = new ItemGeneric {
                 ItemId = nebulaObject.Id,
@@ -222,6 +226,8 @@ namespace Nebula.Game.Components {
             ReceiveEvent(eventData, sendParameters);
         }
 
+        //Unused
+        [Obsolete("Now unused this quest system")]
         public void ReceiveQuestReady(Hashtable hash) {
             var eventInstance = new ItemGeneric {
                 ItemId = nebulaObject.Id,
@@ -237,6 +243,8 @@ namespace Nebula.Game.Components {
             ReceiveEvent(eventData, sendParameters);
         }
 
+        //Unused
+        [Obsolete("Now unused this quest system")]
         public void ReceiveQuestCompleted(Hashtable hash) {
             var eventInstance = new ItemGeneric {
                 ItemId = nebulaObject.Id,
@@ -247,6 +255,22 @@ namespace Nebula.Game.Components {
             SendParameters sendParameters = new SendParameters {
                 Unreliable = false,
                 ChannelId = Settings.ItemEventChannel
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            ReceiveEvent(eventData, sendParameters);
+        }
+
+        //Here i use ItemServicesChannel = 1
+        public void ReceiveNewQuests(CustomEventCode code, Hashtable hash) {
+            ItemGeneric eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)code,
+                EventData = hash
+            };
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = Settings.ItemServicesChannel
             };
             EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
             ReceiveEvent(eventData, sendParameters);
@@ -870,6 +894,20 @@ namespace Nebula.Game.Components {
 
 
 
+        public void TestReceiveEventOnOtherChannel() {
+            ItemGeneric eventInstance = new ItemGeneric {
+                ItemId = nebulaObject.Id,
+                ItemType = nebulaObject.Type,
+                CustomEventCode = (byte)CustomEventCode.TestEventOnOtherChannel,
+                EventData = 0
+            };
+            EventData eventData = new EventData((byte)EventCode.ItemGeneric, eventInstance);
+            SendParameters sendParameters = new SendParameters {
+                Unreliable = false,
+                ChannelId = 1
+            };
+            GetComponent<MmoActor>()?.Peer?.SendEvent(eventData, sendParameters);
+        }
 
         private bool ReceiveEvent(EventData eventData, SendParameters sendParameters) {
             var player = GetComponent<MmoActor>();

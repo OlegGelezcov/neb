@@ -18,7 +18,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\photon_server\deploy\Nebula\Login\bin\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;LOCAL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -95,6 +95,7 @@
     <Compile Include="OutgoingMasterServerPeer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\InapItem.cs" />
+    <Compile Include="S2SMethodInvoker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameMath\GameMath.csproj">

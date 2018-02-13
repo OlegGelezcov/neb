@@ -182,5 +182,9 @@ namespace Nebula.Game {
             }
             return sb.ToString();
         }
+
+        public static bool IsValid(this string str) {
+            return (!string.IsNullOrEmpty(str));
+        }
     }
 }

@@ -204,6 +204,10 @@ public class OutgoingMasterServerPeer : ServerPeerBase {
                             log.Info("PlanetObjectUnderAttackNotification(): end response...");
                         }
                         break;
+                    case "AddNebulaCredits": {
+                            log.Info($"S2SMETHOD: {method} ended with code {result}");
+                        }
+                        break;
                 }
             }
         } else {

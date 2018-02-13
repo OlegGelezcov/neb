@@ -7,7 +7,7 @@ using Nebula.Client.Utils;
 using Nebula.Client.Inventory.Objects;
 
 namespace Nebula.Client {
-    public class ClientShipModule : IInventoryObjectInfo, ILeveledObjectInfo {
+    public class ClientShipModule : IInventoryObjectInfo, ILeveledObjectInfo, IWorkshopObjectInfo {
         public string id;
         public ShipModelSlotType type;
         public int level;
@@ -47,6 +47,12 @@ namespace Nebula.Client {
             this.ParseInfo(info);
 
 
+        }
+
+        public Workshop Workshop {
+            get {
+                return workshop;
+            }
         }
 
         public int Level {

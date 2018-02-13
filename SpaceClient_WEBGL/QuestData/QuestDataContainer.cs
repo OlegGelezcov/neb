@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 
 namespace Nebula.Client.QuestData {
+    /*
     public class QuestDataContainer : Dictionary<string, QuestData> {
 
         public QuestDataContainer() { }
@@ -51,5 +52,6 @@ namespace Nebula.Client.QuestData {
             }
             return null;
         }
-    }
+    }*/
+
 }

@@ -15,6 +15,7 @@ namespace Space.Server
             ItemAutoUnsubcribeDelay = 30000;
             RadarEventChannel = 2;
             ItemEventChannel = 0;
+            ItemServicesChannel = 1;
             MaxLockWaitTimeMilliseconds = 500000;
             RadarUpdateInterval = 10000;
             DiagnosticsEventChannel = 2;
@@ -53,6 +54,8 @@ namespace Space.Server
         /// Default value is 0.
         /// </summary>
         public static byte ItemEventChannel { get; set; }
+
+        public static byte ItemServicesChannel { get; set; }
 
         /// <summary>
         /// Gets or sets the maxium lock wait time for the lock protected dictionaries <see cref="MmoItemCache"/> and <see cref="MmoWorldCache"/>.

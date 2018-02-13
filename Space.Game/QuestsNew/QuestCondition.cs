@@ -14,6 +14,8 @@ namespace Nebula.Quests {
         public virtual void ResetVariable(IQuestConditionContext context) { }
     }
 
+    
+
     public class PlayerLevelGEQuestCondition : QuestCondition {
 
         public int Level { get; private set; }
@@ -33,6 +35,27 @@ namespace Nebula.Quests {
         }
     }
 
+    public class NpcKilledWithBotGroupQuestCondition : QuestCondition {
+        public string BotGroup { get; private set; }
+
+        public NpcKilledWithBotGroupQuestCondition(XElement element) {
+            BotGroup = element.GetString("value");
+        }
+
+        public override QuestConditionType Type => QuestConditionType.npc_killed_with_bot_group;
+
+        public override bool Check(IQuestConditionContext context) {
+            if(context.KilledNpc == null ) {
+                return false;
+            }
+            return (context.KilledNpc.BotGroup == BotGroup);
+        }
+
+        public override string ToString() {
+            return $"{GetType().Name} => {BotGroup}";
+        }
+    }
+
     public class NpcKilledWithLevelQuestCondition : QuestCondition {
         public int Level { get; private set; }
 
@@ -46,7 +69,7 @@ namespace Nebula.Quests {
             if(context.KilledNpc == null ) {
                 return false;
             }
-            return (context.KilledNpc.Level == Level);
+            return (context.KilledNpc.Level >= Level);
         }
 
         public override string ToString() {
@@ -143,6 +166,39 @@ namespace Nebula.Quests {
         }
     }
 
+    public class ModuleCraftedQuestCondition : QuestCondition {
+        public ShipModelSlotType ModuleType { get; private set; }
+        public ObjectColor Color { get; private set; }
+        public int Level { get; private set; }
+
+        public ModuleCraftedQuestCondition(XElement element) {
+            ModuleType = element.GetEnum<ShipModelSlotType>("value");
+            Color = element.GetEnum<ObjectColor>("color");
+            Level = element.GetInt("level");
+        }
+
+        public override QuestConditionType Type => QuestConditionType.module_crafted;
+
+        public override bool Check(IQuestConditionContext context) {
+            if(context.CraftedModule == null ) {
+                return false;
+            }
+            return (context.CraftedModule.Color == Color) && (context.CraftedModule.Level >= Level) && (context.CraftedModule.Slot == ModuleType);
+        }
+
+        //public override string VariableName => ModuleType.ToString() + Color.ToString() + Level.ToString();
+
+        //public override bool IsClearVariable => true;
+
+        //public override void ResetVariable(IQuestConditionContext context) {
+        //    context.ResetVariable<bool>(VariableName);
+        //}
+
+        public override string ToString() {
+            return $"{GetType().Name} => {ModuleType}:{Color}";
+        }
+    }
+
     public class CollectOreQuestCondition : QuestCondition {
         public string OreId { get; private set; }
         public int Count { get; private set; }
@@ -174,29 +230,32 @@ namespace Nebula.Quests {
     public class CreateStructureQuestCondition : QuestCondition {
 
         public QuestStructureType Structure { get; private set; }
-        public int Count { get; private set; }
+        //public int Count { get; private set; }
 
         public CreateStructureQuestCondition(XElement element) {
-            Structure = (QuestStructureType)Enum.Parse(typeof(QuestStructureType), element.GetString("value"));
-            Count = element.GetInt("count");
+            Structure = element.GetEnum<QuestStructureType>("value");
+            //Count = element.GetInt("count");
         }
 
         public override QuestConditionType Type => QuestConditionType.create_structure;
 
         public override bool Check(IQuestConditionContext context) {
-            return context.GetVariable<int>(VariableName) >= Count;
+            if(context.CreatedStructure == null ) {
+                return false;
+            }
+            return context.CreatedStructure.Type == Structure;
         }
 
-        public override bool IsClearVariable => true;
+        //public override bool IsClearVariable => true;
 
-        public override string VariableName => Structure.ToString();
+        //public override string VariableName => Structure.ToString();
 
-        public override void ResetVariable(IQuestConditionContext context) {
-            context.ResetVariable<int>(VariableName);
-        }
+        //public override void ResetVariable(IQuestConditionContext context) {
+        //    context.ResetVariable<int>(VariableName);
+        //}
 
         public override string ToString() {
-            return $"{GetType().Name} => {Structure}, count => {Count}";
+            return $"{GetType().Name} => {Structure}";
         }
     }
 

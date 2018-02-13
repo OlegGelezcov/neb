@@ -62,5 +62,11 @@
         public const int rpc_Activate = 41;
         public const int rpc_RestartQuest = 42;
         public const int rpc_UseQuestItem = 43;
+        public const int rpc_SendEventOnOtherChannel = 44;
+        public const int rpc_GetNewQuestsUpdateEvent = 45;
+        public const int rpc_RestartQuests = 46;
+        public const int rpc_ForceStartQuest = 47;
+        public const int rpc_RewardQuest = 48;
+        public const int rpc_AcceptQuest = 49;
     }
 }

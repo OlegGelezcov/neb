@@ -24,6 +24,12 @@ namespace Nebula.Client.Inventory.Objects {
             private set;
         }
 
+        public Race Race {
+            get {
+                return (Race)(byte)race;
+            }
+        }
+
         public string Id {
             get;
             private set;

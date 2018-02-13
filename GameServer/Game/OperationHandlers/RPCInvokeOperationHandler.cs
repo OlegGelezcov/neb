@@ -3,6 +3,7 @@ using ExitGames.Logging;
 using Nebula.Drop;
 using Nebula.Engine;
 using Nebula.Game.Components;
+using Nebula.Game.Components.Quests;
 //using Nebula.Game.Components.Quests;
 //using Nebula.Game.Components.Quests.Dialogs;
 using Nebula.Inventory.Objects;
@@ -123,12 +124,95 @@ namespace Nebula.Game.OperationHandlers {
 #endif
                 case RPCID.rpc_UseQuestItem:
                     return CallUseQuestItem(actor, request, operation);
+                case RPCID.rpc_SendEventOnOtherChannel:
+                    return CallSendEventOnOtherChannel(actor, request, operation);
+                case RPCID.rpc_GetNewQuestsUpdateEvent:
+                    return CallGetNewQuestsUpdateEvent(actor, request, operation);
+                case RPCID.rpc_RestartQuests:
+                    return CallRestartQuests(actor, request, operation);
+                case RPCID.rpc_ForceStartQuest:
+                    return CallForceStartQuest(actor, request, operation);
+                case RPCID.rpc_RewardQuest:
+                    return CallRewardQuest(actor, request, operation);
+                case RPCID.rpc_AcceptQuest:
+                    return CallAcceptQuest(actor, request, operation);
                 default:
                     return new OperationResponse(request.OperationCode) {
                         ReturnCode = (int)ReturnCode.InvalidRPCID,
                         DebugMessage = string.Format("not found rpc with id = {0}", operation.rpcId)
                     };
             }
+        }
+
+        private OperationResponse CallAcceptQuest(MmoActor player, OperationRequest request, RPCInvokeOperation operation ) {
+            if(operation.parameters?.Length > 0 ) {
+                string questId = operation.parameters[0] as string;
+                if (questId.IsValid()) {
+                    player.GetComponent<QuestManager>()?.AcceptQuest(questId);
+                    RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                        rpcId = operation.rpcId,
+                        result = new Hashtable()
+                    };
+                    return new OperationResponse(request.OperationCode, responseInstance);
+                }
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallRewardQuest(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if (op.parameters != null && op.parameters.Length > 0) {
+                string questId = op.parameters[0] as string;
+                if (questId.IsValid()) {
+                    player.GetComponent<QuestManager>()?.RewardQuest(questId);
+                    RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                        rpcId = op.rpcId,
+                        result = new Hashtable()
+                    };
+                    return new OperationResponse(request.OperationCode, responseInstance);
+                }
+            }
+            return InvalidOperationParameter(request);
+        }
+        private OperationResponse CallForceStartQuest(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            if(op.parameters != null && op.parameters.Length > 0 ) {
+                string questId = op.parameters[0] as string;
+                if(questId.IsValid()) {
+                    player.GetComponent<QuestManager>()?.ForceStartQuest(questId);
+                    RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                        rpcId = op.rpcId,
+                        result = new Hashtable()
+                    };
+                    return new OperationResponse(request.OperationCode, responseInstance);
+                }
+            }
+            return InvalidOperationParameter(request);
+        }
+
+        private OperationResponse CallRestartQuests(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            player.GetComponent<QuestManager>()?.RestartQuests();
+            RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = new Hashtable()
+            };
+            return new OperationResponse(request.OperationCode, responseInstance);
+        }
+
+        private OperationResponse CallGetNewQuestsUpdateEvent(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            player.GetComponent<QuestManager>()?.SendQuestsUpdate();
+            RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = new Hashtable()
+            };
+            return new OperationResponse(request.OperationCode, responseInstance);
+        }
+
+        private OperationResponse CallSendEventOnOtherChannel(MmoActor player, OperationRequest request, RPCInvokeOperation op) {
+            player.GetComponent<MmoMessageComponent>()?.TestReceiveEventOnOtherChannel();
+            RPCInvokeResponse responseInstance = new RPCInvokeResponse {
+                rpcId = op.rpcId,
+                result = new Hashtable()
+            };
+            return new OperationResponse(request.OperationCode, responseInstance);
         }
 
         private OperationResponse CallUseQuestItem(MmoActor player, OperationRequest request, RPCInvokeOperation op ) {

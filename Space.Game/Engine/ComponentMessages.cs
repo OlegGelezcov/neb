@@ -65,6 +65,19 @@ namespace Nebula.Engine {
         /// </summary>
         public const string OnStartAttack = "OnStartAttack";
 
-        
+        /// <summary>
+        /// Player send to yourself when he craft module from scheme
+        /// </summary>
+        public const string OnModuleCrafted = "OnModuleCrafted";
+
+        /// <summary>
+        /// Sended to self when asteroid collected (paarameter is List[AsteroidContent])
+        /// </summary>
+        public const string OnAsteroidCollected = "OnAsteroidCollected";
+
+        /// <summary>
+        /// Sended to yourself when player created structure (parameter is QuestStructureType enum and strcuture GameObject itself)
+        /// </summary>
+        public const string OnStructureCreated = "OnStructureCreated";
     }
 }

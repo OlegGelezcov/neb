@@ -30,6 +30,12 @@ namespace Nebula.Client.Inventory.Objects {
             }
         }
 
+        public Race Race {
+            get {
+                return (Race)(byte)race;
+            }
+        }
+
         public Hashtable rawHash {
             get;
             private set;

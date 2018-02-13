@@ -665,9 +665,26 @@ namespace Common
             return (T)System.Enum.Parse(typeof(T), e.Attribute(name).Value);
         }
 
+        //public static bool HasAttribute(this XElement e, string name) {
+        //    foreach(var attrib in e.Attributes()) {
+        //        if(attrib.Name == name) {
+        //            return true;
+        //        }
+        //    }
+        //    return false;
+        //}
+
         public static int GetInt(this XElement e, string name)
         {
             return int.Parse(e.Attribute(name).Value);
+        }
+
+        public static int GetInt(this XElement e, string name, int defaultValue = 0) {
+            if(e.HasAttribute(name)) {
+                return e.GetInt(name);
+            } else {
+                return defaultValue;
+            }
         }
 
         public static string GetString(this XElement e, string name)

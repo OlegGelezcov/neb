@@ -1,5 +1,6 @@
 ﻿using MongoDB.Driver;
 using MongoDB.Driver.Builders;
+using Nebula.Game.Components.Quests;
 using Space.Game;
 using System;
 using System.Collections;
@@ -28,7 +29,7 @@ namespace Nebula.Database {
             questDocuments = app.defaultDatabase.GetCollection<QuestDocument>(GameServerSettings.Default.DatabaseQuestCollectionName);
         }
 
-        public void SaveQuests(string characterId, Hashtable questHash ) {
+        public void SaveQuests(string characterId, QuestSave questSave ) {
             lock(sync) {
                 var document = questDocuments.FindOne(Query<QuestDocument>.EQ(d => d.characterId, characterId));
                 if(document == null ) {
@@ -37,26 +38,28 @@ namespace Nebula.Database {
                     };
                 }
                 document.isNewDocument = false;
-                document.Set(questHash);
+                document.Set(questSave);
                 questDocuments.Save(document);
             }
         }
 
-        public Hashtable LoadQuests(string characterId, Res resource, out bool isNew ) {
+        public QuestSave LoadQuests(string characterId,  out bool isNew ) {
             lock(sync) {
                 var document = questDocuments.FindOne(Query<QuestDocument>.EQ(d => d.characterId, characterId));
                 if( document != null ) {
                     isNew = false;
-                    return document.SourceObject(resource);
+                    return document.SourceObject();
                 } else {
                     isNew = true;
                     document = new QuestDocument {
                         characterId = characterId,
-                        isNewDocument = isNew,
-                        questHash = new Hashtable()
+                        isNewDocument = true,
+                        CompletedQuests = new List<string>(),
+                        StartedQuests = new List<Hashtable>(),
+                        QuestVariables = new Hashtable()
                     };
                     questDocuments.Save(document);
-                    return document.SourceObject(resource);
+                    return document.SourceObject();
                 }
             }
         }

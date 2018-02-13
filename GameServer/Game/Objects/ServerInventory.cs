@@ -67,9 +67,12 @@ namespace Space.Game.Inventory {
             ShipModule result = (schemeItem.Object as SchemeObject).Transform(dropManager) as ShipModule;
             Remove(InventoryObjectType.Scheme, schemeID, 1);
             Add(result, 1);
-            return new Hashtable { { ACTION_RESULT.RESULT,  ACTION_RESULT.SUCCESS },
+            return new Hashtable {
+                { ACTION_RESULT.RESULT,  ACTION_RESULT.SUCCESS },
                 { (int)SPC.Workshop, result.Workshop.ToString() },
-                { ACTION_RESULT.RETURN, schemeID } };
+                { ACTION_RESULT.RETURN, schemeID },
+                { (int)SPC.Module, result }
+            };
         }
 
         public bool RemoveContractItems(string contractId ) {

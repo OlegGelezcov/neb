@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 
 namespace Nebula.Client.QuestData {
+
+    /*
     public class QuestData {
         public string id { get; private set; }
         public string text { get; private set; }
@@ -63,5 +65,5 @@ namespace Nebula.Client.QuestData {
             }
             return null;
         }
-    }
+    }*/
 }

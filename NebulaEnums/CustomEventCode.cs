@@ -64,7 +64,14 @@ namespace Common
         Dialogs = 60,
         DialogCompleted = 61,
         QuestConditionUpdate = 62,
-        ReceiveErrorCode = 63
+        ReceiveErrorCode = 63,
+
+        NewQuestStarted = 64,
+        NewQuestCompleted = 65,
+        NewQuestUpdated = 66,
+        TestEventOnOtherChannel = 67,
+        NewQuestReady = 68,
+        NewQuestNotAccepted = 69
         //CooperativeGroupRequest = 18,
         //CooperativeGroupUpdate = 19
     }

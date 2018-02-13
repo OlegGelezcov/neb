@@ -55,7 +55,8 @@ namespace Nebula.Client.Res
                     Type = (MaterialType)System.Enum.Parse(typeof(MaterialType), e.Attribute("type").Value),
                     Name = e.Attribute("name").Value,
                     Description = e.Attribute("description").Value,
-                    craftDescription = e.Attribute("cr_desc").Value
+                    craftDescription = e.Attribute("cr_desc").Value,
+                    Color = e.GetEnum<ObjectColor>("color")
                 };
             }).ToList();
         }

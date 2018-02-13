@@ -26,5 +26,32 @@ namespace Nebula.Client.Inventory {
                 return 0;
             }
         }
+
+        public ObjectColor Color {
+            get {
+                if(Object != null ) {
+                    return Object.MyColor();
+                }
+                return ObjectColor.white;
+            }
+        }
+
+        public string Id {
+            get {
+                if(Object != null ) {
+                    return Object.Id;
+                }
+                return string.Empty;
+            }
+        }
+
+        public InventoryObjectType Type {
+            get {
+                if(Object != null ) {
+                    return Object.Type;
+                }
+                throw new System.NullReferenceException($"property {nameof(Object)} is null");
+            }
+        }
     }
 }

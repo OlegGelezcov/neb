@@ -2,6 +2,7 @@
     using Common;
     using ExitGames.Logging;
     using Nebula.Game.Components;
+    using Nebula.Game.Components.Quests;
     //using Nebula.Game.Components.Quests;
     //using Nebula.Game.Components.Quests.Dialogs;
     using Nebula.Game.Contracts;
@@ -195,6 +196,7 @@
                     typeof(PlayerEventSubscriber),
                     typeof(ContractManager),
                     typeof(AchievmentComponent),
+                    typeof(QuestManager)
                     //typeof(QuestManager),
                     //typeof(DialogManager)
                 };

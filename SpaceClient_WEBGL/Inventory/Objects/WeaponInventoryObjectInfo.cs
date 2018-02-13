@@ -5,7 +5,7 @@ using ExitGames.Client.Photon;
 using Nebula.Client.Utils;
 
 namespace Nebula.Client.Inventory.Objects {
-    public class WeaponInventoryObjectInfo : IInventoryObjectInfo, ILeveledObjectInfo {
+    public class WeaponInventoryObjectInfo : IInventoryObjectInfo, ILeveledObjectInfo, IWorkshopObjectInfo {
         private string id;
         private string template;
         private int level;
@@ -62,6 +62,12 @@ namespace Nebula.Client.Inventory.Objects {
 
         public WeaponInventoryObjectInfo(Hashtable info) {
             ParseInfo(info);
+        }
+
+        public Workshop Workshop {
+            get {
+                return workshop;
+            }
         }
 
         public string Id {

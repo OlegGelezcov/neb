@@ -904,5 +904,12 @@ namespace Space.Game {
                 return (int)ComponentID.Player;
             }
         }
+
+        public void AddToStationInventory(ServerInventoryItem item, bool sendUpdateEvent = true) {
+            Station.StationInventory.Add(item.Object, item.Count);
+            if(sendUpdateEvent) {
+                EventOnStationHoldUpdated();
+            }
+        }
     }
 }

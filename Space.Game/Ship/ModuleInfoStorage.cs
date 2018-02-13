@@ -98,6 +98,17 @@
             return null;
         }
 
+        public ModuleInfo Module(Workshop workshop, ShipModelSlotType type) {
+            List<ModuleInfo> filteredModules = null;
+            if (this.modules.TryGetValue(workshop, out filteredModules)) {
+                List<ModuleInfo> modules = filteredModules.Where(m => m.Type == type).ToList();
+                if(modules.Count > 0 ) {
+                    return modules.AnyElement();
+                }
+            }
+            return null;
+        }
+
         public ModuleInfo RandomModule(Workshop workshop)
         {
             List<ModuleInfo> filteredModules = null;

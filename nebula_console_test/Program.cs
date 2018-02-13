@@ -1,25 +1,18 @@
-﻿using nebula_console_test.Contracts;
+﻿
+using nebula_console_test.Contracts;
 using Space.Game.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static System.Console;
 
 namespace nebula_console_test {
     class Program {
         static void Main(string[] args) {
-            //ContractTests tests = new ContractTests();
-            //tests.TestContractGeneration();
-            //tests.TestKillNPCGroupContractServerClientCompativility();
-            //tests.TestExploreLocationParsing();
-            //new RemapWeightsTest().CollectStatistics(new float[] { 0, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1f });
-            /*
-            StringHashFuncTest hashTest = new StringHashFuncTest();
-            hashTest.Load("DataClient/Strings");
-            hashTest.FindMaxCharAtKey();
-            hashTest.TestSimpleSum();*/
-            PrintModuleSettings();
+            ParseQuestFile();
         }
 
         static void PrintModuleSettings() {
@@ -27,6 +20,20 @@ namespace nebula_console_test {
             ModuleSettingsRes res = new ModuleSettingsRes();
             res.Load(string.Empty);
             Console.WriteLine(res.ToString());
+        }
+
+        private static void ParseQuestFile() {
+            string path = @"C:\Users\olegg\Documents\Nebula_PC\Assets\Resources\Data\quests.xml";
+            XDocument document = XDocument.Load(path);
+            List<Nebula.Quests.QuestData> quests = new List<Nebula.Quests.QuestData>();
+            foreach(var questElement in document.Element("quests").Elements("quest")) {
+                Nebula.Quests.QuestData quest = new Nebula.Quests.QuestData();
+                quest.Load(questElement);
+                quests.Add(quest);
+            }
+
+            quests.ForEach(q => WriteLine(q));
+
         }
     }
 }

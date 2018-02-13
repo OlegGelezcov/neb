@@ -26,20 +26,39 @@ namespace Nebula.Client {
         public UniXMLElement() { }
 
 
-        public string GetString(string key) {
-            return element.GetString(key);
+        public string GetString(string key, string defaultValue = "") {
+            if (element.HasAttribute(key)) {
+                return element.GetString(key);
+            }
+            return defaultValue;
         }
 
-        public int GetInt(string key) {
-            return element.GetInt(key);
+        public int GetInt(string key, int defaultValue = 0) {
+            if (element.HasAttribute(key)) {
+                return element.GetInt(key);
+            }
+            return defaultValue;
         }
 
-        public bool GetBool(string key) {
-            return element.GetBool(key);
+        public bool GetBool(string key, bool defaultValue = false) {
+            if (element.HasAttribute(key)) {
+                return element.GetBool(key);
+            }
+            return defaultValue;
         }
 
-        public float GetFloat(string key) {
-            return element.GetFloat(key);
+        public T GetEnum<T>(string key) where T : struct {
+            if(element.HasAttribute(key)) {
+                return (T)System.Enum.Parse(typeof(T), element.GetString(key));
+            }
+            return default(T);
+        }
+
+        public float GetFloat(string key, float defaultValue = 0.0f) {
+            if (element.HasAttribute(key)) {
+                return element.GetFloat(key);
+            }
+            return defaultValue;
         }
 
         public float[] GetFloatArray(string key) {

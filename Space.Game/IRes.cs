@@ -86,6 +86,7 @@ namespace Space.Game {
         Planet2OreMapRes planetOreMap { get; }
         //QuestDataResource quests { get; }
         //DialogDataResource dialogs { get; }
+        QuestRes Quests { get; }
     }
 
 }

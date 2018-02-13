@@ -362,6 +362,9 @@ namespace ServerClientCommon {
         ExpectedCount = 347,
         ActualCount = 348,
         VariableName = 349,
-        Interactable = 350
+        Interactable = 350,
+        StartedQuests = 351,
+        NewQuest = 352,
+        Module = 353
     }
 }

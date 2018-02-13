@@ -183,6 +183,7 @@
             planetOreMap = new Planet2OreMapRes();
             planetOreMap.Load(Path.Combine(basePath, "Data/planet2oremap.xml"));
 
+            Quests.Load(Path.Combine(basePath, "Data/quests.xml"));
             //quests = new QuestDataResource();
             //quests.Load(basePath);
 
@@ -198,6 +199,8 @@
         //    get;
         //    private set;
         //}
+
+        public QuestRes Quests { get; } = new QuestRes();
 
         public Planet2OreMapRes planetOreMap {
             get;
